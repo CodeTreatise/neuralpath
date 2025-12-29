@@ -59,11 +59,8 @@ const State = {
         try {
             const response = await fetch('data/tools.json');
             if (response.ok) {
-            // Jobs page is backed by careers.json; keep State.data.jobs as a flat roles array.
-            const response = await fetch('data/careers.json');
-                // Store both categories and flat tools array
                 const data = await response.json();
-                this.data.jobs = data.roles || [];
+                this.data.toolCategories = data.categories || [];
                 this.data.tools = data.tools || [];
                 this.loaded.tools = true;
             }
