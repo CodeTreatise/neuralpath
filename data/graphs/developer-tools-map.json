@@ -1,0 +1,143 @@
+{
+  "id": "developer-tools-map",
+  "title": "AI Developer Tools Ecosystem",
+  "description": "Complete map of tools for building AI applications",
+  "sections": [
+    { "id": "models", "title": "Models & APIs", "color": "#6366f1" },
+    { "id": "frameworks", "title": "Frameworks", "color": "#10b981" },
+    { "id": "data", "title": "Data & Storage", "color": "#f59e0b" },
+    { "id": "dev-env", "title": "Dev Environment", "color": "#ec4899" },
+    { "id": "ops", "title": "MLOps & Ops", "color": "#8b5cf6" },
+    { "id": "safety", "title": "Safety & Eval", "color": "#ef4444" }
+  ],
+  "nodes": [
+    {"id": "dev-tools", "label": "AI Developer Tools", "type": "root", "section": "models", "description": "Everything you need to build AI apps", "difficulty": "Beginner"},
+    
+    {"id": "model-apis", "label": "Model APIs", "type": "concept", "section": "models", "description": "Cloud-hosted AI models", "difficulty": "Beginner"},
+    {"id": "embeddings", "label": "Embedding Models", "type": "concept", "section": "models", "description": "Text to vectors", "difficulty": "Intermediate"},
+    
+    {"id": "frameworks", "label": "Frameworks", "type": "concept", "section": "frameworks", "description": "LLM app frameworks", "difficulty": "Intermediate"},
+    {"id": "orchestration", "label": "Orchestration", "type": "concept", "section": "frameworks", "description": "Workflow management", "difficulty": "Advanced"},
+    
+    {"id": "vector-dbs", "label": "Vector Databases", "type": "concept", "section": "data", "description": "Semantic search storage", "difficulty": "Intermediate"},
+    
+    {"id": "ides", "label": "AI IDEs", "type": "concept", "section": "dev-env", "description": "AI-powered code editors", "difficulty": "Beginner"},
+    
+    {"id": "mlops", "label": "MLOps", "type": "concept", "section": "ops", "description": "Training & deployment", "difficulty": "Advanced"},
+    {"id": "observability", "label": "Observability", "type": "concept", "section": "ops", "description": "Logging & tracing", "difficulty": "Advanced"},
+    
+    {"id": "evaluation", "label": "Evaluation", "type": "concept", "section": "safety", "description": "Testing & monitoring", "difficulty": "Intermediate"},
+    {"id": "guardrails", "label": "Guardrails", "type": "concept", "section": "safety", "description": "Safety & validation", "difficulty": "Intermediate"},
+    
+    {"id": "openai", "label": "OpenAI", "type": "tool", "section": "models", "description": "GPT-4, GPT-4o, o1", "difficulty": "Beginner", "url": "https://platform.openai.com/"},
+    {"id": "anthropic", "label": "Anthropic", "type": "tool", "section": "models", "description": "Claude 3.5, Claude 3", "difficulty": "Beginner", "url": "https://console.anthropic.com/"},
+    {"id": "google-ai", "label": "Google AI", "type": "tool", "section": "models", "description": "Gemini 1.5, PaLM", "difficulty": "Beginner", "url": "https://ai.google.dev/"},
+    {"id": "mistral", "label": "Mistral AI", "type": "tool", "section": "models", "description": "Mistral, Mixtral", "difficulty": "Intermediate", "url": "https://mistral.ai/"},
+    {"id": "cohere", "label": "Cohere", "type": "tool", "section": "models", "description": "Command, Embed, Rerank", "difficulty": "Intermediate", "url": "https://cohere.com/"},
+    
+    {"id": "langchain", "label": "LangChain", "type": "tool", "section": "frameworks", "description": "Most popular LLM framework", "difficulty": "Intermediate", "url": "https://www.langchain.com/"},
+    {"id": "llamaindex", "label": "LlamaIndex", "type": "tool", "section": "frameworks", "description": "RAG-focused framework", "difficulty": "Intermediate", "url": "https://www.llamaindex.ai/"},
+    {"id": "haystack", "label": "Haystack", "type": "tool", "section": "frameworks", "description": "Search-focused pipelines", "difficulty": "Intermediate", "url": "https://haystack.deepset.ai/"},
+    {"id": "semantic-kernel", "label": "Semantic Kernel", "type": "tool", "section": "frameworks", "description": "Microsoft's LLM SDK", "difficulty": "Advanced", "url": "https://github.com/microsoft/semantic-kernel"},
+    
+    {"id": "pinecone", "label": "Pinecone", "type": "tool", "section": "data", "description": "Managed vector DB", "difficulty": "Beginner", "url": "https://www.pinecone.io/"},
+    {"id": "weaviate", "label": "Weaviate", "type": "tool", "section": "data", "description": "Open-source, AI-native", "difficulty": "Intermediate", "url": "https://weaviate.io/"},
+    {"id": "chroma", "label": "Chroma", "type": "tool", "section": "data", "description": "Simple, embedded", "difficulty": "Beginner", "url": "https://www.trychroma.com/"},
+    {"id": "qdrant", "label": "Qdrant", "type": "tool", "section": "data", "description": "Rust, high performance", "difficulty": "Advanced", "url": "https://qdrant.tech/"},
+    {"id": "milvus", "label": "Milvus", "type": "tool", "section": "data", "description": "Scalable, enterprise", "difficulty": "Advanced", "url": "https://milvus.io/"},
+    
+    {"id": "cursor", "label": "Cursor", "type": "tool", "section": "dev-env", "description": "VS Code + AI", "difficulty": "Beginner", "url": "https://cursor.sh/"},
+    {"id": "github-copilot", "label": "GitHub Copilot", "type": "tool", "section": "dev-env", "description": "AI pair programmer", "difficulty": "Beginner", "url": "https://github.com/features/copilot"},
+    {"id": "windsurf", "label": "Windsurf", "type": "tool", "section": "dev-env", "description": "Agentic coding", "difficulty": "Intermediate", "url": "https://codeium.com/windsurf"},
+    {"id": "replit-ai", "label": "Replit AI", "type": "tool", "section": "dev-env", "description": "Browser-based AI coding", "difficulty": "Beginner", "url": "https://replit.com/ai"},
+    
+    {"id": "mlflow", "label": "MLflow", "type": "tool", "section": "ops", "description": "Experiment tracking", "difficulty": "Intermediate", "url": "https://mlflow.org/"},
+    {"id": "wandb", "label": "Weights & Biases", "type": "tool", "section": "ops", "description": "ML experiment platform", "difficulty": "Intermediate", "url": "https://wandb.ai/"},
+    {"id": "huggingface-hub", "label": "HF Hub", "type": "tool", "section": "ops", "description": "Model hosting & sharing", "difficulty": "Beginner", "url": "https://huggingface.co/"},
+    {"id": "modal", "label": "Modal", "type": "tool", "section": "ops", "description": "Serverless ML compute", "difficulty": "Advanced", "url": "https://modal.com/"},
+    
+    {"id": "openai-embed", "label": "OpenAI Embeddings", "type": "tool", "section": "models", "description": "text-embedding-3", "difficulty": "Beginner", "url": "https://platform.openai.com/docs/guides/embeddings"},
+    {"id": "cohere-embed", "label": "Cohere Embed", "type": "tool", "section": "models", "description": "embed-v3", "difficulty": "Intermediate", "url": "https://cohere.com/embeddings"},
+    {"id": "bge", "label": "BGE", "type": "tool", "section": "models", "description": "Open-source SOTA", "difficulty": "Advanced", "url": "https://huggingface.co/BAAI/bge-large-en-v1.5"},
+    
+    {"id": "langsmith", "label": "LangSmith", "type": "tool", "section": "ops", "description": "LangChain tracing", "difficulty": "Intermediate", "url": "https://smith.langchain.com/"},
+    {"id": "prefect", "label": "Prefect", "type": "tool", "section": "frameworks", "description": "Workflow orchestration", "difficulty": "Intermediate", "url": "https://www.prefect.io/"},
+    {"id": "dagster", "label": "Dagster", "type": "tool", "section": "frameworks", "description": "Data orchestration", "difficulty": "Advanced", "url": "https://dagster.io/"},
+    
+    {"id": "ragas", "label": "RAGAS", "type": "tool", "section": "safety", "description": "RAG evaluation", "difficulty": "Advanced", "url": "https://docs.ragas.io/"},
+    {"id": "deepeval", "label": "DeepEval", "type": "tool", "section": "safety", "description": "LLM testing framework", "difficulty": "Advanced", "url": "https://github.com/confident-ai/deepeval"},
+    {"id": "promptfoo", "label": "promptfoo", "type": "tool", "section": "safety", "description": "Prompt testing", "difficulty": "Intermediate", "url": "https://www.promptfoo.dev/"},
+    
+    {"id": "nemoguard", "label": "NeMo Guardrails", "type": "tool", "section": "safety", "description": "NVIDIA safety toolkit", "difficulty": "Advanced", "url": "https://github.com/NVIDIA/NeMo-Guardrails"},
+    {"id": "guardrails-ai", "label": "Guardrails AI", "type": "tool", "section": "safety", "description": "Output validation", "difficulty": "Intermediate", "url": "https://www.guardrailsai.com/"},
+    {"id": "rebuff", "label": "Rebuff", "type": "tool", "section": "safety", "description": "Prompt injection defense", "difficulty": "Advanced", "url": "https://rebuff.ai/"},
+    
+    {"id": "langfuse", "label": "Langfuse", "type": "tool", "section": "ops", "description": "Open-source LLM tracing", "difficulty": "Advanced", "url": "https://langfuse.com/"},
+    {"id": "helicone", "label": "Helicone", "type": "tool", "section": "ops", "description": "LLM observability", "difficulty": "Intermediate", "url": "https://helicone.ai/"},
+    {"id": "phoenix", "label": "Arize Phoenix", "type": "tool", "section": "ops", "description": "ML observability", "difficulty": "Advanced", "url": "https://phoenix.arize.com/"}
+  ],
+  "links": [
+    {"source": "dev-tools", "target": "model-apis", "type": "category"},
+    {"source": "dev-tools", "target": "frameworks", "type": "category"},
+    {"source": "dev-tools", "target": "vector-dbs", "type": "category"},
+    {"source": "dev-tools", "target": "ides", "type": "category"},
+    {"source": "dev-tools", "target": "mlops", "type": "category"},
+    {"source": "dev-tools", "target": "embeddings", "type": "category"},
+    {"source": "dev-tools", "target": "orchestration", "type": "category"},
+    {"source": "dev-tools", "target": "evaluation", "type": "category"},
+    {"source": "dev-tools", "target": "guardrails", "type": "category"},
+    {"source": "dev-tools", "target": "observability", "type": "category"},
+    
+    {"source": "model-apis", "target": "openai", "type": "instance"},
+    {"source": "model-apis", "target": "anthropic", "type": "instance"},
+    {"source": "model-apis", "target": "google-ai", "type": "instance"},
+    {"source": "model-apis", "target": "mistral", "type": "instance"},
+    {"source": "model-apis", "target": "cohere", "type": "instance"},
+    
+    {"source": "frameworks", "target": "langchain", "type": "instance"},
+    {"source": "frameworks", "target": "llamaindex", "type": "instance"},
+    {"source": "frameworks", "target": "haystack", "type": "instance"},
+    {"source": "frameworks", "target": "semantic-kernel", "type": "instance"},
+    
+    {"source": "vector-dbs", "target": "pinecone", "type": "instance"},
+    {"source": "vector-dbs", "target": "weaviate", "type": "instance"},
+    {"source": "vector-dbs", "target": "chroma", "type": "instance"},
+    {"source": "vector-dbs", "target": "qdrant", "type": "instance"},
+    {"source": "vector-dbs", "target": "milvus", "type": "instance"},
+    
+    {"source": "ides", "target": "cursor", "type": "instance"},
+    {"source": "ides", "target": "github-copilot", "type": "instance"},
+    {"source": "ides", "target": "windsurf", "type": "instance"},
+    {"source": "ides", "target": "replit-ai", "type": "instance"},
+    
+    {"source": "mlops", "target": "mlflow", "type": "instance"},
+    {"source": "mlops", "target": "wandb", "type": "instance"},
+    {"source": "mlops", "target": "huggingface-hub", "type": "instance"},
+    {"source": "mlops", "target": "modal", "type": "instance"},
+    
+    {"source": "embeddings", "target": "openai-embed", "type": "instance"},
+    {"source": "embeddings", "target": "cohere-embed", "type": "instance"},
+    {"source": "embeddings", "target": "bge", "type": "instance"},
+    
+    {"source": "orchestration", "target": "langsmith", "type": "instance"},
+    {"source": "orchestration", "target": "prefect", "type": "instance"},
+    {"source": "orchestration", "target": "dagster", "type": "instance"},
+    
+    {"source": "evaluation", "target": "ragas", "type": "instance"},
+    {"source": "evaluation", "target": "deepeval", "type": "instance"},
+    {"source": "evaluation", "target": "promptfoo", "type": "instance"},
+    
+    {"source": "guardrails", "target": "nemoguard", "type": "instance"},
+    {"source": "guardrails", "target": "guardrails-ai", "type": "instance"},
+    {"source": "guardrails", "target": "rebuff", "type": "instance"},
+    
+    {"source": "observability", "target": "langfuse", "type": "instance"},
+    {"source": "observability", "target": "helicone", "type": "instance"},
+    {"source": "observability", "target": "phoenix", "type": "instance"},
+    
+    {"source": "langchain", "target": "langsmith", "type": "integrates"},
+    {"source": "llamaindex", "target": "phoenix", "type": "integrates"},
+    {"source": "chroma", "target": "langchain", "type": "integrates"},
+    {"source": "pinecone", "target": "langchain", "type": "integrates"}
+  ]
+}

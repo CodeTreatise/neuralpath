@@ -1,0 +1,98 @@
+{
+  "id": "rag-architecture",
+  "title": "RAG Systems Architecture",
+  "description": "Components and patterns for building RAG systems",
+  "sections": [
+    { "id": "ingestion", "title": "Data Ingestion", "color": "#6366f1" },
+    { "id": "embedding", "title": "Embeddings", "color": "#ec4899" },
+    { "id": "storage", "title": "Vector Storage", "color": "#f59e0b" },
+    { "id": "retrieval", "title": "Retrieval", "color": "#10b981" },
+    { "id": "generation", "title": "Generation", "color": "#06b6d4" },
+    { "id": "advanced", "title": "Advanced Patterns", "color": "#8b5cf6" }
+  ],
+  "nodes": [
+    { "id": "rag", "label": "RAG Systems", "type": "root", "description": "Retrieval-Augmented Generation", "url": "https://arxiv.org/abs/2005.11401" },
+    
+    { "id": "ingestion", "label": "Data Ingestion", "type": "category", "section": "ingestion", "description": "Processing source documents" },
+    { "id": "loaders", "label": "Document Loaders", "type": "concept", "section": "ingestion", "description": "Reading various file formats", "url": "https://python.langchain.com/docs/modules/data_connection/document_loaders/" },
+    { "id": "pdf-loader", "label": "PDF Loader", "type": "component", "section": "ingestion", "description": "Parse PDF documents" },
+    { "id": "web-loader", "label": "Web Scraper", "type": "component", "section": "ingestion", "description": "Extract web content" },
+    { "id": "chunking", "label": "Text Chunking", "type": "concept", "section": "ingestion", "description": "Splitting documents", "url": "https://www.pinecone.io/learn/chunking-strategies/" },
+    { "id": "recursive", "label": "Recursive Splitter", "type": "component", "section": "ingestion", "description": "Smart text splitting" },
+    { "id": "semantic", "label": "Semantic Chunking", "type": "component", "section": "ingestion", "description": "Meaning-based splits" },
+    
+    { "id": "embedding", "label": "Embeddings", "type": "category", "section": "embedding", "description": "Vector representations" },
+    { "id": "embed-models", "label": "Embedding Models", "type": "concept", "section": "embedding", "description": "Text to vectors", "url": "https://huggingface.co/blog/getting-started-with-embeddings" },
+    { "id": "openai-embed", "label": "OpenAI Embeddings", "type": "model", "section": "embedding", "description": "text-embedding-3", "url": "https://platform.openai.com/docs/guides/embeddings" },
+    { "id": "cohere-embed", "label": "Cohere Embed", "type": "model", "section": "embedding", "description": "embed-v3", "url": "https://cohere.com/embeddings" },
+    { "id": "bge", "label": "BGE", "type": "model", "section": "embedding", "description": "Open source embeddings" },
+    
+    { "id": "storage", "label": "Vector Storage", "type": "category", "section": "storage", "description": "Storing embeddings" },
+    { "id": "pinecone", "label": "Pinecone", "type": "database", "section": "storage", "description": "Managed vector DB", "url": "https://www.pinecone.io/" },
+    { "id": "chroma", "label": "Chroma", "type": "database", "section": "storage", "description": "Open source vector DB", "url": "https://www.trychroma.com/" },
+    { "id": "weaviate", "label": "Weaviate", "type": "database", "section": "storage", "description": "Vector search engine", "url": "https://weaviate.io/" },
+    { "id": "pgvector", "label": "pgvector", "type": "database", "section": "storage", "description": "PostgreSQL extension", "url": "https://github.com/pgvector/pgvector" },
+    { "id": "qdrant", "label": "Qdrant", "type": "database", "section": "storage", "description": "High-performance vector DB", "url": "https://qdrant.tech/" },
+    
+    { "id": "retrieval", "label": "Retrieval", "type": "category", "section": "retrieval", "description": "Finding relevant context" },
+    { "id": "similarity", "label": "Similarity Search", "type": "concept", "section": "retrieval", "description": "Vector similarity" },
+    { "id": "hybrid", "label": "Hybrid Search", "type": "concept", "section": "retrieval", "description": "Vector + keyword", "url": "https://www.pinecone.io/learn/hybrid-search-intro/" },
+    { "id": "reranking", "label": "Reranking", "type": "concept", "section": "retrieval", "description": "Improve relevance", "url": "https://www.sbert.net/examples/applications/retrieve_rerank/README.html" },
+    { "id": "mmr", "label": "MMR", "type": "concept", "section": "retrieval", "description": "Maximum Marginal Relevance" },
+    
+    { "id": "generation", "label": "Generation", "type": "category", "section": "generation", "description": "LLM response generation" },
+    { "id": "prompting", "label": "Prompt Engineering", "type": "concept", "section": "generation", "description": "Context injection", "url": "https://www.promptingguide.ai/" },
+    { "id": "chains", "label": "RAG Chains", "type": "concept", "section": "generation", "description": "Retrieval + generation", "url": "https://python.langchain.com/docs/expression_language/" },
+    { "id": "citations", "label": "Citations", "type": "concept", "section": "generation", "description": "Source attribution" },
+    
+    { "id": "advanced", "label": "Advanced Patterns", "type": "category", "section": "advanced", "description": "Beyond basic RAG" },
+    { "id": "graphrag", "label": "GraphRAG", "type": "concept", "section": "advanced", "description": "Knowledge graphs + RAG", "url": "https://microsoft.github.io/graphrag/" },
+    { "id": "corrective-rag", "label": "Corrective RAG", "type": "concept", "section": "advanced", "description": "Self-correction retrieval", "url": "https://arxiv.org/abs/2401.15884" },
+    { "id": "self-rag", "label": "Self-RAG", "type": "concept", "section": "advanced", "description": "Reflection on retrieval", "url": "https://arxiv.org/abs/2310.11511" },
+    { "id": "agentic-rag", "label": "Agentic RAG", "type": "concept", "section": "advanced", "description": "Agents + retrieval", "url": "https://www.llamaindex.ai/blog/agentic-rag" },
+    { "id": "modular-rag", "label": "Modular RAG", "type": "concept", "section": "advanced", "description": "Composable RAG components" },
+    { "id": "query-transform", "label": "Query Transformation", "type": "concept", "section": "advanced", "description": "Rewriting for better retrieval" }
+  ],
+  "links": [
+    { "source": "rag", "target": "ingestion", "type": "contains" },
+    { "source": "rag", "target": "embedding", "type": "contains" },
+    { "source": "rag", "target": "storage", "type": "contains" },
+    { "source": "rag", "target": "retrieval", "type": "contains" },
+    { "source": "rag", "target": "generation", "type": "contains" },
+    
+    { "source": "ingestion", "target": "loaders", "type": "includes" },
+    { "source": "ingestion", "target": "chunking", "type": "includes" },
+    { "source": "loaders", "target": "pdf-loader", "type": "example" },
+    { "source": "loaders", "target": "web-loader", "type": "example" },
+    { "source": "chunking", "target": "recursive", "type": "example" },
+    { "source": "chunking", "target": "semantic", "type": "example" },
+    
+    { "source": "embedding", "target": "embed-models", "type": "includes" },
+    { "source": "embed-models", "target": "openai-embed", "type": "example" },
+    { "source": "embed-models", "target": "cohere-embed", "type": "example" },
+    { "source": "embed-models", "target": "bge", "type": "example" },
+    
+    { "source": "storage", "target": "pinecone", "type": "example" },
+    { "source": "storage", "target": "chroma", "type": "example" },
+    { "source": "storage", "target": "weaviate", "type": "example" },
+    { "source": "storage", "target": "pgvector", "type": "example" },
+    { "source": "storage", "target": "qdrant", "type": "example" },
+    
+    { "source": "retrieval", "target": "similarity", "type": "includes" },
+    { "source": "retrieval", "target": "hybrid", "type": "includes" },
+    { "source": "retrieval", "target": "reranking", "type": "includes" },
+    { "source": "retrieval", "target": "mmr", "type": "includes" },
+    
+    { "source": "generation", "target": "prompting", "type": "includes" },
+    { "source": "generation", "target": "chains", "type": "includes" },
+    { "source": "generation", "target": "citations", "type": "includes" },
+    
+    { "source": "rag", "target": "advanced", "type": "contains" },
+    { "source": "advanced", "target": "graphrag", "type": "includes" },
+    { "source": "advanced", "target": "corrective-rag", "type": "includes" },
+    { "source": "advanced", "target": "self-rag", "type": "includes" },
+    { "source": "advanced", "target": "agentic-rag", "type": "includes" },
+    { "source": "advanced", "target": "modular-rag", "type": "includes" },
+    { "source": "advanced", "target": "query-transform", "type": "includes" }
+  ]
+}

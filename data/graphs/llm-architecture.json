@@ -1,0 +1,62 @@
+{
+  "id": "llm-architecture",
+  "title": "LLM Architecture Deep Dive",
+  "description": "Understand the internal architecture of large language models",
+  "sections": [
+    { "id": "transformer", "title": "Transformer Architecture", "color": "#3b82f6" },
+    { "id": "components", "title": "Core Components", "color": "#10b981" },
+    { "id": "training", "title": "Training Process", "color": "#f97316" },
+    { "id": "scaling", "title": "Scaling Laws", "color": "#8b5cf6" }
+  ],
+  "nodes": [
+    { "id": "llm", "label": "Large Language Models", "type": "root", "description": "Neural networks trained on massive text data", "url": "https://en.wikipedia.org/wiki/Large_language_model", "difficulty": "Beginner" },
+    
+    { "id": "transformer", "label": "Transformer Architecture", "type": "category", "section": "transformer", "description": "The foundation of modern LLMs", "url": "https://arxiv.org/abs/1706.03762", "difficulty": "Advanced" },
+    { "id": "attention", "label": "Attention Mechanism", "type": "concept", "section": "transformer", "description": "Core innovation enabling context understanding", "url": "https://jalammar.github.io/illustrated-transformer/", "difficulty": "Advanced" },
+    { "id": "self-attention", "label": "Self-Attention", "type": "concept", "section": "transformer", "description": "Tokens attend to all other tokens", "difficulty": "Advanced" },
+    { "id": "multi-head", "label": "Multi-Head Attention", "type": "concept", "section": "transformer", "description": "Multiple attention patterns in parallel", "difficulty": "Advanced" },
+    { "id": "positional", "label": "Positional Encoding", "type": "concept", "section": "transformer", "description": "Encoding sequence position information", "difficulty": "Advanced" },
+    
+    { "id": "components", "label": "Core Components", "type": "category", "section": "components", "description": "Building blocks of transformers", "difficulty": "Advanced" },
+    { "id": "embedding", "label": "Token Embeddings", "type": "concept", "section": "components", "description": "Converting tokens to vectors", "difficulty": "Intermediate" },
+    { "id": "ffn", "label": "Feed-Forward Networks", "type": "concept", "section": "components", "description": "Dense layers for processing", "difficulty": "Advanced" },
+    { "id": "layernorm", "label": "Layer Normalization", "type": "concept", "section": "components", "description": "Stabilizing training", "difficulty": "Advanced" },
+    { "id": "residual", "label": "Residual Connections", "type": "concept", "section": "components", "description": "Skip connections for gradient flow", "difficulty": "Advanced" },
+    
+    { "id": "training", "label": "Training Process", "type": "category", "section": "training", "description": "How LLMs learn", "difficulty": "Intermediate" },
+    { "id": "pretraining", "label": "Pre-training", "type": "concept", "section": "training", "description": "Learning from massive text corpora", "difficulty": "Intermediate" },
+    { "id": "finetuning", "label": "Fine-tuning", "type": "concept", "section": "training", "description": "Adapting to specific tasks", "difficulty": "Intermediate" },
+    { "id": "rlhf", "label": "RLHF", "type": "concept", "section": "training", "description": "Reinforcement Learning from Human Feedback", "url": "https://huggingface.co/blog/rlhf", "difficulty": "Advanced" },
+    { "id": "tokenization", "label": "Tokenization", "type": "concept", "section": "training", "description": "Breaking text into tokens", "url": "https://tiktokenizer.vercel.app/", "difficulty": "Beginner" },
+    
+    { "id": "scaling", "label": "Scaling Laws", "type": "category", "section": "scaling", "description": "How size affects performance", "difficulty": "Intermediate" },
+    { "id": "params", "label": "Parameter Count", "type": "concept", "section": "scaling", "description": "Model size in billions", "difficulty": "Intermediate" },
+    { "id": "context", "label": "Context Length", "type": "concept", "section": "scaling", "description": "Maximum input tokens", "difficulty": "Intermediate" },
+    { "id": "compute", "label": "Compute Requirements", "type": "concept", "section": "scaling", "description": "Training and inference costs", "difficulty": "Intermediate" }
+  ],
+  "links": [
+    { "source": "llm", "target": "transformer", "type": "built-on" },
+    { "source": "llm", "target": "components", "type": "contains" },
+    { "source": "llm", "target": "training", "type": "requires" },
+    { "source": "llm", "target": "scaling", "type": "follows" },
+    
+    { "source": "transformer", "target": "attention", "type": "uses" },
+    { "source": "attention", "target": "self-attention", "type": "includes" },
+    { "source": "attention", "target": "multi-head", "type": "includes" },
+    { "source": "transformer", "target": "positional", "type": "uses" },
+    
+    { "source": "components", "target": "embedding", "type": "includes" },
+    { "source": "components", "target": "ffn", "type": "includes" },
+    { "source": "components", "target": "layernorm", "type": "includes" },
+    { "source": "components", "target": "residual", "type": "includes" },
+    
+    { "source": "training", "target": "pretraining", "type": "includes" },
+    { "source": "training", "target": "finetuning", "type": "includes" },
+    { "source": "training", "target": "rlhf", "type": "includes" },
+    { "source": "training", "target": "tokenization", "type": "requires" },
+    
+    { "source": "scaling", "target": "params", "type": "includes" },
+    { "source": "scaling", "target": "context", "type": "includes" },
+    { "source": "scaling", "target": "compute", "type": "includes" }
+  ]
+}

@@ -1,0 +1,419 @@
+{
+  "id": "ml-fundamentals",
+  "title": "Machine Learning Fundamentals",
+  "description": "Core ML concepts from theory to implementation",
+  "icon": "🤖",
+  "level": "beginner",
+  "duration": "10 weeks",
+  "prerequisites": ["Python basics", "NumPy fundamentals"],
+  "learningOutcomes": [
+    "Understand supervised vs unsupervised learning",
+    "Implement core algorithms from scratch",
+    "Evaluate and improve model performance",
+    "Apply ML to real-world problems"
+  ],
+  "modules": [
+    {
+      "id": "ml-intro",
+      "title": "Introduction to Machine Learning",
+      "lessons": [
+        {
+          "id": "what-is-ml",
+          "title": "What is Machine Learning?",
+          "duration": "30 min",
+          "content": {
+            "overview": "Machine Learning is a subset of artificial intelligence that enables systems to learn and improve from experience without being explicitly programmed. Arthur Samuel coined the term in 1959, defining it as the 'field of study that gives computers the ability to learn without being explicitly programmed.'",
+            "sections": [
+              {
+                "title": "The ML Paradigm Shift",
+                "content": "Traditional programming requires explicit rules:\n\n**Traditional**: Data + Rules → Answers\n**Machine Learning**: Data + Answers → Rules\n\nInstead of writing rules manually, ML algorithms discover patterns from data. This is powerful when:\n\n1. Rules are too complex to program (speech recognition)\n2. Rules change over time (spam detection)\n3. We don't know the rules (medical diagnosis)\n4. Scale makes manual rules impractical (recommendation systems)",
+                "code": "# Traditional approach: explicit rules\ndef is_spam_traditional(email):\n    spam_words = ['free', 'winner', 'click here']\n    return any(word in email.lower() for word in spam_words)\n\n# ML approach: learn from data\nfrom sklearn.naive_bayes import MultinomialNB\nfrom sklearn.feature_extraction.text import CountVectorizer\n\nvectorizer = CountVectorizer()\nX = vectorizer.fit_transform(emails)\nclassifier = MultinomialNB()\nclassifier.fit(X, labels)  # Learns patterns from data"
+              },
+              {
+                "title": "Types of Machine Learning",
+                "content": "Machine learning is broadly categorized into three types:\n\n**1. Supervised Learning**\n- Learn from labeled data (inputs with correct outputs)\n- Goal: Predict output for new inputs\n- Examples: Classification, Regression\n\n**2. Unsupervised Learning**\n- Learn from unlabeled data\n- Goal: Find hidden patterns or structure\n- Examples: Clustering, Dimensionality Reduction\n\n**3. Reinforcement Learning**\n- Learn through interaction with environment\n- Goal: Maximize cumulative reward\n- Examples: Game playing, Robotics",
+                "diagram": {
+                  "title": "Types of Machine Learning",
+                  "code": "flowchart TB\n    ML[Machine Learning] --> SUP[Supervised]\n    ML --> UNSUP[Unsupervised]\n    ML --> RL[Reinforcement]\n    \n    SUP --> CLS[Classification]\n    SUP --> REG[Regression]\n    \n    UNSUP --> CLUST[Clustering]\n    UNSUP --> DIM[Dimensionality Reduction]\n    \n    RL --> GAME[Game Playing]\n    RL --> ROB[Robotics]"
+                },
+                "code": "# Supervised: Classification\nfrom sklearn.ensemble import RandomForestClassifier\nmodel = RandomForestClassifier()\nmodel.fit(X_train, y_train)  # X=features, y=labels\npredictions = model.predict(X_test)\n\n# Unsupervised: Clustering\nfrom sklearn.cluster import KMeans\nkmeans = KMeans(n_clusters=3)\nkmeans.fit(X)  # No labels needed\nclusters = kmeans.labels_\n\n# Reinforcement Learning (conceptual)\n# Agent takes actions, receives rewards\n# Learns policy to maximize long-term reward"
+              },
+              {
+                "title": "The ML Workflow",
+                "content": "Every ML project follows a similar workflow:\n\n1. **Problem Definition**: What are we trying to predict?\n2. **Data Collection**: Gather relevant data\n3. **Data Preprocessing**: Clean, transform, encode\n4. **Feature Engineering**: Create informative features\n5. **Model Selection**: Choose appropriate algorithm\n6. **Training**: Fit model to training data\n7. **Evaluation**: Measure performance on test data\n8. **Hyperparameter Tuning**: Optimize model settings\n9. **Deployment**: Put model into production\n10. **Monitoring**: Track performance over time",
+                "diagram": {
+                  "title": "Machine Learning Lifecycle",
+                  "code": "flowchart TD\n    subgraph Data[\"Data Phase\"]\n        D1[Problem Definition] --> D2[Data Collection]\n        D2 --> D3[Preprocessing]\n        D3 --> D4[Feature Engineering]\n    end\n    \n    subgraph Model[\"Modeling Phase\"]\n        D4 --> M1[Model Selection]\n        M1 --> M2[Training]\n        M2 --> M3[Evaluation]\n        M3 --> M4{Good Enough?}\n        M4 -->|No| M5[Hyperparameter Tuning]\n        M5 --> M2\n    end\n    \n    subgraph Prod[\"Production Phase\"]\n        M4 -->|Yes| P1[Deployment]\n        P1 --> P2[Monitoring]\n        P2 -.->|Feedback| D1\n    end"
+                },
+                "code": "# Complete ML workflow example\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import accuracy_score, classification_report\n\n# 1. Load data\ndf = pd.read_csv('data.csv')\n\n# 2. Preprocess\nX = df.drop('target', axis=1)\ny = df['target']\n\n# 3. Split data\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\n# 4. Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# 5. Train model\nmodel = RandomForestClassifier(n_estimators=100)\nmodel.fit(X_train_scaled, y_train)\n\n# 6. Evaluate\npredictions = model.predict(X_test_scaled)\nprint(f\"Accuracy: {accuracy_score(y_test, predictions):.4f}\")\nprint(classification_report(y_test, predictions))"
+              }
+            ],
+            "keyTakeaways": [
+              "ML learns patterns from data instead of explicit programming",
+              "Three main types: Supervised, Unsupervised, Reinforcement",
+              "Follow a structured workflow for successful ML projects"
+            ],
+            "exercises": [
+              {
+                "title": "Problem Identification",
+                "description": "List 5 real-world problems and classify each as supervised, unsupervised, or reinforcement learning"
+              },
+              {
+                "title": "ML vs Traditional",
+                "description": "Pick a problem and explain why ML is better than traditional programming"
+              }
+            ],
+            "sources": [
+              {"title": "Machine Learning", "author": "Tom Mitchell", "year": 1997},
+              {"title": "Hands-On Machine Learning", "author": "Aurélien Géron", "year": 2022},
+              {"title": "Google ML Crash Course", "url": "https://developers.google.com/machine-learning/crash-course"}
+            ]
+          }
+        },
+        {
+          "id": "bias-variance",
+          "title": "Bias-Variance Tradeoff",
+          "duration": "45 min",
+          "content": {
+            "overview": "The bias-variance tradeoff is a fundamental concept in ML that describes the tension between a model's ability to fit the training data (low bias) and its ability to generalize to new data (low variance). Understanding this tradeoff is crucial for building models that perform well on unseen data.",
+            "sections": [
+              {
+                "title": "Understanding Bias and Variance",
+                "content": "**Bias** measures how far off predictions are from correct values on average. High bias means the model is too simple and underfits.\n\n**Variance** measures how much predictions vary for a given input when trained on different datasets. High variance means the model overfits.\n\n**Total Error = Bias² + Variance + Irreducible Error**\n\n| Model Complexity | Bias | Variance | Result |\n|-----------------|------|----------|--------|\n| Too Simple | High | Low | Underfitting |\n| Just Right | Low | Low | Good Generalization |\n| Too Complex | Low | High | Overfitting |",
+                "code": "import numpy as np\nimport matplotlib.pyplot as plt\nfrom sklearn.preprocessing import PolynomialFeatures\nfrom sklearn.linear_model import LinearRegression\n\n# Generate noisy data\nnp.random.seed(42)\nX = np.linspace(0, 1, 20).reshape(-1, 1)\ny = np.sin(2 * np.pi * X).ravel() + np.random.randn(20) * 0.3\n\n# Underfitting: Linear model (high bias)\nmodel_1 = LinearRegression().fit(X, y)\n\n# Just right: Polynomial degree 3\npoly_3 = PolynomialFeatures(degree=3)\nX_poly_3 = poly_3.fit_transform(X)\nmodel_3 = LinearRegression().fit(X_poly_3, y)\n\n# Overfitting: Polynomial degree 15 (high variance)\npoly_15 = PolynomialFeatures(degree=15)\nX_poly_15 = poly_15.fit_transform(X)\nmodel_15 = LinearRegression().fit(X_poly_15, y)"
+              },
+              {
+                "title": "Detecting Overfitting and Underfitting",
+                "content": "Compare training and validation performance to diagnose your model:\n\n**Underfitting (High Bias)**:\n- Training error: High\n- Validation error: High\n- Gap: Small\n- Solution: More complex model, more features\n\n**Overfitting (High Variance)**:\n- Training error: Low\n- Validation error: High\n- Gap: Large\n- Solution: Regularization, more data, simpler model\n\n**Good Fit**:\n- Training error: Low\n- Validation error: Low\n- Gap: Small",
+                "code": "from sklearn.model_selection import learning_curve\n\ndef plot_learning_curve(model, X, y):\n    train_sizes, train_scores, val_scores = learning_curve(\n        model, X, y, cv=5,\n        train_sizes=np.linspace(0.1, 1.0, 10),\n        scoring='neg_mean_squared_error'\n    )\n    \n    train_mean = -train_scores.mean(axis=1)\n    val_mean = -val_scores.mean(axis=1)\n    \n    plt.figure(figsize=(10, 6))\n    plt.plot(train_sizes, train_mean, label='Training Error')\n    plt.plot(train_sizes, val_mean, label='Validation Error')\n    plt.xlabel('Training Set Size')\n    plt.ylabel('Mean Squared Error')\n    plt.legend()\n    plt.title('Learning Curve')\n    plt.show()\n\n# High bias: both curves are high and close\n# High variance: training low, validation high, large gap"
+              },
+              {
+                "title": "Regularization Techniques",
+                "content": "Regularization adds a penalty for complexity, reducing variance at the cost of slightly increased bias:\n\n**L1 Regularization (Lasso)**: Adds absolute value of weights\n- Can produce sparse models (some weights = 0)\n- Good for feature selection\n\n**L2 Regularization (Ridge)**: Adds squared weights\n- Keeps all features but shrinks weights\n- Generally more stable\n\n**Elastic Net**: Combines L1 and L2",
+                "code": "from sklearn.linear_model import Ridge, Lasso, ElasticNet\n\n# Ridge regression (L2)\nridge = Ridge(alpha=1.0)  # Higher alpha = more regularization\nridge.fit(X_train, y_train)\n\n# Lasso regression (L1)\nlasso = Lasso(alpha=0.1)\nlasso.fit(X_train, y_train)\nprint(f\"Features with zero weight: {np.sum(lasso.coef_ == 0)}\")\n\n# Elastic Net (L1 + L2)\nelastic = ElasticNet(alpha=0.1, l1_ratio=0.5)\nelastic.fit(X_train, y_train)\n\n# Cross-validation to find best alpha\nfrom sklearn.linear_model import RidgeCV\nridge_cv = RidgeCV(alphas=[0.01, 0.1, 1, 10, 100])\nridge_cv.fit(X_train, y_train)\nprint(f\"Best alpha: {ridge_cv.alpha_}\")"
+              }
+            ],
+            "keyTakeaways": [
+              "Bias measures systematic error, variance measures sensitivity to training data",
+              "Use learning curves to diagnose underfitting and overfitting",
+              "Regularization reduces variance at the cost of slightly increased bias"
+            ],
+            "exercises": [
+              {
+                "title": "Learning Curve Analysis",
+                "description": "Train models of different complexity and plot their learning curves"
+              },
+              {
+                "title": "Regularization Comparison",
+                "description": "Compare Ridge, Lasso, and ElasticNet on a regression dataset"
+              }
+            ],
+            "sources": [
+              {"title": "Understanding the Bias-Variance Tradeoff", "url": "http://scott.fortmann-roe.com/docs/BiasVariance.html"},
+              {"title": "Elements of Statistical Learning", "author": "Hastie, Tibshirani, Friedman", "year": 2009}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "supervised-learning",
+      "title": "Supervised Learning Algorithms",
+      "lessons": [
+        {
+          "id": "linear-regression",
+          "title": "Linear Regression",
+          "duration": "60 min",
+          "content": {
+            "overview": "Linear regression is the foundational algorithm for predicting continuous values. It models the relationship between input features and a target variable as a linear combination. Despite its simplicity, it remains widely used due to its interpretability and efficiency.",
+            "sections": [
+              {
+                "title": "The Linear Model",
+                "content": "Linear regression assumes the target variable can be predicted as a weighted sum of features:\n\n**Simple Linear Regression** (one feature):\n$$y = w_0 + w_1 x$$\n\n**Multiple Linear Regression** (many features):\n$$y = w_0 + w_1 x_1 + w_2 x_2 + ... + w_n x_n$$\n\nOr in matrix form:\n$$\\hat{y} = X \\mathbf{w}$$\n\nWhere:\n- $\\hat{y}$ is the predicted value\n- $X$ is the feature matrix (with bias column)\n- $\\mathbf{w}$ is the weight vector",
+                "code": "import numpy as np\n\nclass LinearRegression:\n    \"\"\"Linear regression from scratch.\"\"\"\n    \n    def __init__(self):\n        self.weights = None\n    \n    def fit(self, X, y):\n        \"\"\"Fit using the normal equation.\"\"\"\n        # Add bias term (column of 1s)\n        X_b = np.c_[np.ones(len(X)), X]\n        \n        # Normal equation: w = (X^T X)^-1 X^T y\n        self.weights = np.linalg.inv(X_b.T @ X_b) @ X_b.T @ y\n        return self\n    \n    def predict(self, X):\n        \"\"\"Make predictions.\"\"\"\n        X_b = np.c_[np.ones(len(X)), X]\n        return X_b @ self.weights\n    \n    @property\n    def intercept_(self):\n        return self.weights[0]\n    \n    @property\n    def coef_(self):\n        return self.weights[1:]"
+              },
+              {
+                "title": "Loss Function and Optimization",
+                "content": "The goal is to find weights that minimize the **Mean Squared Error (MSE)**:\n\n$$MSE = \\frac{1}{n} \\sum_{i=1}^{n} (y_i - \\hat{y}_i)^2$$\n\n**Two approaches to find optimal weights:**\n\n1. **Normal Equation** (closed-form solution):\n$$\\mathbf{w} = (X^T X)^{-1} X^T y$$\n- Fast for small datasets\n- Memory intensive for large data\n\n2. **Gradient Descent** (iterative):\n$$\\mathbf{w} = \\mathbf{w} - \\alpha \\nabla MSE$$\n- Works for any size\n- Requires tuning learning rate",
+                "code": "class LinearRegressionGD:\n    \"\"\"Linear regression with gradient descent.\"\"\"\n    \n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.lr = learning_rate\n        self.n_iter = n_iterations\n        self.weights = None\n        self.loss_history = []\n    \n    def fit(self, X, y):\n        n_samples, n_features = X.shape\n        X_b = np.c_[np.ones(n_samples), X]\n        \n        # Initialize weights\n        self.weights = np.zeros(n_features + 1)\n        \n        for _ in range(self.n_iter):\n            # Predictions\n            y_pred = X_b @ self.weights\n            \n            # Compute gradients\n            errors = y_pred - y\n            gradients = (2 / n_samples) * X_b.T @ errors\n            \n            # Update weights\n            self.weights -= self.lr * gradients\n            \n            # Track loss\n            mse = np.mean(errors ** 2)\n            self.loss_history.append(mse)\n        \n        return self"
+              },
+              {
+                "title": "Evaluating Regression Models",
+                "content": "Common metrics for regression:\n\n**MSE (Mean Squared Error)**: Average squared difference\n- Penalizes large errors more\n- Same units as target²\n\n**RMSE (Root MSE)**: Square root of MSE\n- Same units as target\n- More interpretable\n\n**MAE (Mean Absolute Error)**: Average absolute difference\n- Robust to outliers\n- Same units as target\n\n**R² Score**: Proportion of variance explained\n- 1.0 = perfect fit\n- 0.0 = predicts the mean\n- Can be negative for poor models",
+                "code": "from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score\nimport numpy as np\n\n# Make predictions\ny_pred = model.predict(X_test)\n\n# Calculate metrics\nmse = mean_squared_error(y_test, y_pred)\nrmse = np.sqrt(mse)\nmae = mean_absolute_error(y_test, y_pred)\nr2 = r2_score(y_test, y_pred)\n\nprint(f\"MSE:  {mse:.4f}\")\nprint(f\"RMSE: {rmse:.4f}\")\nprint(f\"MAE:  {mae:.4f}\")\nprint(f\"R²:   {r2:.4f}\")\n\n# Scikit-learn implementation\nfrom sklearn.linear_model import LinearRegression\n\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\nprint(f\"Coefficients: {model.coef_}\")\nprint(f\"Intercept: {model.intercept_}\")"
+              }
+            ],
+            "keyTakeaways": [
+              "Linear regression models target as weighted sum of features",
+              "Normal equation gives closed-form solution, gradient descent scales better",
+              "Use R² for overall fit quality, RMSE for error magnitude"
+            ],
+            "exercises": [
+              {
+                "title": "Implement from Scratch",
+                "description": "Implement linear regression using both normal equation and gradient descent"
+              },
+              {
+                "title": "Housing Price Prediction",
+                "description": "Use sklearn's California housing dataset to predict prices"
+              }
+            ],
+            "sources": [
+              {"title": "An Introduction to Statistical Learning", "author": "James, Witten, Hastie, Tibshirani", "year": 2021},
+              {"title": "Scikit-learn Linear Models", "url": "https://scikit-learn.org/stable/modules/linear_model.html"}
+            ]
+          }
+        },
+        {
+          "id": "logistic-regression",
+          "title": "Logistic Regression",
+          "duration": "60 min",
+          "content": {
+            "overview": "Logistic regression is a classification algorithm despite its name. It predicts the probability that an instance belongs to a class using the logistic (sigmoid) function. It's widely used for binary classification and serves as the foundation for neural network neurons.",
+            "sections": [
+              {
+                "title": "From Linear to Logistic",
+                "content": "Linear regression outputs unbounded values, but probabilities must be between 0 and 1. The **sigmoid function** transforms any value to this range:\n\n$$\\sigma(z) = \\frac{1}{1 + e^{-z}}$$\n\nFor logistic regression:\n$$P(y=1|x) = \\sigma(w^T x) = \\frac{1}{1 + e^{-w^T x}}$$\n\nProperties of sigmoid:\n- σ(0) = 0.5 (decision boundary)\n- σ(∞) → 1\n- σ(-∞) → 0\n- Derivative: σ'(z) = σ(z)(1 - σ(z))",
+                "code": "import numpy as np\n\ndef sigmoid(z):\n    \"\"\"Sigmoid activation function.\"\"\"\n    return 1 / (1 + np.exp(-np.clip(z, -500, 500)))\n\nclass LogisticRegression:\n    \"\"\"Logistic regression from scratch.\"\"\"\n    \n    def __init__(self, learning_rate=0.01, n_iterations=1000):\n        self.lr = learning_rate\n        self.n_iter = n_iterations\n        self.weights = None\n        self.bias = None\n    \n    def fit(self, X, y):\n        n_samples, n_features = X.shape\n        \n        # Initialize parameters\n        self.weights = np.zeros(n_features)\n        self.bias = 0\n        \n        # Gradient descent\n        for _ in range(self.n_iter):\n            # Forward pass\n            linear = X @ self.weights + self.bias\n            predictions = sigmoid(linear)\n            \n            # Compute gradients\n            dw = (1 / n_samples) * X.T @ (predictions - y)\n            db = (1 / n_samples) * np.sum(predictions - y)\n            \n            # Update parameters\n            self.weights -= self.lr * dw\n            self.bias -= self.lr * db\n        \n        return self\n    \n    def predict_proba(self, X):\n        return sigmoid(X @ self.weights + self.bias)\n    \n    def predict(self, X, threshold=0.5):\n        return (self.predict_proba(X) >= threshold).astype(int)"
+              },
+              {
+                "title": "Binary Cross-Entropy Loss",
+                "content": "We can't use MSE for classification—it's not convex for logistic regression. Instead, we use **Binary Cross-Entropy** (Log Loss):\n\n$$L = -\\frac{1}{n} \\sum_{i=1}^{n} [y_i \\log(\\hat{p}_i) + (1-y_i) \\log(1-\\hat{p}_i)]$$\n\nIntuition:\n- If y=1 and p̂ is high → loss is low\n- If y=1 and p̂ is low → loss is high (penalized heavily)\n- Same logic for y=0",
+                "code": "def binary_cross_entropy(y_true, y_pred):\n    \"\"\"Calculate binary cross-entropy loss.\"\"\"\n    epsilon = 1e-15  # Avoid log(0)\n    y_pred = np.clip(y_pred, epsilon, 1 - epsilon)\n    \n    loss = -np.mean(\n        y_true * np.log(y_pred) + \n        (1 - y_true) * np.log(1 - y_pred)\n    )\n    return loss\n\n# Example\ny_true = np.array([1, 0, 1, 1, 0])\ny_pred = np.array([0.9, 0.1, 0.8, 0.6, 0.3])\n\nloss = binary_cross_entropy(y_true, y_pred)\nprint(f\"Loss: {loss:.4f}\")  # ~0.28"
+              },
+              {
+                "title": "Multiclass Classification",
+                "content": "Logistic regression extends to multiple classes using:\n\n**One-vs-Rest (OvR)**: Train K binary classifiers\n**Softmax (Multinomial)**: Predict all classes simultaneously\n\nSoftmax function:\n$$P(y=k|x) = \\frac{e^{z_k}}{\\sum_{j=1}^{K} e^{z_j}}$$",
+                "code": "from sklearn.linear_model import LogisticRegression\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.metrics import classification_report\n\n# Load multiclass dataset\niris = load_iris()\nX_train, X_test, y_train, y_test = train_test_split(\n    iris.data, iris.target, test_size=0.2, random_state=42\n)\n\n# Multinomial logistic regression (softmax)\nmodel = LogisticRegression(\n    multi_class='multinomial',  # or 'ovr'\n    solver='lbfgs',\n    max_iter=1000\n)\nmodel.fit(X_train, y_train)\n\n# Evaluate\ny_pred = model.predict(X_test)\nprint(classification_report(y_test, y_pred, target_names=iris.target_names))\n\n# Probability for each class\nprobs = model.predict_proba(X_test[:3])\nprint(\"Class probabilities:\")\nprint(probs)"
+              }
+            ],
+            "keyTakeaways": [
+              "Sigmoid function transforms linear output to probability [0, 1]",
+              "Binary cross-entropy is the appropriate loss for classification",
+              "Softmax extends logistic regression to multiclass problems"
+            ],
+            "exercises": [
+              {
+                "title": "Binary Classification",
+                "description": "Build a spam detector using logistic regression"
+              },
+              {
+                "title": "Decision Boundary",
+                "description": "Visualize the decision boundary of a 2D logistic regression"
+              }
+            ],
+            "sources": [
+              {"title": "CS229 Lecture Notes", "author": "Andrew Ng", "url": "https://cs229.stanford.edu/"},
+              {"title": "Pattern Recognition and ML", "author": "Christopher Bishop", "year": 2006}
+            ]
+          }
+        },
+        {
+          "id": "decision-trees",
+          "title": "Decision Trees & Random Forests",
+          "duration": "75 min",
+          "content": {
+            "overview": "Decision trees are intuitive models that make predictions by learning decision rules from features. Random Forests combine many trees to create powerful ensemble models that reduce overfitting and improve accuracy.",
+            "sections": [
+              {
+                "title": "How Decision Trees Work",
+                "diagram": {
+                  "title": "Decision Tree Structure",
+                  "code": "flowchart TB\n    Root{Is Age > 30?}\n    Root -->|Yes| Node1{Income > 50k?}\n    Root -->|No| Node2{Student?}\n    \n    Node1 -->|Yes| Leaf1[Buy: Yes]\n    Node1 -->|No| Leaf2[Buy: No]\n    \n    Node2 -->|Yes| Leaf3[Buy: Yes]\n    Node2 -->|No| Leaf4[Buy: No]\n    \n    style Root fill:#dbeafe,stroke:#2563eb\n    style Node1 fill:#dbeafe,stroke:#2563eb\n    style Node2 fill:#dbeafe,stroke:#2563eb\n    style Leaf1 fill:#dcfce7,stroke:#16a34a\n    style Leaf2 fill:#fce7f3,stroke:#db2777\n    style Leaf3 fill:#dcfce7,stroke:#16a34a\n    style Leaf4 fill:#fce7f3,stroke:#db2777"
+                },
+                "content": "Decision trees recursively split data based on feature thresholds to create pure leaf nodes:\n\n**Algorithm (ID3/CART)**:\n1. Select the best feature and threshold to split\n2. Partition data into subsets\n3. Recursively build subtrees\n4. Stop when pure or max depth reached\n\n**Splitting Criteria**:\n- **Gini Impurity**: Probability of misclassification\n$$Gini = 1 - \\sum_{k=1}^{K} p_k^2$$\n\n- **Entropy**: Information disorder\n$$Entropy = -\\sum_{k=1}^{K} p_k \\log_2(p_k)$$",
+                "code": "from sklearn.tree import DecisionTreeClassifier, plot_tree\nimport matplotlib.pyplot as plt\n\n# Train decision tree\ntree = DecisionTreeClassifier(\n    max_depth=3,           # Prevent overfitting\n    min_samples_split=10,  # Min samples to split\n    criterion='gini'       # or 'entropy'\n)\ntree.fit(X_train, y_train)\n\n# Visualize the tree\nplt.figure(figsize=(20, 10))\nplot_tree(\n    tree,\n    feature_names=feature_names,\n    class_names=class_names,\n    filled=True,\n    rounded=True\n)\nplt.show()\n\n# Feature importance\nimportances = tree.feature_importances_\nfor name, imp in zip(feature_names, importances):\n    print(f\"{name}: {imp:.4f}\")"
+              },
+              {
+                "title": "Random Forests",
+                "content": "Random Forests address tree overfitting through **bagging** (Bootstrap Aggregating) and **feature randomization**:\n\n1. Create many trees, each trained on:\n   - Random sample of data (with replacement)\n   - Random subset of features at each split\n\n2. Aggregate predictions:\n   - Classification: Majority vote\n   - Regression: Average\n\n**Why it works**: Errors of individual trees cancel out when averaged.",
+                "code": "from sklearn.ensemble import RandomForestClassifier\nfrom sklearn.model_selection import cross_val_score\n\n# Random Forest\nrf = RandomForestClassifier(\n    n_estimators=100,      # Number of trees\n    max_depth=10,          # Max depth per tree\n    max_features='sqrt',   # Features per split\n    min_samples_leaf=5,    # Min samples in leaf\n    random_state=42,\n    n_jobs=-1              # Use all CPU cores\n)\n\nrf.fit(X_train, y_train)\n\n# Cross-validation\nscores = cross_val_score(rf, X, y, cv=5, scoring='accuracy')\nprint(f\"CV Accuracy: {scores.mean():.4f} (+/- {scores.std()*2:.4f})\")\n\n# Feature importance\nimportances = rf.feature_importances_\nindices = np.argsort(importances)[::-1]\n\nplt.figure(figsize=(10, 6))\nplt.title(\"Feature Importances\")\nplt.bar(range(10), importances[indices][:10])\nplt.xticks(range(10), [feature_names[i] for i in indices[:10]], rotation=45)\nplt.show()"
+              },
+              {
+                "title": "Gradient Boosting",
+                "content": "Gradient Boosting builds trees sequentially, with each tree correcting errors of the previous ensemble:\n\n**Algorithm**:\n1. Start with a simple prediction (mean)\n2. Compute residuals (errors)\n3. Train tree to predict residuals\n4. Add tree to ensemble (with learning rate)\n5. Repeat\n\n**Popular Implementations**:\n- XGBoost: Fast, regularized\n- LightGBM: Faster, leaf-wise growth\n- CatBoost: Handles categorical features",
+                "code": "from sklearn.ensemble import GradientBoostingClassifier\nimport xgboost as xgb\nimport lightgbm as lgb\n\n# Scikit-learn Gradient Boosting\ngb = GradientBoostingClassifier(\n    n_estimators=100,\n    learning_rate=0.1,\n    max_depth=3\n)\ngb.fit(X_train, y_train)\n\n# XGBoost\nxgb_model = xgb.XGBClassifier(\n    n_estimators=100,\n    learning_rate=0.1,\n    max_depth=3,\n    use_label_encoder=False,\n    eval_metric='logloss'\n)\nxgb_model.fit(X_train, y_train)\n\n# LightGBM\nlgb_model = lgb.LGBMClassifier(\n    n_estimators=100,\n    learning_rate=0.1,\n    num_leaves=31\n)\nlgb_model.fit(X_train, y_train)\n\n# Compare\nfor name, model in [('GB', gb), ('XGB', xgb_model), ('LGB', lgb_model)]:\n    acc = model.score(X_test, y_test)\n    print(f\"{name}: {acc:.4f}\")"
+              }
+            ],
+            "keyTakeaways": [
+              "Decision trees split data recursively using Gini or entropy",
+              "Random Forests reduce overfitting through bagging and feature randomization",
+              "Gradient Boosting builds trees sequentially to correct errors"
+            ],
+            "exercises": [
+              {
+                "title": "Tree Visualization",
+                "description": "Train a decision tree and visualize its structure"
+              },
+              {
+                "title": "Ensemble Comparison",
+                "description": "Compare Random Forest, XGBoost, and LightGBM on a classification task"
+              }
+            ],
+            "sources": [
+              {"title": "XGBoost Documentation", "url": "https://xgboost.readthedocs.io/"},
+              {"title": "Random Forests", "author": "Leo Breiman", "year": 2001, "url": "https://link.springer.com/article/10.1023/A:1010933404324"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "model-evaluation",
+      "title": "Model Evaluation & Selection",
+      "lessons": [
+        {
+          "id": "cross-validation",
+          "title": "Cross-Validation Strategies",
+          "duration": "45 min",
+          "content": {
+            "overview": "Cross-validation provides robust estimates of model performance by testing on multiple held-out subsets. It helps detect overfitting and is essential for model selection and hyperparameter tuning.",
+            "sections": [
+              {
+                "title": "K-Fold Cross-Validation",
+                "content": "K-Fold CV splits data into K equal parts, trains on K-1 folds, and tests on the remaining fold. This is repeated K times:\n\n**Advantages**:\n- Uses all data for both training and testing\n- Reduces variance in performance estimates\n- More reliable than single train/test split\n\n**Choosing K**:\n- K=5 or K=10 are common choices\n- Higher K = more computation, lower bias\n- Lower K = faster, higher bias",
+                "code": "from sklearn.model_selection import cross_val_score, cross_validate\nfrom sklearn.ensemble import RandomForestClassifier\n\nmodel = RandomForestClassifier(n_estimators=100)\n\n# Simple cross-validation\nscores = cross_val_score(model, X, y, cv=5, scoring='accuracy')\nprint(f\"Accuracy: {scores.mean():.4f} (+/- {scores.std()*2:.4f})\")\n\n# Multiple metrics\nresults = cross_validate(\n    model, X, y, cv=5,\n    scoring=['accuracy', 'f1_weighted', 'roc_auc_ovr'],\n    return_train_score=True\n)\n\nfor metric in ['accuracy', 'f1_weighted', 'roc_auc_ovr']:\n    test_scores = results[f'test_{metric}']\n    print(f\"{metric}: {test_scores.mean():.4f} (+/- {test_scores.std()*2:.4f})\")"
+              },
+              {
+                "title": "Stratified and Other CV Methods",
+                "content": "Different CV strategies for different scenarios:\n\n**Stratified K-Fold**: Preserves class proportions (essential for imbalanced data)\n\n**Leave-One-Out (LOO)**: K = n, maximum information but slow\n\n**Time Series Split**: For temporal data, maintains chronological order\n\n**Group K-Fold**: Ensures groups (e.g., patients) don't leak across splits",
+                "code": "from sklearn.model_selection import (\n    StratifiedKFold, LeaveOneOut, TimeSeriesSplit, GroupKFold\n)\n\n# Stratified K-Fold (for classification)\nskf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)\nfor train_idx, test_idx in skf.split(X, y):\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n    # Train and evaluate...\n\n# Time Series Split\ntscv = TimeSeriesSplit(n_splits=5)\nfor train_idx, test_idx in tscv.split(X):\n    # Train on past, test on future\n    pass\n\n# Group K-Fold (no data leakage between groups)\ngroups = patient_ids  # Example: different patients\ngkf = GroupKFold(n_splits=5)\nfor train_idx, test_idx in gkf.split(X, y, groups):\n    # Same patient never in both train and test\n    pass"
+              },
+              {
+                "title": "Hyperparameter Tuning",
+                "content": "Use cross-validation to find optimal hyperparameters:\n\n**Grid Search**: Exhaustive search over parameter grid\n**Random Search**: Sample random combinations (often better)\n**Bayesian Optimization**: Smart search based on past results",
+                "code": "from sklearn.model_selection import GridSearchCV, RandomizedSearchCV\nfrom scipy.stats import randint, uniform\n\n# Grid Search\nparam_grid = {\n    'n_estimators': [50, 100, 200],\n    'max_depth': [3, 5, 10, None],\n    'min_samples_split': [2, 5, 10]\n}\n\ngrid_search = GridSearchCV(\n    RandomForestClassifier(),\n    param_grid,\n    cv=5,\n    scoring='accuracy',\n    n_jobs=-1,\n    verbose=1\n)\ngrid_search.fit(X_train, y_train)\n\nprint(f\"Best params: {grid_search.best_params_}\")\nprint(f\"Best score: {grid_search.best_score_:.4f}\")\n\n# Random Search (often better for large spaces)\nparam_dist = {\n    'n_estimators': randint(50, 500),\n    'max_depth': randint(3, 20),\n    'min_samples_split': randint(2, 20),\n    'min_samples_leaf': randint(1, 10)\n}\n\nrandom_search = RandomizedSearchCV(\n    RandomForestClassifier(),\n    param_dist,\n    n_iter=50,  # Number of random combinations\n    cv=5,\n    scoring='accuracy',\n    random_state=42,\n    n_jobs=-1\n)\nrandom_search.fit(X_train, y_train)"
+              }
+            ],
+            "keyTakeaways": [
+              "Cross-validation provides robust performance estimates",
+              "Use Stratified K-Fold for classification with imbalanced classes",
+              "Random search is often more efficient than grid search"
+            ],
+            "exercises": [
+              {
+                "title": "CV Strategy Selection",
+                "description": "Choose appropriate CV strategy for: imbalanced classification, time series, medical data with multiple visits per patient"
+              },
+              {
+                "title": "Hyperparameter Optimization",
+                "description": "Use RandomizedSearchCV to tune a GradientBoosting model"
+              }
+            ],
+            "sources": [
+              {"title": "Scikit-learn Cross-validation", "url": "https://scikit-learn.org/stable/modules/cross_validation.html"},
+              {"title": "Random Search for Hyper-Parameter Optimization", "author": "Bergstra & Bengio", "year": 2012}
+            ]
+          }
+        },
+        {
+          "id": "classification-metrics",
+          "title": "Classification Metrics Deep Dive",
+          "duration": "60 min",
+          "content": {
+            "overview": "Accuracy alone is often misleading, especially for imbalanced datasets. Understanding precision, recall, F1-score, and ROC curves is essential for evaluating classification models properly.",
+            "sections": [
+              {
+                "title": "Confusion Matrix",
+                "content": "The confusion matrix shows all prediction outcomes:\n\n|  | Predicted Positive | Predicted Negative |\n|--|-------------------|-------------------|\n| **Actual Positive** | True Positive (TP) | False Negative (FN) |\n| **Actual Negative** | False Positive (FP) | True Negative (TN) |\n\n**Key Metrics**:\n- **Accuracy** = (TP + TN) / Total\n- **Precision** = TP / (TP + FP) — \"Of predicted positives, how many are correct?\"\n- **Recall** = TP / (TP + FN) — \"Of actual positives, how many did we find?\"\n- **F1 Score** = 2 × (Precision × Recall) / (Precision + Recall)",
+                "code": "from sklearn.metrics import (\n    confusion_matrix, classification_report,\n    precision_score, recall_score, f1_score\n)\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Confusion matrix\ncm = confusion_matrix(y_test, y_pred)\n\nplt.figure(figsize=(8, 6))\nsns.heatmap(cm, annot=True, fmt='d', cmap='Blues',\n            xticklabels=class_names, yticklabels=class_names)\nplt.xlabel('Predicted')\nplt.ylabel('Actual')\nplt.title('Confusion Matrix')\nplt.show()\n\n# Detailed report\nprint(classification_report(y_test, y_pred, target_names=class_names))\n\n# Individual metrics\nprint(f\"Precision: {precision_score(y_test, y_pred, average='weighted'):.4f}\")\nprint(f\"Recall: {recall_score(y_test, y_pred, average='weighted'):.4f}\")\nprint(f\"F1: {f1_score(y_test, y_pred, average='weighted'):.4f}\")"
+              },
+              {
+                "title": "Precision-Recall Tradeoff",
+                "content": "Adjusting the classification threshold trades off precision and recall:\n\n- **High threshold** (e.g., 0.9): High precision, low recall\n  - Use when false positives are costly (spam detection)\n\n- **Low threshold** (e.g., 0.1): Low precision, high recall\n  - Use when false negatives are costly (disease detection)\n\n**Precision-Recall Curve**: Plot precision vs recall at various thresholds\n**Average Precision (AP)**: Area under PR curve",
+                "code": "from sklearn.metrics import precision_recall_curve, average_precision_score\n\n# Get probability predictions\ny_proba = model.predict_proba(X_test)[:, 1]\n\n# Precision-Recall curve\nprecision, recall, thresholds = precision_recall_curve(y_test, y_proba)\n\nplt.figure(figsize=(10, 6))\nplt.plot(recall, precision)\nplt.xlabel('Recall')\nplt.ylabel('Precision')\nplt.title('Precision-Recall Curve')\nplt.show()\n\n# Average Precision\nap = average_precision_score(y_test, y_proba)\nprint(f\"Average Precision: {ap:.4f}\")\n\n# Find threshold for desired recall\ndesired_recall = 0.9\nidx = np.argmax(recall >= desired_recall)\nthreshold = thresholds[idx]\nprint(f\"Threshold for {desired_recall:.0%} recall: {threshold:.4f}\")"
+              },
+              {
+                "title": "ROC Curve and AUC",
+                "content": "**ROC Curve** plots True Positive Rate vs False Positive Rate:\n\n- **TPR (Recall)** = TP / (TP + FN)\n- **FPR** = FP / (FP + TN)\n\n**AUC (Area Under Curve)**:\n- 0.5 = Random guessing\n- 1.0 = Perfect classifier\n- < 0.5 = Worse than random\n\nROC-AUC is threshold-independent and works well for balanced datasets.",
+                "code": "from sklearn.metrics import roc_curve, roc_auc_score\n\n# ROC curve\nfpr, tpr, thresholds = roc_curve(y_test, y_proba)\nauc = roc_auc_score(y_test, y_proba)\n\nplt.figure(figsize=(10, 6))\nplt.plot(fpr, tpr, label=f'ROC Curve (AUC = {auc:.4f})')\nplt.plot([0, 1], [0, 1], 'k--', label='Random')\nplt.xlabel('False Positive Rate')\nplt.ylabel('True Positive Rate')\nplt.title('ROC Curve')\nplt.legend()\nplt.show()\n\n# Multiclass ROC-AUC\nfrom sklearn.preprocessing import label_binarize\nfrom sklearn.metrics import roc_auc_score\n\n# For multiclass\ny_test_bin = label_binarize(y_test, classes=[0, 1, 2])\ny_proba_multi = model.predict_proba(X_test)\n\nauc_ovr = roc_auc_score(y_test_bin, y_proba_multi, multi_class='ovr')\nprint(f\"Multiclass AUC (OvR): {auc_ovr:.4f}\")"
+              }
+            ],
+            "keyTakeaways": [
+              "Use precision when false positives are costly, recall when false negatives are costly",
+              "F1 score balances precision and recall",
+              "ROC-AUC measures overall discriminative power regardless of threshold"
+            ],
+            "exercises": [
+              {
+                "title": "Metric Selection",
+                "description": "For fraud detection, cancer screening, and email classification, which metric matters most?"
+              },
+              {
+                "title": "Threshold Optimization",
+                "description": "Find the optimal threshold to achieve 95% recall on a fraud detection dataset"
+              }
+            ],
+            "sources": [
+              {"title": "The Relationship Between Precision-Recall and ROC Curves", "author": "Davis & Goadrich", "year": 2006},
+              {"title": "Scikit-learn Metrics", "url": "https://scikit-learn.org/stable/modules/model_evaluation.html"}
+            ]
+          }
+        },
+        {
+          "id": "ml-quiz",
+          "title": "Machine Learning Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is the main difference between supervised and unsupervised learning?",
+              "options": [
+                "Supervised learning uses labeled data, while unsupervised learning uses unlabeled data",
+                "Supervised learning is faster",
+                "Unsupervised learning is only for clustering",
+                "Supervised learning does not require training"
+              ],
+              "correct": 0,
+              "explanation": "Supervised learning algorithms learn from input-output pairs (labels), whereas unsupervised algorithms find patterns in data without explicit labels."
+            },
+            {
+              "question": "Which metric is best for evaluating a model on an imbalanced dataset where false negatives are costly (e.g., disease detection)?",
+              "options": [
+                "Accuracy",
+                "Precision",
+                "Recall",
+                "Specificity"
+              ],
+              "correct": 2,
+              "explanation": "Recall (Sensitivity) measures the proportion of actual positives that were correctly identified. High recall is crucial when missing a positive case is dangerous."
+            },
+            {
+              "question": "What is the 'Bias-Variance Tradeoff'?",
+              "options": [
+                "The tradeoff between training time and model size",
+                "The balance between a model's ability to fit training data (bias) and generalize to new data (variance)",
+                "The cost difference between CPU and GPU training",
+                "The tradeoff between precision and recall"
+              ],
+              "correct": 1,
+              "explanation": "High bias leads to underfitting (too simple), while high variance leads to overfitting (too complex). The goal is to find the optimal balance."
+            },
+            {
+              "question": "What does K-Fold Cross-Validation help with?",
+              "options": [
+                "Speeding up training",
+                "Reducing the need for data",
+                "Providing a more reliable estimate of model performance and detecting overfitting",
+                "Automatically tuning hyperparameters"
+              ],
+              "correct": 2,
+              "explanation": "By training and testing on different subsets of data multiple times, K-Fold CV gives a better estimate of how the model will perform on unseen data."
+            },
+            {
+              "question": "In a decision tree, what does 'entropy' measure?",
+              "options": [
+                "The depth of the tree",
+                "The impurity or disorder of a set of examples",
+                "The number of leaves",
+                "The accuracy of the split"
+              ],
+              "correct": 1,
+              "explanation": "Entropy is a measure of impurity. A split that reduces entropy (increases information gain) results in more homogeneous child nodes."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

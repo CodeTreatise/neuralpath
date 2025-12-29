@@ -1,0 +1,537 @@
+{
+  "id": "math-for-ai",
+  "title": "Mathematics for AI",
+  "icon": "🧮",
+  "description": "Master the essential mathematical foundations needed for machine learning and deep learning.",
+  "level": "beginner",
+  "duration": "6 weeks",
+  "totalLessons": 18,
+  "prerequisites": [
+    "Basic algebra",
+    "High school math"
+  ],
+  "outcomes": [
+    "Understand vectors, matrices, and linear transformations",
+    "Apply calculus concepts to optimization problems",
+    "Work with probability distributions and Bayes' theorem",
+    "Implement gradient descent from scratch"
+  ],
+  "modules": [
+    {
+      "id": "linear-algebra",
+      "title": "Linear Algebra Essentials",
+      "description": "Vectors, matrices, and transformations - the language of ML",
+      "lessons": [
+        {
+          "id": "vectors",
+          "title": "Vectors and Vector Operations",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## What is a Vector?\n\nA **vector** is an ordered list of numbers that represents a point or direction in space. In ML, vectors represent data points, features, and model parameters.\n\n$$\\vec{v} = \\begin{bmatrix} v_1 \\\\ v_2 \\\\ \\vdots \\\\ v_n \\end{bmatrix}$$\n\n**Examples in ML:**\n- A data point with 3 features: $\\vec{x} = [age, income, credit\\_score]$\n- Word embeddings: 300-dimensional vectors representing words\n- Image pixels: Flattened into vectors of RGB values"
+            },
+            {
+              "type": "text",
+              "content": "## Vector Operations\n\n### Addition\nAdd corresponding elements:\n$$\\vec{a} + \\vec{b} = \\begin{bmatrix} a_1 + b_1 \\\\ a_2 + b_2 \\end{bmatrix}$$\n\n### Scalar Multiplication\nMultiply each element by a scalar:\n$$c \\cdot \\vec{v} = \\begin{bmatrix} c \\cdot v_1 \\\\ c \\cdot v_2 \\end{bmatrix}$$\n\n### Dot Product\nSum of element-wise products:\n$$\\vec{a} \\cdot \\vec{b} = \\sum_{i=1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \\cdots + a_n b_n$$\n\nThe dot product measures **similarity** between vectors - crucial for attention mechanisms!"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Vector Operations in NumPy",
+              "code": "import numpy as np\n\n# Create vectors\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\n\n# Vector addition\nprint(f\"a + b = {a + b}\")  # [5, 7, 9]\n\n# Scalar multiplication\nprint(f\"2 * a = {2 * a}\")  # [2, 4, 6]\n\n# Dot product\nprint(f\"a · b = {np.dot(a, b)}\")  # 32\n\n# Magnitude (length) of a vector\nmagnitude = np.linalg.norm(a)\nprint(f\"|a| = {magnitude:.2f}\")  # 3.74\n\n# Unit vector (normalized)\nunit_a = a / np.linalg.norm(a)\nprint(f\"Unit vector: {unit_a}\")"
+            },
+            {
+              "type": "text",
+              "content": "## Vector Norms\n\nThe **norm** measures the \"size\" or magnitude of a vector:\n\n**L1 Norm (Manhattan):** $||\\vec{v}||_1 = \\sum |v_i|$\n\n**L2 Norm (Euclidean):** $||\\vec{v}||_2 = \\sqrt{\\sum v_i^2}$\n\n**In ML, norms are used for:**\n- Regularization (L1 for sparsity, L2 for small weights)\n- Measuring distances between points\n- Normalizing vectors (unit vectors)"
+            }
+          ]
+        },
+        {
+          "id": "matrices",
+          "title": "Matrices and Matrix Operations",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## What is a Matrix?\n\nA **matrix** is a 2D array of numbers arranged in rows and columns. In ML, matrices represent datasets, weights, and transformations.\n\n$$A = \\begin{bmatrix} a_{11} & a_{12} & a_{13} \\\\ a_{21} & a_{22} & a_{23} \\end{bmatrix}$$\n\nThis is a $2 \\times 3$ matrix (2 rows, 3 columns).\n\n**Examples in ML:**\n- Dataset: Each row is a sample, each column is a feature\n- Weight matrix: Connects layers in a neural network\n- Attention matrix: Stores attention scores between tokens"
+            },
+            {
+              "type": "text",
+              "content": "## Matrix Multiplication\n\nTo multiply matrices $A$ (m×n) and $B$ (n×p), we get result $C$ (m×p):\n\n$$C_{ij} = \\sum_{k=1}^{n} A_{ik} B_{kj}$$\n\n**Key rule:** Inner dimensions must match!\n- $(3 \\times \\mathbf{4}) \\cdot (\\mathbf{4} \\times 2) = (3 \\times 2)$ ✓\n- $(3 \\times 4) \\cdot (2 \\times 5)$ ✗ Cannot multiply!\n\n**Why it matters:**\n- Forward pass: $\\text{output} = W \\cdot x + b$\n- Each neuron computes a dot product of inputs and weights"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Matrix Operations in NumPy",
+              "code": "import numpy as np\n\n# Create matrices\nA = np.array([[1, 2], \n              [3, 4]])\nB = np.array([[5, 6], \n              [7, 8]])\n\n# Matrix multiplication\nC = A @ B  # or np.matmul(A, B)\nprint(\"A @ B =\")\nprint(C)\n\n# Element-wise multiplication (Hadamard)\nhadamard = A * B\nprint(\"\\nA * B (element-wise) =\")\nprint(hadamard)\n\n# Transpose\nprint(\"\\nA^T =\")\nprint(A.T)\n\n# Neural network layer simulation\ndef linear_layer(X, W, b):\n    \"\"\"Compute Y = XW + b\"\"\"\n    return X @ W + b\n\n# Example: 3 samples, 4 features -> 2 outputs\nX = np.random.randn(3, 4)  # Input\nW = np.random.randn(4, 2)  # Weights\nb = np.random.randn(2)     # Bias\n\nY = linear_layer(X, W, b)\nprint(f\"\\nInput shape: {X.shape}\")\nprint(f\"Output shape: {Y.shape}\")"
+            },
+            {
+              "type": "text",
+              "content": "## Special Matrices\n\n**Identity Matrix:** $I \\cdot A = A$\n$$I = \\begin{bmatrix} 1 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 1 \\end{bmatrix}$$\n\n**Diagonal Matrix:** Non-zero only on diagonal\n- Used for scaling operations\n\n**Symmetric Matrix:** $A = A^T$\n- Covariance matrices are symmetric\n\n**Orthogonal Matrix:** $A^T A = I$\n- Preserves lengths and angles"
+            }
+          ]
+        },
+        {
+          "id": "transformations",
+          "title": "Linear Transformations",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": [
+            {
+              "type": "mermaid",
+              "title": "Neural Network as Transformations",
+              "code": "flowchart LR\n    subgraph Layer1[\"Layer 1\"]\n        X[Input X] --> W1[\"W1 x\"]\n        W1 --> A1[\"+ b1\"]\n        A1 --> R1[ReLU]\n    end\n    \n    subgraph Layer2[\"Layer 2\"]\n        R1 --> W2[\"W2 x\"]\n        W2 --> A2[\"+ b2\"]\n        A2 --> R2[ReLU]\n    end\n    \n    R2 --> OUT[Output Y]"
+            },
+            {
+              "type": "text",
+              "content": "## Matrices as Transformations\n\nA matrix multiplication $y = Ax$ transforms vector $x$ into vector $y$. This is a **linear transformation**.\n\n**Common transformations:**\n- **Scaling:** Stretch or shrink\n- **Rotation:** Rotate around origin\n- **Shearing:** Slant the space\n- **Projection:** Map to lower dimension\n\n**In neural networks:**\n- Each layer transforms the input space\n- Learning = finding the right transformations"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Visualizing Transformations",
+              "code": "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Original points (unit square)\npoints = np.array([[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]).T\n\n# Transformation matrices\nrotation_45 = np.array([[0.707, -0.707],\n                        [0.707,  0.707]])\n\nscaling = np.array([[2, 0],\n                    [0, 0.5]])\n\nshear = np.array([[1, 0.5],\n                  [0, 1]])\n\n# Apply transformations\nrotated = rotation_45 @ points\nscaled = scaling @ points\nsheared = shear @ points\n\nprint(\"Original shape:\", points.shape)\nprint(\"Transformed shape:\", rotated.shape)\nprint(\"\\nEach column is a point (x, y)\")"
+            },
+            {
+              "type": "text",
+              "content": "## The Big Picture\n\nA neural network is a series of:\n1. **Linear transformations** (matrix multiply)\n2. **Non-linear activations** (ReLU, sigmoid)\n\n$$\\text{Layer: } f(x) = \\sigma(Wx + b)$$\n\nWithout non-linearity, stacking layers would just be one big matrix multiply. The activation functions let us model complex, non-linear relationships!"
+            }
+          ]
+        },
+        {
+          "id": "eigenvalues",
+          "title": "Eigenvalues and Eigenvectors",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## What are Eigenvectors?\n\nAn **eigenvector** of matrix $A$ is a vector that only gets scaled (not rotated) when transformed by $A$:\n\n$$A\\vec{v} = \\lambda\\vec{v}$$\n\nWhere:\n- $\\vec{v}$ is the eigenvector\n- $\\lambda$ is the eigenvalue (the scaling factor)\n\n**Intuition:** Eigenvectors are the \"natural axes\" of a transformation."
+            },
+            {
+              "type": "text",
+              "content": "## Why They Matter in ML\n\n**1. PCA (Principal Component Analysis)**\n- Eigenvectors of covariance matrix = principal components\n- Eigenvalues = variance explained by each component\n- Used for dimensionality reduction\n\n**2. Stability Analysis**\n- Eigenvalues determine if gradients explode or vanish\n- RNNs suffer when eigenvalues > 1 (exploding) or < 1 (vanishing)\n\n**3. Graph Neural Networks**\n- Eigenvalues of graph Laplacian reveal structure\n- Spectral clustering uses eigenvectors"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Computing Eigenvalues in NumPy",
+              "code": "import numpy as np\n\n# Covariance matrix (symmetric)\nA = np.array([[4, 2],\n              [2, 3]])\n\n# Compute eigenvalues and eigenvectors\neigenvalues, eigenvectors = np.linalg.eig(A)\n\nprint(\"Eigenvalues:\", eigenvalues)\nprint(\"\\nEigenvectors (columns):\")\nprint(eigenvectors)\n\n# Verify: A @ v = lambda * v\nv1 = eigenvectors[:, 0]\nlambda1 = eigenvalues[0]\n\nprint(f\"\\nA @ v1 = {A @ v1}\")\nprint(f\"λ1 * v1 = {lambda1 * v1}\")\nprint(\"They match!\")\n\n# PCA Example\nfrom sklearn.decomposition import PCA\n\n# Random data\nX = np.random.randn(100, 5)\n\n# PCA finds eigenvectors of covariance matrix\npca = PCA(n_components=2)\nX_reduced = pca.fit_transform(X)\n\nprint(f\"\\nOriginal shape: {X.shape}\")\nprint(f\"Reduced shape: {X_reduced.shape}\")\nprint(f\"Variance explained: {pca.explained_variance_ratio_}\")"
+            }
+          ]
+        },
+        {
+          "id": "la-quiz",
+          "title": "Linear Algebra Quiz",
+          "type": "quiz",
+          "duration": "10 min",
+          "questions": [
+            {
+              "question": "What does the dot product of two vectors measure?",
+              "options": [
+                "Their difference",
+                "Their similarity",
+                "Their product",
+                "Their sum"
+              ],
+              "correct": 1,
+              "explanation": "The dot product measures how aligned two vectors are. It's maximized when vectors point the same direction and zero when perpendicular."
+            },
+            {
+              "question": "For matrix multiplication A(3×4) @ B(4×2), what is the result shape?",
+              "options": [
+                "3×2",
+                "4×4",
+                "3×4",
+                "2×3"
+              ],
+              "correct": 0,
+              "explanation": "Matrix multiplication: (m×n) @ (n×p) = (m×p). So (3×4) @ (4×2) = (3×2)."
+            },
+            {
+              "question": "In the equation Av = λv, what is λ?",
+              "options": [
+                "Eigenvector",
+                "Eigenvalue",
+                "Determinant",
+                "Trace"
+              ],
+              "correct": 1,
+              "explanation": "λ (lambda) is the eigenvalue - the scalar that the eigenvector is multiplied by after the transformation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "calculus",
+      "title": "Calculus for Optimization",
+      "description": "Derivatives, gradients, and the chain rule - how neural networks learn",
+      "lessons": [
+        {
+          "id": "derivatives",
+          "title": "Derivatives and Slopes",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## What is a Derivative?\n\nThe **derivative** measures how fast a function changes at a point. It's the slope of the tangent line.\n\n$$f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$$\n\n**Intuition:** If $f(x)$ is your position, $f'(x)$ is your velocity.\n\n**Common derivatives:**\n- $\\frac{d}{dx}(x^n) = nx^{n-1}$\n- $\\frac{d}{dx}(e^x) = e^x$\n- $\\frac{d}{dx}(\\ln x) = \\frac{1}{x}$"
+            },
+            {
+              "type": "text",
+              "content": "## Why Derivatives Matter for ML\n\nTraining a neural network means finding weights that **minimize the loss function**.\n\nThe derivative tells us:\n- **Which direction** to move (sign of derivative)\n- **How much** to move (magnitude of derivative)\n\n$$w_{new} = w_{old} - \\alpha \\cdot \\frac{\\partial L}{\\partial w}$$\n\nThis is **gradient descent** - the heart of deep learning!"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Computing Derivatives",
+              "code": "import numpy as np\n\n# Numerical derivative\ndef numerical_derivative(f, x, h=1e-5):\n    \"\"\"Compute derivative using finite differences\"\"\"\n    return (f(x + h) - f(x - h)) / (2 * h)\n\n# Example: f(x) = x^2\nf = lambda x: x**2\n\n# At x = 3, derivative should be 2*3 = 6\nderiv = numerical_derivative(f, 3)\nprint(f\"f(x) = x², f'(3) = {deriv:.4f}\")  # ~6.0\n\n# Loss function example\ndef mse_loss(y_pred, y_true):\n    return np.mean((y_pred - y_true)**2)\n\n# Derivative of MSE with respect to predictions\ndef mse_gradient(y_pred, y_true):\n    return 2 * (y_pred - y_true) / len(y_true)\n\ny_true = np.array([1, 2, 3])\ny_pred = np.array([1.1, 2.2, 2.8])\n\nprint(f\"\\nLoss: {mse_loss(y_pred, y_true):.4f}\")\nprint(f\"Gradient: {mse_gradient(y_pred, y_true)}\")"
+            }
+          ]
+        },
+        {
+          "id": "gradients",
+          "title": "Gradients and Partial Derivatives",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## From 1D to Multiple Dimensions\n\nWhen a function has multiple inputs, we take **partial derivatives** with respect to each input:\n\n$$f(x, y) = x^2 + xy + y^2$$\n\n$$\\frac{\\partial f}{\\partial x} = 2x + y \\quad \\frac{\\partial f}{\\partial y} = x + 2y$$\n\nThe **gradient** is a vector of all partial derivatives:\n\n$$\\nabla f = \\begin{bmatrix} \\frac{\\partial f}{\\partial x} \\\\ \\frac{\\partial f}{\\partial y} \\end{bmatrix}$$"
+            },
+            {
+              "type": "text",
+              "content": "## The Gradient Points Uphill\n\nThe gradient $\\nabla f$ points in the direction of **steepest increase**.\n\nTo minimize the loss:\n- Move in the **opposite direction** of the gradient\n- This is gradient descent!\n\n$$\\theta_{new} = \\theta_{old} - \\alpha \\nabla L(\\theta)$$\n\nWhere $\\alpha$ is the learning rate."
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Gradient Descent from Scratch",
+              "code": "import numpy as np\n\n# Function to minimize: f(x,y) = x² + y² (bowl shape)\ndef f(params):\n    x, y = params\n    return x**2 + y**2\n\ndef gradient(params):\n    x, y = params\n    return np.array([2*x, 2*y])\n\n# Gradient descent\ndef gradient_descent(start, lr=0.1, n_steps=20):\n    params = np.array(start, dtype=float)\n    history = [params.copy()]\n    \n    for i in range(n_steps):\n        grad = gradient(params)\n        params = params - lr * grad\n        history.append(params.copy())\n        \n        if i % 5 == 0:\n            print(f\"Step {i}: params={params}, f={f(params):.4f}\")\n    \n    return params, history\n\n# Start at (5, 5), should converge to (0, 0)\nfinal, history = gradient_descent([5.0, 5.0])\nprint(f\"\\nFinal: {final}, f={f(final):.6f}\")"
+            }
+          ]
+        },
+        {
+          "id": "chain-rule",
+          "title": "The Chain Rule and Backpropagation",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## The Chain Rule\n\nWhen functions are composed, the chain rule lets us find the derivative:\n\n$$\\frac{d}{dx} f(g(x)) = f'(g(x)) \\cdot g'(x)$$\n\n**Example:** If $y = (3x + 2)^2$\n- Let $u = 3x + 2$, so $y = u^2$\n- $\\frac{dy}{dx} = \\frac{dy}{du} \\cdot \\frac{du}{dx} = 2u \\cdot 3 = 6(3x+2)$"
+            },
+            {
+              "type": "text",
+              "content": "## Backpropagation = Chain Rule\n\nA neural network is a composition of functions:\n$$\\text{output} = f_3(f_2(f_1(x)))$$\n\nTo find how the loss depends on early weights, we chain the derivatives:\n\n$$\\frac{\\partial L}{\\partial w_1} = \\frac{\\partial L}{\\partial y_3} \\cdot \\frac{\\partial y_3}{\\partial y_2} \\cdot \\frac{\\partial y_2}{\\partial y_1} \\cdot \\frac{\\partial y_1}{\\partial w_1}$$\n\n**This is backpropagation!** We compute gradients layer by layer, from output back to input."
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Backprop Through a Simple Network",
+              "code": "import numpy as np\n\ndef sigmoid(x):\n    return 1 / (1 + np.exp(-x))\n\ndef sigmoid_derivative(x):\n    s = sigmoid(x)\n    return s * (1 - s)\n\n# Simple 2-layer network\nclass SimpleNetwork:\n    def __init__(self):\n        self.w1 = np.random.randn(2, 3) * 0.5\n        self.w2 = np.random.randn(3, 1) * 0.5\n    \n    def forward(self, x):\n        # Store for backprop\n        self.x = x\n        self.z1 = x @ self.w1\n        self.a1 = sigmoid(self.z1)\n        self.z2 = self.a1 @ self.w2\n        self.output = sigmoid(self.z2)\n        return self.output\n    \n    def backward(self, y_true, lr=0.1):\n        # Output layer gradient (chain rule!)\n        dL_dz2 = (self.output - y_true) * sigmoid_derivative(self.z2)\n        dL_dw2 = self.a1.T @ dL_dz2\n        \n        # Hidden layer gradient (chain rule continues!)\n        dL_da1 = dL_dz2 @ self.w2.T\n        dL_dz1 = dL_da1 * sigmoid_derivative(self.z1)\n        dL_dw1 = self.x.T @ dL_dz1\n        \n        # Update weights\n        self.w2 -= lr * dL_dw2\n        self.w1 -= lr * dL_dw1\n\n# Train on XOR problem\nX = np.array([[0,0], [0,1], [1,0], [1,1]])\ny = np.array([[0], [1], [1], [0]])\n\nnet = SimpleNetwork()\nfor epoch in range(1000):\n    pred = net.forward(X)\n    net.backward(y)\n    if epoch % 200 == 0:\n        loss = np.mean((pred - y)**2)\n        print(f\"Epoch {epoch}: Loss = {loss:.4f}\")"
+            }
+          ]
+        },
+        {
+          "id": "calculus-quiz",
+          "title": "Calculus Quiz",
+          "type": "quiz",
+          "duration": "10 min",
+          "questions": [
+            {
+              "question": "What does the gradient of a loss function tell us?",
+              "options": [
+                "The minimum value",
+                "The direction of steepest increase",
+                "The learning rate",
+                "The final weights"
+              ],
+              "correct": 1,
+              "explanation": "The gradient points in the direction of steepest increase. We move opposite to it to minimize the loss."
+            },
+            {
+              "question": "What mathematical concept is backpropagation based on?",
+              "options": [
+                "Matrix multiplication",
+                "The chain rule",
+                "Eigenvalues",
+                "Integration"
+              ],
+              "correct": 1,
+              "explanation": "Backpropagation uses the chain rule to compute gradients through composed functions (layers)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "probability",
+      "title": "Probability and Statistics",
+      "description": "Uncertainty, distributions, and Bayesian thinking for ML",
+      "lessons": [
+        {
+          "id": "probability-basics",
+          "title": "Probability Fundamentals",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## Why Probability in ML?\n\nMachine learning is fundamentally about **uncertainty**:\n- Data has noise\n- Predictions are uncertain\n- We want to quantify confidence\n\n**Probability** gives us a framework to reason about uncertainty mathematically."
+            },
+            {
+              "type": "text",
+              "content": "## Basic Rules\n\n**Probability of event A:** $0 \\leq P(A) \\leq 1$\n\n**Complement:** $P(\\text{not } A) = 1 - P(A)$\n\n**Addition (OR):** $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$\n\n**Multiplication (AND):**\n- Independent: $P(A \\cap B) = P(A) \\cdot P(B)$\n- Dependent: $P(A \\cap B) = P(A) \\cdot P(B|A)$\n\n**Conditional probability:**\n$$P(A|B) = \\frac{P(A \\cap B)}{P(B)}$$"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Probability with Python",
+              "code": "import numpy as np\n\n# Simulating probabilities\nnp.random.seed(42)\n\n# Fair coin flips\nflips = np.random.choice(['H', 'T'], size=10000)\nprint(f\"P(Heads) ≈ {np.mean(flips == 'H'):.3f}\")\n\n# Rolling dice\nrolls = np.random.randint(1, 7, size=10000)\nprint(f\"P(roll = 6) ≈ {np.mean(rolls == 6):.3f}\")\nprint(f\"P(roll >= 5) ≈ {np.mean(rolls >= 5):.3f}\")\n\n# Joint probability (two dice)\ndice1 = np.random.randint(1, 7, size=10000)\ndice2 = np.random.randint(1, 7, size=10000)\n\n# P(both = 6)\np_both_6 = np.mean((dice1 == 6) & (dice2 == 6))\nprint(f\"\\nP(both dice = 6) ≈ {p_both_6:.4f}\")\nprint(f\"Theoretical: {1/6 * 1/6:.4f}\")"
+            }
+          ]
+        },
+        {
+          "id": "distributions",
+          "title": "Probability Distributions",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## What is a Distribution?\n\nA **probability distribution** describes all possible values and their probabilities.\n\n**Discrete distributions:** Countable outcomes (coin flips, dice)\n**Continuous distributions:** Infinite outcomes (heights, weights)"
+            },
+            {
+              "type": "text",
+              "content": "## Key Distributions for ML\n\n### Normal (Gaussian)\n$$f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$$\n- Bell-shaped curve\n- Defined by mean ($\\mu$) and standard deviation ($\\sigma$)\n- Central limit theorem: Sums tend toward normal\n- Weight initialization, noise, errors\n\n### Bernoulli\n- Single binary outcome (0 or 1)\n- Parameter: $p$ (probability of success)\n- Binary classification outputs\n\n### Categorical\n- Multiple discrete outcomes\n- Softmax outputs in classification"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Working with Distributions",
+              "code": "import numpy as np\nfrom scipy import stats\n\n# Normal distribution\nmu, sigma = 0, 1  # Standard normal\nnormal = stats.norm(mu, sigma)\n\nprint(\"Normal Distribution (μ=0, σ=1):\")\nprint(f\"P(X < 0) = {normal.cdf(0):.3f}\")      # 0.5\nprint(f\"P(-1 < X < 1) = {normal.cdf(1) - normal.cdf(-1):.3f}\")  # ~0.68\nprint(f\"P(-2 < X < 2) = {normal.cdf(2) - normal.cdf(-2):.3f}\")  # ~0.95\n\n# Sample from distributions\nsamples = np.random.normal(mu, sigma, 1000)\nprint(f\"\\nSample mean: {samples.mean():.3f}\")\nprint(f\"Sample std: {samples.std():.3f}\")\n\n# Bernoulli (coin flip)\np = 0.7\nbernoulli_samples = np.random.binomial(1, p, 1000)\nprint(f\"\\nBernoulli (p=0.7): Mean = {bernoulli_samples.mean():.3f}\")\n\n# Softmax (converts logits to probabilities)\ndef softmax(logits):\n    exp_logits = np.exp(logits - np.max(logits))\n    return exp_logits / exp_logits.sum()\n\nlogits = np.array([2.0, 1.0, 0.1])\nprobs = softmax(logits)\nprint(f\"\\nSoftmax: {logits} -> {probs.round(3)}\")\nprint(f\"Sum = {probs.sum():.3f}\")"
+            }
+          ]
+        },
+        {
+          "id": "bayes",
+          "title": "Bayes' Theorem",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## Bayes' Theorem\n\n$$P(A|B) = \\frac{P(B|A) \\cdot P(A)}{P(B)}$$\n\n**In words:**\n$$\\text{Posterior} = \\frac{\\text{Likelihood} \\times \\text{Prior}}{\\text{Evidence}}$$\n\n**Bayes lets us update our beliefs given new evidence.**"
+            },
+            {
+              "type": "text",
+              "content": "## Example: Medical Testing\n\n- Disease prevalence: 1% (prior)\n- Test accuracy: 99% (true positive rate)\n- False positive rate: 5%\n\n**Question:** If test is positive, what's the probability of disease?\n\n$$P(D|+) = \\frac{P(+|D) \\cdot P(D)}{P(+)}$$\n\n$$= \\frac{0.99 \\times 0.01}{0.99 \\times 0.01 + 0.05 \\times 0.99} = \\frac{0.0099}{0.0594} \\approx 17\\%$$\n\n**Surprising!** A positive test only means 17% chance of disease because the disease is rare."
+            },
+            {
+              "type": "text",
+              "content": "## Bayes in ML\n\n**Bayesian inference:** Update model beliefs with data\n- Prior: What we believe before seeing data\n- Likelihood: How well model explains data\n- Posterior: Updated beliefs\n\n**Applications:**\n- Naive Bayes classifiers\n- Bayesian neural networks\n- Uncertainty quantification\n- Hyperparameter optimization (Bayesian optimization)"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Naive Bayes Classifier",
+              "code": "from sklearn.naive_bayes import GaussianNB\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\n\n# Load data\niris = load_iris()\nX_train, X_test, y_train, y_test = train_test_split(\n    iris.data, iris.target, test_size=0.3, random_state=42\n)\n\n# Train Naive Bayes\nnb = GaussianNB()\nnb.fit(X_train, y_train)\n\n# Evaluate\naccuracy = nb.score(X_test, y_test)\nprint(f\"Naive Bayes Accuracy: {accuracy:.3f}\")\n\n# Get probability predictions\nprobs = nb.predict_proba(X_test[:3])\nprint(f\"\\nProbabilities for first 3 samples:\")\nfor i, p in enumerate(probs):\n    print(f\"  Sample {i}: {p.round(3)}\")"
+            }
+          ]
+        },
+        {
+          "id": "stats-quiz",
+          "title": "Probability Quiz",
+          "type": "quiz",
+          "duration": "10 min",
+          "questions": [
+            {
+              "question": "What distribution is most commonly used for weight initialization?",
+              "options": [
+                "Uniform",
+                "Normal (Gaussian)",
+                "Bernoulli",
+                "Poisson"
+              ],
+              "correct": 1,
+              "explanation": "Normal distribution is commonly used for weight initialization (e.g., Xavier/He initialization)."
+            },
+            {
+              "question": "In Bayes' theorem, what does the 'prior' represent?",
+              "options": [
+                "Evidence from data",
+                "Belief before seeing data",
+                "The likelihood",
+                "The posterior"
+              ],
+              "correct": 1,
+              "explanation": "The prior represents our belief about a parameter before observing any data."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "optimization",
+      "title": "Optimization Techniques",
+      "description": "From vanilla gradient descent to Adam - how models learn",
+      "lessons": [
+        {
+          "id": "loss-functions",
+          "title": "Loss Functions",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## What is a Loss Function?\n\nA **loss function** (or cost function) measures how wrong the model's predictions are. Training minimizes this loss.\n\n**Properties of good loss functions:**\n- Lower is better\n- Differentiable (for gradient descent)\n- Reflects the actual goal"
+            },
+            {
+              "type": "text",
+              "content": "## Common Loss Functions\n\n### Mean Squared Error (Regression)\n$$L = \\frac{1}{n}\\sum_{i=1}^{n}(y_i - \\hat{y}_i)^2$$\n- Penalizes large errors heavily (squared)\n- Used for continuous outputs\n\n### Binary Cross-Entropy (Binary Classification)\n$$L = -\\frac{1}{n}\\sum[y\\log(\\hat{y}) + (1-y)\\log(1-\\hat{y})]$$\n- For 0/1 classification\n- Pairs with sigmoid activation\n\n### Categorical Cross-Entropy (Multi-class)\n$$L = -\\sum_{c=1}^{C} y_c \\log(\\hat{y}_c)$$\n- For multi-class classification\n- Pairs with softmax activation"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Loss Functions in Practice",
+              "code": "import numpy as np\n\n# Mean Squared Error\ndef mse(y_true, y_pred):\n    return np.mean((y_true - y_pred)**2)\n\n# Binary Cross-Entropy\ndef binary_crossentropy(y_true, y_pred, eps=1e-15):\n    y_pred = np.clip(y_pred, eps, 1 - eps)  # Avoid log(0)\n    return -np.mean(y_true * np.log(y_pred) + \n                    (1 - y_true) * np.log(1 - y_pred))\n\n# Categorical Cross-Entropy\ndef categorical_crossentropy(y_true, y_pred, eps=1e-15):\n    y_pred = np.clip(y_pred, eps, 1 - eps)\n    return -np.sum(y_true * np.log(y_pred)) / len(y_true)\n\n# Examples\ny_true_reg = np.array([1.0, 2.0, 3.0])\ny_pred_reg = np.array([1.1, 2.2, 2.8])\nprint(f\"MSE: {mse(y_true_reg, y_pred_reg):.4f}\")\n\ny_true_bin = np.array([1, 0, 1, 1])\ny_pred_bin = np.array([0.9, 0.1, 0.8, 0.7])\nprint(f\"Binary CE: {binary_crossentropy(y_true_bin, y_pred_bin):.4f}\")"
+            }
+          ]
+        },
+        {
+          "id": "gradient-descent",
+          "title": "Gradient Descent Variants",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## Vanilla Gradient Descent\n\n$$\\theta = \\theta - \\alpha \\nabla L(\\theta)$$\n\n**Problem:** Uses all data for each update (slow for large datasets)"
+            },
+            {
+              "type": "text",
+              "content": "## Stochastic Gradient Descent (SGD)\n\nUpdate after each sample (or mini-batch):\n- Faster iterations\n- Noisy updates can escape local minima\n- More common in practice\n\n**Mini-batch SGD:** Update after small batch (e.g., 32 samples)\n- Balance between speed and stability"
+            },
+            {
+              "type": "text",
+              "content": "## SGD with Momentum\n\nAccumulate velocity from past gradients:\n\n$$v_t = \\beta v_{t-1} + \\nabla L(\\theta)$$\n$$\\theta = \\theta - \\alpha v_t$$\n\n**Benefits:**\n- Faster convergence\n- Dampens oscillations\n- Helps escape shallow local minima"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "SGD with Momentum",
+              "code": "import numpy as np\n\nclass SGDMomentum:\n    def __init__(self, lr=0.01, momentum=0.9):\n        self.lr = lr\n        self.momentum = momentum\n        self.velocity = None\n    \n    def update(self, params, grads):\n        if self.velocity is None:\n            self.velocity = np.zeros_like(params)\n        \n        self.velocity = self.momentum * self.velocity + grads\n        params = params - self.lr * self.velocity\n        return params\n\n# Example optimization\ndef quadratic(x):\n    return x**2 + 10*np.sin(x)\n\ndef gradient(x):\n    return 2*x + 10*np.cos(x)\n\noptimizer = SGDMomentum(lr=0.1, momentum=0.9)\nx = 5.0\n\nfor i in range(50):\n    grad = gradient(x)\n    x = optimizer.update(x, grad)\n    if i % 10 == 0:\n        print(f\"Step {i}: x={x:.3f}, f(x)={quadratic(x):.3f}\")"
+            }
+          ]
+        },
+        {
+          "id": "adam",
+          "title": "Adam and Modern Optimizers",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## Adam: Adaptive Moment Estimation\n\nAdam combines:\n1. **Momentum** (first moment)\n2. **RMSprop** (second moment - adaptive learning rates)\n\n$$m_t = \\beta_1 m_{t-1} + (1-\\beta_1) g_t$$\n$$v_t = \\beta_2 v_{t-1} + (1-\\beta_2) g_t^2$$\n$$\\theta = \\theta - \\alpha \\frac{m_t}{\\sqrt{v_t} + \\epsilon}$$\n\n**Default hyperparameters:**\n- $\\alpha = 0.001$\n- $\\beta_1 = 0.9$\n- $\\beta_2 = 0.999$\n- $\\epsilon = 10^{-8}$"
+            },
+            {
+              "type": "text",
+              "content": "## Why Adam is Popular\n\n✅ Works well out-of-the-box\n✅ Adapts learning rate per parameter\n✅ Handles sparse gradients well\n✅ Less sensitive to hyperparameters\n\n**Other modern optimizers:**\n- **AdamW:** Adam with weight decay (better regularization)\n- **LAMB:** Layerwise adaptive, good for large batch training\n- **Lion:** Newer optimizer from Google, memory efficient"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Using Optimizers in PyTorch",
+              "code": "import torch\nimport torch.nn as nn\nimport torch.optim as optim\n\n# Simple model\nmodel = nn.Sequential(\n    nn.Linear(10, 32),\n    nn.ReLU(),\n    nn.Linear(32, 1)\n)\n\n# Different optimizers\noptimizers = {\n    'SGD': optim.SGD(model.parameters(), lr=0.01),\n    'SGD+Momentum': optim.SGD(model.parameters(), lr=0.01, momentum=0.9),\n    'Adam': optim.Adam(model.parameters(), lr=0.001),\n    'AdamW': optim.AdamW(model.parameters(), lr=0.001, weight_decay=0.01),\n}\n\n# Training loop skeleton\noptimizer = optim.Adam(model.parameters(), lr=0.001)\ncriterion = nn.MSELoss()\n\nfor epoch in range(100):\n    # Forward pass\n    X = torch.randn(32, 10)\n    y = torch.randn(32, 1)\n    pred = model(X)\n    loss = criterion(pred, y)\n    \n    # Backward pass\n    optimizer.zero_grad()  # Clear old gradients\n    loss.backward()        # Compute gradients\n    optimizer.step()       # Update weights\n    \n    if epoch % 20 == 0:\n        print(f\"Epoch {epoch}: Loss = {loss.item():.4f}\")"
+            }
+          ]
+        },
+        {
+          "id": "regularization",
+          "title": "Regularization Techniques",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## Why Regularization?\n\n**Overfitting:** Model memorizes training data but fails on new data.\n\n**Regularization:** Techniques to prevent overfitting by constraining the model."
+            },
+            {
+              "type": "text",
+              "content": "## L1 and L2 Regularization\n\nAdd penalty to loss function:\n\n**L2 (Ridge/Weight Decay):**\n$$L_{total} = L + \\lambda \\sum w_i^2$$\n- Pushes weights toward zero\n- Keeps all features, just shrinks them\n\n**L1 (Lasso):**\n$$L_{total} = L + \\lambda \\sum |w_i|$$\n- Creates sparse solutions (some weights = 0)\n- Feature selection effect"
+            },
+            {
+              "type": "text",
+              "content": "## Dropout\n\nRandomly set neurons to zero during training:\n$$h = h \\cdot \\text{mask}$$\n\nWhere mask is random 0s and 1s.\n\n**Why it works:**\n- Prevents co-adaptation\n- Ensemble effect (many sub-networks)\n- Implicit regularization"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Regularization in Practice",
+              "code": "import torch\nimport torch.nn as nn\n\nclass RegularizedNetwork(nn.Module):\n    def __init__(self, dropout_rate=0.5):\n        super().__init__()\n        self.layers = nn.Sequential(\n            nn.Linear(784, 256),\n            nn.ReLU(),\n            nn.Dropout(dropout_rate),  # Dropout!\n            nn.Linear(256, 128),\n            nn.ReLU(),\n            nn.Dropout(dropout_rate),\n            nn.Linear(128, 10)\n        )\n    \n    def forward(self, x):\n        return self.layers(x)\n\nmodel = RegularizedNetwork(dropout_rate=0.3)\n\n# L2 regularization via weight_decay\noptimizer = torch.optim.AdamW(\n    model.parameters(), \n    lr=0.001, \n    weight_decay=0.01  # L2 penalty\n)\n\nprint(\"Model with Dropout layers:\")\nprint(model)\n\n# Training vs Eval mode\nmodel.train()  # Dropout active\nmodel.eval()   # Dropout disabled"
+            }
+          ]
+        },
+        {
+          "id": "optimization-quiz",
+          "title": "Optimization Quiz",
+          "type": "quiz",
+          "duration": "10 min",
+          "questions": [
+            {
+              "question": "What is the main advantage of Adam over vanilla SGD?",
+              "options": [
+                "Faster",
+                "Adapts learning rate per parameter",
+                "Uses less memory",
+                "Simpler to implement"
+              ],
+              "correct": 1,
+              "explanation": "Adam adapts the learning rate for each parameter individually using momentum and RMSprop."
+            },
+            {
+              "question": "Which regularization technique can result in exactly zero weights?",
+              "options": [
+                "L2 (Ridge)",
+                "L1 (Lasso)",
+                "Dropout",
+                "Batch Normalization"
+              ],
+              "correct": 1,
+              "explanation": "L1 regularization produces sparse solutions where some weights become exactly zero."
+            },
+            {
+              "question": "What does dropout do during training?",
+              "options": [
+                "Removes layers",
+                "Randomly sets some neurons to zero",
+                "Reduces learning rate",
+                "Normalizes inputs"
+              ],
+              "correct": 1,
+              "explanation": "Dropout randomly zeroes out a fraction of neurons during training to prevent overfitting."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "project": {
+    "id": "math-capstone",
+    "title": "Build a Neural Network from Scratch",
+    "description": "Implement a complete neural network using only NumPy, applying all the math concepts learned.",
+    "duration": "3 hours",
+    "tasks": [
+      "Implement matrix operations for forward pass",
+      "Compute gradients using the chain rule",
+      "Build gradient descent optimizer",
+      "Add regularization",
+      "Train on MNIST digits"
+    ]
+  }
+}

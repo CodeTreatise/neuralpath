@@ -1,0 +1,83 @@
+{
+  "id": "ai-ethics-framework",
+  "title": "AI Ethics & Safety Framework",
+  "description": "Comprehensive map of ethical AI development principles and practices",
+  "sections": [
+    { "id": "principles", "title": "Core Principles", "color": "#6366f1" },
+    { "id": "techniques", "title": "Technical Methods", "color": "#10b981" },
+    { "id": "governance", "title": "Governance & Policy", "color": "#f59e0b" },
+    { "id": "metrics", "title": "Fairness Metrics", "color": "#ef4444" }
+  ],
+  "nodes": [
+    {"id": "responsible-ai", "label": "Responsible AI", "type": "root", "section": "principles", "description": "Core principle of ethical AI development", "difficulty": "Beginner", "url": "https://ai.google/responsibility/principles/"},
+    
+    {"id": "fairness", "label": "Fairness", "type": "concept", "section": "principles", "description": "Equitable treatment across groups", "difficulty": "Beginner", "url": "https://fairlearn.org/"},
+    {"id": "transparency", "label": "Transparency", "type": "concept", "section": "principles", "description": "Understandable AI decisions", "difficulty": "Beginner"},
+    {"id": "privacy", "label": "Privacy", "type": "concept", "section": "principles", "description": "Data protection and consent", "difficulty": "Beginner"},
+    {"id": "safety", "label": "Safety", "type": "concept", "section": "principles", "description": "Preventing harm", "difficulty": "Beginner"},
+    {"id": "accountability", "label": "Accountability", "type": "concept", "section": "principles", "description": "Clear responsibility", "difficulty": "Beginner"},
+    
+    {"id": "demographic-parity", "label": "Demographic Parity", "type": "concept", "section": "metrics", "description": "Equal outcome rates", "difficulty": "Intermediate"},
+    {"id": "equalized-odds", "label": "Equalized Odds", "type": "concept", "section": "metrics", "description": "Equal error rates", "difficulty": "Intermediate"},
+    {"id": "individual-fairness", "label": "Individual Fairness", "type": "concept", "section": "metrics", "description": "Similar treatment for similar cases", "difficulty": "Advanced"},
+    
+    {"id": "explainability", "label": "Explainability", "type": "concept", "section": "techniques", "description": "SHAP, LIME, attention", "difficulty": "Intermediate", "url": "https://christophm.github.io/interpretable-ml-book/"},
+    {"id": "interpretability", "label": "Interpretability", "type": "concept", "section": "techniques", "description": "Inherently understandable models", "difficulty": "Intermediate"},
+    
+    {"id": "data-privacy", "label": "Data Privacy", "type": "concept", "section": "governance", "description": "GDPR, CCPA compliance", "difficulty": "Beginner"},
+    {"id": "differential-privacy", "label": "Differential Privacy", "type": "concept", "section": "techniques", "description": "Privacy-preserving ML", "difficulty": "Advanced", "url": "https://differentialprivacy.org/"},
+    {"id": "federated-learning", "label": "Federated Learning", "type": "concept", "section": "techniques", "description": "Decentralized training", "difficulty": "Advanced", "url": "https://www.tensorflow.org/federated"},
+    
+    {"id": "robustness", "label": "Robustness", "type": "concept", "section": "techniques", "description": "Reliable under adversity", "difficulty": "Intermediate"},
+    {"id": "alignment", "label": "Alignment", "type": "concept", "section": "techniques", "description": "Goals match intentions", "difficulty": "Advanced", "url": "https://openai.com/research/instruction-following"},
+    {"id": "red-teaming", "label": "Red Teaming", "type": "concept", "section": "techniques", "description": "Adversarial testing", "difficulty": "Intermediate"},
+    
+    {"id": "audit-trails", "label": "Audit Trails", "type": "concept", "section": "governance", "description": "Decision logging", "difficulty": "Beginner"},
+    {"id": "governance", "label": "Governance", "type": "concept", "section": "governance", "description": "Policies and oversight", "difficulty": "Intermediate"},
+    
+    {"id": "bias-mitigation", "label": "Bias Mitigation", "type": "concept", "section": "techniques", "description": "Fairlearn, AIF360", "difficulty": "Intermediate", "url": "https://aif360.mybluemix.net/"},
+    {"id": "model-cards", "label": "Model Cards", "type": "concept", "section": "governance", "description": "Documentation of limitations", "difficulty": "Beginner", "url": "https://modelcards.withgoogle.com/about"},
+    {"id": "impact-assessment", "label": "Impact Assessment", "type": "concept", "section": "governance", "description": "Evaluate societal effects", "difficulty": "Intermediate"},
+    {"id": "rlhf", "label": "RLHF", "type": "concept", "section": "techniques", "description": "Human feedback alignment", "difficulty": "Advanced", "url": "https://huggingface.co/blog/rlhf"},
+    {"id": "constitutional-ai", "label": "Constitutional AI", "type": "concept", "section": "techniques", "description": "Principle-based training", "difficulty": "Advanced", "url": "https://www.anthropic.com/index/constitutional-ai-harmlessness-from-ai-feedback"},
+    {"id": "human-oversight", "label": "Human Oversight", "type": "concept", "section": "governance", "description": "Human-in-the-loop", "difficulty": "Beginner"},
+    
+    {"id": "regulations", "label": "AI Regulations", "type": "concept", "section": "governance", "description": "EU AI Act, NIST AI RMF", "difficulty": "Intermediate", "url": "https://www.nist.gov/itl/ai-risk-management-framework"}
+  ],
+  "links": [
+    {"source": "responsible-ai", "target": "fairness", "type": "includes"},
+    {"source": "responsible-ai", "target": "transparency", "type": "includes"},
+    {"source": "responsible-ai", "target": "privacy", "type": "includes"},
+    {"source": "responsible-ai", "target": "safety", "type": "includes"},
+    {"source": "responsible-ai", "target": "accountability", "type": "includes"},
+    
+    {"source": "fairness", "target": "demographic-parity", "type": "measured-by"},
+    {"source": "fairness", "target": "equalized-odds", "type": "measured-by"},
+    {"source": "fairness", "target": "individual-fairness", "type": "measured-by"},
+    {"source": "fairness", "target": "bias-mitigation", "type": "achieved-by"},
+    
+    {"source": "transparency", "target": "explainability", "type": "enabled-by"},
+    {"source": "transparency", "target": "interpretability", "type": "enabled-by"},
+    {"source": "transparency", "target": "model-cards", "type": "documented-by"},
+    
+    {"source": "privacy", "target": "data-privacy", "type": "requires"},
+    {"source": "privacy", "target": "differential-privacy", "type": "enhanced-by"},
+    {"source": "privacy", "target": "federated-learning", "type": "enhanced-by"},
+    
+    {"source": "safety", "target": "robustness", "type": "requires"},
+    {"source": "safety", "target": "alignment", "type": "requires"},
+    {"source": "safety", "target": "red-teaming", "type": "verified-by"},
+    {"source": "alignment", "target": "rlhf", "type": "method"},
+    {"source": "alignment", "target": "constitutional-ai", "type": "method"},
+    
+    {"source": "accountability", "target": "audit-trails", "type": "requires"},
+    {"source": "accountability", "target": "governance", "type": "requires"},
+    {"source": "accountability", "target": "human-oversight", "type": "requires"},
+    {"source": "governance", "target": "impact-assessment", "type": "includes"},
+    
+    {"source": "bias-mitigation", "target": "regulations", "type": "complies-with"},
+    {"source": "model-cards", "target": "regulations", "type": "complies-with"},
+    {"source": "impact-assessment", "target": "regulations", "type": "complies-with"},
+    {"source": "human-oversight", "target": "regulations", "type": "complies-with"}
+  ]
+}

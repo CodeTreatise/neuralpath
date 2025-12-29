@@ -1,0 +1,88 @@
+{
+  "id": "multimodal-ai",
+  "title": "Multimodal AI Landscape",
+  "description": "Map of AI systems that process multiple types of data: text, image, audio, video",
+  "sections": [
+    { "id": "text", "title": "Text Modality", "color": "#3b82f6" },
+    { "id": "image", "title": "Image Modality", "color": "#ec4899" },
+    { "id": "audio", "title": "Audio Modality", "color": "#10b981" },
+    { "id": "video", "title": "Video Modality", "color": "#f97316" },
+    { "id": "fusion", "title": "Cross-Modal Fusion", "color": "#8b5cf6" },
+    { "id": "unified", "title": "Unified Models", "color": "#ef4444" }
+  ],
+  "nodes": [
+    {"id": "multimodal-ai", "label": "Multimodal AI", "type": "root", "section": "unified", "description": "AI that understands multiple modalities", "difficulty": "Beginner"},
+    
+    {"id": "text", "label": "Text", "type": "category", "section": "text", "description": "Natural language processing", "difficulty": "Beginner"},
+    {"id": "image", "label": "Image", "type": "category", "section": "image", "description": "Computer vision", "difficulty": "Beginner"},
+    {"id": "audio", "label": "Audio", "type": "category", "section": "audio", "description": "Speech and sound", "difficulty": "Beginner"},
+    {"id": "video", "label": "Video", "type": "category", "section": "video", "description": "Temporal visual data", "difficulty": "Beginner"},
+    
+    {"id": "llms", "label": "LLMs", "type": "concept", "section": "text", "description": "GPT, Claude, Llama", "difficulty": "Intermediate"},
+    {"id": "text-embeddings", "label": "Text Embeddings", "type": "concept", "section": "text", "description": "Sentence-BERT, OpenAI", "difficulty": "Intermediate"},
+    
+    {"id": "image-classification", "label": "Classification", "type": "concept", "section": "image", "description": "ResNet, ViT, EfficientNet", "difficulty": "Intermediate"},
+    {"id": "object-detection", "label": "Object Detection", "type": "concept", "section": "image", "description": "YOLO, DETR, Faster R-CNN", "difficulty": "Intermediate"},
+    {"id": "image-generation", "label": "Image Generation", "type": "concept", "section": "image", "description": "DALL-E, Stable Diffusion, Midjourney", "difficulty": "Intermediate"},
+    
+    {"id": "asr", "label": "Speech Recognition", "type": "concept", "section": "audio", "description": "Whisper, Deepgram", "difficulty": "Intermediate"},
+    {"id": "tts", "label": "Text-to-Speech", "type": "concept", "section": "audio", "description": "ElevenLabs, Bark, XTTS", "difficulty": "Intermediate"},
+    {"id": "audio-gen", "label": "Audio Generation", "type": "concept", "section": "audio", "description": "Suno, MusicGen, AudioLDM", "difficulty": "Advanced"},
+    
+    {"id": "video-understanding", "label": "Video Understanding", "type": "concept", "section": "video", "description": "VideoMAE, TimeSformer", "difficulty": "Advanced"},
+    {"id": "video-gen", "label": "Video Generation", "type": "concept", "section": "video", "description": "Sora, Runway, Pika", "difficulty": "Advanced"},
+    
+    {"id": "vlm", "label": "Vision-Language", "type": "concept", "section": "fusion", "description": "GPT-4V, Claude 3, Gemini Pro Vision", "difficulty": "Advanced"},
+    {"id": "clip", "label": "CLIP", "type": "model", "section": "fusion", "description": "Contrastive image-text learning", "url": "https://openai.com/research/clip", "difficulty": "Advanced"},
+    {"id": "text-to-image", "label": "Text-to-Image", "type": "concept", "section": "fusion", "description": "Diffusion models", "difficulty": "Intermediate"},
+    
+    {"id": "audio-llm", "label": "Audio LLMs", "type": "model", "section": "fusion", "description": "Qwen-Audio, SALMONN", "difficulty": "Advanced"},
+    
+    {"id": "video-llm", "label": "Video LLMs", "type": "model", "section": "fusion", "description": "Video-LLaVA, mPLUG-2", "difficulty": "Advanced"},
+    
+    {"id": "unified-multimodal", "label": "Unified Multimodal", "type": "model", "section": "unified", "description": "Gemini, GPT-4o, Claude 3.5", "difficulty": "Advanced"},
+    
+    {"id": "any-to-any", "label": "Any-to-Any Models", "type": "concept", "section": "unified", "description": "Unified I/O across modalities", "difficulty": "Advanced"}
+  ],
+  "links": [
+    {"source": "multimodal-ai", "target": "text", "type": "contains"},
+    {"source": "multimodal-ai", "target": "image", "type": "contains"},
+    {"source": "multimodal-ai", "target": "audio", "type": "contains"},
+    {"source": "multimodal-ai", "target": "video", "type": "contains"},
+    
+    {"source": "text", "target": "llms", "type": "includes"},
+    {"source": "text", "target": "text-embeddings", "type": "includes"},
+    
+    {"source": "image", "target": "image-classification", "type": "includes"},
+    {"source": "image", "target": "object-detection", "type": "includes"},
+    {"source": "image", "target": "image-generation", "type": "includes"},
+    
+    {"source": "audio", "target": "asr", "type": "includes"},
+    {"source": "audio", "target": "tts", "type": "includes"},
+    {"source": "audio", "target": "audio-gen", "type": "includes"},
+    
+    {"source": "video", "target": "video-understanding", "type": "includes"},
+    {"source": "video", "target": "video-gen", "type": "includes"},
+    
+    {"source": "llms", "target": "vlm", "type": "evolves-to"},
+    {"source": "image-classification", "target": "vlm", "type": "evolves-to"},
+    {"source": "image-classification", "target": "clip", "type": "evolves-to"},
+    {"source": "text-embeddings", "target": "clip", "type": "evolves-to"},
+    {"source": "clip", "target": "text-to-image", "type": "enables"},
+    {"source": "image-generation", "target": "text-to-image", "type": "enables"},
+    
+    {"source": "llms", "target": "audio-llm", "type": "evolves-to"},
+    {"source": "asr", "target": "audio-llm", "type": "evolves-to"},
+    
+    {"source": "vlm", "target": "video-llm", "type": "evolves-to"},
+    {"source": "video-understanding", "target": "video-llm", "type": "evolves-to"},
+    
+    {"source": "vlm", "target": "unified-multimodal", "type": "evolves-to"},
+    {"source": "audio-llm", "target": "unified-multimodal", "type": "evolves-to"},
+    {"source": "video-llm", "target": "unified-multimodal", "type": "evolves-to"},
+    
+    {"source": "unified-multimodal", "target": "any-to-any", "type": "evolves-to"},
+    {"source": "text-to-image", "target": "any-to-any", "type": "evolves-to"},
+    {"source": "video-gen", "target": "any-to-any", "type": "evolves-to"}
+  ]
+}

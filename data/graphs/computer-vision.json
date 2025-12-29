@@ -1,0 +1,88 @@
+{
+  "id": "computer-vision",
+  "title": "Computer Vision Evolution",
+  "description": "From CNNs to Vision Transformers and beyond",
+  "sections": [
+    { "id": "foundations", "title": "Foundations", "color": "#94a3b8" },
+    { "id": "cnns", "title": "CNN Architectures", "color": "#3b82f6" },
+    { "id": "detection", "title": "Object Detection", "color": "#f59e0b" },
+    { "id": "segmentation", "title": "Segmentation", "color": "#10b981" },
+    { "id": "vit", "title": "Vision Transformers", "color": "#8b5cf6" },
+    { "id": "multimodal", "title": "Vision-Language", "color": "#ec4899" }
+  ],
+  "nodes": [
+    { "id": "cv", "label": "Computer Vision", "type": "root", "description": "Teaching machines to see", "url": "https://en.wikipedia.org/wiki/Computer_vision" },
+    
+    { "id": "foundations", "label": "Foundations", "type": "category", "section": "foundations", "description": "Classic CV concepts" },
+    { "id": "image-proc", "label": "Image Processing", "type": "concept", "section": "foundations", "description": "Filtering and enhancement", "difficulty": "Beginner", "url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html" },
+    { "id": "edge-detect", "label": "Edge Detection", "type": "concept", "section": "foundations", "description": "Finding boundaries (Canny, Sobel)", "difficulty": "Beginner", "url": "https://en.wikipedia.org/wiki/Edge_detection" },
+    { "id": "feature-extract", "label": "Feature Extraction", "type": "concept", "section": "foundations", "description": "SIFT, HOG, SURF", "difficulty": "Intermediate", "url": "https://docs.opencv.org/4.x/df/d54/tutorial_py_features_meaning.html" },
+    
+    { "id": "cnns", "label": "CNNs", "type": "category", "section": "cnns", "description": "Convolutional Neural Networks" },
+    { "id": "lenet", "label": "LeNet", "type": "model", "section": "cnns", "description": "1998 - Digit recognition", "difficulty": "Beginner", "url": "http://yann.lecun.com/exdb/lenet/" },
+    { "id": "alexnet", "label": "AlexNet", "type": "model", "section": "cnns", "description": "2012 - ImageNet breakthrough", "difficulty": "Intermediate", "url": "https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html" },
+    { "id": "vgg", "label": "VGG", "type": "model", "section": "cnns", "description": "2014 - Deeper networks", "difficulty": "Intermediate", "url": "https://arxiv.org/abs/1409.1556" },
+    { "id": "resnet", "label": "ResNet", "type": "model", "section": "cnns", "description": "2015 - Skip connections", "difficulty": "Intermediate", "url": "https://arxiv.org/abs/1512.03385" },
+    { "id": "inception", "label": "Inception", "type": "model", "section": "cnns", "description": "2015 - Multi-scale", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1409.4842" },
+    { "id": "efficientnet", "label": "EfficientNet", "type": "model", "section": "cnns", "description": "2019 - Scaling", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1905.11946" },
+    
+    { "id": "detection", "label": "Object Detection", "type": "category", "section": "detection", "description": "Finding objects in images" },
+    { "id": "rcnn", "label": "R-CNN Family", "type": "model", "section": "detection", "description": "Region-based detection", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1311.2524" },
+    { "id": "yolo", "label": "YOLO", "type": "model", "section": "detection", "description": "Real-time detection", "difficulty": "Intermediate", "url": "https://pjreddie.com/darknet/yolo/" },
+    { "id": "ssd", "label": "SSD", "type": "model", "section": "detection", "description": "Single shot detector", "difficulty": "Intermediate", "url": "https://arxiv.org/abs/1512.02325" },
+    { "id": "detr", "label": "DETR", "type": "model", "section": "detection", "description": "Transformer detection", "difficulty": "Advanced", "url": "https://arxiv.org/abs/2005.12872" },
+    
+    { "id": "segmentation", "label": "Segmentation", "type": "category", "section": "segmentation", "description": "Pixel-level classification" },
+    { "id": "unet", "label": "U-Net", "type": "model", "section": "segmentation", "description": "Medical imaging", "difficulty": "Intermediate", "url": "https://arxiv.org/abs/1505.04597" },
+    { "id": "mask-rcnn", "label": "Mask R-CNN", "type": "model", "section": "segmentation", "description": "Instance segmentation", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1703.06870" },
+    { "id": "sam", "label": "SAM", "type": "model", "section": "segmentation", "description": "Segment Anything Model", "difficulty": "Advanced", "url": "https://segment-anything.com/" },
+    
+    { "id": "vit", "label": "Vision Transformers", "type": "category", "section": "vit", "description": "Attention-based vision" },
+    { "id": "vit-original", "label": "ViT", "type": "model", "section": "vit", "description": "2020 - Image patches", "difficulty": "Advanced", "url": "https://arxiv.org/abs/2010.11929" },
+    { "id": "deit", "label": "DeiT", "type": "model", "section": "vit", "description": "Data-efficient training", "difficulty": "Advanced", "url": "https://arxiv.org/abs/2012.12877" },
+    { "id": "swin", "label": "Swin Transformer", "type": "model", "section": "vit", "description": "Hierarchical vision", "difficulty": "Advanced", "url": "https://arxiv.org/abs/2103.14030" },
+    
+    { "id": "multimodal", "label": "Vision-Language", "type": "category", "section": "multimodal", "description": "Images + Text" },
+    { "id": "clip", "label": "CLIP", "type": "model", "section": "multimodal", "description": "Contrastive learning", "difficulty": "Advanced", "url": "https://openai.com/research/clip" },
+    { "id": "blip", "label": "BLIP", "type": "model", "section": "multimodal", "description": "Bootstrapped captioning", "difficulty": "Advanced", "url": "https://arxiv.org/abs/2201.12086" },
+    { "id": "llava", "label": "LLaVA", "type": "model", "section": "multimodal", "description": "Visual instruction tuning", "difficulty": "Advanced", "url": "https://llava-vl.github.io/" },
+    { "id": "gpt4v", "label": "GPT-4V", "type": "model", "section": "multimodal", "description": "Multimodal GPT", "difficulty": "Advanced", "url": "https://openai.com/research/gpt-4v-system-card" }
+  ],
+  "links": [
+    { "source": "cv", "target": "foundations", "type": "builds-on" },
+    { "source": "cv", "target": "cnns", "type": "includes" },
+    { "source": "cv", "target": "detection", "type": "task" },
+    { "source": "cv", "target": "segmentation", "type": "task" },
+    { "source": "cv", "target": "vit", "type": "evolved-to" },
+    { "source": "cv", "target": "multimodal", "type": "merged-with" },
+    
+    { "source": "foundations", "target": "image-proc", "type": "includes" },
+    { "source": "foundations", "target": "edge-detect", "type": "includes" },
+    { "source": "foundations", "target": "feature-extract", "type": "includes" },
+    
+    { "source": "cnns", "target": "lenet", "type": "starts-with" },
+    { "source": "lenet", "target": "alexnet", "type": "leads-to" },
+    { "source": "alexnet", "target": "vgg", "type": "leads-to" },
+    { "source": "vgg", "target": "resnet", "type": "leads-to" },
+    { "source": "vgg", "target": "inception", "type": "leads-to" },
+    { "source": "resnet", "target": "efficientnet", "type": "leads-to" },
+    
+    { "source": "detection", "target": "rcnn", "type": "includes" },
+    { "source": "detection", "target": "yolo", "type": "includes" },
+    { "source": "detection", "target": "ssd", "type": "includes" },
+    { "source": "detection", "target": "detr", "type": "includes" },
+    
+    { "source": "segmentation", "target": "unet", "type": "includes" },
+    { "source": "segmentation", "target": "mask-rcnn", "type": "includes" },
+    { "source": "segmentation", "target": "sam", "type": "includes" },
+    
+    { "source": "vit", "target": "vit-original", "type": "starts-with" },
+    { "source": "vit-original", "target": "deit", "type": "leads-to" },
+    { "source": "vit-original", "target": "swin", "type": "leads-to" },
+    
+    { "source": "multimodal", "target": "clip", "type": "includes" },
+    { "source": "clip", "target": "blip", "type": "leads-to" },
+    { "source": "multimodal", "target": "llava", "type": "includes" },
+    { "source": "multimodal", "target": "gpt4v", "type": "includes" }
+  ]
+}

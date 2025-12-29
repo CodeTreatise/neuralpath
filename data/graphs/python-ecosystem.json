@@ -1,0 +1,97 @@
+{
+  "id": "python-ecosystem",
+  "title": "Python for AI",
+  "description": "The Python ecosystem for AI development",
+  "sections": [
+    { "id": "data", "title": "Data Processing", "color": "#94a3b8" },
+    { "id": "viz", "title": "Visualization", "color": "#f59e0b" },
+    { "id": "ml-libs", "title": "ML Libraries", "color": "#10b981" },
+    { "id": "dl", "title": "Deep Learning", "color": "#3b82f6" },
+    { "id": "nlp", "title": "NLP Libraries", "color": "#8b5cf6" },
+    { "id": "llm-tools", "title": "LLM Tools", "color": "#ec4899" },
+    { "id": "infra", "title": "Infrastructure", "color": "#64748b" }
+  ],
+  "nodes": [
+    { "id": "python", "label": "Python for AI", "type": "root", "description": "The dominant language for AI/ML", "url": "https://www.python.org/" },
+    
+    { "id": "data", "label": "Data Processing", "type": "category", "section": "data", "description": "Libraries for handling data" },
+    { "id": "numpy", "label": "NumPy", "type": "library", "section": "data", "description": "Numerical computing foundation", "difficulty": "Beginner", "url": "https://numpy.org/" },
+    { "id": "pandas", "label": "Pandas", "type": "library", "section": "data", "description": "Data manipulation and analysis", "difficulty": "Beginner", "url": "https://pandas.pydata.org/" },
+    { "id": "polars", "label": "Polars", "type": "library", "section": "data", "description": "Fast DataFrame library", "difficulty": "Intermediate", "url": "https://pola.rs/" },
+    
+    { "id": "viz", "label": "Visualization", "type": "category", "section": "viz", "description": "Data visualization tools" },
+    { "id": "matplotlib", "label": "Matplotlib", "type": "library", "section": "viz", "description": "Basic plotting library", "difficulty": "Beginner", "url": "https://matplotlib.org/" },
+    { "id": "seaborn", "label": "Seaborn", "type": "library", "section": "viz", "description": "Statistical visualization", "difficulty": "Beginner", "url": "https://seaborn.pydata.org/" },
+    { "id": "plotly", "label": "Plotly", "type": "library", "section": "viz", "description": "Interactive visualizations", "difficulty": "Intermediate", "url": "https://plotly.com/python/" },
+    
+    { "id": "ml-libs", "label": "ML Libraries", "type": "category", "section": "ml-libs", "description": "Machine learning frameworks" },
+    { "id": "sklearn", "label": "Scikit-learn", "type": "library", "section": "ml-libs", "description": "Classical ML algorithms", "difficulty": "Beginner", "url": "https://scikit-learn.org/" },
+    { "id": "xgb", "label": "XGBoost", "type": "library", "section": "ml-libs", "description": "Gradient boosting", "difficulty": "Intermediate", "url": "https://xgboost.readthedocs.io/" },
+    { "id": "lightgbm", "label": "LightGBM", "type": "library", "section": "ml-libs", "description": "Fast gradient boosting", "difficulty": "Intermediate", "url": "https://lightgbm.readthedocs.io/" },
+    
+    { "id": "dl", "label": "Deep Learning", "type": "category", "section": "dl", "description": "Neural network frameworks" },
+    { "id": "pytorch", "label": "PyTorch", "type": "library", "section": "dl", "description": "Dynamic neural networks", "difficulty": "Intermediate", "url": "https://pytorch.org/" },
+    { "id": "tensorflow", "label": "TensorFlow", "type": "library", "section": "dl", "description": "Production ML platform", "difficulty": "Intermediate", "url": "https://www.tensorflow.org/" },
+    { "id": "keras", "label": "Keras", "type": "library", "section": "dl", "description": "High-level neural network API", "difficulty": "Beginner", "url": "https://keras.io/" },
+    { "id": "jax", "label": "JAX", "type": "library", "section": "dl", "description": "Composable transformations", "difficulty": "Advanced", "url": "https://jax.readthedocs.io/" },
+    
+    { "id": "nlp", "label": "NLP Libraries", "type": "category", "section": "nlp", "description": "Natural language processing" },
+    { "id": "transformers", "label": "Transformers (HF)", "type": "library", "section": "nlp", "description": "Pre-trained models hub", "difficulty": "Intermediate", "url": "https://huggingface.co/docs/transformers/index" },
+    { "id": "spacy", "label": "spaCy", "type": "library", "section": "nlp", "description": "Industrial NLP", "difficulty": "Intermediate", "url": "https://spacy.io/" },
+    { "id": "nltk", "label": "NLTK", "type": "library", "section": "nlp", "description": "NLP toolkit", "difficulty": "Beginner", "url": "https://www.nltk.org/" },
+    
+    { "id": "llm-tools", "label": "LLM Tools", "type": "category", "section": "llm-tools", "description": "LLM application frameworks" },
+    { "id": "langchain-lib", "label": "LangChain", "type": "library", "section": "llm-tools", "description": "LLM application framework", "difficulty": "Intermediate", "url": "https://python.langchain.com/" },
+    { "id": "llamaindex", "label": "LlamaIndex", "type": "library", "section": "llm-tools", "description": "Data framework for LLMs", "difficulty": "Intermediate", "url": "https://www.llamaindex.ai/" },
+    { "id": "openai-lib", "label": "OpenAI SDK", "type": "library", "section": "llm-tools", "description": "OpenAI API client", "difficulty": "Beginner", "url": "https://github.com/openai/openai-python" },
+    { "id": "anthropic-lib", "label": "Anthropic SDK", "type": "library", "section": "llm-tools", "description": "Claude API client", "difficulty": "Beginner", "url": "https://github.com/anthropic-ai/anthropic-sdk-python" },
+    
+    { "id": "infra", "label": "Infrastructure", "type": "category", "section": "infra", "description": "Deployment and serving" },
+    { "id": "fastapi", "label": "FastAPI", "type": "library", "section": "infra", "description": "Modern API framework", "difficulty": "Intermediate", "url": "https://fastapi.tiangolo.com/" },
+    { "id": "gradio", "label": "Gradio", "type": "library", "section": "infra", "description": "ML demo interfaces", "difficulty": "Beginner", "url": "https://www.gradio.app/" },
+    { "id": "streamlit", "label": "Streamlit", "type": "library", "section": "infra", "description": "Data app framework", "difficulty": "Beginner", "url": "https://streamlit.io/" }
+  ],
+  "links": [
+    { "source": "python", "target": "data", "type": "contains" },
+    { "source": "python", "target": "viz", "type": "contains" },
+    { "source": "python", "target": "ml-libs", "type": "contains" },
+    { "source": "python", "target": "dl", "type": "contains" },
+    { "source": "python", "target": "nlp", "type": "contains" },
+    { "source": "python", "target": "llm-tools", "type": "contains" },
+    { "source": "python", "target": "infra", "type": "contains" },
+    
+    { "source": "data", "target": "numpy", "type": "includes" },
+    { "source": "data", "target": "pandas", "type": "includes" },
+    { "source": "data", "target": "polars", "type": "includes" },
+    { "source": "pandas", "target": "numpy", "type": "uses" },
+    
+    { "source": "viz", "target": "matplotlib", "type": "includes" },
+    { "source": "viz", "target": "seaborn", "type": "includes" },
+    { "source": "viz", "target": "plotly", "type": "includes" },
+    { "source": "seaborn", "target": "matplotlib", "type": "uses" },
+    
+    { "source": "ml-libs", "target": "sklearn", "type": "includes" },
+    { "source": "ml-libs", "target": "xgb", "type": "includes" },
+    { "source": "ml-libs", "target": "lightgbm", "type": "includes" },
+    
+    { "source": "dl", "target": "pytorch", "type": "includes" },
+    { "source": "dl", "target": "tensorflow", "type": "includes" },
+    { "source": "dl", "target": "keras", "type": "includes" },
+    { "source": "dl", "target": "jax", "type": "includes" },
+    { "source": "keras", "target": "tensorflow", "type": "uses" },
+    
+    { "source": "nlp", "target": "transformers", "type": "includes" },
+    { "source": "nlp", "target": "spacy", "type": "includes" },
+    { "source": "nlp", "target": "nltk", "type": "includes" },
+    { "source": "transformers", "target": "pytorch", "type": "uses" },
+    
+    { "source": "llm-tools", "target": "langchain-lib", "type": "includes" },
+    { "source": "llm-tools", "target": "llamaindex", "type": "includes" },
+    { "source": "llm-tools", "target": "openai-lib", "type": "includes" },
+    { "source": "llm-tools", "target": "anthropic-lib", "type": "includes" },
+    
+    { "source": "infra", "target": "fastapi", "type": "includes" },
+    { "source": "infra", "target": "gradio", "type": "includes" },
+    { "source": "infra", "target": "streamlit", "type": "includes" }
+  ]
+}

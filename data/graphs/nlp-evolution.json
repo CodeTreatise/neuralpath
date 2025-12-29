@@ -1,0 +1,96 @@
+{
+  "id": "nlp-evolution",
+  "title": "NLP Evolution Timeline",
+  "description": "From rule-based systems to Large Language Models",
+  "sections": [
+    { "id": "rule-based", "title": "Rule-Based Era", "color": "#94a3b8" },
+    { "id": "statistical", "title": "Statistical Era", "color": "#64748b" },
+    { "id": "embeddings", "title": "Word Embeddings", "color": "#10b981" },
+    { "id": "seq2seq", "title": "Sequence Models", "color": "#f59e0b" },
+    { "id": "transformer-era", "title": "Transformer Era", "color": "#3b82f6" },
+    { "id": "llm-era", "title": "LLM Era", "color": "#8b5cf6" }
+  ],
+  "nodes": [
+    { "id": "nlp", "label": "NLP Evolution", "type": "root", "description": "History of Natural Language Processing", "url": "https://en.wikipedia.org/wiki/Natural_language_processing" },
+    
+    { "id": "rule-based", "label": "Rule-Based Era", "type": "era", "section": "rule-based", "description": "1950s-1980s: Handcrafted rules" },
+    { "id": "eliza", "label": "ELIZA", "type": "model", "section": "rule-based", "description": "1966 - First chatbot", "difficulty": "Beginner", "url": "https://en.wikipedia.org/wiki/ELIZA" },
+    { "id": "grammar", "label": "Grammar Rules", "type": "concept", "section": "rule-based", "description": "Handcrafted parsing", "difficulty": "Intermediate" },
+    { "id": "expert-sys", "label": "Expert Systems", "type": "concept", "section": "rule-based", "description": "Knowledge-based", "difficulty": "Intermediate" },
+    
+    { "id": "statistical", "label": "Statistical Era", "type": "era", "section": "statistical", "description": "1990s-2000s: Probabilistic models" },
+    { "id": "hmm", "label": "HMM", "type": "model", "section": "statistical", "description": "Hidden Markov Models", "difficulty": "Advanced", "url": "https://en.wikipedia.org/wiki/Hidden_Markov_model" },
+    { "id": "ngram", "label": "N-grams", "type": "model", "section": "statistical", "description": "Language modeling", "difficulty": "Beginner", "url": "https://web.stanford.edu/~jurafsky/slp3/3.pdf" },
+    { "id": "tfidf", "label": "TF-IDF", "type": "concept", "section": "statistical", "description": "Document retrieval", "difficulty": "Beginner", "url": "https://en.wikipedia.org/wiki/Tf%E2%80%93idf" },
+    { "id": "pos-tag", "label": "POS Tagging", "type": "task", "section": "statistical", "description": "Part-of-speech", "difficulty": "Intermediate" },
+    { "id": "ner", "label": "NER", "type": "task", "section": "statistical", "description": "Named entity recognition", "difficulty": "Intermediate" },
+    
+    { "id": "embeddings", "label": "Word Embeddings", "type": "era", "section": "embeddings", "description": "2010s: Dense vectors" },
+    { "id": "word2vec", "label": "Word2Vec", "type": "model", "section": "embeddings", "description": "2013 - Neural embeddings", "difficulty": "Intermediate", "url": "https://arxiv.org/abs/1301.3781" },
+    { "id": "glove", "label": "GloVe", "type": "model", "section": "embeddings", "description": "2014 - Global vectors", "difficulty": "Intermediate", "url": "https://nlp.stanford.edu/projects/glove/" },
+    { "id": "fasttext", "label": "FastText", "type": "model", "section": "embeddings", "description": "2016 - Subword", "difficulty": "Intermediate", "url": "https://fasttext.cc/" },
+    
+    { "id": "seq2seq", "label": "Sequence Models", "type": "era", "section": "seq2seq", "description": "Mid 2010s: Encoder-Decoder" },
+    { "id": "rnn", "label": "RNN", "type": "model", "section": "seq2seq", "description": "Recurrent networks", "difficulty": "Intermediate", "url": "https://colah.github.io/posts/2015-08-Understanding-LSTMs/" },
+    { "id": "lstm", "label": "LSTM", "type": "model", "section": "seq2seq", "description": "Long short-term memory", "difficulty": "Advanced", "url": "https://colah.github.io/posts/2015-08-Understanding-LSTMs/" },
+    { "id": "gru", "label": "GRU", "type": "model", "section": "seq2seq", "description": "Gated recurrent unit", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1406.1078" },
+    { "id": "attention-mech", "label": "Attention", "type": "concept", "section": "seq2seq", "description": "2015 - Focus mechanism", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1409.0473" },
+    
+    { "id": "transformer-era", "label": "Transformer Era", "type": "era", "section": "transformer-era", "description": "2017-2020: Self-Attention" },
+    { "id": "transformer", "label": "Transformer", "type": "model", "section": "transformer-era", "description": "2017 - Attention is all you need", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1706.03762" },
+    { "id": "bert", "label": "BERT", "type": "model", "section": "transformer-era", "description": "2018 - Bidirectional", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1810.04805" },
+    { "id": "gpt", "label": "GPT", "type": "model", "section": "transformer-era", "description": "2018 - Generative pretraining", "difficulty": "Advanced", "url": "https://openai.com/research/language-unsupervised" },
+    { "id": "gpt2", "label": "GPT-2", "type": "model", "section": "transformer-era", "description": "2019 - Larger scale", "difficulty": "Advanced", "url": "https://openai.com/research/better-language-models" },
+    { "id": "roberta", "label": "RoBERTa", "type": "model", "section": "transformer-era", "description": "2019 - Robust BERT", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1907.11692" },
+    { "id": "t5", "label": "T5", "type": "model", "section": "transformer-era", "description": "2019 - Text-to-text", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1910.10683" },
+    
+    { "id": "llm-era", "label": "LLM Era", "type": "era", "section": "llm-era", "description": "2020-Present: Scale & Alignment" },
+    { "id": "gpt3", "label": "GPT-3", "type": "model", "section": "llm-era", "description": "2020 - Few-shot learning", "difficulty": "Advanced", "url": "https://arxiv.org/abs/2005.14165" },
+    { "id": "chatgpt", "label": "ChatGPT", "type": "model", "section": "llm-era", "description": "2022 - RLHF chat", "difficulty": "Beginner", "url": "https://openai.com/blog/chatgpt" },
+    { "id": "gpt4", "label": "GPT-4", "type": "model", "section": "llm-era", "description": "2023 - Multimodal", "difficulty": "Advanced", "url": "https://openai.com/research/gpt-4" },
+    { "id": "llama", "label": "LLaMA", "type": "model", "section": "llm-era", "description": "2023 - Open weights", "difficulty": "Intermediate", "url": "https://ai.meta.com/blog/large-language-model-llama-meta-ai/" },
+    { "id": "claude", "label": "Claude", "type": "model", "section": "llm-era", "description": "Constitutional AI", "difficulty": "Intermediate", "url": "https://www.anthropic.com/index/introducing-claude" },
+    { "id": "gemini", "label": "Gemini", "type": "model", "section": "llm-era", "description": "Google multimodal", "difficulty": "Intermediate", "url": "https://deepmind.google/technologies/gemini/" }
+  ],
+  "links": [
+    { "source": "nlp", "target": "rule-based", "type": "starts-with" },
+    { "source": "rule-based", "target": "statistical", "type": "leads-to" },
+    { "source": "statistical", "target": "embeddings", "type": "leads-to" },
+    { "source": "embeddings", "target": "seq2seq", "type": "leads-to" },
+    { "source": "seq2seq", "target": "transformer-era", "type": "leads-to" },
+    { "source": "transformer-era", "target": "llm-era", "type": "leads-to" },
+    
+    { "source": "rule-based", "target": "eliza", "type": "includes" },
+    { "source": "rule-based", "target": "grammar", "type": "includes" },
+    { "source": "rule-based", "target": "expert-sys", "type": "includes" },
+    
+    { "source": "statistical", "target": "hmm", "type": "includes" },
+    { "source": "statistical", "target": "ngram", "type": "includes" },
+    { "source": "statistical", "target": "tfidf", "type": "includes" },
+    { "source": "statistical", "target": "pos-tag", "type": "task" },
+    { "source": "statistical", "target": "ner", "type": "task" },
+    
+    { "source": "embeddings", "target": "word2vec", "type": "starts-with" },
+    { "source": "word2vec", "target": "glove", "type": "leads-to" },
+    { "source": "glove", "target": "fasttext", "type": "leads-to" },
+    
+    { "source": "seq2seq", "target": "rnn", "type": "includes" },
+    { "source": "rnn", "target": "lstm", "type": "improves" },
+    { "source": "rnn", "target": "gru", "type": "improves" },
+    { "source": "seq2seq", "target": "attention-mech", "type": "introduces" },
+    
+    { "source": "transformer-era", "target": "transformer", "type": "starts-with" },
+    { "source": "transformer", "target": "bert", "type": "leads-to" },
+    { "source": "transformer", "target": "gpt", "type": "leads-to" },
+    { "source": "gpt", "target": "gpt2", "type": "leads-to" },
+    { "source": "bert", "target": "roberta", "type": "improves" },
+    { "source": "bert", "target": "t5", "type": "leads-to" },
+    
+    { "source": "llm-era", "target": "gpt3", "type": "starts-with" },
+    { "source": "gpt3", "target": "chatgpt", "type": "leads-to" },
+    { "source": "chatgpt", "target": "gpt4", "type": "leads-to" },
+    { "source": "llm-era", "target": "llama", "type": "includes" },
+    { "source": "llm-era", "target": "claude", "type": "includes" },
+    { "source": "llm-era", "target": "gemini", "type": "includes" }
+  ]
+}

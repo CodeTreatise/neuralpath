@@ -1,0 +1,475 @@
+{
+  "id": "python-ai",
+  "title": "Python for AI & Machine Learning",
+  "description": "Master Python from fundamentals to advanced AI programming",
+  "icon": "\ud83d\udc0d",
+  "level": "beginner",
+  "duration": "8 weeks",
+  "prerequisites": [],
+  "learningOutcomes": [
+    "Write efficient Python code for data manipulation",
+    "Use NumPy and Pandas for numerical computing",
+    "Implement machine learning algorithms from scratch",
+    "Build end-to-end AI projects"
+  ],
+  "modules": [
+    {
+      "id": "py-fundamentals",
+      "title": "Python Fundamentals",
+      "lessons": [
+        {
+          "id": "py-intro",
+          "title": "Introduction to Python for AI",
+          "duration": "30 min",
+          "content": {
+            "overview": "Python has become the dominant language for AI and machine learning due to its simplicity, readability, and extensive ecosystem of libraries. Created by Guido van Rossum in 1991, Python's design philosophy emphasizes code readability with its notable use of significant whitespace.",
+            "sections": [
+              {
+                "title": "Why Python for AI?",
+                "content": "Python dominates AI development for several key reasons:\n\n1. **Readable Syntax**: Python's clean syntax allows researchers to focus on algorithms rather than language complexities\n2. **Rich Ecosystem**: Libraries like NumPy, Pandas, TensorFlow, and PyTorch provide optimized implementations\n3. **Community Support**: Millions of developers contribute to open-source AI tools\n4. **Rapid Prototyping**: Quick iteration from idea to working prototype\n5. **Integration**: Easy binding to C/C++ for performance-critical code",
+                "code": "# Python's readable syntax\ndef train_model(data, epochs=10):\n    \"\"\"Train a simple model on data.\"\"\"\n    for epoch in range(epochs):\n        loss = compute_loss(data)\n        update_weights(loss)\n        print(f\"Epoch {epoch}: Loss = {loss:.4f}\")\n    return model",
+                "diagram": {
+                  "title": "Python AI Ecosystem",
+                  "code": "flowchart TB\n    PY[Python] --> DS[Data Science]\n    PY --> ML[Machine Learning]\n    PY --> DL[Deep Learning]\n    \n    DS --> NP[NumPy]\n    DS --> PD[Pandas]\n    \n    ML --> SK[Scikit-learn]\n    ML --> XG[XGBoost]\n    \n    DL --> PT[PyTorch]\n    DL --> TF[TensorFlow]"
+                }
+              },
+              {
+                "title": "Setting Up Your Environment",
+                "content": "For AI development, we recommend using virtual environments to manage dependencies:\n\n**Option 1: venv (Built-in)**\n```bash\npython -m venv ai_env\nsource ai_env/bin/activate  # Linux/Mac\nai_env\\Scripts\\activate     # Windows\n```\n\n**Option 2: Conda (Recommended for AI)**\n```bash\nconda create -n ai_env python=3.11\nconda activate ai_env\n```\n\nConda is preferred because it handles complex dependencies like CUDA for GPU computing.",
+                "code": "# Verify your installation\nimport sys\nprint(f\"Python version: {sys.version}\")\n\n# Install essential AI packages\n# pip install numpy pandas matplotlib scikit-learn torch"
+              },
+              {
+                "title": "Python Data Types for AI",
+                "content": "Understanding Python's data types is crucial for AI programming:\n\n- **int/float**: Numerical computations\n- **list**: Mutable sequences (often converted to NumPy arrays)\n- **tuple**: Immutable sequences (used for shapes, dimensions)\n- **dict**: Key-value mappings (hyperparameters, configs)\n- **set**: Unique collections (vocabulary, unique labels)",
+                "code": "# Common data structures in AI\nhyperparams = {\n    'learning_rate': 0.001,\n    'batch_size': 32,\n    'epochs': 100\n}\n\n# Tuple for tensor shapes\ninput_shape = (224, 224, 3)  # Height, Width, Channels\n\n# List of training samples\nsamples = [\n    {'text': 'Great product!', 'label': 'positive'},\n    {'text': 'Terrible service', 'label': 'negative'}\n]"
+              }
+            ],
+            "keyTakeaways": [
+              "Python's simplicity makes it ideal for AI research and development",
+              "Use Conda for managing AI/ML environments with GPU support",
+              "Understanding data types helps in efficient data manipulation"
+            ],
+            "exercises": [
+              {
+                "title": "Environment Setup",
+                "description": "Create a new Conda environment and install NumPy, Pandas, and Matplotlib"
+              },
+              {
+                "title": "Data Structure Practice",
+                "description": "Create a dictionary to store model hyperparameters and a list of training samples"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Python Official Documentation",
+                "url": "https://docs.python.org/3/"
+              },
+              {
+                "title": "Conda Documentation",
+                "url": "https://docs.conda.io/"
+              },
+              {
+                "title": "Python for Data Science Handbook",
+                "author": "Jake VanderPlas",
+                "year": 2016
+              }
+            ]
+          }
+        },
+        {
+          "id": "py-functions",
+          "title": "Functions and Functional Programming",
+          "duration": "45 min",
+          "content": {
+            "overview": "Functions are the building blocks of modular AI code. Python supports multiple programming paradigms including functional programming, which is particularly useful for data transformations in ML pipelines.",
+            "sections": [
+              {
+                "title": "Defining Functions",
+                "content": "Well-designed functions make AI code reusable and testable. Use type hints for clarity:",
+                "code": "from typing import List, Tuple, Optional\nimport numpy as np\n\ndef normalize(data: np.ndarray, \n              method: str = 'minmax') -> np.ndarray:\n    \"\"\"Normalize data using specified method.\n    \n    Args:\n        data: Input array to normalize\n        method: 'minmax' or 'zscore'\n    \n    Returns:\n        Normalized array\n    \"\"\"\n    if method == 'minmax':\n        return (data - data.min()) / (data.max() - data.min())\n    elif method == 'zscore':\n        return (data - data.mean()) / data.std()\n    else:\n        raise ValueError(f\"Unknown method: {method}\")"
+              },
+              {
+                "title": "Lambda Functions and Map/Filter",
+                "content": "Lambda functions enable concise data transformations common in preprocessing pipelines:",
+                "code": "# Lambda for quick transformations\nsquare = lambda x: x ** 2\n\n# Map applies function to each element\ndata = [1, 2, 3, 4, 5]\nsquared = list(map(lambda x: x ** 2, data))  # [1, 4, 9, 16, 25]\n\n# Filter selects elements matching condition\npositive_samples = list(filter(\n    lambda x: x['label'] == 'positive', \n    samples\n))\n\n# List comprehension (often preferred)\nsquared = [x ** 2 for x in data]\npositive = [s for s in samples if s['label'] == 'positive']"
+              },
+              {
+                "title": "Decorators for ML",
+                "content": "Decorators add functionality to functions without modifying them. Common uses in ML include timing, caching, and logging:",
+                "code": "import time\nfrom functools import wraps\n\ndef timer(func):\n    \"\"\"Decorator to time function execution.\"\"\"\n    @wraps(func)\n    def wrapper(*args, **kwargs):\n        start = time.perf_counter()\n        result = func(*args, **kwargs)\n        elapsed = time.perf_counter() - start\n        print(f\"{func.__name__} took {elapsed:.4f}s\")\n        return result\n    return wrapper\n\n@timer\ndef train_epoch(model, data):\n    # Training logic here\n    pass\n\n# Usage\ntrain_epoch(model, data)  # Prints: train_epoch took 2.3456s"
+              }
+            ],
+            "keyTakeaways": [
+              "Type hints improve code readability and enable IDE support",
+              "Lambda functions are useful for quick data transformations",
+              "Decorators add reusable functionality like timing and caching"
+            ],
+            "exercises": [
+              {
+                "title": "Preprocessing Pipeline",
+                "description": "Create functions for text preprocessing: lowercase, remove punctuation, tokenize"
+              },
+              {
+                "title": "Custom Decorator",
+                "description": "Write a decorator that logs function inputs and outputs"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Fluent Python",
+                "author": "Luciano Ramalho",
+                "year": 2022
+              },
+              {
+                "title": "Python Type Hints Documentation",
+                "url": "https://docs.python.org/3/library/typing.html"
+              }
+            ]
+          }
+        },
+        {
+          "id": "py-oop",
+          "title": "Object-Oriented Programming for AI",
+          "duration": "60 min",
+          "content": {
+            "overview": "Object-oriented programming (OOP) is essential for building maintainable AI systems. PyTorch and TensorFlow both use OOP extensively\u2014models are classes, layers are objects, and training loops use polymorphism.",
+            "sections": [
+              {
+                "title": "Classes and Objects",
+                "content": "In AI frameworks, models are typically implemented as classes:",
+                "code": "class NeuralNetwork:\n    \"\"\"A simple neural network implementation.\"\"\"\n    \n    def __init__(self, input_size: int, hidden_size: int, output_size: int):\n        self.input_size = input_size\n        self.hidden_size = hidden_size\n        self.output_size = output_size\n        \n        # Initialize weights\n        self.W1 = np.random.randn(input_size, hidden_size) * 0.01\n        self.W2 = np.random.randn(hidden_size, output_size) * 0.01\n        self.b1 = np.zeros((1, hidden_size))\n        self.b2 = np.zeros((1, output_size))\n    \n    def forward(self, X: np.ndarray) -> np.ndarray:\n        \"\"\"Forward pass through the network.\"\"\"\n        self.z1 = X @ self.W1 + self.b1\n        self.a1 = np.maximum(0, self.z1)  # ReLU\n        self.z2 = self.a1 @ self.W2 + self.b2\n        return self.softmax(self.z2)\n    \n    @staticmethod\n    def softmax(x: np.ndarray) -> np.ndarray:\n        exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))\n        return exp_x / exp_x.sum(axis=1, keepdims=True)"
+              },
+              {
+                "title": "Inheritance and Polymorphism",
+                "content": "Inheritance enables code reuse. Different model architectures can share common functionality:",
+                "code": "from abc import ABC, abstractmethod\n\nclass BaseModel(ABC):\n    \"\"\"Abstract base class for all models.\"\"\"\n    \n    def __init__(self, name: str):\n        self.name = name\n        self.is_trained = False\n    \n    @abstractmethod\n    def fit(self, X, y):\n        \"\"\"Train the model.\"\"\"\n        pass\n    \n    @abstractmethod\n    def predict(self, X):\n        \"\"\"Make predictions.\"\"\"\n        pass\n    \n    def save(self, path: str):\n        \"\"\"Save model to disk.\"\"\"\n        import pickle\n        with open(path, 'wb') as f:\n            pickle.dump(self, f)\n\nclass LinearRegression(BaseModel):\n    \"\"\"Linear regression implementation.\"\"\"\n    \n    def __init__(self):\n        super().__init__('LinearRegression')\n        self.weights = None\n    \n    def fit(self, X, y):\n        # Add bias term\n        X_b = np.c_[np.ones(len(X)), X]\n        # Normal equation\n        self.weights = np.linalg.inv(X_b.T @ X_b) @ X_b.T @ y\n        self.is_trained = True\n        return self\n    \n    def predict(self, X):\n        X_b = np.c_[np.ones(len(X)), X]\n        return X_b @ self.weights"
+              },
+              {
+                "title": "Data Classes for Configurations",
+                "content": "Python's dataclasses are perfect for ML configurations and experiment tracking:",
+                "code": "from dataclasses import dataclass, field\nfrom typing import List\n\n@dataclass\nclass TrainingConfig:\n    \"\"\"Configuration for model training.\"\"\"\n    model_name: str\n    learning_rate: float = 0.001\n    batch_size: int = 32\n    epochs: int = 100\n    hidden_layers: List[int] = field(default_factory=lambda: [128, 64])\n    dropout: float = 0.1\n    \n    def __post_init__(self):\n        # Validation\n        if self.learning_rate <= 0:\n            raise ValueError(\"Learning rate must be positive\")\n\n# Usage\nconfig = TrainingConfig(\n    model_name='sentiment_classifier',\n    learning_rate=0.0001,\n    epochs=50\n)\nprint(config)  # Pretty printed"
+              }
+            ],
+            "keyTakeaways": [
+              "AI frameworks like PyTorch use classes to define models",
+              "Abstract base classes enforce consistent interfaces",
+              "Dataclasses simplify configuration management"
+            ],
+            "exercises": [
+              {
+                "title": "Custom Model Class",
+                "description": "Implement a KNearestNeighbors class with fit() and predict() methods"
+              },
+              {
+                "title": "Experiment Config",
+                "description": "Create a dataclass for experiment configuration with validation"
+              }
+            ],
+            "sources": [
+              {
+                "title": "PyTorch Documentation - Modules",
+                "url": "https://pytorch.org/docs/stable/nn.html"
+              },
+              {
+                "title": "Python dataclasses",
+                "url": "https://docs.python.org/3/library/dataclasses.html"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "numpy-pandas",
+      "title": "NumPy & Pandas for Data Science",
+      "lessons": [
+        {
+          "id": "numpy-basics",
+          "title": "NumPy: The Foundation of Scientific Python",
+          "duration": "60 min",
+          "content": {
+            "overview": "NumPy (Numerical Python) is the fundamental package for scientific computing in Python. It provides support for large, multi-dimensional arrays and matrices, along with a vast collection of mathematical functions. All major AI frameworks build upon NumPy's array interface.",
+            "sections": [
+              {
+                "title": "Understanding NumPy Arrays",
+                "content": "NumPy arrays are the backbone of data representation in ML. Unlike Python lists, they store homogeneous data in contiguous memory blocks, enabling fast vectorized operations:",
+                "code": "import numpy as np\n\n# Creating arrays\narr_1d = np.array([1, 2, 3, 4, 5])\narr_2d = np.array([[1, 2, 3], [4, 5, 6]])\n\n# Array from functions\nzeros = np.zeros((3, 4))           # 3x4 matrix of zeros\nones = np.ones((2, 3))             # 2x3 matrix of ones\nidentity = np.eye(4)               # 4x4 identity matrix\nrandom = np.random.randn(3, 3)     # Standard normal distribution\n\n# Ranges\nsequence = np.arange(0, 10, 2)     # [0, 2, 4, 6, 8]\nlinspace = np.linspace(0, 1, 5)    # [0, 0.25, 0.5, 0.75, 1]\n\n# Array properties\nprint(f\"Shape: {arr_2d.shape}\")    # (2, 3)\nprint(f\"Dtype: {arr_2d.dtype}\")    # int64\nprint(f\"Size: {arr_2d.size}\")      # 6"
+              },
+              {
+                "title": "Vectorized Operations",
+                "content": "Vectorization is the key to fast numerical computing. Operations are applied element-wise without explicit loops:",
+                "code": "# Vectorized math (100x faster than loops)\na = np.array([1, 2, 3, 4])\nb = np.array([10, 20, 30, 40])\n\n# Element-wise operations\nsum_ab = a + b         # [11, 22, 33, 44]\nproduct = a * b        # [10, 40, 90, 160]\nsquared = a ** 2       # [1, 4, 9, 16]\n\n# Universal functions (ufuncs)\nsqrt = np.sqrt(a)      # [1, 1.414, 1.732, 2]\nexp = np.exp(a)        # [2.718, 7.389, 20.086, 54.598]\nlog = np.log(a)        # [0, 0.693, 1.099, 1.386]\n\n# Aggregations\nprint(f\"Sum: {a.sum()}\")       # 10\nprint(f\"Mean: {a.mean()}\")     # 2.5\nprint(f\"Std: {a.std()}\")       # 1.118\nprint(f\"Max: {a.max()}\")       # 4"
+              },
+              {
+                "title": "Broadcasting",
+                "content": "Broadcasting allows operations between arrays of different shapes, automatically expanding smaller arrays:",
+                "code": "# Broadcasting examples\nmatrix = np.array([[1, 2, 3],\n                   [4, 5, 6],\n                   [7, 8, 9]])\n\n# Scalar broadcasting\nmatrix_scaled = matrix * 2  # Multiply each element by 2\n\n# 1D to 2D broadcasting\nrow_vector = np.array([1, 0, 1])\nresult = matrix + row_vector  # Add to each row\n# [[2, 2, 4],\n#  [5, 5, 7],\n#  [8, 8, 10]]\n\n# Column broadcasting\ncol_vector = np.array([[10], [20], [30]])\nresult = matrix + col_vector  # Add to each column\n\n# Common ML pattern: subtract mean per feature\ndata = np.random.randn(100, 5)  # 100 samples, 5 features\nmean = data.mean(axis=0)        # Mean of each column\ncentered = data - mean          # Broadcast subtract"
+              },
+              {
+                "title": "Indexing and Slicing",
+                "content": "Efficient data access is crucial for preprocessing and batching:",
+                "code": "arr = np.arange(20).reshape(4, 5)\n# [[ 0,  1,  2,  3,  4],\n#  [ 5,  6,  7,  8,  9],\n#  [10, 11, 12, 13, 14],\n#  [15, 16, 17, 18, 19]]\n\n# Basic slicing\nrow = arr[1, :]           # [5, 6, 7, 8, 9]\ncol = arr[:, 2]           # [2, 7, 12, 17]\nsubset = arr[1:3, 2:4]    # [[7, 8], [12, 13]]\n\n# Boolean indexing (filtering)\nmask = arr > 10\nfiltered = arr[mask]       # [11, 12, 13, 14, 15, 16, 17, 18, 19]\n\n# Fancy indexing\nindices = [0, 2, 3]\nselected_rows = arr[indices]  # Rows 0, 2, 3\n\n# Common ML pattern: train/test split\nnp.random.seed(42)\nindices = np.random.permutation(len(arr))\ntrain_idx = indices[:3]\ntest_idx = indices[3:]"
+              }
+            ],
+            "keyTakeaways": [
+              "NumPy arrays are faster than Python lists due to contiguous memory and vectorization",
+              "Broadcasting enables operations between arrays of different shapes",
+              "Boolean indexing is powerful for filtering data"
+            ],
+            "exercises": [
+              {
+                "title": "Matrix Operations",
+                "description": "Create two random matrices and compute their dot product, element-wise product, and sum along each axis"
+              },
+              {
+                "title": "Data Normalization",
+                "description": "Normalize a dataset to have zero mean and unit variance using broadcasting"
+              }
+            ],
+            "sources": [
+              {
+                "title": "NumPy User Guide",
+                "url": "https://numpy.org/doc/stable/user/"
+              },
+              {
+                "title": "From Python to NumPy",
+                "author": "Nicolas Rougier",
+                "url": "https://www.labri.fr/perso/nrougier/from-python-to-numpy/"
+              }
+            ]
+          }
+        },
+        {
+          "id": "pandas-basics",
+          "title": "Pandas for Data Manipulation",
+          "duration": "60 min",
+          "content": {
+            "overview": "Pandas provides high-performance, easy-to-use data structures for data analysis. The DataFrame is the primary structure, representing tabular data with labeled rows and columns\u2014essential for loading, cleaning, and transforming datasets.",
+            "sections": [
+              {
+                "title": "DataFrames and Series",
+                "content": "DataFrames are 2D labeled data structures with columns of potentially different types:",
+                "code": "import pandas as pd\n\n# Creating DataFrames\ndf = pd.DataFrame({\n    'name': ['Alice', 'Bob', 'Charlie', 'Diana'],\n    'age': [25, 30, 35, 28],\n    'salary': [50000, 60000, 75000, 55000],\n    'department': ['Engineering', 'Marketing', 'Engineering', 'Sales']\n})\n\n# From CSV (most common in ML)\ndf = pd.read_csv('data/train.csv')\n\n# From JSON\ndf = pd.read_json('data/samples.json')\n\n# Basic info\nprint(df.shape)        # (rows, columns)\nprint(df.columns)      # Column names\nprint(df.dtypes)       # Data types\nprint(df.describe())   # Statistical summary\nprint(df.head())       # First 5 rows"
+              },
+              {
+                "title": "Selection and Filtering",
+                "content": "Pandas provides powerful selection mechanisms for extracting and filtering data:",
+                "code": "# Column selection\nnames = df['name']              # Single column (Series)\nsubset = df[['name', 'age']]    # Multiple columns (DataFrame)\n\n# Row selection\nfirst_row = df.iloc[0]          # By integer index\nrows_1_3 = df.iloc[1:4]         # Slice by index\nby_label = df.loc[0]            # By label\n\n# Boolean filtering\neng_team = df[df['department'] == 'Engineering']\nhigh_salary = df[df['salary'] > 55000]\n\n# Multiple conditions\nsenior_eng = df[(df['department'] == 'Engineering') & (df['age'] > 30)]\n\n# Query method (more readable)\nresult = df.query('age > 25 and department == \"Engineering\"')\n\n# Filter with isin\nselected_depts = df[df['department'].isin(['Engineering', 'Sales'])]"
+              },
+              {
+                "title": "Data Cleaning",
+                "content": "Real-world data is messy. Pandas provides tools for handling missing values, duplicates, and type conversions:",
+                "code": "# Handling missing values\ndf.isna().sum()                    # Count missing per column\ndf.dropna()                        # Drop rows with any missing\ndf.dropna(subset=['age'])          # Drop only if 'age' is missing\ndf.fillna(0)                       # Fill missing with 0\ndf['age'].fillna(df['age'].mean()) # Fill with mean\n\n# Remove duplicates\ndf.drop_duplicates()\ndf.drop_duplicates(subset=['name'], keep='first')\n\n# Type conversion\ndf['age'] = df['age'].astype(int)\ndf['date'] = pd.to_datetime(df['date'])\n\n# String operations\ndf['name_lower'] = df['name'].str.lower()\ndf['name_len'] = df['name'].str.len()\n\n# Apply custom function\ndf['age_group'] = df['age'].apply(\n    lambda x: 'young' if x < 30 else 'senior'\n)"
+              },
+              {
+                "title": "Grouping and Aggregation",
+                "content": "GroupBy operations are essential for feature engineering and data analysis:",
+                "code": "# Group by single column\ngrouped = df.groupby('department')\n\n# Aggregations\ndf.groupby('department')['salary'].mean()\ndf.groupby('department')['salary'].agg(['mean', 'std', 'count'])\n\n# Multiple aggregations\nagg_result = df.groupby('department').agg({\n    'salary': ['mean', 'max'],\n    'age': 'mean'\n})\n\n# Group by multiple columns\ndf.groupby(['department', 'age_group'])['salary'].mean()\n\n# Transform (preserves original shape)\ndf['dept_avg_salary'] = df.groupby('department')['salary'].transform('mean')\ndf['salary_vs_dept'] = df['salary'] - df['dept_avg_salary']\n\n# Pivot tables\npivot = df.pivot_table(\n    values='salary',\n    index='department',\n    columns='age_group',\n    aggfunc='mean'\n)"
+              }
+            ],
+            "keyTakeaways": [
+              "DataFrames are the go-to structure for tabular data in ML",
+              "Boolean indexing enables powerful filtering",
+              "GroupBy operations are essential for feature engineering"
+            ],
+            "exercises": [
+              {
+                "title": "Data Cleaning Pipeline",
+                "description": "Load a CSV, handle missing values, remove duplicates, and convert types"
+              },
+              {
+                "title": "Feature Engineering",
+                "description": "Create new features using groupby transformations and apply functions"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Pandas User Guide",
+                "url": "https://pandas.pydata.org/docs/user_guide/"
+              },
+              {
+                "title": "Python for Data Analysis",
+                "author": "Wes McKinney",
+                "year": 2022
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "advanced-python",
+      "title": "Advanced Python for AI",
+      "lessons": [
+        {
+          "id": "generators-iterators",
+          "title": "Generators and Iterators for Large Datasets",
+          "duration": "45 min",
+          "content": {
+            "overview": "When working with datasets too large to fit in memory, generators provide a memory-efficient solution. They generate values on-the-fly, enabling processing of massive datasets, streaming data, and efficient batching for training.",
+            "sections": [
+              {
+                "title": "Understanding Generators",
+                "content": "Generators are functions that yield values one at a time instead of returning all at once:",
+                "code": "# Regular function - loads all data in memory\ndef get_all_data(n):\n    return [i ** 2 for i in range(n)]  # Creates full list\n\n# Generator - produces values on demand\ndef generate_data(n):\n    for i in range(n):\n        yield i ** 2  # Yields one value at a time\n\n# Memory comparison\nimport sys\nlist_data = get_all_data(1000000)\ngen_data = generate_data(1000000)\n\nprint(f\"List size: {sys.getsizeof(list_data)} bytes\")  # ~8 MB\nprint(f\"Generator size: {sys.getsizeof(gen_data)} bytes\")  # ~120 bytes"
+              },
+              {
+                "title": "Data Loader Pattern",
+                "content": "Generators are perfect for creating custom data loaders for ML training:",
+                "code": "import numpy as np\nfrom pathlib import Path\n\ndef batch_generator(data_path: str, batch_size: int = 32):\n    \"\"\"Generate batches of data from a large file.\"\"\"\n    data = np.load(data_path, mmap_mode='r')  # Memory-mapped\n    n_samples = len(data)\n    indices = np.random.permutation(n_samples)\n    \n    for start in range(0, n_samples, batch_size):\n        batch_indices = indices[start:start + batch_size]\n        yield data[batch_indices]\n\ndef image_generator(image_dir: str, batch_size: int = 32):\n    \"\"\"Generate batches of images from a directory.\"\"\"\n    image_paths = list(Path(image_dir).glob('*.jpg'))\n    np.random.shuffle(image_paths)\n    \n    batch = []\n    for path in image_paths:\n        img = load_and_preprocess(path)\n        batch.append(img)\n        \n        if len(batch) == batch_size:\n            yield np.array(batch)\n            batch = []\n    \n    if batch:  # Remaining samples\n        yield np.array(batch)\n\n# Usage\nfor batch in batch_generator('train_data.npy', batch_size=64):\n    train_step(model, batch)"
+              },
+              {
+                "title": "Generator Expressions",
+                "content": "Generator expressions provide a concise syntax for simple generators:",
+                "code": "# List comprehension (creates full list)\nsquares_list = [x**2 for x in range(1000000)]  # 8 MB\n\n# Generator expression (lazy evaluation)\nsquares_gen = (x**2 for x in range(1000000))   # 120 bytes\n\n# Useful for chaining operations\ndata = [1, -2, 3, -4, 5]\npositive = (x for x in data if x > 0)\ndoubled = (x * 2 for x in positive)\nresult = sum(doubled)  # Computes lazily: 18\n\n# Reading large files\ndef process_large_file(filepath):\n    with open(filepath) as f:\n        lines = (line.strip() for line in f)\n        non_empty = (line for line in lines if line)\n        for line in non_empty:\n            yield process_line(line)"
+              }
+            ],
+            "keyTakeaways": [
+              "Generators produce values on-demand, saving memory",
+              "Use generators for data loaders and processing large datasets",
+              "Generator expressions provide concise syntax for simple cases"
+            ],
+            "exercises": [
+              {
+                "title": "Custom Data Loader",
+                "description": "Create a generator that yields batches of (X, y) tuples for training"
+              },
+              {
+                "title": "Infinite Generator",
+                "description": "Create a generator that yields augmented samples indefinitely for training"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Python Generators",
+                "url": "https://docs.python.org/3/howto/functional.html#generators"
+              },
+              {
+                "title": "PyTorch DataLoader",
+                "url": "https://pytorch.org/docs/stable/data.html"
+              }
+            ]
+          }
+        },
+        {
+          "id": "async-python",
+          "title": "Async Python for AI Applications",
+          "duration": "45 min",
+          "content": {
+            "overview": "Asynchronous programming enables efficient I/O-bound operations like API calls to LLMs, fetching datasets, and serving model predictions. Understanding async is essential for building production AI applications.",
+            "sections": [
+              {
+                "title": "Async Basics",
+                "content": "Async functions run concurrently, allowing other code to execute while waiting for I/O:",
+                "code": "import asyncio\nimport aiohttp\n\nasync def fetch_embedding(session, text: str) -> list:\n    \"\"\"Fetch embedding from OpenAI API.\"\"\"\n    url = \"https://api.openai.com/v1/embeddings\"\n    payload = {\n        \"model\": \"text-embedding-3-small\",\n        \"input\": text\n    }\n    async with session.post(url, json=payload) as response:\n        data = await response.json()\n        return data['data'][0]['embedding']\n\nasync def embed_batch(texts: list[str]) -> list:\n    \"\"\"Embed multiple texts concurrently.\"\"\"\n    async with aiohttp.ClientSession() as session:\n        tasks = [fetch_embedding(session, text) for text in texts]\n        embeddings = await asyncio.gather(*tasks)\n        return embeddings\n\n# Run async function\ntexts = [\"Hello world\", \"Machine learning\", \"Python programming\"]\nembeddings = asyncio.run(embed_batch(texts))"
+              },
+              {
+                "title": "Async for LLM Applications",
+                "content": "Async is crucial for building responsive LLM applications:",
+                "code": "import asyncio\nfrom openai import AsyncOpenAI\n\nclient = AsyncOpenAI()\n\nasync def chat_completion(prompt: str) -> str:\n    \"\"\"Get completion from GPT-4.\"\"\"\n    response = await client.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\"role\": \"user\", \"content\": prompt}]\n    )\n    return response.choices[0].message.content\n\nasync def parallel_completions(prompts: list[str]) -> list[str]:\n    \"\"\"Process multiple prompts concurrently.\"\"\"\n    tasks = [chat_completion(prompt) for prompt in prompts]\n    return await asyncio.gather(*tasks)\n\nasync def streaming_response(prompt: str):\n    \"\"\"Stream response tokens.\"\"\"\n    stream = await client.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\"role\": \"user\", \"content\": prompt}],\n        stream=True\n    )\n    async for chunk in stream:\n        if chunk.choices[0].delta.content:\n            print(chunk.choices[0].delta.content, end=\"\")"
+              },
+              {
+                "title": "Rate Limiting and Semaphores",
+                "content": "Control concurrency to respect API rate limits:",
+                "code": "import asyncio\n\nclass RateLimiter:\n    \"\"\"Rate limiter for API calls.\"\"\"\n    \n    def __init__(self, max_concurrent: int = 10):\n        self.semaphore = asyncio.Semaphore(max_concurrent)\n    \n    async def call(self, coro):\n        async with self.semaphore:\n            return await coro\n\n# Usage\nlimiter = RateLimiter(max_concurrent=5)\n\nasync def process_all(items):\n    tasks = [\n        limiter.call(process_item(item))\n        for item in items\n    ]\n    return await asyncio.gather(*tasks)\n\n# With retry logic\nasync def with_retry(coro, max_retries=3):\n    for attempt in range(max_retries):\n        try:\n            return await coro\n        except Exception as e:\n            if attempt == max_retries - 1:\n                raise\n            await asyncio.sleep(2 ** attempt)  # Exponential backoff"
+              }
+            ],
+            "keyTakeaways": [
+              "Async enables concurrent I/O operations for faster processing",
+              "Use asyncio.gather() for parallel API calls",
+              "Implement rate limiting with semaphores for production use"
+            ],
+            "exercises": [
+              {
+                "title": "Batch Embeddings",
+                "description": "Create an async function to embed 100 texts concurrently with rate limiting"
+              },
+              {
+                "title": "Streaming Chat",
+                "description": "Build a streaming chat interface using async generators"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Python asyncio documentation",
+                "url": "https://docs.python.org/3/library/asyncio.html"
+              },
+              {
+                "title": "OpenAI Python SDK",
+                "url": "https://github.com/openai/openai-python"
+              }
+            ]
+          }
+        },
+        {
+          "id": "python-ai-quiz",
+          "title": "Python for AI Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "id": "python-ai-benefits",
+              "question": "Which of the following is NOT a primary reason Python is dominant in AI?",
+              "options": [
+                "Rich ecosystem of libraries (NumPy, PyTorch)",
+                "Readable and concise syntax",
+                "Fastest raw execution speed compared to C++",
+                "Strong community support"
+              ],
+              "correctAnswer": 2,
+              "explanation": "Python is interpreted and generally slower than C++ in raw execution. Its speed in AI comes from optimized C/C++ backends used by libraries like NumPy and PyTorch."
+            },
+            {
+              "id": "numpy-arrays",
+              "question": "What is a key advantage of NumPy arrays over standard Python lists?",
+              "options": [
+                "They can hold mixed data types",
+                "They support vectorized operations and are memory efficient",
+                "They are built-in to the Python standard library",
+                "They are slower but more flexible"
+              ],
+              "correctAnswer": 1,
+              "explanation": "NumPy arrays store data in contiguous memory blocks, allowing for SIMD vectorization and significantly faster numerical computations compared to lists."
+            },
+            {
+              "id": "pandas-dataframe",
+              "question": "Which Pandas data structure is primarily used for 2D tabular data?",
+              "options": [
+                "Series",
+                "DataFrame",
+                "Panel",
+                "Tensor"
+              ],
+              "correctAnswer": 1,
+              "explanation": "The DataFrame is the primary 2D labeled data structure in Pandas, similar to a SQL table or Excel spreadsheet."
+            },
+            {
+              "id": "generators",
+              "question": "Why are Python generators useful for training AI models on large datasets?",
+              "options": [
+                "They load the entire dataset into RAM at once",
+                "They yield data one batch at a time, saving memory",
+                "They automatically parallelize code on GPUs",
+                "They compress the data on disk"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Generators produce values lazily (on demand), allowing you to iterate over massive datasets without loading everything into memory simultaneously."
+            },
+            {
+              "id": "async-io",
+              "question": "What is the main benefit of using `asyncio` in AI applications?",
+              "options": [
+                "It makes the model training faster",
+                "It allows concurrent handling of I/O-bound tasks like API calls",
+                "It replaces the need for GPUs",
+                "It automatically optimizes hyperparameters"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Asyncio enables concurrent execution, which is ideal for I/O-bound operations such as making multiple API requests to LLMs or fetching data without blocking the main thread."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "meta": {
+    "title": "AI Learning Path",
+    "description": "Structured 5-level progression from beginner to production-ready AI engineer",
+    "lastUpdated": "2025-12-26"
+  },
+  "levels": [
+    {
+      "id": "foundations",
+      "level": 1,
+      "title": "Foundations",
+      "subtitle": "Build your base",
+      "icon": "🌱",
+      "color": "#22c55e",
+      "duration": "4-6 weeks",
+      "description": "Master the essential programming and math foundations needed for AI/ML",
+      "outcomes": [
+        "Python proficiency for data science",
+        "Basic linear algebra and statistics",
+        "Data manipulation with pandas",
+        "Introduction to machine learning concepts"
+      ],
+      "sections": [
+        {
+          "title": "Python Essentials",
+          "topics": ["Variables & Data Types", "Control Flow", "Functions & Classes", "Error Handling", "File I/O"]
+        },
+        {
+          "title": "Math Foundations",
+          "topics": ["Linear Algebra Basics", "Probability & Statistics", "Calculus Intuition", "Optimization Concepts"]
+        },
+        {
+          "title": "Data Handling",
+          "topics": ["NumPy Arrays", "Pandas DataFrames", "Data Cleaning", "Exploratory Analysis", "Visualization"]
+        }
+      ],
+      "resources": [
+        {"type": "course", "title": "Python Fundamentals for AI", "id": "python-ai"},
+        {"type": "course", "title": "Mathematics for AI", "id": "math-for-ai"},
+        {"type": "course", "title": "Data Science Fundamentals", "id": "data-science"},
+        {"type": "tool", "title": "Jupyter Notebooks", "id": "jupyter"},
+        {"type": "graph", "title": "Python Ecosystem", "id": "python-ecosystem"}
+      ],
+      "projects": [
+        "Build a data analysis pipeline",
+        "Create visualizations with matplotlib",
+        "Implement basic statistical analysis"
+      ]
+    },
+    {
+      "id": "ml-basics",
+      "level": 2,
+      "title": "ML Basics",
+      "subtitle": "Classical machine learning",
+      "icon": "📊",
+      "color": "#3b82f6",
+      "duration": "6-8 weeks",
+      "description": "Learn traditional machine learning algorithms and techniques",
+      "outcomes": [
+        "Understand supervised and unsupervised learning",
+        "Implement classification and regression models",
+        "Feature engineering best practices",
+        "Model evaluation and validation"
+      ],
+      "sections": [
+        {
+          "title": "Supervised Learning",
+          "topics": ["Linear Regression", "Logistic Regression", "Decision Trees", "Random Forests", "SVM", "KNN"]
+        },
+        {
+          "title": "Unsupervised Learning",
+          "topics": ["K-Means Clustering", "Hierarchical Clustering", "PCA", "Dimensionality Reduction"]
+        },
+        {
+          "title": "ML Engineering",
+          "topics": ["Feature Engineering", "Cross-Validation", "Hyperparameter Tuning", "Model Selection", "Evaluation Metrics"]
+        }
+      ],
+      "resources": [
+        {"type": "course", "title": "Machine Learning Fundamentals", "id": "ml-fundamentals"},
+        {"type": "course", "title": "AI Ethics & Safety", "id": "ai-ethics"},
+        {"type": "tool", "title": "scikit-learn", "id": "sklearn"},
+        {"type": "graph", "title": "ML Algorithms", "id": "ml-algorithms"},
+        {"type": "graph", "title": "AI Ethics Framework", "id": "ai-ethics-framework"}
+      ],
+      "projects": [
+        "Build a spam classifier",
+        "Create a customer segmentation model",
+        "Predict house prices with regression"
+      ]
+    },
+    {
+      "id": "deep-learning",
+      "level": 3,
+      "title": "Deep Learning",
+      "subtitle": "Neural networks mastery",
+      "icon": "🧠",
+      "color": "#8b5cf6",
+      "duration": "8-10 weeks",
+      "description": "Master neural networks from basics to advanced architectures",
+      "outcomes": [
+        "Build and train neural networks from scratch",
+        "Understand CNNs, RNNs, and Transformers",
+        "Deep learning for computer vision and NLP",
+        "GPU training and optimization"
+      ],
+      "sections": [
+        {
+          "title": "Neural Network Fundamentals",
+          "topics": ["Perceptrons", "Activation Functions", "Backpropagation", "Optimization", "Regularization"]
+        },
+        {
+          "title": "Architectures",
+          "topics": ["CNNs for Vision", "RNNs & LSTMs", "Attention Mechanism", "Transformer Architecture", "Vision Transformers"]
+        },
+        {
+          "title": "Practical Deep Learning",
+          "topics": ["PyTorch/TensorFlow", "Transfer Learning", "Data Augmentation", "Mixed Precision", "Distributed Training"]
+        }
+      ],
+      "resources": [
+        {"type": "course", "title": "Deep Learning with PyTorch", "id": "deep-learning-pytorch"},
+        {"type": "course", "title": "Computer Vision with PyTorch", "id": "computer-vision"},
+        {"type": "course", "title": "NLP & Transformers", "id": "nlp-transformers"},
+        {"type": "tool", "title": "PyTorch", "id": "pytorch"},
+        {"type": "graph", "title": "Neural Networks", "id": "neural-networks"},
+        {"type": "graph", "title": "Computer Vision", "id": "computer-vision"},
+        {"type": "graph", "title": "Transformers Deep Dive", "id": "transformers-deep-dive"}
+      ],
+      "projects": [
+        "Build an image classifier",
+        "Create a sentiment analysis model",
+        "Implement attention from scratch"
+      ]
+    },
+    {
+      "id": "llms-genai",
+      "level": 4,
+      "title": "LLMs & GenAI",
+      "subtitle": "Generative AI expertise",
+      "icon": "🤖",
+      "color": "#f59e0b",
+      "duration": "8-12 weeks",
+      "description": "Master large language models and generative AI technologies",
+      "outcomes": [
+        "Understand transformer architecture deeply",
+        "Master prompt engineering techniques",
+        "Build RAG applications",
+        "Fine-tune models for specific tasks"
+      ],
+      "sections": [
+        {
+          "title": "LLM Foundations",
+          "topics": ["Tokenization", "Embeddings", "Attention Mechanisms", "Pre-training", "RLHF"]
+        },
+        {
+          "title": "Prompt Engineering",
+          "topics": ["Zero/Few-shot Learning", "Chain of Thought", "System Prompts", "Prompt Optimization", "Structured Outputs"]
+        },
+        {
+          "title": "LLM Applications",
+          "topics": ["RAG Systems", "Vector Databases", "Agents & Tools", "Function Calling", "Evaluation"]
+        },
+        {
+          "title": "Fine-tuning",
+          "topics": ["LoRA/QLoRA", "Instruction Tuning", "PEFT Methods", "Dataset Preparation", "Evaluation"]
+        }
+      ],
+      "resources": [
+        {"type": "course", "title": "Prompt Engineering", "id": "prompt-engineering"},
+        {"type": "course", "title": "RAG Applications", "id": "rag-applications"},
+        {"type": "course", "title": "LLM Fine-tuning", "id": "llm-finetuning"},
+        {"type": "course", "title": "Building AI Agents", "id": "agentic-ai"},
+        {"type": "course", "title": "LLM Evaluation & Testing", "id": "llm-evaluation"},
+        {"type": "course", "title": "Generative AI Applications", "id": "genai-applications"},
+        {"type": "tool", "title": "LangChain", "id": "langchain"},
+        {"type": "tool", "title": "LangGraph", "id": "langgraph"},
+        {"type": "graph", "title": "LLM Ecosystem", "id": "llm-ecosystem"},
+        {"type": "graph", "title": "RAG Architecture", "id": "rag-architecture"},
+        {"type": "graph", "title": "AI Agents", "id": "ai-agents"}
+      ],
+      "projects": [
+        "Build a RAG chatbot",
+        "Create an AI agent with tools",
+        "Fine-tune a model for your domain"
+      ]
+    },
+    {
+      "id": "production",
+      "level": 5,
+      "title": "Production",
+      "subtitle": "Deploy at scale",
+      "icon": "🚀",
+      "color": "#ef4444",
+      "duration": "6-8 weeks",
+      "description": "Deploy, monitor, and scale AI systems in production",
+      "outcomes": [
+        "Build production-grade ML pipelines",
+        "Deploy models with proper MLOps",
+        "Monitor and maintain AI systems",
+        "Scale to millions of requests"
+      ],
+      "sections": [
+        {
+          "title": "MLOps Fundamentals",
+          "topics": ["CI/CD for ML", "Model Versioning", "Experiment Tracking", "Feature Stores", "Data Versioning"]
+        },
+        {
+          "title": "Deployment",
+          "topics": ["Docker", "Kubernetes", "Model Serving", "API Design", "Edge Deployment"]
+        },
+        {
+          "title": "Monitoring & Scaling",
+          "topics": ["Model Monitoring", "Data Drift Detection", "A/B Testing", "Load Balancing", "Cost Optimization"]
+        }
+      ],
+      "resources": [
+        {"type": "course", "title": "MLOps & Model Deployment", "id": "mlops"},
+        {"type": "course", "title": "Angular & Node.js AI Engineering", "id": "angular-node-ai"},
+        {"type": "tool", "title": "MLflow", "id": "mlflow"},
+        {"type": "tool", "title": "Docker", "id": "docker"},
+        {"type": "graph", "title": "MLOps", "id": "mlops-graph"},
+        {"type": "graph", "title": "MLOps Pipeline", "id": "mlops-pipeline"}
+      ],
+      "projects": [
+        "Deploy an ML API with FastAPI",
+        "Set up CI/CD for model training",
+        "Build a model monitoring dashboard"
+      ]
+    }
+  ],
+  "skillsProgression": {
+    "python": [1, 2, 3, 4, 5],
+    "math": [1, 2, 3],
+    "ml": [2, 3, 4],
+    "deep-learning": [3, 4],
+    "llm": [4, 5],
+    "mlops": [5]
+  }
+}

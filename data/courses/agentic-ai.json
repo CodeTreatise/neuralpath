@@ -1,0 +1,427 @@
+{
+  "id": "agentic-ai",
+  "title": "Building AI Agents",
+  "description": "Master the architecture and implementation of autonomous AI agents",
+  "icon": "🤖",
+  "level": "advanced",
+  "duration": "5 weeks",
+  "prerequisites": ["LLM fundamentals", "Prompt Engineering", "Python programming"],
+  "learningOutcomes": [
+    "Understand the core architecture of AI agents",
+    "Implement tool use and function calling patterns",
+    "Build agents with persistent memory systems",
+    "Design and orchestrate multi-agent systems"
+  ],
+  "modules": [
+    {
+      "id": "agent-fundamentals",
+      "title": "Agent Fundamentals",
+      "lessons": [
+        {
+          "id": "what-are-agents",
+          "title": "What Are AI Agents?",
+          "duration": "40 min",
+          "content": {
+            "overview": "AI agents are autonomous systems that use LLMs as reasoning engines to perceive, plan, and act toward goals. Unlike simple chatbots, agents can break down complex tasks, use tools, and iterate until objectives are met.",
+            "sections": [
+              {
+                "title": "The Agent Paradigm",
+                "content": "Traditional LLM applications are reactive: prompt in, response out. Agents are proactive:\n\n**Key characteristics**:\n- **Autonomy**: Make decisions without constant human input\n- **Goal-oriented**: Work toward specific objectives\n- **Tool use**: Interact with external systems\n- **Memory**: Remember past interactions and learn\n- **Reasoning**: Plan and reflect on actions\n\n**The Agent Loop**:\n1. Perceive (gather input/context)\n2. Think (reason about the goal)\n3. Plan (break down into steps)\n4. Act (execute tools/actions)\n5. Observe (check results)\n6. Repeat until goal achieved",
+                "diagram": {
+                  "title": "The Agent Loop",
+                  "code": "flowchart TD\n    A[Goal] --> B[Perceive]\n    B --> C{Think & Plan}\n    C --> D[Act]\n    D --> E[Observe]\n    E --> F{Goal Achieved?}\n    F -->|No| C\n    F -->|Yes| G[Done]\n    \n    style A fill:#6366f1,color:#fff\n    style G fill:#10b981,color:#fff\n    style F fill:#f59e0b,color:#000"
+                },
+                "code": "# Basic Agent Loop\nclass SimpleAgent:\n    def __init__(self, llm, tools, goal):\n        self.llm = llm\n        self.tools = tools\n        self.goal = goal\n        self.memory = []\n    \n    def run(self, max_iterations=10):\n        for i in range(max_iterations):\n            # Think: What should I do next?\n            thought = self.think()\n            \n            # Decide: Is the goal complete?\n            if thought.is_complete:\n                return thought.final_answer\n            \n            # Act: Execute the chosen tool\n            action = thought.next_action\n            result = self.execute(action)\n            \n            # Observe: Store the result\n            self.memory.append({\n                'thought': thought,\n                'action': action,\n                'result': result\n            })\n        \n        return 'Max iterations reached'\n    \n    def think(self):\n        prompt = f\"\"\"\n        Goal: {self.goal}\n        Memory: {self.memory}\n        Available tools: {[t.name for t in self.tools]}\n        \n        What should I do next? If goal is complete, say DONE.\n        \"\"\"\n        return self.llm.generate(prompt)"
+              },
+              {
+                "title": "ReAct: Reasoning + Acting",
+                "content": "ReAct (Reason + Act) is a foundational agent pattern that interleaves reasoning traces with actions:\n\n**Format**:\n- **Thought**: The agent's reasoning\n- **Action**: Tool to call with parameters\n- **Observation**: Result from the tool\n\nThis creates an interpretable chain of reasoning that helps debug agent behavior and improves reliability.",
+                "diagram": {
+                  "title": "ReAct Pattern Flow",
+                  "code": "sequenceDiagram\n    participant U as User\n    participant A as Agent (LLM)\n    participant T as Tools\n    \n    U->>A: Question\n    loop Until Answer Found\n        A->>A: Thought: reasoning...\n        A->>T: Action: tool(params)\n        T->>A: Observation: result\n    end\n    A->>U: Final Answer"
+                },
+                "code": "# ReAct Pattern Example\nREACT_PROMPT = \"\"\"\nAnswer the question using the available tools.\n\nTools:\n- search(query): Search the web\n- calculate(expression): Evaluate math\n- lookup(term): Look up a definition\n\nUse this format:\nThought: [your reasoning about what to do]\nAction: [tool_name(parameters)]\nObservation: [result from the tool]\n... (repeat as needed)\nThought: I now know the answer\nFinal Answer: [your answer]\n\nQuestion: What is the population of France divided by 2?\n\nThought: I need to find France's population first.\nAction: search(\"France population 2024\")\nObservation: France has a population of approximately 68 million.\nThought: Now I need to divide 68 million by 2.\nAction: calculate(68000000 / 2)\nObservation: 34000000\nThought: I now know the answer\nFinal Answer: 34 million (34,000,000)\n\"\"\"\n\ndef run_react_agent(question, tools, llm):\n    messages = [{'role': 'user', 'content': REACT_PROMPT + f'\\nQuestion: {question}'}]\n    \n    while True:\n        response = llm.generate(messages)\n        \n        if 'Final Answer:' in response:\n            return extract_final_answer(response)\n        \n        action = parse_action(response)\n        observation = tools[action.name](**action.params)\n        \n        messages.append({'role': 'assistant', 'content': response})\n        messages.append({'role': 'user', 'content': f'Observation: {observation}'})"
+              },
+              {
+                "title": "Agent Architectures",
+                "content": "Different architectures suit different use cases:\n\n**1. Single Agent**: One LLM handles everything\n- Simple to build, limited capabilities\n- Good for focused tasks\n\n**2. Router Agent**: Dispatches to specialized sub-agents\n- Better at complex, multi-domain tasks\n- Requires good routing logic\n\n**3. Hierarchical Agents**: Manager agents delegate to workers\n- Scales to very complex workflows\n- More overhead, harder to debug\n\n**4. Collaborative Agents**: Peers that communicate\n- Good for creative/adversarial tasks\n- Complex coordination needed",
+                "diagram": {
+                  "title": "Agent Architecture Patterns",
+                  "code": "flowchart TB\n    subgraph Single[\"Single Agent\"]\n        S1[LLM] --> S2[Tools]\n    end\n    \n    subgraph Router[\"Router Agent\"]\n        R1[Router] --> R2[Code Agent]\n        R1 --> R3[Research Agent]\n        R1 --> R4[Math Agent]\n    end\n    \n    subgraph Hierarchical[\"Hierarchical\"]\n        H1[Manager] --> H2[Worker 1]\n        H1 --> H3[Worker 2]\n        H1 --> H4[Worker 3]\n    end\n    \n    subgraph Collab[\"Collaborative\"]\n        C1[Agent A] <--> C2[Agent B]\n        C2 <--> C3[Agent C]\n        C3 <--> C1\n    end"
+                },
+                "code": "# Router Agent Pattern\nclass RouterAgent:\n    def __init__(self, router_llm, specialist_agents):\n        self.router = router_llm\n        self.specialists = specialist_agents  # {'code': CodeAgent, 'research': ResearchAgent, ...}\n    \n    def route(self, query):\n        routing_prompt = f\"\"\"\n        Given the query, which specialist should handle it?\n        Specialists: {list(self.specialists.keys())}\n        Query: {query}\n        \n        Respond with just the specialist name.\n        \"\"\"\n        specialist_name = self.router.generate(routing_prompt).strip()\n        return self.specialists.get(specialist_name)\n    \n    def run(self, query):\n        specialist = self.route(query)\n        if specialist:\n            return specialist.run(query)\n        return 'No suitable specialist found'\n\n# Hierarchical Agent Pattern\nclass ManagerAgent:\n    def __init__(self, llm, worker_agents):\n        self.llm = llm\n        self.workers = worker_agents\n    \n    def decompose_task(self, goal):\n        prompt = f\"Break this goal into subtasks for workers: {goal}\"\n        subtasks = self.llm.generate(prompt)\n        return parse_subtasks(subtasks)\n    \n    def run(self, goal):\n        subtasks = self.decompose_task(goal)\n        results = []\n        for task in subtasks:\n            worker = self.assign_worker(task)\n            result = worker.run(task)\n            results.append(result)\n        return self.synthesize(results)"
+              }
+            ],
+            "keyTakeaways": [
+              "Agents are autonomous, goal-oriented systems with reasoning, tools, and memory",
+              "ReAct pattern interleaves thinking with acting for interpretable agents",
+              "Choose architecture based on task complexity and domain requirements"
+            ],
+            "exercises": [
+              {
+                "title": "Build a ReAct Agent",
+                "description": "Implement a simple ReAct agent with search and calculator tools"
+              },
+              {
+                "title": "Agent Loop Visualization",
+                "description": "Add logging to trace through the agent loop and visualize decision points"
+              }
+            ],
+            "sources": [
+              {"title": "ReAct: Synergizing Reasoning and Acting", "url": "https://arxiv.org/abs/2210.03629"},
+              {"title": "LangChain Agents Documentation", "url": "https://python.langchain.com/docs/modules/agents/"},
+              {"title": "LLM Powered Autonomous Agents - Lilian Weng", "url": "https://lilianweng.github.io/posts/2023-06-23-agent/"}
+            ]
+          }
+        },
+        {
+          "id": "agent-frameworks",
+          "title": "Agent Frameworks Overview",
+          "duration": "35 min",
+          "content": {
+            "overview": "Several frameworks simplify agent development. Understanding their trade-offs helps you choose the right tool for your project.",
+            "sections": [
+              {
+                "title": "LangChain Agents",
+                "content": "LangChain provides flexible building blocks for agents:\n\n**Pros**:\n- Rich ecosystem of tools and integrations\n- Good documentation and community\n- Flexible, composable architecture\n\n**Cons**:\n- Can be verbose for simple use cases\n- Abstractions sometimes hide complexity",
+                "code": "from langchain.agents import create_react_agent, AgentExecutor\nfrom langchain_openai import ChatOpenAI\nfrom langchain.tools import Tool\nfrom langchain import hub\n\n# Define tools\ntools = [\n    Tool(\n        name=\"Search\",\n        func=lambda q: search_api(q),\n        description=\"Search the web for information\"\n    ),\n    Tool(\n        name=\"Calculator\",\n        func=lambda x: eval(x),\n        description=\"Calculate mathematical expressions\"\n    )\n]\n\n# Create agent\nllm = ChatOpenAI(model=\"gpt-4o\")\nprompt = hub.pull(\"hwchase17/react\")\nagent = create_react_agent(llm, tools, prompt)\n\n# Run agent\nexecutor = AgentExecutor(agent=agent, tools=tools, verbose=True)\nresult = executor.invoke({\"input\": \"What is 25% of Apple's market cap?\"})"
+              },
+              {
+                "title": "LangGraph: Stateful Agents",
+                "content": "LangGraph builds agents as state machines with explicit control flow:\n\n**Key concepts**:\n- **StateGraph**: Define agent state and transitions\n- **Nodes**: Processing steps (LLM calls, tool execution)\n- **Edges**: Control flow between nodes\n- **Checkpointing**: Persist state for long-running agents\n\n**Best for**: Complex workflows, human-in-the-loop, production systems",
+                "diagram": {
+                  "title": "LangGraph State Machine",
+                  "code": "stateDiagram-v2\n    [*] --> Reason\n    Reason --> Tool: Call Tool\n    Reason --> End: Done\n    Tool --> Reason: Result\n    End --> [*]"
+                },
+                "code": "from langgraph.graph import StateGraph, END\nfrom typing import TypedDict, Annotated\nimport operator\n\n# Define state\nclass AgentState(TypedDict):\n    messages: Annotated[list, operator.add]\n    next_step: str\n\n# Define nodes\ndef reasoning_node(state):\n    # LLM decides next action\n    response = llm.invoke(state['messages'])\n    return {'messages': [response], 'next_step': parse_next(response)}\n\ndef tool_node(state):\n    # Execute tool based on last message\n    tool_call = state['messages'][-1].tool_calls[0]\n    result = execute_tool(tool_call)\n    return {'messages': [result]}\n\ndef should_continue(state):\n    if state['next_step'] == 'done':\n        return END\n    return 'tool'\n\n# Build graph\nworkflow = StateGraph(AgentState)\nworkflow.add_node('reason', reasoning_node)\nworkflow.add_node('tool', tool_node)\n\nworkflow.set_entry_point('reason')\nworkflow.add_conditional_edges('reason', should_continue)\nworkflow.add_edge('tool', 'reason')\n\n# Compile and run\napp = workflow.compile()\nresult = app.invoke({'messages': [user_message], 'next_step': ''})"
+              },
+              {
+                "title": "CrewAI: Multi-Agent Teams",
+                "content": "CrewAI simplifies building teams of specialized agents:\n\n**Core concepts**:\n- **Agent**: Persona with role, goal, backstory, tools\n- **Task**: Specific work item assigned to an agent\n- **Crew**: Team of agents working together\n- **Process**: How agents collaborate (sequential, hierarchical)",
+                "code": "from crewai import Agent, Task, Crew, Process\n\n# Define agents\nresearcher = Agent(\n    role='Senior Research Analyst',\n    goal='Find comprehensive information on the topic',\n    backstory='Expert researcher with 10 years experience',\n    tools=[search_tool, scrape_tool],\n    llm=llm\n)\n\nwriter = Agent(\n    role='Technical Writer',\n    goal='Create clear, engaging content from research',\n    backstory='Award-winning tech writer',\n    tools=[],\n    llm=llm\n)\n\n# Define tasks\nresearch_task = Task(\n    description='Research the latest developments in AI agents',\n    agent=researcher,\n    expected_output='Detailed research notes with sources'\n)\n\nwriting_task = Task(\n    description='Write a blog post based on the research',\n    agent=writer,\n    expected_output='2000-word blog post in markdown',\n    context=[research_task]  # Uses output from research\n)\n\n# Create and run crew\ncrew = Crew(\n    agents=[researcher, writer],\n    tasks=[research_task, writing_task],\n    process=Process.sequential\n)\n\nresult = crew.kickoff()"
+              },
+              {
+                "title": "OpenAI Assistants API",
+                "content": "OpenAI's managed agent infrastructure:\n\n**Features**:\n- Built-in tools: Code Interpreter, File Search\n- Managed conversation threads\n- Automatic context management\n- No infrastructure to manage\n\n**Trade-offs**:\n- Less flexibility than custom agents\n- Vendor lock-in to OpenAI\n- Cost at scale",
+                "code": "from openai import OpenAI\n\nclient = OpenAI()\n\n# Create an assistant\nassistant = client.beta.assistants.create(\n    name=\"Data Analyst\",\n    instructions=\"You analyze data and create visualizations.\",\n    tools=[\n        {\"type\": \"code_interpreter\"},\n        {\"type\": \"file_search\"}\n    ],\n    model=\"gpt-4o\"\n)\n\n# Create a thread\nthread = client.beta.threads.create()\n\n# Add a message\nclient.beta.threads.messages.create(\n    thread_id=thread.id,\n    role=\"user\",\n    content=\"Analyze this sales data and identify trends\",\n    attachments=[{\"file_id\": file.id, \"tools\": [{\"type\": \"code_interpreter\"}]}]\n)\n\n# Run the assistant\nrun = client.beta.threads.runs.create_and_poll(\n    thread_id=thread.id,\n    assistant_id=assistant.id\n)\n\n# Get results\nif run.status == 'completed':\n    messages = client.beta.threads.messages.list(thread_id=thread.id)\n    print(messages.data[0].content)"
+              }
+            ],
+            "keyTakeaways": [
+              "LangChain: Flexible, composable building blocks",
+              "LangGraph: Explicit state machines for complex flows",
+              "CrewAI: Easy multi-agent team orchestration",
+              "OpenAI Assistants: Managed infrastructure, less flexibility"
+            ],
+            "exercises": [
+              {
+                "title": "Framework Comparison",
+                "description": "Build the same agent in two different frameworks and compare developer experience"
+              }
+            ],
+            "sources": [
+              {"title": "LangGraph Documentation", "url": "https://langchain-ai.github.io/langgraph/"},
+              {"title": "CrewAI Documentation", "url": "https://docs.crewai.com/"},
+              {"title": "OpenAI Assistants API", "url": "https://platform.openai.com/docs/assistants/overview"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "tool-use",
+      "title": "Tool Use & Function Calling",
+      "lessons": [
+        {
+          "id": "function-calling",
+          "title": "Function Calling Fundamentals",
+          "duration": "45 min",
+          "content": {
+            "overview": "Function calling allows LLMs to generate structured outputs that map to real function calls. This is the foundation of tool use in agents.",
+            "sections": [
+              {
+                "title": "How Function Calling Works",
+                "content": "Modern LLMs can output structured function calls instead of plain text:\n\n1. You define available functions with their schemas\n2. LLM decides if/when to call a function\n3. LLM outputs function name + arguments as JSON\n4. You execute the function and return results\n5. LLM incorporates results into its response\n\n**Key insight**: The LLM doesn't execute functions - it generates the call specification for you to execute.",
+                "code": "from openai import OpenAI\n\nclient = OpenAI()\n\n# Define available functions\ntools = [\n    {\n        \"type\": \"function\",\n        \"function\": {\n            \"name\": \"get_weather\",\n            \"description\": \"Get the current weather for a location\",\n            \"parameters\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"location\": {\n                        \"type\": \"string\",\n                        \"description\": \"City and state, e.g. San Francisco, CA\"\n                    },\n                    \"unit\": {\n                        \"type\": \"string\",\n                        \"enum\": [\"celsius\", \"fahrenheit\"],\n                        \"description\": \"Temperature unit\"\n                    }\n                },\n                \"required\": [\"location\"]\n            }\n        }\n    }\n]\n\n# Call the API\nresponse = client.chat.completions.create(\n    model=\"gpt-4o\",\n    messages=[{\"role\": \"user\", \"content\": \"What's the weather in Paris?\"}],\n    tools=tools,\n    tool_choice=\"auto\"  # Let model decide\n)\n\n# Check if model wants to call a function\nif response.choices[0].message.tool_calls:\n    tool_call = response.choices[0].message.tool_calls[0]\n    print(f\"Function: {tool_call.function.name}\")\n    print(f\"Arguments: {tool_call.function.arguments}\")\n    # Output: Function: get_weather, Arguments: {\"location\": \"Paris, France\"}"
+              },
+              {
+                "title": "Executing Function Calls",
+                "content": "After the LLM generates a function call, you must execute it and return the result:",
+                "code": "import json\n\n# Your actual function implementations\ndef get_weather(location: str, unit: str = \"celsius\") -> dict:\n    # In reality, call a weather API\n    return {\"temp\": 22, \"unit\": unit, \"condition\": \"sunny\"}\n\ndef search_database(query: str, limit: int = 10) -> list:\n    # In reality, query your database\n    return [{\"id\": 1, \"title\": \"Result 1\"}, {\"id\": 2, \"title\": \"Result 2\"}]\n\n# Map function names to implementations\nAVAILABLE_FUNCTIONS = {\n    \"get_weather\": get_weather,\n    \"search_database\": search_database\n}\n\ndef execute_function_call(tool_call):\n    \"\"\"Execute a function call from the LLM\"\"\"\n    func_name = tool_call.function.name\n    func_args = json.loads(tool_call.function.arguments)\n    \n    if func_name not in AVAILABLE_FUNCTIONS:\n        return {\"error\": f\"Unknown function: {func_name}\"}\n    \n    try:\n        result = AVAILABLE_FUNCTIONS[func_name](**func_args)\n        return result\n    except Exception as e:\n        return {\"error\": str(e)}\n\ndef run_with_tools(user_message, tools):\n    messages = [{\"role\": \"user\", \"content\": user_message}]\n    \n    while True:\n        response = client.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=messages,\n            tools=tools\n        )\n        \n        msg = response.choices[0].message\n        messages.append(msg)\n        \n        # If no tool calls, we're done\n        if not msg.tool_calls:\n            return msg.content\n        \n        # Execute each tool call\n        for tool_call in msg.tool_calls:\n            result = execute_function_call(tool_call)\n            messages.append({\n                \"role\": \"tool\",\n                \"tool_call_id\": tool_call.id,\n                \"content\": json.dumps(result)\n            })"
+              },
+              {
+                "title": "Parallel Function Calling",
+                "content": "LLMs can request multiple function calls at once for efficiency:\n\n**When parallel calls happen**:\n- Independent information needed (weather in 3 cities)\n- Multiple tools needed for one query\n\n**Handling parallel calls**: Execute all calls, return all results, then let the LLM synthesize.",
+                "code": "def run_with_parallel_tools(user_message, tools):\n    messages = [{\"role\": \"user\", \"content\": user_message}]\n    \n    while True:\n        response = client.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=messages,\n            tools=tools,\n            parallel_tool_calls=True  # Enable parallel calls\n        )\n        \n        msg = response.choices[0].message\n        messages.append(msg)\n        \n        if not msg.tool_calls:\n            return msg.content\n        \n        # Execute ALL tool calls (potentially in parallel)\n        import concurrent.futures\n        \n        with concurrent.futures.ThreadPoolExecutor() as executor:\n            futures = {\n                executor.submit(execute_function_call, tc): tc \n                for tc in msg.tool_calls\n            }\n            \n            for future in concurrent.futures.as_completed(futures):\n                tool_call = futures[future]\n                result = future.result()\n                messages.append({\n                    \"role\": \"tool\",\n                    \"tool_call_id\": tool_call.id,\n                    \"content\": json.dumps(result)\n                })\n\n# Example: \"Compare weather in Tokyo, London, and NYC\"\n# LLM will call get_weather 3 times in parallel"
+              },
+              {
+                "title": "Structured Outputs with Functions",
+                "content": "Use function calling to enforce structured output formats, even when not calling real functions:",
+                "diagram": {
+                  "title": "Structured Output Flow",
+                  "code": "flowchart LR\n    A[Unstructured Text] --> B[LLM]\n    C[JSON Schema] --> B\n    B --> D[Structured JSON]\n    style B fill:#f9f,stroke:#333,stroke-width:2px"
+                },
+                "code": "# Use function calling for structured extraction\nextract_entities_tool = {\n    \"type\": \"function\",\n    \"function\": {\n        \"name\": \"extract_entities\",\n        \"description\": \"Extract structured entities from text\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"people\": {\n                    \"type\": \"array\",\n                    \"items\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"name\": {\"type\": \"string\"},\n                            \"role\": {\"type\": \"string\"},\n                            \"organization\": {\"type\": \"string\"}\n                        }\n                    }\n                },\n                \"dates\": {\n                    \"type\": \"array\",\n                    \"items\": {\"type\": \"string\", \"format\": \"date\"}\n                },\n                \"monetary_values\": {\n                    \"type\": \"array\",\n                    \"items\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"amount\": {\"type\": \"number\"},\n                            \"currency\": {\"type\": \"string\"}\n                        }\n                    }\n                }\n            },\n            \"required\": [\"people\", \"dates\", \"monetary_values\"]\n        }\n    }\n}\n\nresponse = client.chat.completions.create(\n    model=\"gpt-4o\",\n    messages=[{\n        \"role\": \"user\",\n        \"content\": \"Extract entities: John Smith, CEO of Acme Corp, announced a $5M funding round on January 15, 2024.\"\n    }],\n    tools=[extract_entities_tool],\n    tool_choice={\"type\": \"function\", \"function\": {\"name\": \"extract_entities\"}}\n)\n\n# Guaranteed structured output\nentities = json.loads(response.choices[0].message.tool_calls[0].function.arguments)"
+              }
+            ],
+            "keyTakeaways": [
+              "Function calling generates structured calls, you execute them",
+              "Always validate and handle errors in function execution",
+              "Parallel function calls improve efficiency for independent operations",
+              "Use function schemas to enforce structured outputs"
+            ],
+            "exercises": [
+              {
+                "title": "Build a Tool-Using Agent",
+                "description": "Create an agent with 3+ tools that can answer complex questions requiring multiple tool calls"
+              },
+              {
+                "title": "Structured Extractor",
+                "description": "Use function calling to build a reliable entity extractor for a specific domain"
+              }
+            ],
+            "sources": [
+              {"title": "OpenAI Function Calling Guide", "url": "https://platform.openai.com/docs/guides/function-calling"},
+              {"title": "Anthropic Tool Use", "url": "https://docs.anthropic.com/claude/docs/tool-use"}
+            ]
+          }
+        },
+        {
+          "id": "tool-design",
+          "title": "Designing Effective Tools",
+          "duration": "40 min",
+          "content": {
+            "overview": "Well-designed tools make agents more reliable. Poor tool design leads to hallucinations, errors, and wasted tokens.",
+            "sections": [
+              {
+                "title": "Tool Design Principles",
+                "content": "**1. Single Responsibility**: Each tool does one thing well\n❌ `manage_database(action, query, table, ...)` - too broad\n✅ `search_products(query)`, `get_product(id)`, `update_inventory(id, qty)`\n\n**2. Clear Descriptions**: The LLM reads these to decide when to use tools\n❌ `\"Does stuff with users\"`\n✅ `\"Retrieves user profile by email. Returns name, role, and last login. Use when you need user details.\"`\n\n**3. Explicit Parameters**: Type hints and descriptions prevent errors\n\n**4. Predictable Outputs**: Consistent structure helps the LLM reason",
+                "code": "# Well-designed tool definitions\ntools = [\n    {\n        \"type\": \"function\",\n        \"function\": {\n            \"name\": \"search_products\",\n            \"description\": \"\"\"Search the product catalog. Returns up to 10 matching products.\n            Use this when the user asks about products, prices, or availability.\n            Returns: List of {id, name, price, in_stock, category}\"\"\",\n            \"parameters\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"query\": {\n                        \"type\": \"string\",\n                        \"description\": \"Search terms (product name, category, or description keywords)\"\n                    },\n                    \"category\": {\n                        \"type\": \"string\",\n                        \"enum\": [\"electronics\", \"clothing\", \"home\", \"books\"],\n                        \"description\": \"Optional: filter by category\"\n                    },\n                    \"max_price\": {\n                        \"type\": \"number\",\n                        \"description\": \"Optional: maximum price filter\"\n                    },\n                    \"in_stock_only\": {\n                        \"type\": \"boolean\",\n                        \"description\": \"If true, only return products currently in stock\",\n                        \"default\": False\n                    }\n                },\n                \"required\": [\"query\"]\n            }\n        }\n    },\n    {\n        \"type\": \"function\",\n        \"function\": {\n            \"name\": \"get_product_details\",\n            \"description\": \"\"\"Get full details for a specific product by ID.\n            Use AFTER search_products when user wants more info about a specific item.\n            Returns: {id, name, description, price, in_stock, specifications, reviews_summary}\"\"\",\n            \"parameters\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"product_id\": {\n                        \"type\": \"string\",\n                        \"description\": \"The product ID from search results\"\n                    }\n                },\n                \"required\": [\"product_id\"]\n            }\n        }\n    }\n]"
+              },
+              {
+                "title": "Error Handling in Tools",
+                "content": "Tools should return informative errors that help the LLM recover:\n\n**Good error responses**:\n- Explain what went wrong\n- Suggest corrective action\n- Return partial data when possible",
+                "code": "def search_products(query: str, category: str = None, max_price: float = None) -> dict:\n    \"\"\"Search products with robust error handling\"\"\"\n    \n    # Validate inputs\n    if not query or len(query) < 2:\n        return {\n            \"error\": \"Query too short\",\n            \"suggestion\": \"Please provide at least 2 characters for search\",\n            \"results\": []\n        }\n    \n    if category and category not in VALID_CATEGORIES:\n        return {\n            \"error\": f\"Invalid category: {category}\",\n            \"valid_categories\": VALID_CATEGORIES,\n            \"suggestion\": f\"Try one of: {', '.join(VALID_CATEGORIES)}\",\n            \"results\": []\n        }\n    \n    try:\n        results = database.search(query, category, max_price)\n        \n        if not results:\n            return {\n                \"results\": [],\n                \"message\": \"No products found matching your criteria\",\n                \"suggestions\": [\n                    \"Try broader search terms\",\n                    \"Remove category or price filters\",\n                    f\"Similar searches: {get_similar_queries(query)}\"\n                ]\n            }\n        \n        return {\n            \"results\": results,\n            \"total_found\": len(results),\n            \"filters_applied\": {\n                \"category\": category,\n                \"max_price\": max_price\n            }\n        }\n        \n    except DatabaseError as e:\n        return {\n            \"error\": \"Database temporarily unavailable\",\n            \"retry\": True,\n            \"message\": \"Please try again in a moment\"\n        }"
+              },
+              {
+                "title": "Tool Selection Strategies",
+                "content": "Help the LLM choose the right tool:\n\n**1. Use enums for known values**: Prevents invalid inputs\n**2. Describe when NOT to use**: \"Don't use for historical data older than 30 days\"\n**3. Suggest workflows**: \"Use search_products first, then get_product_details\"\n**4. Include examples in descriptions**: \"e.g., query='wireless headphones under $100'\"",
+                "code": "# Tool with usage guidance\nanalytics_tool = {\n    \"type\": \"function\",\n    \"function\": {\n        \"name\": \"get_sales_analytics\",\n        \"description\": \"\"\"Retrieve sales analytics for a date range.\n        \n        USE WHEN: User asks about sales performance, revenue, or trends.\n        DON'T USE: For individual order details (use get_order instead).\n        \n        WORKFLOW:\n        1. Call this for overview data\n        2. Use get_top_products for detailed product breakdown\n        3. Use get_sales_by_region for geographic analysis\n        \n        EXAMPLE: get_sales_analytics(start_date='2024-01-01', end_date='2024-01-31', metric='revenue')\n        \n        Returns: {total, daily_average, trend, top_category, comparison_to_previous}\"\"\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"start_date\": {\n                    \"type\": \"string\",\n                    \"format\": \"date\",\n                    \"description\": \"Start date (YYYY-MM-DD). Max 90 days ago.\"\n                },\n                \"end_date\": {\n                    \"type\": \"string\",\n                    \"format\": \"date\",\n                    \"description\": \"End date (YYYY-MM-DD). Cannot be in the future.\"\n                },\n                \"metric\": {\n                    \"type\": \"string\",\n                    \"enum\": [\"revenue\", \"orders\", \"units\", \"customers\"],\n                    \"description\": \"Primary metric to analyze\"\n                },\n                \"granularity\": {\n                    \"type\": \"string\",\n                    \"enum\": [\"daily\", \"weekly\", \"monthly\"],\n                    \"default\": \"daily\"\n                }\n            },\n            \"required\": [\"start_date\", \"end_date\", \"metric\"]\n        }\n    }\n}"
+              }
+            ],
+            "keyTakeaways": [
+              "Single responsibility: one tool, one purpose",
+              "Descriptions should include when to use AND when not to use",
+              "Return informative errors with recovery suggestions",
+              "Use enums, examples, and workflows to guide tool selection"
+            ],
+            "exercises": [
+              {
+                "title": "Tool Audit",
+                "description": "Review an existing set of tools and identify design improvements"
+              },
+              {
+                "title": "Error Recovery",
+                "description": "Build a tool that gracefully handles various error conditions and guides the LLM to retry"
+              }
+            ],
+            "sources": [
+              {"title": "Building Effective Agents - Anthropic", "url": "https://docs.anthropic.com/claude/docs/building-effective-agents"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "memory-systems",
+      "title": "Agent Memory Systems",
+      "lessons": [
+        {
+          "id": "memory-types",
+          "title": "Types of Agent Memory",
+          "duration": "45 min",
+          "content": {
+            "overview": "Memory allows agents to maintain context, learn from past interactions, and build knowledge over time. Different memory types serve different purposes.",
+            "sections": [
+              {
+                "title": "Memory Architecture Overview",
+                "diagram": {
+                  "title": "Agent Memory Systems",
+                  "code": "flowchart TD\n    Core[Agent Core / LLM]\n    \n    subgraph Memory Systems\n        WM[Working Memory\\n(Context Window)]\n        EM[Episodic Memory\\n(Past Experiences)]\n        SM[Semantic Memory\\n(Knowledge Base)]\n        PM[Procedural Memory\\n(Skills & Tools)]\n    end\n    \n    Core <--> WM\n    Core <--> EM\n    Core <--> SM\n    Core <--> PM"
+                },
+                "content": "Agents benefit from multiple memory types:\n\n**1. Working Memory (Short-term)**\n- Current conversation context\n- Recently retrieved information\n- Limited by context window\n\n**2. Episodic Memory (Experience)**\n- Past conversations and outcomes\n- Successful problem-solving patterns\n- User preferences learned over time\n\n**3. Semantic Memory (Knowledge)**\n- Facts and information\n- Domain knowledge\n- Retrieved from vector stores\n\n**4. Procedural Memory (Skills)**\n- How to use tools effectively\n- Learned workflows\n- Successful prompt patterns",
+                "code": "class AgentMemory:\n    def __init__(self):\n        # Working memory: current conversation\n        self.working_memory = []\n        \n        # Episodic memory: past experiences\n        self.episodic_store = VectorStore('episodic')\n        \n        # Semantic memory: knowledge base\n        self.semantic_store = VectorStore('semantic')\n        \n        # Procedural memory: learned skills\n        self.procedures = {}\n    \n    def add_to_working(self, message):\n        self.working_memory.append(message)\n        self._trim_working_memory()\n    \n    def save_episode(self, conversation, outcome):\n        \"\"\"Save a completed interaction as an episode\"\"\"\n        episode = {\n            'conversation': conversation,\n            'outcome': outcome,\n            'timestamp': datetime.now(),\n            'success': outcome.get('success', False)\n        }\n        self.episodic_store.add(episode)\n    \n    def retrieve_relevant(self, query, memory_type='all'):\n        \"\"\"Retrieve relevant memories for the current context\"\"\"\n        results = []\n        if memory_type in ['all', 'episodic']:\n            results.extend(self.episodic_store.search(query, k=3))\n        if memory_type in ['all', 'semantic']:\n            results.extend(self.semantic_store.search(query, k=5))\n        return results"
+              },
+              {
+                "title": "Conversation Memory Strategies",
+                "content": "Managing conversation history within token limits:\n\n**1. Sliding Window**: Keep last N messages\n**2. Summarization**: Periodically summarize old messages\n**3. Token-based**: Keep messages up to token limit\n**4. Importance-based**: Prioritize key messages",
+                "code": "class ConversationMemory:\n    def __init__(self, max_tokens=4000, summarization_threshold=3000):\n        self.messages = []\n        self.max_tokens = max_tokens\n        self.summarization_threshold = summarization_threshold\n        self.summary = None\n    \n    def add_message(self, role, content):\n        self.messages.append({'role': role, 'content': content})\n        self._manage_memory()\n    \n    def _manage_memory(self):\n        current_tokens = self._count_tokens()\n        \n        if current_tokens > self.summarization_threshold:\n            self._summarize_old_messages()\n    \n    def _summarize_old_messages(self):\n        # Keep last 5 messages, summarize the rest\n        old_messages = self.messages[:-5]\n        recent_messages = self.messages[-5:]\n        \n        summary_prompt = f\"\"\"Summarize this conversation, preserving:\n        - Key decisions made\n        - Important facts mentioned\n        - User preferences expressed\n        - Any commitments or action items\n        \n        Conversation: {old_messages}\"\"\"\n        \n        self.summary = llm.generate(summary_prompt)\n        self.messages = recent_messages\n    \n    def get_context(self):\n        context = []\n        if self.summary:\n            context.append({\n                'role': 'system',\n                'content': f'Previous conversation summary: {self.summary}'\n            })\n        context.extend(self.messages)\n        return context\n\n# Importance-based memory\nclass ImportanceMemory:\n    def __init__(self, max_messages=50):\n        self.messages = []  # (message, importance_score)\n    \n    def add_message(self, message, importance=1.0):\n        self.messages.append((message, importance))\n        self._prune_by_importance()\n    \n    def _calculate_importance(self, message):\n        \"\"\"Score message importance\"\"\"\n        score = 1.0\n        # Boost important patterns\n        if 'decision' in message.lower(): score += 0.5\n        if 'important' in message.lower(): score += 0.3\n        if any(word in message.lower() for word in ['always', 'never', 'must']): score += 0.4\n        if message.startswith('User preference:'): score += 0.5\n        return score"
+              },
+              {
+                "title": "Long-term Memory with Vector Stores",
+                "content": "Vector databases enable semantic search over large memory stores:",
+                "code": "from langchain_community.vectorstores import Chroma\nfrom langchain_openai import OpenAIEmbeddings\nfrom datetime import datetime\n\nclass LongTermMemory:\n    def __init__(self, persist_directory='./memory'):\n        self.embeddings = OpenAIEmbeddings()\n        self.vectorstore = Chroma(\n            persist_directory=persist_directory,\n            embedding_function=self.embeddings,\n            collection_name='agent_memory'\n        )\n    \n    def store_memory(self, content, metadata=None):\n        \"\"\"Store a memory with metadata\"\"\"\n        meta = metadata or {}\n        meta['timestamp'] = datetime.now().isoformat()\n        meta['type'] = meta.get('type', 'general')\n        \n        self.vectorstore.add_texts(\n            texts=[content],\n            metadatas=[meta]\n        )\n    \n    def recall(self, query, k=5, filter_dict=None):\n        \"\"\"Recall relevant memories\"\"\"\n        results = self.vectorstore.similarity_search(\n            query, k=k, filter=filter_dict\n        )\n        return results\n    \n    def recall_with_scores(self, query, k=5):\n        \"\"\"Recall with relevance scores\"\"\"\n        results = self.vectorstore.similarity_search_with_score(query, k=k)\n        return [(doc, score) for doc, score in results if score < 0.8]  # Filter low relevance\n\n# Usage in an agent\nclass MemoryAugmentedAgent:\n    def __init__(self):\n        self.memory = LongTermMemory()\n        self.llm = get_llm()\n    \n    def respond(self, user_input):\n        # Recall relevant memories\n        memories = self.memory.recall(user_input, k=3)\n        memory_context = \"\\n\".join([m.page_content for m in memories])\n        \n        # Generate response with memory context\n        prompt = f\"\"\"Relevant memories:\n        {memory_context}\n        \n        User: {user_input}\n        \n        Respond helpfully, using relevant memories if applicable.\"\"\"\n        \n        response = self.llm.generate(prompt)\n        \n        # Store this interaction\n        self.memory.store_memory(\n            f\"User asked: {user_input}\\nI responded: {response}\",\n            metadata={'type': 'interaction'}\n        )\n        \n        return response"
+              },
+              {
+                "title": "Reflection and Learning",
+                "content": "Agents can improve by reflecting on past experiences:",
+                "code": "class ReflectiveAgent:\n    def __init__(self):\n        self.experiences = []\n        self.learned_patterns = []\n    \n    def reflect(self):\n        \"\"\"Periodically reflect on recent experiences to extract lessons\"\"\"\n        recent = self.experiences[-10:]  # Last 10 interactions\n        \n        reflection_prompt = f\"\"\"Analyze these agent interactions and extract lessons:\n        \n        {json.dumps(recent, indent=2)}\n        \n        For each interaction, identify:\n        1. What worked well\n        2. What could be improved\n        3. Patterns to remember\n        \n        Output as JSON: {{\"lessons\": [...], \"patterns\": [...]}}\"\"\"\n        \n        insights = self.llm.generate(reflection_prompt)\n        self.learned_patterns.extend(json.loads(insights)['patterns'])\n    \n    def apply_lessons(self, current_task):\n        \"\"\"Apply learned patterns to current task\"\"\"\n        relevant_patterns = self._find_relevant_patterns(current_task)\n        \n        augmented_prompt = f\"\"\"Task: {current_task}\n        \n        Lessons from past experience:\n        {relevant_patterns}\n        \n        Apply these lessons while completing the task.\"\"\"\n        \n        return self.llm.generate(augmented_prompt)"
+              }
+            ],
+            "keyTakeaways": [
+              "Different memory types serve different purposes: working, episodic, semantic, procedural",
+              "Manage conversation memory with summarization and importance scoring",
+              "Vector stores enable semantic search over long-term memories",
+              "Reflection helps agents learn from experience"
+            ],
+            "exercises": [
+              {
+                "title": "Memory System Design",
+                "description": "Design a memory architecture for a customer support agent that needs to remember user preferences"
+              },
+              {
+                "title": "Implement Reflection",
+                "description": "Add a reflection mechanism to an agent that extracts lessons after each conversation"
+              }
+            ],
+            "sources": [
+              {"title": "Generative Agents: Interactive Simulacra", "url": "https://arxiv.org/abs/2304.03442"},
+              {"title": "MemGPT: Towards LLMs as Operating Systems", "url": "https://arxiv.org/abs/2310.08560"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "multi-agent",
+      "title": "Multi-Agent Systems",
+      "lessons": [
+        {
+          "id": "multi-agent-patterns",
+          "title": "Multi-Agent Orchestration Patterns",
+          "duration": "50 min",
+          "content": {
+            "overview": "Complex tasks often benefit from multiple specialized agents working together. Understanding orchestration patterns helps you design effective multi-agent systems.",
+            "sections": [
+              {
+                "title": "When to Use Multiple Agents",
+                "content": "Multiple agents make sense when:\n\n**1. Diverse expertise needed**: Research + coding + writing\n**2. Separation of concerns**: Planner vs executor\n**3. Quality assurance**: Generator + critic\n**4. Scalability**: Parallel processing of subtasks\n**5. Different trust levels**: User-facing vs backend agents\n\n**Single agent is better when**:\n- Task is focused and well-defined\n- Low latency is critical\n- Simplicity is a priority\n- Context sharing is essential",
+                "code": "# Decision framework\ndef should_use_multi_agent(task):\n    factors = {\n        'requires_multiple_domains': task.domains > 1,\n        'benefits_from_review': task.quality_critical,\n        'can_parallelize': len(task.subtasks) > 2,\n        'needs_different_personas': task.requires_debate,\n        'complexity': task.estimated_steps > 10\n    }\n    \n    score = sum(factors.values())\n    \n    if score >= 3:\n        return 'multi-agent', suggest_architecture(factors)\n    elif score >= 2:\n        return 'consider multi-agent', factors\n    else:\n        return 'single agent', None"
+              },
+              {
+                "title": "Sequential Pipeline Pattern",
+                "content": "Agents process tasks in order, each building on the previous output:\n\n**Use case**: Content creation, data processing pipelines\n**Pros**: Simple flow, clear handoffs\n**Cons**: Slow, single point of failure",
+                "diagram": {
+                  "title": "Sequential Pipeline",
+                  "code": "flowchart LR\n    Input --> A[Agent 1]\n    A --> B[Agent 2]\n    B --> C[Agent 3]\n    C --> Output"
+                },
+                "code": "class SequentialPipeline:\n    def __init__(self, agents: list):\n        self.agents = agents\n    \n    def run(self, initial_input):\n        result = initial_input\n        \n        for i, agent in enumerate(self.agents):\n            print(f\"Stage {i+1}: {agent.name}\")\n            result = agent.process(result)\n            \n            # Optional: validate between stages\n            if not self.validate_stage_output(result, i):\n                raise PipelineError(f\"Stage {i+1} produced invalid output\")\n        \n        return result\n\n# Example: Blog post pipeline\nresearch_agent = Agent(\"Researcher\", tools=[search, scrape])\noutline_agent = Agent(\"Outliner\", prompt=\"Create detailed outline from research\")\nwriter_agent = Agent(\"Writer\", prompt=\"Write engaging content from outline\")\neditor_agent = Agent(\"Editor\", prompt=\"Polish and improve the draft\")\n\npipeline = SequentialPipeline([\n    research_agent,\n    outline_agent, \n    writer_agent,\n    editor_agent\n])\n\nblog_post = pipeline.run(\"Write about AI agents in 2024\")"
+              },
+              {
+                "title": "Supervisor Pattern",
+                "content": "A supervisor agent coordinates specialized worker agents:\n\n**Use case**: Complex tasks requiring dynamic delegation\n**Pros**: Flexible routing, can handle unexpected subtasks\n**Cons**: Supervisor can become bottleneck",
+                "code": "from langgraph.graph import StateGraph\n\nclass SupervisorSystem:\n    def __init__(self):\n        self.supervisor = self._create_supervisor()\n        self.workers = {\n            'researcher': ResearchAgent(),\n            'coder': CodingAgent(),\n            'writer': WritingAgent(),\n            'analyst': AnalysisAgent()\n        }\n    \n    def _create_supervisor(self):\n        prompt = \"\"\"You are a supervisor managing a team of specialists.\n        \n        Available workers:\n        - researcher: Finds information from the web\n        - coder: Writes and debugs code\n        - writer: Creates written content\n        - analyst: Analyzes data and provides insights\n        \n        Given the task, decide:\n        1. Which worker should handle the next step\n        2. What specific instructions to give them\n        3. When the task is complete\n        \n        Respond with JSON: {\"worker\": \"...\", \"instruction\": \"...\", \"complete\": false}\n        Or if done: {\"complete\": true, \"final_answer\": \"...\"}\"\"\"\n        \n        return Agent(prompt=prompt)\n    \n    def run(self, task):\n        context = {'task': task, 'history': []}\n        \n        while True:\n            # Supervisor decides next step\n            decision = self.supervisor.decide(context)\n            \n            if decision['complete']:\n                return decision['final_answer']\n            \n            # Delegate to worker\n            worker = self.workers[decision['worker']]\n            result = worker.execute(decision['instruction'])\n            \n            # Update context\n            context['history'].append({\n                'worker': decision['worker'],\n                'instruction': decision['instruction'],\n                'result': result\n            })"
+              },
+              {
+                "title": "Debate and Consensus Pattern",
+                "content": "Multiple agents debate to reach better conclusions:\n\n**Use case**: Decision-making, code review, fact-checking\n**Pros**: Catches errors, considers multiple perspectives\n**Cons**: Time-consuming, may not converge",
+                "code": "class DebateSystem:\n    def __init__(self, num_agents=3, max_rounds=3):\n        self.debaters = [self._create_debater(i) for i in range(num_agents)]\n        self.judge = self._create_judge()\n        self.max_rounds = max_rounds\n    \n    def _create_debater(self, id):\n        personas = [\n            \"You are a careful, risk-averse analyst.\",\n            \"You are an innovative, bold thinker.\",\n            \"You are a practical, implementation-focused engineer.\"\n        ]\n        return Agent(prompt=personas[id % len(personas)])\n    \n    def debate(self, question):\n        positions = []\n        \n        # Initial positions\n        for debater in self.debaters:\n            position = debater.respond(f\"What is your position on: {question}\")\n            positions.append(position)\n        \n        # Debate rounds\n        for round in range(self.max_rounds):\n            new_positions = []\n            \n            for i, debater in enumerate(self.debaters):\n                other_positions = [p for j, p in enumerate(positions) if j != i]\n                \n                response = debater.respond(f\"\"\"\n                    Question: {question}\n                    Your previous position: {positions[i]}\n                    Other positions: {other_positions}\n                    \n                    Respond to the other positions. Update your view if convinced.\n                \"\"\")\n                new_positions.append(response)\n            \n            positions = new_positions\n            \n            # Check for consensus\n            if self._check_consensus(positions):\n                break\n        \n        # Judge makes final decision\n        return self.judge.decide(question, positions)\n    \n    def _check_consensus(self, positions):\n        # Use LLM to check if positions are converging\n        check = self.judge.respond(f\"\"\"\n            Are these positions in agreement? {positions}\n            Respond: CONSENSUS or NO_CONSENSUS\n        \"\"\")\n        return 'CONSENSUS' in check"
+              },
+              {
+                "title": "Human-in-the-Loop",
+                "content": "Incorporate human approval at critical decision points:",
+                "diagram": {
+                  "title": "Human-in-the-Loop Workflow",
+                  "code": "flowchart LR\n    Start[Start Task] --> Plan[Generate Plan]\n    Plan --> Review{Human\\nReview}\n    Review -->|Approved| Execute[Execute Actions]\n    Review -->|Rejected| Feedback[Human Feedback]\n    Feedback --> Plan\n    Execute --> Result[Final Result]\n    \n    style Review fill:#f59e0b,color:#000"
+                },
+                "code": "from langgraph.checkpoint.memory import MemorySaver\nfrom langgraph.graph import StateGraph, END\n\ndef create_hitl_agent():\n    workflow = StateGraph(AgentState)\n    \n    # Define nodes\n    workflow.add_node(\"plan\", planning_node)\n    workflow.add_node(\"human_review\", human_review_node)  # Interrupt point\n    workflow.add_node(\"execute\", execution_node)\n    workflow.add_node(\"summarize\", summarize_node)\n    \n    # Define edges\n    workflow.set_entry_point(\"plan\")\n    workflow.add_edge(\"plan\", \"human_review\")\n    workflow.add_edge(\"human_review\", \"execute\")\n    workflow.add_edge(\"execute\", \"summarize\")\n    workflow.add_edge(\"summarize\", END)\n    \n    # Add checkpointing for state persistence\n    memory = MemorySaver()\n    \n    return workflow.compile(\n        checkpointer=memory,\n        interrupt_before=[\"human_review\"]  # Pause here for approval\n    )\n\n# Usage\nagent = create_hitl_agent()\nconfig = {\"configurable\": {\"thread_id\": \"user-123\"}}\n\n# Start execution (will pause at human_review)\nresult = agent.invoke({\"task\": \"Deploy to production\"}, config)\n\n# ... time passes, human reviews ...\n\n# Resume with approval\nresult = agent.invoke(\n    {\"human_approval\": True, \"human_notes\": \"Looks good, proceed\"},\n    config\n)"
+              }
+            ],
+            "keyTakeaways": [
+              "Choose multi-agent when tasks require diverse expertise or quality assurance",
+              "Sequential pipelines are simple but slow; supervisors are flexible but complex",
+              "Debate patterns improve quality for critical decisions",
+              "Human-in-the-loop ensures safety for high-stakes actions"
+            ],
+            "exercises": [
+              {
+                "title": "Design a Multi-Agent System",
+                "description": "Design a multi-agent architecture for automated code review with researcher, reviewer, and reporter agents"
+              },
+              {
+                "title": "Implement Consensus",
+                "description": "Build a debate system where 3 agents discuss and reach consensus on a technical decision"
+              }
+            ],
+            "sources": [
+              {"title": "AutoGen: Multi-Agent Conversation Framework", "url": "https://microsoft.github.io/autogen/"},
+              {"title": "LangGraph Multi-Agent Tutorial", "url": "https://langchain-ai.github.io/langgraph/tutorials/multi_agent/"}
+            ]
+          }
+        },
+        {
+          "id": "agentic-quiz",
+          "title": "Agentic AI Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is the core difference between a standard LLM chatbot and an AI agent?",
+              "options": [
+                "Agents run faster",
+                "Agents have autonomy and can use tools to achieve goals",
+                "Agents use larger models",
+                "Agents cannot process text"
+              ],
+              "correct": 1,
+              "explanation": "Agents are characterized by their autonomy, goal-oriented behavior, and ability to use tools to interact with the world, whereas chatbots are typically reactive."
+            },
+            {
+              "question": "In the ReAct pattern, what does the 'Observation' step represent?",
+              "options": [
+                "The user's input",
+                "The agent's internal reasoning",
+                "The output from a tool execution",
+                "The final answer"
+              ],
+              "correct": 2,
+              "explanation": "In ReAct (Reason + Act), the Observation is the result returned from executing a tool action, which the agent then uses for further reasoning."
+            },
+            {
+              "question": "Which memory type is best suited for storing a knowledge base of facts?",
+              "options": [
+                "Working Memory",
+                "Episodic Memory",
+                "Semantic Memory",
+                "Procedural Memory"
+              ],
+              "correct": 2,
+              "explanation": "Semantic memory stores facts and general knowledge, often using vector databases for retrieval, unlike episodic memory which stores past experiences."
+            },
+            {
+              "question": "What is the main advantage of a Multi-Agent Debate pattern?",
+              "options": [
+                "It is faster than single agent",
+                "It reduces token usage",
+                "It improves decision quality by considering multiple perspectives",
+                "It requires no prompt engineering"
+              ],
+              "correct": 2,
+              "explanation": "Debate patterns allow agents to challenge each other's reasoning, leading to more robust and accurate conclusions through consensus or judging."
+            },
+            {
+              "question": "When using function calling, who executes the actual function code?",
+              "options": [
+                "The LLM itself",
+                "The user manually",
+                "The application runtime / developer code",
+                "The vector database"
+              ],
+              "correct": 2,
+              "explanation": "The LLM generates the *specification* for the function call (name and arguments), but the actual execution happens in the application code."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

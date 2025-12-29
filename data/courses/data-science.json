@@ -1,0 +1,778 @@
+{
+  "id": "data-science",
+  "title": "Data Science Fundamentals",
+  "icon": "📊",
+  "description": "Master data analysis, visualization, and statistical thinking for AI applications.",
+  "level": "beginner",
+  "duration": "5 weeks",
+  "totalLessons": 19,
+  "prerequisites": [
+    "Basic Python knowledge"
+  ],
+  "outcomes": [
+    "Analyze datasets using pandas and numpy",
+    "Create compelling visualizations",
+    "Apply statistical methods to real data",
+    "Build end-to-end data pipelines",
+    "Handle time series and temporal data",
+    "Build reproducible data processing pipelines",
+    "Design and analyze A/B tests"
+  ],
+  "modules": [
+    {
+      "title": "Data Analysis Basics",
+      "description": "Data Analysis Basics module",
+      "lessons": [
+        {
+          "id": "intro-ds",
+          "title": "Introduction to Data Science",
+          "type": "lesson",
+          "duration": "15 min",
+          "content": {
+            "overview": "Data science is the interdisciplinary field that uses scientific methods, algorithms, and systems to extract insights from structured and unstructured data.",
+            "sections": [
+              {
+                "title": "What is Data Science?",
+                "content": "Data science combines statistics, mathematics, programming, and domain expertise to analyze data and solve complex problems. It's the foundation of modern AI applications.",
+                "keyPoints": [
+                  "Interdisciplinary field combining stats, CS, and domain knowledge",
+                  "Focus on extracting actionable insights from data",
+                  "Foundation for machine learning and AI",
+                  "Applied in every industry today"
+                ]
+              },
+              {
+                "title": "The Data Science Workflow",
+                "content": "A typical data science project follows these steps: Problem Definition → Data Collection → Data Cleaning → Exploratory Analysis → Modeling → Evaluation → Deployment.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Typical Data Science Workflow\n\n# 1. Load and explore data\nimport pandas as pd\ndf = pd.read_csv('data.csv')\nprint(df.head())\nprint(df.describe())\n\n# 2. Clean and preprocess\ndf = df.dropna()\ndf['date'] = pd.to_datetime(df['date'])\n\n# 3. Analyze and visualize\nimport matplotlib.pyplot as plt\ndf['sales'].plot(kind='hist')\nplt.show()\n\n# 4. Build models\nfrom sklearn.linear_model import LinearRegression\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)"
+                },
+                "diagram": {
+                  "title": "Data Science Workflow",
+                  "code": "flowchart LR\n    A[Problem Definition] --> B[Data Collection]\n    B --> C[Data Cleaning]\n    C --> D[Exploratory Analysis]\n    D --> E[Modeling]\n    E --> F[Evaluation]\n    F --> G[Deployment]\n    \n    F -.->|Iterate| D\n    G -.->|Monitor| F"
+                }
+              },
+              {
+                "title": "Data Science vs ML vs AI",
+                "content": "While related, these terms have distinct meanings:\n- **Data Science**: Extracting insights from data\n- **Machine Learning**: Algorithms that learn from data\n- **AI**: Systems that mimic human intelligence\n\nData science is often the first step before ML/AI.",
+                "diagram": {
+                  "title": "AI vs ML vs Data Science",
+                  "code": "flowchart TD\n    subgraph AI[Artificial Intelligence]\n        direction TB\n        subgraph ML[Machine Learning]\n            subgraph DL[Deep Learning]\n            end\n        end\n    end\n    \n    subgraph DS[Data Science]\n        Stats[Statistics]\n        Vis[Visualization]\n        Analysis[Analysis]\n    end\n    \n    ML -.->|Intersection| DS\n    \n    style AI fill:#f3f4f6,stroke:#4b5563\n    style ML fill:#dbeafe,stroke:#2563eb\n    style DS fill:#dcfce7,stroke:#16a34a"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Data science is about turning data into decisions",
+              "The workflow is iterative: explore, model, evaluate, repeat",
+              "Good data science requires both technical and domain skills",
+              "It's the foundation for all modern AI applications"
+            ]
+          }
+        },
+        {
+          "id": "data-cleaning",
+          "title": "Data Cleaning Techniques",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Real-world data is messy. Data cleaning (80% of a data scientist's job!) involves handling missing values, duplicates, outliers, and inconsistent formats.",
+            "sections": [
+              {
+                "title": "Handling Missing Values",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\nimport numpy as np\n\n# Detect missing values\ndf.isnull().sum()           # Count per column\ndf.isnull().sum().sum()     # Total count\n\n# Drop missing\ndf.dropna()                 # Drop rows with any NaN\ndf.dropna(subset=['name'])  # Drop if NaN in specific columns\n\n# Fill missing\ndf.fillna(0)                            # Fill with constant\ndf['age'].fillna(df['age'].mean())      # Fill with mean\ndf.fillna(method='ffill')               # Forward fill\ndf.interpolate()                        # Interpolate"
+                }
+              },
+              {
+                "title": "Handling Duplicates",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Find duplicates\ndf.duplicated().sum()\ndf[df.duplicated()]\n\n# Remove duplicates\ndf.drop_duplicates()\ndf.drop_duplicates(subset=['email'])  # Based on column\ndf.drop_duplicates(keep='last')       # Keep last occurrence"
+                }
+              },
+              {
+                "title": "Data Type Conversion",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Check types\ndf.dtypes\n\n# Convert types\ndf['age'] = df['age'].astype(int)\ndf['date'] = pd.to_datetime(df['date'])\ndf['category'] = df['category'].astype('category')\n\n# Handle mixed types\ndf['price'] = pd.to_numeric(df['price'], errors='coerce')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Always check for missing values first",
+              "Choose fill strategy based on data context",
+              "Duplicates can skew analysis significantly",
+              "Correct data types enable proper operations"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "End-to-End Projects",
+      "description": "End-to-End Projects module",
+      "lessons": [
+        {
+          "id": "ab-testing",
+          "title": "A/B Testing and Experimentation",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Learn how to design, run, and analyze A/B tests to make data-driven product decisions.",
+            "sections": [
+              {
+                "title": "Experiment Design",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\nfrom scipy import stats\n\n# Calculate required sample size\ndef sample_size_calculator(baseline_rate, mde, alpha=0.05, power=0.8):\n    \"\"\"Calculate sample size for A/B test.\n    \n    Args:\n        baseline_rate: Current conversion rate\n        mde: Minimum detectable effect (relative change)\n        alpha: Significance level\n        power: Statistical power\n    \"\"\"\n    p1 = baseline_rate\n    p2 = baseline_rate * (1 + mde)\n    \n    effect_size = abs(p2 - p1) / np.sqrt((p1*(1-p1) + p2*(1-p2)) / 2)\n    \n    from statsmodels.stats.power import NormalIndPower\n    analysis = NormalIndPower()\n    n = analysis.solve_power(effect_size, power=power, alpha=alpha)\n    \n    return int(np.ceil(n))\n\n# Example: 5% baseline, want to detect 10% improvement\nn = sample_size_calculator(0.05, 0.10)\nprint(f'Need {n} users per group')"
+                }
+              },
+              {
+                "title": "Analyzing Results",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from scipy import stats\nimport numpy as np\n\n# Conversion rate test\ncontrol_conversions = 150\ncontrol_visitors = 3000\ntest_conversions = 180\ntest_visitors = 3000\n\np_control = control_conversions / control_visitors\np_test = test_conversions / test_visitors\nlift = (p_test - p_control) / p_control * 100\n\n# Chi-square test\ncontingency = [[control_conversions, control_visitors - control_conversions],\n               [test_conversions, test_visitors - test_conversions]]\nchi2, p_value, dof, expected = stats.chi2_contingency(contingency)\n\nprint(f'Control: {p_control:.2%}')\nprint(f'Test: {p_test:.2%}')\nprint(f'Lift: {lift:.1f}%')\nprint(f'p-value: {p_value:.4f}')\nprint('Significant!' if p_value < 0.05 else 'Not significant')"
+                }
+              },
+              {
+                "title": "Confidence Intervals",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\nfrom scipy import stats\n\ndef proportion_confidence_interval(successes, trials, confidence=0.95):\n    \"\"\"Calculate CI for proportion.\"\"\"\n    p = successes / trials\n    z = stats.norm.ppf((1 + confidence) / 2)\n    se = np.sqrt(p * (1 - p) / trials)\n    return p - z * se, p + z * se\n\n# Calculate CIs\nci_control = proportion_confidence_interval(150, 3000)\nci_test = proportion_confidence_interval(180, 3000)\n\nprint(f'Control: {p_control:.2%} [{ci_control[0]:.2%}, {ci_control[1]:.2%}]')\nprint(f'Test: {p_test:.2%} [{ci_test[0]:.2%}, {ci_test[1]:.2%}]')\n\n# If CIs don't overlap, likely significant difference"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Calculate sample size BEFORE running test",
+              "Run test for full duration, don't peek",
+              "p < 0.05 means statistically significant",
+              "Always report confidence intervals"
+            ]
+          }
+        },
+        {
+          "id": "time-series",
+          "title": "Time Series Analysis",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "Time series data requires special handling. Learn to work with dates, detect seasonality, and prepare temporal features.",
+            "sections": [
+              {
+                "title": "Working with Dates",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\n# Parse dates\ndf['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')\ndf = df.set_index('date')\n\n# Date components\ndf['year'] = df.index.year\ndf['month'] = df.index.month\ndf['day'] = df.index.day\ndf['dayofweek'] = df.index.dayofweek  # 0=Monday\ndf['is_weekend'] = df.index.dayofweek >= 5\n\n# Resampling\ndf.resample('M').mean()   # Monthly average\ndf.resample('W').sum()    # Weekly sum\ndf.resample('Q').last()   # Quarterly last value"
+                }
+              },
+              {
+                "title": "Trend and Seasonality",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\nfrom statsmodels.tsa.seasonal import seasonal_decompose\n\n# Decompose time series\nresult = seasonal_decompose(df['sales'], model='additive', period=12)\n\nresult.trend.plot(title='Trend')\nresult.seasonal.plot(title='Seasonality')\nresult.resid.plot(title='Residuals')\n\n# Detrending\ndf['detrended'] = df['sales'] - result.trend\n\n# Differencing (removes trend)\ndf['diff'] = df['sales'].diff()\ndf['diff_seasonal'] = df['sales'].diff(12)  # Seasonal diff"
+                }
+              },
+              {
+                "title": "Lag Features",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\n# Create lag features\nfor lag in [1, 7, 14, 30]:\n    df[f'value_lag_{lag}'] = df['value'].shift(lag)\n\n# Rolling statistics\ndf['rolling_7d_mean'] = df['value'].rolling(7).mean()\ndf['rolling_7d_std'] = df['value'].rolling(7).std()\ndf['rolling_7d_min'] = df['value'].rolling(7).min()\ndf['rolling_7d_max'] = df['value'].rolling(7).max()\n\n# Percent change\ndf['pct_change_1d'] = df['value'].pct_change(1)\ndf['pct_change_7d'] = df['value'].pct_change(7)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Always parse dates with pd.to_datetime()",
+              "Resampling aggregates data to different frequencies",
+              "Decomposition reveals trend, seasonality, and noise",
+              "Lag features capture temporal dependencies"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Additional Topics",
+      "description": "Additional course content",
+      "lessons": [
+        {
+          "id": "numpy-essentials",
+          "title": "NumPy Essentials",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "NumPy is the fundamental package for numerical computing in Python. It provides efficient array operations that are essential for data science and ML.",
+            "sections": [
+              {
+                "title": "Creating Arrays",
+                "content": "NumPy arrays are more efficient than Python lists for numerical operations.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\n\n# Create arrays\narr = np.array([1, 2, 3, 4, 5])\nzeros = np.zeros((3, 4))\nones = np.ones((2, 3))\nrange_arr = np.arange(0, 10, 2)  # [0, 2, 4, 6, 8]\nlinspace = np.linspace(0, 1, 5)  # 5 evenly spaced from 0 to 1\nrandom = np.random.randn(3, 3)  # Random normal distribution\n\nprint(f'Shape: {arr.shape}')\nprint(f'Dtype: {arr.dtype}')"
+                }
+              },
+              {
+                "title": "Array Operations",
+                "content": "NumPy enables vectorized operations that are much faster than loops.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\n\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\n\n# Element-wise operations\nprint(a + b)      # [5, 7, 9]\nprint(a * b)      # [4, 10, 18]\nprint(a ** 2)     # [1, 4, 9]\nprint(np.sqrt(a)) # [1.0, 1.41, 1.73]\n\n# Statistical operations\nprint(np.mean(a))  # 2.0\nprint(np.std(a))   # 0.816\nprint(np.sum(a))   # 6"
+                }
+              },
+              {
+                "title": "Indexing and Slicing",
+                "content": "Access and manipulate array elements efficiently.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\n\narr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n\n# Indexing\nprint(arr[0, 1])     # 2\nprint(arr[1:, :2])   # [[4,5], [7,8]]\n\n# Boolean indexing\nprint(arr[arr > 5])  # [6, 7, 8, 9]\n\n# Fancy indexing\nprint(arr[[0, 2], [1, 2]])  # [2, 9]"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "NumPy arrays are faster and more memory-efficient than lists",
+              "Vectorized operations avoid slow Python loops",
+              "Broadcasting allows operations on different-shaped arrays",
+              "NumPy is the foundation for pandas, scikit-learn, and PyTorch"
+            ]
+          }
+        },
+        {
+          "id": "pandas-dataframes",
+          "title": "Pandas DataFrames",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Pandas is the essential library for data manipulation. DataFrames provide intuitive ways to load, clean, transform, and analyze tabular data.",
+            "sections": [
+              {
+                "title": "Creating DataFrames",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\n# From dictionary\ndf = pd.DataFrame({\n    'name': ['Alice', 'Bob', 'Charlie'],\n    'age': [25, 30, 35],\n    'city': ['NYC', 'LA', 'Chicago']\n})\n\n# From CSV\ndf = pd.read_csv('data.csv')\n\n# From JSON\ndf = pd.read_json('data.json')\n\n# Quick look\nprint(df.head())\nprint(df.info())\nprint(df.describe())"
+                }
+              },
+              {
+                "title": "Selection and Filtering",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\ndf = pd.read_csv('sales.csv')\n\n# Select columns\ndf['name']           # Single column (Series)\ndf[['name', 'age']]  # Multiple columns\n\n# Filter rows\ndf[df['age'] > 25]\ndf[(df['age'] > 25) & (df['city'] == 'NYC')]\ndf.query('age > 25 and city == \"NYC\"')\n\n# loc and iloc\ndf.loc[0:5, 'name':'age']    # Label-based\ndf.iloc[0:5, 0:2]            # Position-based"
+                }
+              },
+              {
+                "title": "Data Transformation",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\n# Add/modify columns\ndf['age_group'] = df['age'].apply(lambda x: 'young' if x < 30 else 'senior')\ndf['full_name'] = df['first'] + ' ' + df['last']\n\n# Group by\ndf.groupby('city')['sales'].mean()\ndf.groupby(['city', 'year']).agg({'sales': 'sum', 'customers': 'count'})\n\n# Pivot tables\npd.pivot_table(df, values='sales', index='city', columns='year', aggfunc='sum')\n\n# Merge DataFrames\npd.merge(df1, df2, on='id', how='left')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "DataFrames are the core data structure for tabular data",
+              "Use .loc for label-based and .iloc for position-based indexing",
+              "GroupBy enables powerful aggregations",
+              "Merge, join, and concat combine multiple DataFrames"
+            ]
+          }
+        },
+        {
+          "id": "visualization",
+          "title": "Data Visualization with Matplotlib & Seaborn",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Visualization is crucial for understanding data patterns and communicating insights. Learn to create compelling charts with Matplotlib and Seaborn.",
+            "sections": [
+              {
+                "title": "Matplotlib Basics",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import matplotlib.pyplot as plt\nimport numpy as np\n\n# Line plot\nx = np.linspace(0, 10, 100)\nplt.figure(figsize=(10, 6))\nplt.plot(x, np.sin(x), label='sin(x)')\nplt.plot(x, np.cos(x), label='cos(x)')\nplt.xlabel('X')\nplt.ylabel('Y')\nplt.title('Trigonometric Functions')\nplt.legend()\nplt.grid(True)\nplt.show()\n\n# Subplots\nfig, axes = plt.subplots(2, 2, figsize=(12, 8))\naxes[0, 0].bar(['A', 'B', 'C'], [10, 20, 15])\naxes[0, 1].scatter(x, y)\naxes[1, 0].hist(data, bins=30)\naxes[1, 1].pie(sizes, labels=labels)\nplt.tight_layout()"
+                }
+              },
+              {
+                "title": "Seaborn for Statistical Plots",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import seaborn as sns\nimport pandas as pd\n\n# Set style\nsns.set_theme(style='whitegrid')\n\n# Distribution plots\nsns.histplot(df['age'], kde=True)\nsns.boxplot(x='category', y='value', data=df)\nsns.violinplot(x='category', y='value', data=df)\n\n# Relationship plots\nsns.scatterplot(x='x', y='y', hue='category', data=df)\nsns.regplot(x='x', y='y', data=df)\nsns.pairplot(df, hue='category')\n\n# Heatmap for correlations\nsns.heatmap(df.corr(), annot=True, cmap='coolwarm')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Matplotlib is flexible but verbose",
+              "Seaborn provides beautiful statistical plots with less code",
+              "Always label axes and add titles",
+              "Choose the right chart type for your data"
+            ]
+          }
+        },
+        {
+          "id": "eda",
+          "title": "Exploratory Data Analysis",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "EDA is the critical first step in any data project. It involves understanding the structure, patterns, and anomalies in your data before modeling.",
+            "sections": [
+              {
+                "title": "Initial Data Exploration",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\ndf = pd.read_csv('dataset.csv')\n\n# Basic info\nprint(f'Shape: {df.shape}')\nprint(f'Columns: {df.columns.tolist()}')\ndf.info()\ndf.describe(include='all')\n\n# Missing values\nprint(df.isnull().sum())\n\n# Unique values\nfor col in df.select_dtypes(include='object'):\n    print(f'{col}: {df[col].nunique()} unique values')"
+                }
+              },
+              {
+                "title": "Univariate Analysis",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Numerical variables\nfor col in df.select_dtypes(include='number'):\n    fig, axes = plt.subplots(1, 2, figsize=(12, 4))\n    sns.histplot(df[col], kde=True, ax=axes[0])\n    sns.boxplot(x=df[col], ax=axes[1])\n    plt.suptitle(f'Distribution of {col}')\n    plt.show()\n\n# Categorical variables\nfor col in df.select_dtypes(include='object'):\n    plt.figure(figsize=(10, 4))\n    df[col].value_counts().plot(kind='bar')\n    plt.title(f'Distribution of {col}')\n    plt.show()"
+                }
+              },
+              {
+                "title": "Bivariate Analysis",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Numerical vs Numerical\nsns.pairplot(df.select_dtypes(include='number'))\n\n# Correlation matrix\nplt.figure(figsize=(12, 8))\nsns.heatmap(df.corr(), annot=True, cmap='coolwarm', center=0)\n\n# Numerical vs Categorical\nsns.boxplot(x='category', y='value', data=df)\n\n# Categorical vs Categorical\npd.crosstab(df['cat1'], df['cat2'], normalize='index').plot(kind='bar', stacked=True)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "EDA reveals data quality issues early",
+              "Look for patterns, outliers, and relationships",
+              "Document your findings before modeling",
+              "Visualizations communicate insights effectively"
+            ]
+          }
+        },
+        {
+          "id": "statistics",
+          "title": "Statistics for Data Science",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Statistical thinking is essential for data science. Learn key concepts from descriptive statistics to hypothesis testing.",
+            "sections": [
+              {
+                "title": "Descriptive Statistics",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\nfrom scipy import stats\n\ndata = np.array([12, 15, 18, 22, 25, 28, 30, 35, 40, 100])\n\n# Central tendency\nmean = np.mean(data)        # 32.5 (affected by outliers)\nmedian = np.median(data)    # 26.5 (robust to outliers)\nmode = stats.mode(data)     # Most frequent value\n\n# Spread\nstd = np.std(data)          # Standard deviation\nvar = np.var(data)          # Variance\nrange_ = data.max() - data.min()\niqr = np.percentile(data, 75) - np.percentile(data, 25)"
+                }
+              },
+              {
+                "title": "Probability Distributions",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from scipy import stats\nimport numpy as np\n\n# Normal distribution\nnormal = stats.norm(loc=0, scale=1)  # mean=0, std=1\nsamples = normal.rvs(size=1000)\nprob = normal.pdf(0)  # Probability density at 0\ncdf = normal.cdf(1.96)  # Cumulative prob up to 1.96\n\n# Binomial distribution\nbinom = stats.binom(n=10, p=0.5)\nP_x_5 = binom.pmf(5)  # P(X = 5)\n\n# Poisson distribution\npoisson = stats.poisson(mu=3)\nP_x_2 = poisson.pmf(2)"
+                }
+              },
+              {
+                "title": "Hypothesis Testing",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from scipy import stats\n\n# T-test: Compare two group means\ngroup_a = [23, 25, 28, 30, 32]\ngroup_b = [28, 30, 33, 35, 38]\nt_stat, p_value = stats.ttest_ind(group_a, group_b)\nprint(f'p-value: {p_value:.4f}')\nif p_value < 0.05:\n    print('Reject null hypothesis: Groups are different')\n\n# Chi-square test: Categorical association\nobserved = [[50, 30], [40, 60]]\nchi2, p_val, dof, expected = stats.chi2_contingency(observed)\n\n# Correlation test\ncorr, p_val = stats.pearsonr(x, y)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Median is more robust than mean for skewed data",
+              "Understand when to use parametric vs non-parametric tests",
+              "p-value < 0.05 traditionally indicates statistical significance",
+              "Correlation ≠ causation"
+            ]
+          }
+        },
+        {
+          "id": "feature-engineering",
+          "title": "Feature Engineering",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Feature engineering is the art of creating informative features from raw data. Good features can dramatically improve model performance.",
+            "sections": [
+              {
+                "title": "Encoding Categorical Variables",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\nfrom sklearn.preprocessing import LabelEncoder, OneHotEncoder\n\n# One-hot encoding (for nominal categories)\ndf = pd.get_dummies(df, columns=['color', 'city'])\n\n# Label encoding (for ordinal categories)\nle = LabelEncoder()\ndf['size_encoded'] = le.fit_transform(df['size'])  # S=0, M=1, L=2\n\n# Target encoding (for high cardinality)\nmeans = df.groupby('zip_code')['target'].mean()\ndf['zip_encoded'] = df['zip_code'].map(means)"
+                }
+              },
+              {
+                "title": "Feature Scaling",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from sklearn.preprocessing import StandardScaler, MinMaxScaler\n\n# Standardization (mean=0, std=1)\nscaler = StandardScaler()\ndf[['age', 'income']] = scaler.fit_transform(df[['age', 'income']])\n\n# Normalization (0-1 range)\nminmax = MinMaxScaler()\ndf[['age', 'income']] = minmax.fit_transform(df[['age', 'income']])\n\n# Log transform for skewed data\nimport numpy as np\ndf['log_income'] = np.log1p(df['income'])"
+                }
+              },
+              {
+                "title": "Creating New Features",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\n# Date features\ndf['date'] = pd.to_datetime(df['date'])\ndf['year'] = df['date'].dt.year\ndf['month'] = df['date'].dt.month\ndf['day_of_week'] = df['date'].dt.dayofweek\ndf['is_weekend'] = df['day_of_week'].isin([5, 6]).astype(int)\n\n# Aggregation features\ndf['user_avg_purchase'] = df.groupby('user_id')['amount'].transform('mean')\ndf['user_purchase_count'] = df.groupby('user_id')['amount'].transform('count')\n\n# Interaction features\ndf['price_per_sqft'] = df['price'] / df['sqft']\ndf['age_income'] = df['age'] * df['income']"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "One-hot encode nominal categories, label encode ordinal",
+              "Scale features for distance-based algorithms",
+              "Log transform reduces skewness",
+              "Domain knowledge helps create meaningful features"
+            ]
+          }
+        },
+        {
+          "id": "numpy-advanced",
+          "title": "Advanced NumPy Techniques",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Master advanced NumPy features like broadcasting, reshaping, and performance optimization for handling large datasets efficiently.",
+            "sections": [
+              {
+                "title": "Broadcasting",
+                "content": "Broadcasting allows NumPy to work with arrays of different shapes during arithmetic operations.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\n\n# Broadcasting examples\na = np.array([[1], [2], [3]])  # Shape (3, 1)\nb = np.array([10, 20, 30])     # Shape (3,)\n\nresult = a + b  # Broadcasting: (3,1) + (3,) -> (3,3)\nprint(result)\n# [[11, 21, 31],\n#  [12, 22, 32],\n#  [13, 23, 33]]\n\n# Normalize each row\nmatrix = np.random.randn(5, 10)\nrow_means = matrix.mean(axis=1, keepdims=True)\nnormalized = matrix - row_means"
+                }
+              },
+              {
+                "title": "Reshaping and Stacking",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\n\narr = np.arange(12)\n\n# Reshape\nreshaped = arr.reshape(3, 4)\nreshaped = arr.reshape(-1, 4)  # Auto-calculate first dim\n\n# Flatten\nflat = reshaped.flatten()\nflat = reshaped.ravel()  # Returns view when possible\n\n# Stacking\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\nnp.vstack([a, b])  # Vertical stack\nnp.hstack([a, b])  # Horizontal stack\nnp.column_stack([a, b])  # As columns"
+                }
+              },
+              {
+                "title": "Performance Tips",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\n\n# Use vectorized operations (fast)\narr = np.random.randn(1000000)\nresult = np.sqrt(arr ** 2 + 1)  # Vectorized\n\n# Avoid Python loops (slow)\n# result = [np.sqrt(x**2 + 1) for x in arr]  # DON'T DO THIS\n\n# Use where for conditional logic\nresult = np.where(arr > 0, arr, 0)  # ReLU\n\n# Use einsum for complex operations\na = np.random.randn(3, 4)\nb = np.random.randn(4, 5)\nc = np.einsum('ij,jk->ik', a, b)  # Matrix multiply"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Broadcasting eliminates the need for explicit loops",
+              "Use reshape(-1, n) for automatic dimension calculation",
+              "Vectorized operations are 100x faster than Python loops",
+              "einsum is powerful for complex tensor operations"
+            ]
+          }
+        },
+        {
+          "id": "pandas-advanced",
+          "title": "Advanced Pandas Operations",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Learn advanced pandas techniques for complex data transformations, time series handling, and performance optimization.",
+            "sections": [
+              {
+                "title": "Multi-Index DataFrames",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\n# Create multi-index\ndf = pd.DataFrame({\n    'year': [2022, 2022, 2023, 2023],\n    'quarter': ['Q1', 'Q2', 'Q1', 'Q2'],\n    'sales': [100, 150, 120, 180]\n})\ndf = df.set_index(['year', 'quarter'])\n\n# Access multi-index\ndf.loc[2022]          # All 2022 data\ndf.loc[(2022, 'Q1')]  # Specific row\ndf.xs('Q1', level='quarter')  # Cross-section\n\n# Reset index\ndf.reset_index()"
+                }
+              },
+              {
+                "title": "Window Functions",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\ndf = pd.DataFrame({'date': pd.date_range('2023-01-01', periods=100),\n                   'value': np.random.randn(100).cumsum()})\n\n# Rolling window\ndf['rolling_mean'] = df['value'].rolling(window=7).mean()\ndf['rolling_std'] = df['value'].rolling(window=7).std()\n\n# Expanding window\ndf['cumulative_max'] = df['value'].expanding().max()\n\n# Exponential moving average\ndf['ema'] = df['value'].ewm(span=7).mean()\n\n# Shift for lag features\ndf['value_lag1'] = df['value'].shift(1)\ndf['value_diff'] = df['value'].diff()"
+                }
+              },
+              {
+                "title": "Apply and Transform",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\n# Apply to columns\ndf['normalized'] = df.groupby('category')['value'].transform(\n    lambda x: (x - x.mean()) / x.std()\n)\n\n# Apply custom function\ndef complex_calc(row):\n    if row['type'] == 'A':\n        return row['value'] * 1.1\n    return row['value'] * 0.9\n\ndf['adjusted'] = df.apply(complex_calc, axis=1)\n\n# Vectorized string operations\ndf['name_upper'] = df['name'].str.upper()\ndf['first_word'] = df['name'].str.split().str[0]\ndf['contains_ai'] = df['text'].str.contains('AI', case=False)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Multi-index enables hierarchical data organization",
+              "Rolling windows are essential for time series features",
+              "Use transform() to keep original index alignment",
+              "Vectorized string methods avoid slow apply loops"
+            ]
+          }
+        },
+        {
+          "id": "outlier-detection",
+          "title": "Outlier Detection and Treatment",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Outliers can significantly impact analysis and models. Learn methods to detect and handle anomalous data points.",
+            "sections": [
+              {
+                "title": "Statistical Methods",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\nimport pandas as pd\n\n# Z-score method (for normally distributed data)\nfrom scipy import stats\nz_scores = np.abs(stats.zscore(df['value']))\noutliers_z = df[z_scores > 3]\n\n# IQR method (robust to distribution)\nQ1 = df['value'].quantile(0.25)\nQ3 = df['value'].quantile(0.75)\nIQR = Q3 - Q1\nlower = Q1 - 1.5 * IQR\nupper = Q3 + 1.5 * IQR\noutliers_iqr = df[(df['value'] < lower) | (df['value'] > upper)]\n\n# Modified Z-score (using median)\nmedian = df['value'].median()\nmad = np.median(np.abs(df['value'] - median))\nmodified_z = 0.6745 * (df['value'] - median) / mad\noutliers_mz = df[np.abs(modified_z) > 3.5]"
+                }
+              },
+              {
+                "title": "Machine Learning Methods",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from sklearn.ensemble import IsolationForest\nfrom sklearn.neighbors import LocalOutlierFactor\n\n# Isolation Forest\niso_forest = IsolationForest(contamination=0.05, random_state=42)\ndf['is_outlier_if'] = iso_forest.fit_predict(df[['value1', 'value2']])\noutliers = df[df['is_outlier_if'] == -1]\n\n# Local Outlier Factor\nlof = LocalOutlierFactor(n_neighbors=20, contamination=0.05)\ndf['is_outlier_lof'] = lof.fit_predict(df[['value1', 'value2']])"
+                }
+              },
+              {
+                "title": "Handling Outliers",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\n\n# Option 1: Remove outliers\ndf_clean = df[(df['value'] >= lower) & (df['value'] <= upper)]\n\n# Option 2: Cap/clip outliers (winsorizing)\ndf['value_capped'] = df['value'].clip(lower=lower, upper=upper)\n\n# Option 3: Transform to reduce impact\ndf['value_log'] = np.log1p(df['value'])\ndf['value_sqrt'] = np.sqrt(df['value'])\n\n# Option 4: Flag but keep\ndf['is_outlier'] = ((df['value'] < lower) | (df['value'] > upper)).astype(int)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "IQR method is more robust than Z-score",
+              "Isolation Forest works well for multivariate outliers",
+              "Don't always remove outliers - they may be valid!",
+              "Document your outlier handling decisions"
+            ]
+          }
+        },
+        {
+          "id": "correlation-analysis",
+          "title": "Correlation and Association Analysis",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Understanding relationships between variables is crucial for feature selection and insight generation.",
+            "sections": [
+              {
+                "title": "Correlation Coefficients",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\nimport numpy as np\nfrom scipy import stats\n\n# Pearson (linear relationships, numerical)\npearson_corr = df[['x', 'y']].corr()  # Pandas method\nr, p_value = stats.pearsonr(df['x'], df['y'])  # With p-value\n\n# Spearman (monotonic relationships, robust to outliers)\nspearman_corr = df[['x', 'y']].corr(method='spearman')\nrho, p_value = stats.spearmanr(df['x'], df['y'])\n\n# Kendall (ordinal data)\nkendall_corr = df[['x', 'y']].corr(method='kendall')\n\n# Correlation matrix\ncorr_matrix = df.select_dtypes(include='number').corr()"
+                }
+              },
+              {
+                "title": "Visualizing Correlations",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Heatmap\nplt.figure(figsize=(12, 10))\nsns.heatmap(df.corr(), annot=True, cmap='RdBu_r', center=0,\n            fmt='.2f', linewidths=0.5)\nplt.title('Correlation Matrix')\n\n# Clustermap (with hierarchical clustering)\nsns.clustermap(df.corr(), annot=True, cmap='coolwarm',\n               method='ward', figsize=(10, 10))\n\n# Pairplot\nsns.pairplot(df, hue='target', diag_kind='kde')"
+                }
+              },
+              {
+                "title": "Categorical Associations",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from scipy import stats\nimport pandas as pd\n\n# Chi-square test for independence\ncontingency = pd.crosstab(df['cat1'], df['cat2'])\nchi2, p_value, dof, expected = stats.chi2_contingency(contingency)\nprint(f'Chi-square: {chi2:.2f}, p-value: {p_value:.4f}')\n\n# Cramér's V (effect size for chi-square)\nn = contingency.sum().sum()\nmin_dim = min(contingency.shape) - 1\ncramers_v = np.sqrt(chi2 / (n * min_dim))\nprint(f\"Cramér's V: {cramers_v:.3f}\")\n\n# Point-biserial (binary vs continuous)\nfrom scipy.stats import pointbiserialr\nr, p = pointbiserialr(df['binary_col'], df['continuous_col'])"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Pearson measures linear relationships only",
+              "Spearman works for any monotonic relationship",
+              "High correlation doesn't imply causation",
+              "Use chi-square for categorical associations"
+            ]
+          }
+        },
+        {
+          "id": "sampling-techniques",
+          "title": "Sampling Techniques",
+          "type": "lesson",
+          "duration": "20 min",
+          "content": {
+            "overview": "Learn different sampling strategies for data collection, train-test splits, and handling imbalanced datasets.",
+            "sections": [
+              {
+                "title": "Basic Sampling Methods",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\nimport numpy as np\n\n# Random sampling\nsample = df.sample(n=100)  # Fixed number\nsample = df.sample(frac=0.1)  # Fraction\nsample = df.sample(n=100, random_state=42)  # Reproducible\n\n# Stratified sampling (preserve proportions)\nfrom sklearn.model_selection import train_test_split\n\ntrain, test = train_test_split(df, test_size=0.2, \n                               stratify=df['target'],\n                               random_state=42)"
+                }
+              },
+              {
+                "title": "Cross-Validation Strategies",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from sklearn.model_selection import (\n    KFold, StratifiedKFold, TimeSeriesSplit, GroupKFold\n)\n\n# K-Fold\nkf = KFold(n_splits=5, shuffle=True, random_state=42)\nfor train_idx, val_idx in kf.split(X):\n    X_train, X_val = X[train_idx], X[val_idx]\n\n# Stratified K-Fold (for classification)\nskf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)\nfor train_idx, val_idx in skf.split(X, y):\n    pass\n\n# Time Series Split (no future data leakage)\ntscv = TimeSeriesSplit(n_splits=5)\nfor train_idx, val_idx in tscv.split(X):\n    pass"
+                }
+              },
+              {
+                "title": "Handling Imbalanced Data",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from imblearn.over_sampling import SMOTE, RandomOverSampler\nfrom imblearn.under_sampling import RandomUnderSampler\nfrom imblearn.combine import SMOTETomek\n\n# Check imbalance\nprint(df['target'].value_counts(normalize=True))\n\n# Oversampling (create more minority samples)\nsmote = SMOTE(random_state=42)\nX_resampled, y_resampled = smote.fit_resample(X, y)\n\n# Undersampling (reduce majority samples)\nrus = RandomUnderSampler(random_state=42)\nX_resampled, y_resampled = rus.fit_resample(X, y)\n\n# Combination\nsmt = SMOTETomek(random_state=42)\nX_resampled, y_resampled = smt.fit_resample(X, y)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Always stratify when classes are imbalanced",
+              "Use TimeSeriesSplit for temporal data",
+              "SMOTE creates synthetic minority samples",
+              "Choose resampling based on your problem"
+            ]
+          }
+        },
+        {
+          "id": "data-pipelines",
+          "title": "Building Data Pipelines",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Learn to build reproducible data processing pipelines using scikit-learn's Pipeline and ColumnTransformer.",
+            "sections": [
+              {
+                "title": "Basic Pipelines",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.impute import SimpleImputer\nfrom sklearn.linear_model import LogisticRegression\n\n# Create pipeline\npipeline = Pipeline([\n    ('imputer', SimpleImputer(strategy='mean')),\n    ('scaler', StandardScaler()),\n    ('model', LogisticRegression())\n])\n\n# Fit and predict\npipeline.fit(X_train, y_train)\npredictions = pipeline.predict(X_test)\n\n# Access steps\nscaler = pipeline.named_steps['scaler']"
+                }
+              },
+              {
+                "title": "ColumnTransformer",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from sklearn.compose import ColumnTransformer\nfrom sklearn.preprocessing import StandardScaler, OneHotEncoder\nfrom sklearn.impute import SimpleImputer\n\nnumeric_features = ['age', 'income', 'score']\ncategorical_features = ['city', 'gender']\n\npreprocessor = ColumnTransformer(\n    transformers=[\n        ('num', Pipeline([\n            ('imputer', SimpleImputer(strategy='median')),\n            ('scaler', StandardScaler())\n        ]), numeric_features),\n        ('cat', Pipeline([\n            ('imputer', SimpleImputer(strategy='constant', fill_value='missing')),\n            ('encoder', OneHotEncoder(handle_unknown='ignore'))\n        ]), categorical_features)\n    ])\n\n# Full pipeline\nfull_pipeline = Pipeline([\n    ('preprocessor', preprocessor),\n    ('model', LogisticRegression())\n])"
+                }
+              },
+              {
+                "title": "Custom Transformers",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from sklearn.base import BaseEstimator, TransformerMixin\n\nclass DateFeatureExtractor(BaseEstimator, TransformerMixin):\n    def __init__(self, date_column):\n        self.date_column = date_column\n    \n    def fit(self, X, y=None):\n        return self\n    \n    def transform(self, X):\n        X = X.copy()\n        X[self.date_column] = pd.to_datetime(X[self.date_column])\n        X['year'] = X[self.date_column].dt.year\n        X['month'] = X[self.date_column].dt.month\n        X['dayofweek'] = X[self.date_column].dt.dayofweek\n        return X.drop(columns=[self.date_column])\n\n# Use in pipeline\npipeline = Pipeline([\n    ('dates', DateFeatureExtractor('date')),\n    ('preprocessor', preprocessor),\n    ('model', model)\n])"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Pipelines ensure consistent preprocessing",
+              "ColumnTransformer handles different feature types",
+              "Custom transformers extend pipeline flexibility",
+              "Pipelines prevent data leakage in cross-validation"
+            ]
+          }
+        },
+        {
+          "id": "storytelling",
+          "title": "Data Storytelling",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Transform your analysis into compelling stories that drive action and influence stakeholders.",
+            "sections": [
+              {
+                "title": "Structure Your Story",
+                "content": "Every data story should have:\n\n1. **Setup**: Context and why this matters\n2. **Conflict**: The problem or question\n3. **Resolution**: What the data reveals\n4. **Action**: What should happen next\n\n**Example Framework**:\n- What's the situation?\n- What did we discover?\n- Why does it matter?\n- What should we do?"
+              },
+              {
+                "title": "Visualization Best Practices",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Set consistent style\nplt.style.use('seaborn-v0_8-whitegrid')\ncolors = ['#2ecc71', '#e74c3c', '#3498db', '#f39c12']\n\nfig, ax = plt.subplots(figsize=(10, 6))\n\n# Clear title that tells the story\nax.set_title('Revenue Grew 23% After Product Launch', fontsize=14, fontweight='bold')\n\n# Remove chart junk\nax.spines['top'].set_visible(False)\nax.spines['right'].set_visible(False)\n\n# Add annotations to highlight key points\nax.annotate('Product Launch', xy=(launch_date, launch_value),\n            xytext=(launch_date, launch_value + 100),\n            arrowprops=dict(arrowstyle='->', color='gray'),\n            fontsize=10, color='gray')\n\n# Clear axis labels\nax.set_xlabel('Month', fontsize=11)\nax.set_ylabel('Revenue ($M)', fontsize=11)\n\nplt.tight_layout()"
+                }
+              },
+              {
+                "title": "Presenting Insights",
+                "content": "**Do's**:\n- Lead with the insight, not the methodology\n- Use visuals to support, not replace, your narrative\n- Quantify impact in business terms\n- Provide actionable recommendations\n\n**Don'ts**:\n- Don't show every analysis you did\n- Don't use jargon without explanation\n- Don't present data without context\n- Don't hide limitations or uncertainty\n\n**Template**: 'We discovered [insight] by analyzing [data]. This matters because [impact]. We recommend [action].'"
+              }
+            ],
+            "keyTakeaways": [
+              "Lead with insights, not methodology",
+              "Simplify visualizations for your audience",
+              "Connect findings to business impact",
+              "Always end with clear recommendations"
+            ]
+          }
+        },
+        {
+          "id": "ds-project",
+          "title": "Capstone: End-to-End Analysis Project",
+          "type": "project",
+          "duration": "90 min",
+          "content": {
+            "overview": "Apply everything you've learned to analyze a real dataset from start to finish.",
+            "sections": [
+              {
+                "title": "Project: E-commerce Customer Analysis",
+                "content": "**Objective**: Analyze customer behavior to identify high-value segments and make recommendations.\n\n**Dataset**: E-commerce transaction data with customer demographics, purchases, and behavior.\n\n**Deliverables**:\n1. Cleaned and processed dataset\n2. EDA report with key visualizations\n3. Customer segmentation analysis\n4. Actionable business recommendations"
+              },
+              {
+                "title": "Project Steps",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Step 1: Load and explore\nimport pandas as pd\ndf = pd.read_csv('ecommerce_data.csv')\nprint(df.shape)\nprint(df.info())\nprint(df.describe())\n\n# Step 2: Clean data\ndf = df.dropna(subset=['customer_id'])\ndf['purchase_date'] = pd.to_datetime(df['purchase_date'])\ndf = df[df['amount'] > 0]  # Remove returns\n\n# Step 3: Feature engineering\ndf['month'] = df['purchase_date'].dt.month\ndf['is_weekend'] = df['purchase_date'].dt.dayofweek >= 5\n\n# Customer-level aggregation\ncustomer_df = df.groupby('customer_id').agg({\n    'order_id': 'count',\n    'amount': ['sum', 'mean'],\n    'purchase_date': ['min', 'max']\n}).reset_index()\ncustomer_df.columns = ['customer_id', 'order_count', 'total_spend', \n                       'avg_order', 'first_purchase', 'last_purchase']\n\n# Step 4: Analyze and visualize\nimport seaborn as sns\nsns.histplot(customer_df['total_spend'], bins=50)\nplt.title('Customer Lifetime Value Distribution')\n\n# Step 5: Segment customers\nfrom sklearn.cluster import KMeans\nscaler = StandardScaler()\nX_scaled = scaler.fit_transform(customer_df[['order_count', 'total_spend', 'avg_order']])\nkmeans = KMeans(n_clusters=4, random_state=42)\ncustomer_df['segment'] = kmeans.fit_predict(X_scaled)\n\n# Step 6: Profile segments\nsegment_profiles = customer_df.groupby('segment').mean()\nprint(segment_profiles)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Real projects are messy - embrace the cleaning!",
+              "Document your decisions and assumptions",
+              "Focus on actionable insights",
+              "Iterate based on findings"
+            ]
+          }
+        },
+        {
+          "id": "ds-quiz",
+          "title": "Data Science Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "Which pandas method would you use to combine two DataFrames based on a common column?",
+              "options": [
+                "concat()",
+                "merge()",
+                "append()",
+                "join()"
+              ],
+              "correct": 1,
+              "explanation": "merge() is used to combine DataFrames based on common columns (like SQL JOIN). concat() stacks DataFrames."
+            },
+            {
+              "question": "What is the most robust measure of central tendency for skewed data?",
+              "options": [
+                "Mean",
+                "Median",
+                "Mode",
+                "Standard deviation"
+              ],
+              "correct": 1,
+              "explanation": "Median is not affected by outliers, making it the most robust measure for skewed distributions."
+            },
+            {
+              "question": "Which method detects outliers using the 25th and 75th percentiles?",
+              "options": [
+                "Z-score",
+                "IQR method",
+                "Isolation Forest",
+                "DBSCAN"
+              ],
+              "correct": 1,
+              "explanation": "IQR (Interquartile Range) method uses Q1, Q3 to define boundaries: [Q1 - 1.5*IQR, Q3 + 1.5*IQR]."
+            },
+            {
+              "question": "What does SMOTE do for imbalanced datasets?",
+              "options": [
+                "Removes majority class samples",
+                "Creates synthetic minority samples",
+                "Weights loss function",
+                "Removes outliers"
+              ],
+              "correct": 1,
+              "explanation": "SMOTE (Synthetic Minority Over-sampling Technique) creates new synthetic samples by interpolating between existing minority class samples."
+            },
+            {
+              "question": "Which correlation coefficient should you use for ordinal data?",
+              "options": [
+                "Pearson",
+                "Spearman",
+                "Chi-square",
+                "Cramér's V"
+              ],
+              "correct": 1,
+              "explanation": "Spearman correlation works with ranked/ordinal data and measures monotonic relationships."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

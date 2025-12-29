@@ -1,0 +1,82 @@
+{
+  "id": "ai-agents",
+  "title": "AI Agents & Automation",
+  "description": "Explore autonomous AI agents and multi-agent systems",
+  "icon": "🤖",
+  "sections": [
+    { "id": "core", "title": "Core Concepts", "color": "#6366f1" },
+    { "id": "tools", "title": "Tool Use", "color": "#10b981" },
+    { "id": "frameworks", "title": "Frameworks", "color": "#8b5cf6" },
+    { "id": "multi-agent", "title": "Multi-Agent", "color": "#f59e0b" },
+    { "id": "patterns", "title": "Patterns", "color": "#06b6d4" }
+  ],
+  "nodes": [
+    { "id": "agents", "label": "AI Agents", "type": "root", "description": "Autonomous AI systems that perceive, reason, and take actions to achieve goals", "url": "https://lilianweng.github.io/posts/2023-06-23-agent/", "difficulty": "Beginner" },
+    
+    { "id": "core", "label": "Core Concepts", "type": "category", "section": "core", "description": "Fundamental agent concepts", "difficulty": "Beginner" },
+    { "id": "reasoning", "label": "Reasoning", "type": "concept", "section": "core", "description": "How agents plan and make decisions", "url": "https://www.promptingguide.ai/techniques/cot", "difficulty": "Intermediate" },
+    { "id": "react", "label": "ReAct Pattern", "type": "concept", "section": "core", "description": "Reason + Act: Think step-by-step, then take action, observe result, repeat", "url": "https://react-lm.github.io/", "difficulty": "Intermediate" },
+    { "id": "cot", "label": "Chain of Thought", "type": "concept", "section": "core", "description": "Break complex problems into step-by-step reasoning", "url": "https://www.promptingguide.ai/techniques/cot", "difficulty": "Beginner" },
+    { "id": "memory", "label": "Memory", "type": "concept", "section": "core", "description": "How agents retain and recall information", "url": "https://python.langchain.com/docs/modules/memory/", "difficulty": "Intermediate" },
+    { "id": "short-term", "label": "Short-term Memory", "type": "concept", "section": "core", "description": "In-context conversation history (limited by context window)", "difficulty": "Beginner" },
+    { "id": "long-term", "label": "Long-term Memory", "type": "concept", "section": "core", "description": "Vector store for persistent knowledge retrieval", "difficulty": "Advanced" },
+    
+    { "id": "tools", "label": "Tool Use", "type": "category", "section": "tools", "description": "Agents using external tools", "difficulty": "Intermediate" },
+    { "id": "function-call", "label": "Function Calling", "type": "concept", "section": "tools", "description": "LLM outputs structured JSON to invoke functions", "url": "https://platform.openai.com/docs/guides/function-calling", "difficulty": "Advanced" },
+    { "id": "web-browse", "label": "Web Browsing", "type": "tool", "section": "tools", "description": "Search and retrieve information from the web", "difficulty": "Intermediate" },
+    { "id": "code-exec", "label": "Code Execution", "type": "tool", "section": "tools", "description": "Run Python/JS code in sandboxed environment", "difficulty": "Advanced" },
+    { "id": "api-calls", "label": "API Calls", "type": "tool", "section": "tools", "description": "Integrate with external services via REST APIs", "difficulty": "Advanced" },
+    { "id": "file-ops", "label": "File Operations", "type": "tool", "section": "tools", "description": "Read, write, and manipulate files", "difficulty": "Intermediate" },
+    
+    { "id": "frameworks", "label": "Agent Frameworks", "type": "category", "section": "frameworks", "description": "Tools for building agents", "difficulty": "Intermediate" },
+    { "id": "langchain-agents", "label": "LangChain Agents", "type": "framework", "section": "frameworks", "description": "Flexible agent abstractions with tools and memory", "url": "https://python.langchain.com/docs/modules/agents/", "difficulty": "Intermediate" },
+    { "id": "autogen", "label": "AutoGen", "type": "framework", "section": "frameworks", "description": "Microsoft's multi-agent conversation framework", "url": "https://microsoft.github.io/autogen/", "difficulty": "Advanced" },
+    { "id": "crewai", "label": "CrewAI", "type": "framework", "section": "frameworks", "description": "Role-based agents working as a crew", "url": "https://www.crewai.com/", "difficulty": "Intermediate" },
+    { "id": "autogpt", "label": "AutoGPT", "type": "framework", "section": "frameworks", "description": "Fully autonomous GPT-4 agent", "url": "https://github.com/Significant-Gravitas/AutoGPT", "difficulty": "Advanced" },
+    { "id": "openai-assist", "label": "OpenAI Assistants", "type": "framework", "section": "frameworks", "description": "Managed agent API with tools and retrieval", "url": "https://platform.openai.com/docs/assistants/overview", "difficulty": "Intermediate" },
+    
+    { "id": "multi-agent", "label": "Multi-Agent Systems", "type": "category", "section": "multi-agent", "description": "Multiple agents working together", "difficulty": "Advanced" },
+    { "id": "orchestration", "label": "Orchestration", "type": "concept", "section": "multi-agent", "description": "Coordinating multiple agents for complex tasks", "difficulty": "Advanced" },
+    { "id": "delegation", "label": "Task Delegation", "type": "concept", "section": "multi-agent", "description": "Breaking tasks and assigning to specialist agents", "difficulty": "Advanced" },
+    { "id": "collaboration", "label": "Agent Collaboration", "type": "concept", "section": "multi-agent", "description": "Agents communicating and working together", "difficulty": "Advanced" },
+    
+    { "id": "patterns", "label": "Design Patterns", "type": "category", "section": "patterns", "description": "Common agent architectures", "difficulty": "Advanced" },
+    { "id": "plan-execute", "label": "Plan & Execute", "type": "pattern", "section": "patterns", "description": "Create plan upfront, then execute steps", "difficulty": "Intermediate" },
+    { "id": "reflection", "label": "Self-Reflection", "type": "pattern", "section": "patterns", "description": "Agent evaluates and improves its own output", "difficulty": "Advanced" },
+    { "id": "supervisor", "label": "Supervisor Pattern", "type": "pattern", "section": "patterns", "description": "Manager agent routes to specialist workers", "difficulty": "Advanced" }
+  ],
+  "links": [
+    { "source": "agents", "target": "core", "type": "contains" },
+    { "source": "agents", "target": "tools", "type": "uses" },
+    { "source": "agents", "target": "frameworks", "type": "built-with" },
+    { "source": "agents", "target": "multi-agent", "type": "extends" },
+    { "source": "agents", "target": "patterns", "type": "follows" },
+    
+    { "source": "core", "target": "reasoning", "type": "includes" },
+    { "source": "core", "target": "memory", "type": "includes" },
+    { "source": "reasoning", "target": "react", "type": "example" },
+    { "source": "reasoning", "target": "cot", "type": "example" },
+    { "source": "memory", "target": "short-term", "type": "includes" },
+    { "source": "memory", "target": "long-term", "type": "includes" },
+    
+    { "source": "tools", "target": "function-call", "type": "includes" },
+    { "source": "tools", "target": "web-browse", "type": "example" },
+    { "source": "tools", "target": "code-exec", "type": "example" },
+    { "source": "tools", "target": "api-calls", "type": "example" },
+    { "source": "tools", "target": "file-ops", "type": "example" },
+    
+    { "source": "frameworks", "target": "langchain-agents", "type": "includes" },
+    { "source": "frameworks", "target": "autogen", "type": "includes" },
+    { "source": "frameworks", "target": "crewai", "type": "includes" },
+    { "source": "frameworks", "target": "autogpt", "type": "includes" },
+    { "source": "frameworks", "target": "openai-assist", "type": "includes" },
+    
+    { "source": "multi-agent", "target": "orchestration", "type": "includes" },
+    { "source": "multi-agent", "target": "delegation", "type": "includes" },
+    { "source": "multi-agent", "target": "collaboration", "type": "includes" },
+    
+    { "source": "patterns", "target": "plan-execute", "type": "includes" },
+    { "source": "patterns", "target": "reflection", "type": "includes" },
+    { "source": "patterns", "target": "supervisor", "type": "includes" }
+  ]
+}

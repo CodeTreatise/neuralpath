@@ -1,0 +1,130 @@
+{
+  "id": "ai-tools-landscape",
+  "title": "AI Tools Landscape",
+  "description": "Comprehensive map of AI tools organized by category and use case",
+  "sections": [
+    { "id": "text", "title": "Text & Chat", "color": "#6366f1" },
+    { "id": "visual", "title": "Visual Media", "color": "#ec4899" },
+    { "id": "audio", "title": "Audio & Speech", "color": "#8b5cf6" },
+    { "id": "dev", "title": "Development", "color": "#10b981" },
+    { "id": "productivity", "title": "Productivity", "color": "#f59e0b" },
+    { "id": "infrastructure", "title": "Infrastructure", "color": "#64748b" }
+  ],
+  "nodes": [
+    {"id": "ai-tools", "label": "AI Tools", "type": "root", "section": "text", "description": "180+ AI tools for every use case", "difficulty": "Beginner"},
+    
+    {"id": "chatbots", "label": "Chatbots & Assistants", "type": "concept", "section": "text", "description": "Conversational AI", "difficulty": "Beginner"},
+    {"id": "writing", "label": "Writing & Content", "type": "concept", "section": "text", "description": "AI writing tools", "difficulty": "Beginner"},
+    
+    {"id": "image-gen", "label": "Image Generation", "type": "concept", "section": "visual", "description": "Create images from text", "difficulty": "Beginner"},
+    {"id": "video-gen", "label": "Video Generation", "type": "concept", "section": "visual", "description": "AI video creation", "difficulty": "Intermediate"},
+    
+    {"id": "audio-music", "label": "Audio & Music", "type": "concept", "section": "audio", "description": "Sound and music AI", "difficulty": "Intermediate"},
+    
+    {"id": "code-dev", "label": "Code & Development", "type": "concept", "section": "dev", "description": "AI coding assistants", "difficulty": "Intermediate"},
+    {"id": "dev-platforms", "label": "Dev Platforms", "type": "concept", "section": "dev", "description": "AI development APIs", "difficulty": "Advanced"},
+    
+    {"id": "productivity", "label": "Productivity", "type": "concept", "section": "productivity", "description": "Automation & workflow", "difficulty": "Beginner"},
+    {"id": "research", "label": "Research", "type": "concept", "section": "productivity", "description": "Academic & scientific AI", "difficulty": "Intermediate"},
+    
+    {"id": "local-ai", "label": "Local AI", "type": "concept", "section": "infrastructure", "description": "Run AI locally", "difficulty": "Advanced"},
+    {"id": "enterprise", "label": "Enterprise", "type": "concept", "section": "infrastructure", "description": "Business AI solutions", "difficulty": "Advanced"},
+    
+    {"id": "chatgpt", "label": "ChatGPT", "type": "tool", "section": "text", "description": "OpenAI's flagship chatbot", "difficulty": "Beginner", "url": "https://chat.openai.com/"},
+    {"id": "claude", "label": "Claude", "type": "tool", "section": "text", "description": "Anthropic's AI assistant", "difficulty": "Beginner", "url": "https://claude.ai/"},
+    {"id": "gemini", "label": "Gemini", "type": "tool", "section": "text", "description": "Google's multimodal AI", "difficulty": "Beginner", "url": "https://gemini.google.com/"},
+    
+    {"id": "midjourney", "label": "Midjourney", "type": "tool", "section": "visual", "description": "Artistic image generation", "difficulty": "Intermediate", "url": "https://www.midjourney.com/"},
+    {"id": "dalle", "label": "DALL-E 3", "type": "tool", "section": "visual", "description": "OpenAI image creation", "difficulty": "Beginner", "url": "https://openai.com/dall-e-3"},
+    {"id": "stable-diff", "label": "Stable Diffusion", "type": "tool", "section": "visual", "description": "Open-source image gen", "difficulty": "Advanced", "url": "https://stability.ai/"},
+    
+    {"id": "sora", "label": "Sora", "type": "tool", "section": "visual", "description": "OpenAI video generation", "difficulty": "Intermediate", "url": "https://openai.com/sora"},
+    {"id": "runway", "label": "Runway", "type": "tool", "section": "visual", "description": "Creative AI video suite", "difficulty": "Intermediate", "url": "https://runwayml.com/"},
+    
+    {"id": "suno", "label": "Suno", "type": "tool", "section": "audio", "description": "AI music generation", "difficulty": "Beginner", "url": "https://suno.com/"},
+    {"id": "elevenlabs", "label": "ElevenLabs", "type": "tool", "section": "audio", "description": "Voice synthesis", "difficulty": "Intermediate", "url": "https://elevenlabs.io/"},
+    
+    {"id": "copilot", "label": "GitHub Copilot", "type": "tool", "section": "dev", "description": "AI pair programmer", "difficulty": "Intermediate", "url": "https://github.com/features/copilot"},
+    {"id": "cursor", "label": "Cursor", "type": "tool", "section": "dev", "description": "AI-first code editor", "difficulty": "Intermediate", "url": "https://cursor.sh/"},
+    
+    {"id": "jasper", "label": "Jasper", "type": "tool", "section": "text", "description": "Marketing content AI", "difficulty": "Beginner", "url": "https://www.jasper.ai/"},
+    {"id": "copy-ai", "label": "Copy.ai", "type": "tool", "section": "text", "description": "AI copywriting", "difficulty": "Beginner", "url": "https://www.copy.ai/"},
+    
+    {"id": "notion-ai", "label": "Notion AI", "type": "tool", "section": "productivity", "description": "AI-enhanced workspace", "difficulty": "Beginner", "url": "https://www.notion.so/product/ai"},
+    {"id": "zapier-ai", "label": "Zapier AI", "type": "tool", "section": "productivity", "description": "AI automation", "difficulty": "Intermediate", "url": "https://zapier.com/ai"},
+    
+    {"id": "perplexity", "label": "Perplexity", "type": "tool", "section": "productivity", "description": "AI search engine", "difficulty": "Beginner", "url": "https://www.perplexity.ai/"},
+    {"id": "elicit", "label": "Elicit", "type": "tool", "section": "productivity", "description": "Research assistant", "difficulty": "Intermediate", "url": "https://elicit.com/"},
+    
+    {"id": "openai-api", "label": "OpenAI API", "type": "tool", "section": "dev", "description": "GPT, DALL-E, Whisper APIs", "difficulty": "Intermediate", "url": "https://platform.openai.com/"},
+    {"id": "anthropic-api", "label": "Anthropic API", "type": "tool", "section": "dev", "description": "Claude API", "difficulty": "Intermediate", "url": "https://console.anthropic.com/"},
+    {"id": "huggingface", "label": "Hugging Face", "type": "tool", "section": "dev", "description": "ML model hub & inference", "difficulty": "Intermediate", "url": "https://huggingface.co/"},
+    
+    {"id": "ollama", "label": "Ollama", "type": "tool", "section": "infrastructure", "description": "Run LLMs locally", "difficulty": "Intermediate", "url": "https://ollama.com/"},
+    {"id": "lmstudio", "label": "LM Studio", "type": "tool", "section": "infrastructure", "description": "Local LLM GUI", "difficulty": "Beginner", "url": "https://lmstudio.ai/"},
+    {"id": "llamacpp", "label": "llama.cpp", "type": "tool", "section": "infrastructure", "description": "Efficient local inference", "difficulty": "Advanced", "url": "https://github.com/ggerganov/llama.cpp"},
+    
+    {"id": "autogpt", "label": "AutoGPT", "type": "tool", "section": "dev", "description": "Autonomous AI agents", "difficulty": "Advanced", "url": "https://github.com/Significant-Gravitas/AutoGPT"},
+    {"id": "crewai", "label": "CrewAI", "type": "tool", "section": "dev", "description": "Multi-agent framework", "difficulty": "Advanced", "url": "https://www.crewai.com/"},
+    {"id": "langchain", "label": "LangChain", "type": "tool", "section": "dev", "description": "LLM app framework", "difficulty": "Advanced", "url": "https://www.langchain.com/"},
+    
+    {"id": "azure-openai", "label": "Azure OpenAI", "type": "tool", "section": "infrastructure", "description": "Enterprise GPT", "difficulty": "Intermediate", "url": "https://azure.microsoft.com/en-us/products/ai-services/openai-service"},
+    {"id": "aws-bedrock", "label": "AWS Bedrock", "type": "tool", "section": "infrastructure", "description": "Managed AI models", "difficulty": "Intermediate", "url": "https://aws.amazon.com/bedrock/"},
+    {"id": "gcp-vertex", "label": "Vertex AI", "type": "tool", "section": "infrastructure", "description": "Google Cloud AI", "difficulty": "Intermediate", "url": "https://cloud.google.com/vertex-ai"}
+  ],
+  "links": [
+    {"source": "ai-tools", "target": "chatbots", "type": "category"},
+    {"source": "ai-tools", "target": "image-gen", "type": "category"},
+    {"source": "ai-tools", "target": "video-gen", "type": "category"},
+    {"source": "ai-tools", "target": "audio-music", "type": "category"},
+    {"source": "ai-tools", "target": "code-dev", "type": "category"},
+    {"source": "ai-tools", "target": "writing", "type": "category"},
+    {"source": "ai-tools", "target": "productivity", "type": "category"},
+    {"source": "ai-tools", "target": "local-ai", "type": "category"},
+    {"source": "ai-tools", "target": "enterprise", "type": "category"},
+    {"source": "ai-tools", "target": "dev-platforms", "type": "category"},
+    
+    {"source": "chatbots", "target": "chatgpt", "type": "instance"},
+    {"source": "chatbots", "target": "claude", "type": "instance"},
+    {"source": "chatbots", "target": "gemini", "type": "instance"},
+    
+    {"source": "image-gen", "target": "midjourney", "type": "instance"},
+    {"source": "image-gen", "target": "dalle", "type": "instance"},
+    {"source": "image-gen", "target": "stable-diff", "type": "instance"},
+    
+    {"source": "video-gen", "target": "sora", "type": "instance"},
+    {"source": "video-gen", "target": "runway", "type": "instance"},
+    
+    {"source": "audio-music", "target": "suno", "type": "instance"},
+    {"source": "audio-music", "target": "elevenlabs", "type": "instance"},
+    
+    {"source": "code-dev", "target": "copilot", "type": "instance"},
+    {"source": "code-dev", "target": "cursor", "type": "instance"},
+    
+    {"source": "writing", "target": "jasper", "type": "instance"},
+    {"source": "writing", "target": "copy-ai", "type": "instance"},
+    
+    {"source": "productivity", "target": "notion-ai", "type": "instance"},
+    {"source": "productivity", "target": "zapier-ai", "type": "instance"},
+    {"source": "productivity", "target": "research", "type": "subcategory"},
+    
+    {"source": "research", "target": "perplexity", "type": "instance"},
+    {"source": "research", "target": "elicit", "type": "instance"},
+    
+    {"source": "dev-platforms", "target": "openai-api", "type": "instance"},
+    {"source": "dev-platforms", "target": "anthropic-api", "type": "instance"},
+    {"source": "dev-platforms", "target": "huggingface", "type": "instance"},
+    
+    {"source": "local-ai", "target": "ollama", "type": "instance"},
+    {"source": "local-ai", "target": "lmstudio", "type": "instance"},
+    {"source": "local-ai", "target": "llamacpp", "type": "instance"},
+    
+    {"source": "dev-platforms", "target": "autogpt", "type": "instance"},
+    {"source": "dev-platforms", "target": "crewai", "type": "instance"},
+    {"source": "dev-platforms", "target": "langchain", "type": "instance"},
+    
+    {"source": "enterprise", "target": "azure-openai", "type": "instance"},
+    {"source": "enterprise", "target": "aws-bedrock", "type": "instance"},
+    {"source": "enterprise", "target": "gcp-vertex", "type": "instance"}
+  ]
+}

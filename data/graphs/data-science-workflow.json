@@ -1,0 +1,82 @@
+{
+  "id": "data-science-workflow",
+  "title": "Data Science Workflow",
+  "description": "End-to-end data science project lifecycle from problem to deployment",
+  "sections": [
+    { "id": "understanding", "title": "Understanding", "color": "#6366f1" },
+    { "id": "preparation", "title": "Data Prep", "color": "#10b981" },
+    { "id": "modeling", "title": "Modeling", "color": "#f59e0b" },
+    { "id": "deployment", "title": "Deployment", "color": "#ef4444" }
+  ],
+  "nodes": [
+    {"id": "problem-definition", "label": "Problem Definition", "type": "root", "section": "understanding", "description": "Define business problem and success metrics", "difficulty": "Beginner"},
+    
+    {"id": "data-collection", "label": "Data Collection", "type": "concept", "section": "understanding", "description": "Gather data from various sources", "difficulty": "Beginner"},
+    {"id": "stakeholder-input", "label": "Stakeholder Input", "type": "concept", "section": "understanding", "description": "Domain expertise and requirements", "difficulty": "Intermediate"},
+    
+    {"id": "data-cleaning", "label": "Data Cleaning", "type": "concept", "section": "preparation", "description": "Handle missing values, outliers, duplicates", "difficulty": "Beginner", "url": "https://pandas.pydata.org/docs/user_guide/missing_data.html"},
+    {"id": "data-integration", "label": "Data Integration", "type": "concept", "section": "preparation", "description": "Merge multiple data sources", "difficulty": "Intermediate"},
+    {"id": "data-validation", "label": "Data Validation", "type": "concept", "section": "preparation", "description": "Check data quality and consistency", "difficulty": "Intermediate", "url": "https://greatexpectations.io/"},
+    
+    {"id": "eda", "label": "Exploratory Analysis", "type": "concept", "section": "preparation", "description": "Visualize and understand patterns", "difficulty": "Beginner", "url": "https://seaborn.pydata.org/tutorial/introduction.html"},
+    {"id": "hypothesis", "label": "Hypothesis Formation", "type": "concept", "section": "preparation", "description": "Develop testable hypotheses", "difficulty": "Intermediate"},
+    
+    {"id": "feature-engineering", "label": "Feature Engineering", "type": "concept", "section": "modeling", "description": "Create and transform features", "difficulty": "Intermediate", "url": "https://scikit-learn.org/stable/modules/preprocessing.html"},
+    {"id": "feature-selection", "label": "Feature Selection", "type": "concept", "section": "modeling", "description": "Choose most predictive features", "difficulty": "Intermediate", "url": "https://scikit-learn.org/stable/modules/feature_selection.html"},
+    {"id": "data-transformation", "label": "Data Transformation", "type": "concept", "section": "modeling", "description": "Scaling, encoding, normalization", "difficulty": "Beginner"},
+    
+    {"id": "model-selection", "label": "Model Selection", "type": "concept", "section": "modeling", "description": "Choose appropriate algorithms", "difficulty": "Intermediate"},
+    {"id": "train-test-split", "label": "Train/Test Split", "type": "concept", "section": "modeling", "description": "Stratified sampling", "difficulty": "Beginner"},
+    
+    {"id": "model-training", "label": "Model Training", "type": "concept", "section": "modeling", "description": "Fit models to training data", "difficulty": "Beginner"},
+    {"id": "hyperparameter-tuning", "label": "Hyperparameter Tuning", "type": "concept", "section": "modeling", "description": "Cross-validation, grid search", "difficulty": "Advanced", "url": "https://scikit-learn.org/stable/modules/grid_search.html"},
+    {"id": "ensemble-methods", "label": "Ensemble Methods", "type": "concept", "section": "modeling", "description": "Combine multiple models", "difficulty": "Advanced"},
+    
+    {"id": "model-evaluation", "label": "Model Evaluation", "type": "concept", "section": "modeling", "description": "Accuracy, precision, recall, F1", "difficulty": "Beginner", "url": "https://scikit-learn.org/stable/modules/model_evaluation.html"},
+    {"id": "cross-validation", "label": "Cross-Validation", "type": "concept", "section": "modeling", "description": "K-fold validation", "difficulty": "Intermediate"},
+    
+    {"id": "model-interpretation", "label": "Model Interpretation", "type": "concept", "section": "deployment", "description": "SHAP, feature importance", "difficulty": "Advanced", "url": "https://shap.readthedocs.io/en/latest/"},
+    {"id": "error-analysis", "label": "Error Analysis", "type": "concept", "section": "deployment", "description": "Understand failure cases", "difficulty": "Intermediate"},
+    
+    {"id": "communication", "label": "Communication", "type": "concept", "section": "deployment", "description": "Reports, dashboards, presentations", "difficulty": "Intermediate"},
+    {"id": "deployment", "label": "Deployment", "type": "concept", "section": "deployment", "description": "API, batch processing", "difficulty": "Advanced"},
+    {"id": "monitoring", "label": "Monitoring", "type": "concept", "section": "deployment", "description": "Track performance over time", "difficulty": "Advanced"}
+  ],
+  "links": [
+    {"source": "problem-definition", "target": "data-collection", "type": "leads-to"},
+    {"source": "problem-definition", "target": "stakeholder-input", "type": "requires"},
+    
+    {"source": "data-collection", "target": "data-cleaning", "type": "leads-to"},
+    {"source": "data-collection", "target": "data-integration", "type": "leads-to"},
+    {"source": "stakeholder-input", "target": "data-validation", "type": "informs"},
+    
+    {"source": "data-cleaning", "target": "eda", "type": "leads-to"},
+    {"source": "data-integration", "target": "eda", "type": "leads-to"},
+    {"source": "data-validation", "target": "hypothesis", "type": "leads-to"},
+    
+    {"source": "eda", "target": "feature-engineering", "type": "informs"},
+    {"source": "eda", "target": "feature-selection", "type": "informs"},
+    {"source": "hypothesis", "target": "data-transformation", "type": "guides"},
+    
+    {"source": "feature-engineering", "target": "model-selection", "type": "leads-to"},
+    {"source": "feature-selection", "target": "train-test-split", "type": "leads-to"},
+    {"source": "data-transformation", "target": "train-test-split", "type": "leads-to"},
+    
+    {"source": "model-selection", "target": "model-training", "type": "leads-to"},
+    {"source": "train-test-split", "target": "model-training", "type": "feeds"},
+    {"source": "model-training", "target": "hyperparameter-tuning", "type": "leads-to"},
+    {"source": "hyperparameter-tuning", "target": "ensemble-methods", "type": "enables"},
+    
+    {"source": "model-training", "target": "model-evaluation", "type": "leads-to"},
+    {"source": "ensemble-methods", "target": "cross-validation", "type": "uses"},
+    
+    {"source": "model-evaluation", "target": "model-interpretation", "type": "leads-to"},
+    {"source": "cross-validation", "target": "error-analysis", "type": "enables"},
+    
+    {"source": "model-interpretation", "target": "communication", "type": "supports"},
+    {"source": "model-interpretation", "target": "deployment", "type": "validates"},
+    {"source": "error-analysis", "target": "deployment", "type": "validates"},
+    {"source": "deployment", "target": "monitoring", "type": "leads-to"},
+    {"source": "monitoring", "target": "data-collection", "type": "feedback"}
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "id": "generative-ai",
+  "title": "Generative AI Landscape",
+  "description": "Explore the complete ecosystem of generative AI technologies",
+  "sections": [
+    { "id": "text", "title": "Text Generation", "color": "#3b82f6" },
+    { "id": "image", "title": "Image Generation", "color": "#ec4899" },
+    { "id": "audio", "title": "Audio Generation", "color": "#10b981" },
+    { "id": "video", "title": "Video Generation", "color": "#f97316" },
+    { "id": "code", "title": "Code Generation", "color": "#8b5cf6" },
+    { "id": "multimodal", "title": "Multimodal", "color": "#06b6d4" }
+  ],
+  "nodes": [
+    { "id": "genai", "label": "Generative AI", "type": "root", "description": "AI systems that create new content", "url": "https://en.wikipedia.org/wiki/Generative_artificial_intelligence", "difficulty": "Beginner" },
+    
+    { "id": "text", "label": "Text Generation", "type": "category", "section": "text", "description": "Models that generate and understand text", "difficulty": "Beginner" },
+    { "id": "llm", "label": "Large Language Models", "type": "concept", "section": "text", "description": "Foundation models for text", "difficulty": "Intermediate" },
+    { "id": "gpt", "label": "GPT Family", "type": "model", "section": "text", "description": "OpenAI's GPT models", "url": "https://openai.com/gpt-4", "difficulty": "Beginner" },
+    { "id": "claude", "label": "Claude Family", "type": "model", "section": "text", "description": "Anthropic's Claude models", "url": "https://www.anthropic.com/claude", "difficulty": "Beginner" },
+    { "id": "llama", "label": "LLaMA Family", "type": "model", "section": "text", "description": "Meta's open LLaMA models", "url": "https://llama.meta.com/", "difficulty": "Intermediate" },
+    { "id": "gemini", "label": "Gemini", "type": "model", "section": "text", "description": "Google's multimodal Gemini", "url": "https://deepmind.google/technologies/gemini/", "difficulty": "Beginner" },
+    
+    { "id": "image", "label": "Image Generation", "type": "category", "section": "image", "description": "Models that create images", "difficulty": "Beginner" },
+    { "id": "diffusion", "label": "Diffusion Models", "type": "concept", "section": "image", "description": "Denoising-based generation", "difficulty": "Advanced" },
+    { "id": "sd", "label": "Stable Diffusion", "type": "model", "section": "image", "description": "Open source diffusion model", "url": "https://stability.ai/", "difficulty": "Intermediate" },
+    { "id": "dalle", "label": "DALL-E", "type": "model", "section": "image", "description": "OpenAI's image generation", "url": "https://openai.com/dall-e-3", "difficulty": "Beginner" },
+    { "id": "midjourney", "label": "Midjourney", "type": "model", "section": "image", "description": "High-quality art generation", "url": "https://www.midjourney.com/", "difficulty": "Beginner" },
+    
+    { "id": "audio", "label": "Audio Generation", "type": "category", "section": "audio", "description": "Models for speech and music", "difficulty": "Intermediate" },
+    { "id": "tts", "label": "Text-to-Speech", "type": "concept", "section": "audio", "description": "Converting text to voice", "difficulty": "Intermediate" },
+    { "id": "music", "label": "Music Generation", "type": "concept", "section": "audio", "description": "AI-generated music", "url": "https://google-research.github.io/seanet/musiclm/examples/", "difficulty": "Advanced" },
+    
+    { "id": "video", "label": "Video Generation", "type": "category", "section": "video", "description": "AI video creation", "difficulty": "Advanced" },
+    { "id": "sora", "label": "Sora", "type": "model", "section": "video", "description": "OpenAI's video model", "url": "https://openai.com/sora", "difficulty": "Advanced" },
+    { "id": "runway", "label": "Runway Gen-2", "type": "model", "section": "video", "description": "Text-to-video generation", "url": "https://runwayml.com/", "difficulty": "Advanced" },
+    
+    { "id": "code", "label": "Code Generation", "type": "category", "section": "code", "description": "AI for programming", "difficulty": "Intermediate" },
+    { "id": "copilot", "label": "GitHub Copilot", "type": "model", "section": "code", "description": "AI pair programmer", "url": "https://github.com/features/copilot", "difficulty": "Beginner" },
+    { "id": "codex", "label": "Codex", "type": "model", "section": "code", "description": "OpenAI's code model", "difficulty": "Advanced" },
+    
+    { "id": "multimodal", "label": "Multimodal", "type": "category", "section": "multimodal", "description": "Models handling multiple modalities", "difficulty": "Advanced" },
+    { "id": "gpt4v", "label": "GPT-4 Vision", "type": "model", "section": "multimodal", "description": "Vision + Language", "difficulty": "Intermediate" }
+  ],
+  "links": [
+    { "source": "genai", "target": "text", "type": "contains" },
+    { "source": "genai", "target": "image", "type": "contains" },
+    { "source": "genai", "target": "audio", "type": "contains" },
+    { "source": "genai", "target": "video", "type": "contains" },
+    { "source": "genai", "target": "code", "type": "contains" },
+    { "source": "genai", "target": "multimodal", "type": "contains" },
+    
+    { "source": "text", "target": "llm", "type": "includes" },
+    { "source": "llm", "target": "gpt", "type": "example" },
+    { "source": "llm", "target": "claude", "type": "example" },
+    { "source": "llm", "target": "llama", "type": "example" },
+    { "source": "llm", "target": "gemini", "type": "example" },
+    
+    { "source": "image", "target": "diffusion", "type": "includes" },
+    { "source": "diffusion", "target": "sd", "type": "example" },
+    { "source": "diffusion", "target": "dalle", "type": "example" },
+    { "source": "diffusion", "target": "midjourney", "type": "example" },
+    
+    { "source": "audio", "target": "tts", "type": "includes" },
+    { "source": "audio", "target": "music", "type": "includes" },
+    
+    { "source": "video", "target": "sora", "type": "example" },
+    { "source": "video", "target": "runway", "type": "example" },
+    
+    { "source": "code", "target": "copilot", "type": "example" },
+    { "source": "code", "target": "codex", "type": "example" },
+    
+    { "source": "multimodal", "target": "gpt4v", "type": "example" },
+    { "source": "multimodal", "target": "gemini", "type": "example" }
+  ]
+}

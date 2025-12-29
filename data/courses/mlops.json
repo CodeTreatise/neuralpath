@@ -1,0 +1,642 @@
+{
+  "id": "mlops",
+  "title": "MLOps & Model Deployment",
+  "icon": "\ud83d\ude80",
+  "description": "Learn to deploy, monitor, and maintain ML models in production environments.",
+  "level": "advanced",
+  "duration": "5 weeks",
+  "totalLessons": 16,
+  "prerequisites": [
+    "ML Fundamentals",
+    "Python Proficiency",
+    "Basic DevOps"
+  ],
+  "outcomes": [
+    "Deploy models with Docker and Kubernetes",
+    "Build ML pipelines with orchestration tools",
+    "Monitor model performance and drift",
+    "Implement CI/CD for machine learning"
+  ],
+  "modules": [
+    {
+      "title": "MLOps Fundamentals",
+      "description": "MLOps Fundamentals module",
+      "lessons": [
+        {
+          "id": "intro-mlops",
+          "title": "Introduction to MLOps",
+          "type": "lesson",
+          "duration": "20 min",
+          "content": {
+            "overview": "MLOps (Machine Learning Operations) applies DevOps principles to ML systems. It addresses the unique challenges of deploying and maintaining ML models in production.",
+            "sections": [
+              {
+                "title": "Why MLOps?",
+                "content": "Only ~15% of ML projects make it to production. MLOps bridges the gap between data science experiments and reliable production systems.",
+                "keyPoints": [
+                  "ML systems have unique challenges: data dependencies, model decay",
+                  "Models need continuous monitoring and retraining",
+                  "Reproducibility is critical for debugging and compliance",
+                  "Collaboration between data scientists and engineers"
+                ]
+              },
+              {
+                "title": "MLOps Maturity Levels",
+                "content": "**Level 0 - Manual**\n- Manual training and deployment\n- No automation, no monitoring\n\n**Level 1 - ML Pipeline**\n- Automated training pipelines\n- Continuous training on new data\n\n**Level 2 - CI/CD for ML**\n- Automated testing and deployment\n- Feature stores, model registries\n- Full observability"
+              },
+              {
+                "title": "MLOps Stack Overview",
+                "content": "A complete MLOps stack includes:\n\n**Data Layer**: Feature stores, data versioning\n**Training**: Experiment tracking, hyperparameter tuning\n**Serving**: Model servers, APIs, edge deployment\n**Monitoring**: Performance tracking, drift detection\n**Orchestration**: Pipeline scheduling, workflow management",
+                "diagram": {
+                  "title": "MLOps Pipeline Architecture",
+                  "code": "flowchart LR\n    subgraph Data[\"Data Layer\"]\n        FS[Feature Store]\n        DV[Data Versioning]\n    end\n    \n    subgraph Training[\"Training\"]\n        ET[Experiment Tracking]\n        HP[Hyperparameter Tuning]\n        MR[Model Registry]\n    end\n    \n    subgraph Serving[\"Serving\"]\n        API[REST API]\n        BATCH[Batch Inference]\n        EDGE[Edge Deploy]\n    end\n    \n    subgraph Monitoring[\"Monitoring\"]\n        PERF[Performance]\n        DRIFT[Drift Detection]\n        ALERT[Alerting]\n    end\n    \n    Data --> Training --> Serving\n    Serving --> Monitoring\n    Monitoring -.->|Retrain| Training"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "MLOps is DevOps + ML-specific practices",
+              "The goal is reliable, reproducible, scalable ML",
+              "Start simple and mature incrementally",
+              "Tooling choice depends on scale and team"
+            ]
+          }
+        },
+        {
+          "id": "experiment-tracking",
+          "title": "Experiment Tracking",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Track experiments systematically to understand what works, ensure reproducibility, and enable collaboration.",
+            "sections": [
+              {
+                "title": "MLflow Tracking",
+                "diagram": {
+                  "title": "MLflow Architecture",
+                  "code": "flowchart LR\n    Client[MLflow Client] -->|Log Metrics| Server[Tracking Server]\n    Client -->|Log Artifacts| Store[Artifact Store]\n    Server -->|Persist| DB[(Backend DB)]\n    \n    subgraph Storage\n        DB\n        Store\n    end\n    \n    style Client fill:#dbeafe,stroke:#2563eb\n    style Server fill:#f3f4f6,stroke:#4b5563\n    style DB fill:#dcfce7,stroke:#16a34a"
+                },
+                "codeExample": {
+                  "language": "python",
+                  "code": "import mlflow\nfrom mlflow.tracking import MlflowClient\n\n# Set tracking URI\nmlflow.set_tracking_uri(\"http://mlflow-server:5000\")\nmlflow.set_experiment(\"classification-experiments\")\n\n# Log experiment\nwith mlflow.start_run(run_name=\"random_forest_v1\"):\n    # Log parameters\n    mlflow.log_params({\n        \"n_estimators\": 100,\n        \"max_depth\": 10,\n        \"min_samples_split\": 5\n    })\n    \n    # Train model\n    model = train_model(X_train, y_train)\n    \n    # Log metrics\n    metrics = evaluate(model, X_test, y_test)\n    mlflow.log_metrics({\n        \"accuracy\": metrics[\"accuracy\"],\n        \"precision\": metrics[\"precision\"],\n        \"recall\": metrics[\"recall\"],\n        \"f1\": metrics[\"f1\"]\n    })\n    \n    # Log artifacts\n    mlflow.log_artifact(\"feature_importance.png\")\n    mlflow.log_artifact(\"confusion_matrix.png\")\n    \n    # Log model\n    mlflow.sklearn.log_model(\n        model, \n        \"model\",\n        registered_model_name=\"fraud-detector\"\n    )\n\n# Compare runs\nclient = MlflowClient()\nruns = client.search_runs(\n    experiment_ids=[\"1\"],\n    order_by=[\"metrics.f1 DESC\"]\n)\nprint(f\"Best F1: {runs[0].data.metrics['f1']}\")"
+                }
+              },
+              {
+                "title": "Weights & Biases",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import wandb\n\n# Initialize run\nwandb.init(\n    project=\"my-project\",\n    config={\n        \"learning_rate\": 0.001,\n        \"epochs\": 100,\n        \"batch_size\": 32,\n        \"architecture\": \"ResNet50\"\n    }\n)\n\n# Training loop with logging\nfor epoch in range(config.epochs):\n    train_loss = train_epoch(model, train_loader)\n    val_loss, val_acc = validate(model, val_loader)\n    \n    # Log metrics\n    wandb.log({\n        \"epoch\": epoch,\n        \"train_loss\": train_loss,\n        \"val_loss\": val_loss,\n        \"val_accuracy\": val_acc\n    })\n    \n    # Log media\n    if epoch % 10 == 0:\n        wandb.log({\n            \"predictions\": wandb.Image(plot_predictions(model, samples))\n        })\n\n# Log model artifact\nartifact = wandb.Artifact(\"model\", type=\"model\")\nartifact.add_file(\"model.pt\")\nwandb.log_artifact(artifact)\n\nwandb.finish()"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Log parameters, metrics, and artifacts systematically",
+              "Compare experiments to understand what works",
+              "Version models alongside experiments",
+              "Use hyperparameter sweeps for optimization"
+            ]
+          }
+        },
+        {
+          "id": "model-registry",
+          "title": "Model Registry & Versioning",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "A model registry is the source of truth for trained models, their versions, metadata, and deployment status.",
+            "sections": [
+              {
+                "title": "MLflow Model Registry",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from mlflow.tracking import MlflowClient\nimport mlflow\n\nclient = MlflowClient()\n\n# Register model from run\nresult = mlflow.register_model(\n    model_uri=f\"runs:/{run_id}/model\",\n    name=\"fraud-detector\"\n)\n\n# Add description and tags\nclient.update_model_version(\n    name=\"fraud-detector\",\n    version=result.version,\n    description=\"Trained on Q4 2024 data, F1=0.94\"\n)\n\nclient.set_model_version_tag(\n    name=\"fraud-detector\",\n    version=result.version,\n    key=\"validation_dataset\",\n    value=\"s3://bucket/validation/q4_2024\"\n)\n\n# Transition to Production\nclient.transition_model_version_stage(\n    name=\"fraud-detector\",\n    version=result.version,\n    stage=\"Production\",\n    archive_existing_versions=True  # Archive old prod version\n)\n\n# Load production model\nmodel = mlflow.pyfunc.load_model(\"models:/fraud-detector/Production\")"
+                }
+              },
+              {
+                "title": "Model Governance",
+                "codeExample": {
+                  "language": "python",
+                  "code": "class ModelGovernance:\n    def __init__(self, registry_client):\n        self.client = registry_client\n        self.approval_rules = {\n            \"production\": {\n                \"min_accuracy\": 0.90,\n                \"min_f1\": 0.85,\n                \"required_tests\": [\"bias_audit\", \"latency_test\"],\n                \"requires_approval\": True\n            }\n        }\n    \n    def validate_for_stage(self, model_name: str, version: str, stage: str):\n        rules = self.approval_rules.get(stage, {})\n        model = self.client.get_model_version(model_name, version)\n        run = self.client.get_run(model.run_id)\n        \n        issues = []\n        \n        # Check metrics\n        metrics = run.data.metrics\n        if metrics.get(\"accuracy\", 0) < rules.get(\"min_accuracy\", 0):\n            issues.append(f\"Accuracy {metrics['accuracy']:.3f} below threshold\")\n        \n        if metrics.get(\"f1\", 0) < rules.get(\"min_f1\", 0):\n            issues.append(f\"F1 {metrics['f1']:.3f} below threshold\")\n        \n        # Check required tests\n        artifacts = [a.path for a in self.client.list_artifacts(run.info.run_id)]\n        for test in rules.get(\"required_tests\", []):\n            if f\"{test}_report.html\" not in artifacts:\n                issues.append(f\"Missing required test: {test}\")\n        \n        return {\"valid\": len(issues) == 0, \"issues\": issues}"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Model registry tracks all model versions",
+              "Use stages (Staging, Production) for lifecycle",
+              "Attach metadata, metrics, and artifacts",
+              "Implement governance rules for production"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Pipelines & CI/CD",
+      "description": "Pipelines & CI/CD module",
+      "lessons": [
+        {
+          "id": "cicd-ml",
+          "title": "CI/CD for Machine Learning",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "CI/CD for ML extends traditional practices to handle data, model training, and model validation as part of the pipeline.",
+            "sections": [
+              {
+                "title": "ML-Specific Testing",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# tests/test_model.py\nimport pytest\nimport torch\n\ndef test_model_output_shape():\n    model = load_model()\n    x = torch.randn(1, 3, 224, 224)\n    output = model(x)\n    assert output.shape == (1, 1000)\n\ndef test_model_deterministic():\n    model = load_model()\n    x = torch.randn(1, 3, 224, 224)\n    out1 = model(x)\n    out2 = model(x)\n    assert torch.allclose(out1, out2)\n\ndef test_model_performance():\n    model = load_model()\n    accuracy = evaluate(model, test_data)\n    assert accuracy >= 0.90, f'Accuracy {accuracy} below threshold'\n\ndef test_inference_latency():\n    import time\n    model = load_model()\n    x = torch.randn(1, 3, 224, 224)\n    \n    start = time.time()\n    for _ in range(100):\n        model(x)\n    avg_time = (time.time() - start) / 100\n    \n    assert avg_time < 0.1, f'Latency {avg_time:.3f}s exceeds threshold'"
+                }
+              },
+              {
+                "title": "GitHub Actions Workflow",
+                "diagram": {
+                  "title": "ML CI/CD Pipeline",
+                  "code": "flowchart TD\n    Push[Git Push] --> Test[Run Tests]\n    Test -->|Pass| Train[Train Model]\n    Train --> Eval{Evaluate}\n    Eval -->|Acc > Threshold| Reg[Register Model]\n    Eval -->|Fail| Stop[Stop Pipeline]\n    Reg --> Deploy[Deploy to Staging]\n    Deploy --> Smoke[Smoke Tests]\n    Smoke -->|Pass| Prod[Promote to Prod]\n    \n    style Push fill:#fff,stroke:#333\n    style Test fill:#dbeafe,stroke:#2563eb\n    style Train fill:#dbeafe,stroke:#2563eb\n    style Reg fill:#dcfce7,stroke:#16a34a\n    style Prod fill:#fcd34d,stroke:#d97706"
+                },
+                "codeExample": {
+                  "language": "yaml",
+                  "code": "# .github/workflows/ml-pipeline.yml\nname: ML Pipeline\n\non:\n  push:\n    branches: [main]\n  pull_request:\n    branches: [main]\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v3\n      \n      - name: Set up Python\n        uses: actions/setup-python@v4\n        with:\n          python-version: '3.10'\n      \n      - name: Install dependencies\n        run: pip install -r requirements.txt\n      \n      - name: Run tests\n        run: pytest tests/\n      \n      - name: Validate model\n        run: python scripts/validate_model.py\n\n  train:\n    needs: test\n    if: github.event_name == 'push'\n    runs-on: ubuntu-latest\n    steps:\n      - name: Train model\n        run: python train.py\n      \n      - name: Register model\n        run: python scripts/register_model.py\n\n  deploy:\n    needs: train\n    runs-on: ubuntu-latest\n    steps:\n      - name: Deploy to staging\n        run: ./scripts/deploy.sh staging"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Test models like code: unit, integration, performance",
+              "Gate deployments on accuracy thresholds",
+              "Use shadow deployments for safe rollouts",
+              "Automate the entire pipeline from commit to production"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Deployment",
+      "description": "Deployment module",
+      "lessons": [
+        {
+          "id": "model-serving",
+          "title": "Model Serving Frameworks",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Specialized model serving frameworks provide optimized inference, batching, GPU support, and multi-model management.",
+            "sections": [
+              {
+                "title": "TorchServe",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# handler.py - Custom handler for TorchServe\nfrom ts.torch_handler.base_handler import BaseHandler\nimport torch\nimport json\n\nclass MyModelHandler(BaseHandler):\n    def preprocess(self, data):\n        inputs = []\n        for row in data:\n            text = row.get('body').get('text')\n            inputs.append(self.tokenizer(text, return_tensors='pt'))\n        return inputs\n    \n    def inference(self, data):\n        with torch.no_grad():\n            return [self.model(**x) for x in data]\n    \n    def postprocess(self, data):\n        return [{'prediction': x.argmax().item()} for x in data]"
+                }
+              },
+              {
+                "title": "TorchServe Commands",
+                "codeExample": {
+                  "language": "bash",
+                  "code": "# Package model\ntorch-model-archiver \\\n  --model-name my_model \\\n  --version 1.0 \\\n  --model-file model.py \\\n  --serialized-file model.pt \\\n  --handler handler.py\n\n# Start server\ntorchserve --start \\\n  --model-store model_store \\\n  --models my_model=my_model.mar\n\n# Inference\ncurl http://localhost:8080/predictions/my_model \\\n  -d '{\"text\": \"Hello world\"}'"
+                }
+              },
+              {
+                "title": "Triton Inference Server",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Model repository structure:\n# model_repository/\n#   my_model/\n#     config.pbtxt\n#     1/\n#       model.onnx\n\n# config.pbtxt\n\"\"\"\nname: \"my_model\"\nplatform: \"onnxruntime_onnx\"\nmax_batch_size: 8\ninput [\n  {\n    name: \"input\"\n    data_type: TYPE_FP32\n    dims: [224, 224, 3]\n  }\n]\noutput [\n  {\n    name: \"output\"\n    data_type: TYPE_FP32\n    dims: [1000]\n  }\n]\ninstance_group [\n  {\n    count: 2\n    kind: KIND_GPU\n  }\n]\n\"\"\"\n\n# Client code\nimport tritonclient.http as httpclient\n\nclient = httpclient.InferenceServerClient(url='localhost:8000')\n\ninputs = [httpclient.InferInput('input', [1, 224, 224, 3], 'FP32')]\ninputs[0].set_data_from_numpy(image_array)\n\nresults = client.infer('my_model', inputs)\noutput = results.as_numpy('output')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "TorchServe is great for PyTorch models",
+              "Triton supports multiple frameworks (TF, PyTorch, ONNX)",
+              "Dynamic batching improves GPU utilization",
+              "Use model versioning for safe rollouts"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Additional Topics",
+      "description": "Additional course content",
+      "lessons": [
+        {
+          "id": "model-packaging",
+          "title": "Model Packaging & Serialization",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Before deployment, models must be serialized and packaged with their dependencies. This ensures consistent behavior across environments.",
+            "sections": [
+              {
+                "title": "Saving Models",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# PyTorch\nimport torch\n\n# Save entire model\ntorch.save(model, 'model.pt')\n\n# Save state dict (recommended)\ntorch.save(model.state_dict(), 'model_weights.pt')\n\n# Load\nmodel = MyModel()\nmodel.load_state_dict(torch.load('model_weights.pt'))\nmodel.eval()\n\n# Scikit-learn\nimport joblib\njoblib.dump(model, 'model.joblib')\nmodel = joblib.load('model.joblib')\n\n# ONNX (cross-platform)\nimport torch.onnx\ntorch.onnx.export(\n    model,\n    dummy_input,\n    'model.onnx',\n    input_names=['input'],\n    output_names=['output'],\n    dynamic_axes={'input': {0: 'batch'}}\n)"
+                }
+              },
+              {
+                "title": "MLflow Model Packaging",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import mlflow\nimport mlflow.pytorch\n\n# Log model with MLflow\nwith mlflow.start_run():\n    # Log parameters\n    mlflow.log_params({'lr': 0.001, 'epochs': 10})\n    \n    # Log metrics\n    mlflow.log_metrics({'accuracy': 0.95, 'f1': 0.93})\n    \n    # Log model\n    mlflow.pytorch.log_model(\n        model,\n        'model',\n        registered_model_name='my-classifier'\n    )\n\n# Load model\nmodel_uri = 'models:/my-classifier/Production'\nmodel = mlflow.pytorch.load_model(model_uri)"
+                }
+              },
+              {
+                "title": "Environment Management",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# requirements.txt\n# torch==2.0.0\n# transformers==4.30.0\n# numpy==1.24.0\n\n# conda environment\n# conda env export > environment.yml\n\n# MLflow conda.yaml (auto-generated)\nmlflow.pytorch.log_model(\n    model,\n    'model',\n    conda_env={\n        'dependencies': [\n            'python=3.10',\n            'pytorch=2.0',\n            'pip',\n            {'pip': ['transformers==4.30.0']}\n        ]\n    }\n)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Save model weights, not entire model when possible",
+              "ONNX enables cross-framework deployment",
+              "MLflow packages model + environment + metadata",
+              "Version your models like code"
+            ]
+          }
+        },
+        {
+          "id": "docker-deployment",
+          "title": "Docker for ML Deployment",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Docker containers package models with all dependencies, ensuring consistent behavior from development to production.",
+            "sections": [
+              {
+                "title": "ML Dockerfile",
+                "codeExample": {
+                  "language": "dockerfile",
+                  "code": "# Dockerfile\nFROM python:3.10-slim\n\n# Install system dependencies\nRUN apt-get update && apt-get install -y \\\n    build-essential \\\n    && rm -rf /var/lib/apt/lists/*\n\n# Set working directory\nWORKDIR /app\n\n# Install Python dependencies\nCOPY requirements.txt .\nRUN pip install --no-cache-dir -r requirements.txt\n\n# Copy model and code\nCOPY model/ ./model/\nCOPY app.py .\n\n# Expose port\nEXPOSE 8000\n\n# Run the application\nCMD [\"uvicorn\", \"app:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]"
+                }
+              },
+              {
+                "title": "FastAPI Model Server",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# app.py\nfrom fastapi import FastAPI\nfrom pydantic import BaseModel\nimport torch\nimport numpy as np\n\napp = FastAPI()\n\n# Load model at startup\nmodel = None\n\n@app.on_event('startup')\nasync def load_model():\n    global model\n    model = torch.load('model/model.pt')\n    model.eval()\n\nclass PredictRequest(BaseModel):\n    features: list[float]\n\nclass PredictResponse(BaseModel):\n    prediction: int\n    confidence: float\n\n@app.post('/predict', response_model=PredictResponse)\nasync def predict(request: PredictRequest):\n    # Prepare input\n    x = torch.tensor([request.features])\n    \n    # Inference\n    with torch.no_grad():\n        logits = model(x)\n        probs = torch.softmax(logits, dim=1)\n        pred = torch.argmax(probs, dim=1)\n    \n    return PredictResponse(\n        prediction=pred.item(),\n        confidence=probs.max().item()\n    )\n\n@app.get('/health')\nasync def health():\n    return {'status': 'healthy'}"
+                }
+              },
+              {
+                "title": "Docker Commands",
+                "codeExample": {
+                  "language": "bash",
+                  "code": "# Build image\ndocker build -t ml-model:v1 .\n\n# Run container\ndocker run -d -p 8000:8000 --name ml-service ml-model:v1\n\n# Test endpoint\ncurl -X POST http://localhost:8000/predict \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"features\": [1.0, 2.0, 3.0]}'\n\n# View logs\ndocker logs ml-service\n\n# Push to registry\ndocker tag ml-model:v1 myregistry/ml-model:v1\ndocker push myregistry/ml-model:v1"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Docker ensures environment consistency",
+              "Use slim base images for smaller containers",
+              "Load model once at startup, not per request",
+              "Health endpoints are essential for orchestration"
+            ]
+          }
+        },
+        {
+          "id": "monitoring-observability",
+          "title": "Model Monitoring & Observability",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "ML models degrade over time due to data drift and concept drift. Monitoring detects issues before they impact business.",
+            "sections": [
+              {
+                "title": "Types of Drift",
+                "content": "**Data Drift**: Input distribution changes\n- New user demographics\n- Seasonal patterns\n- Feature value shifts\n\n**Concept Drift**: Relationship between features and target changes\n- User preferences evolve\n- External events (pandemic, recession)\n\n**Model Performance Decay**\n- Accuracy drops over time\n- Need retraining triggers"
+              },
+              {
+                "title": "Drift Detection",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from evidently import ColumnMapping\nfrom evidently.report import Report\nfrom evidently.metric_preset import DataDriftPreset, TargetDriftPreset\n\n# Compare reference data vs production data\nreport = Report(metrics=[\n    DataDriftPreset(),\n    TargetDriftPreset()\n])\n\nreport.run(\n    reference_data=training_data,\n    current_data=production_data,\n    column_mapping=ColumnMapping(\n        target='label',\n        prediction='prediction'\n    )\n)\n\n# Save report\nreport.save_html('drift_report.html')\n\n# Get drift scores programmatically\nresult = report.as_dict()\ndataset_drift = result['metrics'][0]['result']['dataset_drift']"
+                }
+              },
+              {
+                "title": "Prometheus + Grafana Metrics",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from prometheus_client import Counter, Histogram, Gauge, start_http_server\nimport time\n\n# Define metrics\nREQUEST_COUNT = Counter(\n    'model_requests_total',\n    'Total prediction requests',\n    ['model_name', 'status']\n)\n\nLATENCY = Histogram(\n    'model_latency_seconds',\n    'Prediction latency',\n    ['model_name']\n)\n\nPREDICTION_CONFIDENCE = Histogram(\n    'prediction_confidence',\n    'Model confidence scores',\n    buckets=[0.5, 0.7, 0.8, 0.9, 0.95, 0.99, 1.0]\n)\n\n# Instrument prediction\ndef predict(features):\n    start = time.time()\n    try:\n        result = model(features)\n        REQUEST_COUNT.labels(model_name='v1', status='success').inc()\n        PREDICTION_CONFIDENCE.observe(result['confidence'])\n        return result\n    except Exception as e:\n        REQUEST_COUNT.labels(model_name='v1', status='error').inc()\n        raise\n    finally:\n        LATENCY.labels(model_name='v1').observe(time.time() - start)\n\n# Start metrics server\nstart_http_server(8001)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Monitor both input data and model outputs",
+              "Set alerts on accuracy drops and latency spikes",
+              "Log predictions for debugging and retraining",
+              "Automate retraining when drift is detected"
+            ]
+          }
+        },
+        {
+          "id": "feature-stores",
+          "title": "Feature Stores",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Feature stores provide a centralized repository for feature definitions, enabling consistency between training and serving.",
+            "sections": [
+              {
+                "title": "Why Feature Stores?",
+                "content": "**Problems Without Feature Stores**\n- Training/serving skew: Different feature code\n- Duplicate feature engineering across teams\n- Point-in-time correctness issues\n- No feature reuse\n\n**Feature Store Benefits**\n- Single source of truth for features\n- Consistent features in training and serving\n- Feature discovery and reuse\n- Time-travel for training data"
+              },
+              {
+                "title": "Feast Feature Store",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from feast import FeatureStore, Entity, Feature, FeatureView, FileSource\nfrom feast.types import Float32, Int64\nfrom datetime import timedelta\n\n# Define entity\ncustomer = Entity(\n    name=\"customer_id\",\n    value_type=Int64,\n    description=\"Customer identifier\"\n)\n\n# Define feature source\ncustomer_stats_source = FileSource(\n    path=\"data/customer_stats.parquet\",\n    timestamp_field=\"event_timestamp\"\n)\n\n# Define feature view\ncustomer_stats_view = FeatureView(\n    name=\"customer_stats\",\n    entities=[\"customer_id\"],\n    ttl=timedelta(days=1),\n    features=[\n        Feature(name=\"total_purchases\", dtype=Float32),\n        Feature(name=\"avg_order_value\", dtype=Float32),\n        Feature(name=\"days_since_last_purchase\", dtype=Int64),\n        Feature(name=\"purchase_frequency\", dtype=Float32)\n    ],\n    source=customer_stats_source\n)\n\n# Use in training\nstore = FeatureStore(repo_path=\".\")\n\n# Get training data with point-in-time join\ntraining_df = store.get_historical_features(\n    entity_df=orders_df,  # Has customer_id and timestamp\n    features=[\n        \"customer_stats:total_purchases\",\n        \"customer_stats:avg_order_value\",\n        \"customer_stats:days_since_last_purchase\"\n    ]\n).to_df()\n\n# Online serving\nonline_features = store.get_online_features(\n    features=[\"customer_stats:total_purchases\"],\n    entity_rows=[{\"customer_id\": 123}]\n).to_dict()"
+                }
+              },
+              {
+                "title": "Real-time Features",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from feast import StreamFeatureView\nfrom feast.stream_feature_view import stream_feature_view\nimport pandas as pd\n\n# Define stream source\nfrom feast import KafkaSource\n\nkafka_source = KafkaSource(\n    name=\"clicks_stream\",\n    kafka_bootstrap_servers=\"localhost:9092\",\n    topic=\"user_clicks\",\n    timestamp_field=\"event_timestamp\"\n)\n\n# Stream feature transformation\n@stream_feature_view(\n    entities=[\"user_id\"],\n    ttl=timedelta(hours=1),\n    mode=\"pandas\"\n)\ndef user_click_stats(df: pd.DataFrame):\n    return df.groupby(\"user_id\").agg({\n        \"click_count\": \"sum\",\n        \"session_duration\": \"mean\"\n    })\n\n# Push features to online store\nstore.push(\"user_click_stats\", features_df)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Feature stores ensure training/serving consistency",
+              "Point-in-time joins prevent data leakage",
+              "Enable feature reuse across teams",
+              "Support both batch and real-time features"
+            ]
+          }
+        },
+        {
+          "id": "kubernetes-ml",
+          "title": "Kubernetes for ML Workloads",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "Kubernetes provides scalable infrastructure for ML workloads, from distributed training to model serving.",
+            "sections": [
+              {
+                "title": "ML on Kubernetes Basics",
+                "codeExample": {
+                  "language": "yaml",
+                  "code": "# deployment.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: model-server\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: model-server\n  template:\n    metadata:\n      labels:\n        app: model-server\n    spec:\n      containers:\n      - name: model-server\n        image: myregistry/model-server:v1\n        ports:\n        - containerPort: 8000\n        resources:\n          requests:\n            memory: \"2Gi\"\n            cpu: \"1\"\n            nvidia.com/gpu: \"1\"  # GPU request\n          limits:\n            memory: \"4Gi\"\n            cpu: \"2\"\n            nvidia.com/gpu: \"1\"\n        livenessProbe:\n          httpGet:\n            path: /health\n            port: 8000\n          initialDelaySeconds: 30\n          periodSeconds: 10\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: model-server\nspec:\n  selector:\n    app: model-server\n  ports:\n  - port: 80\n    targetPort: 8000\n  type: LoadBalancer"
+                }
+              },
+              {
+                "title": "Horizontal Pod Autoscaling",
+                "codeExample": {
+                  "language": "yaml",
+                  "code": "# hpa.yaml\napiVersion: autoscaling/v2\nkind: HorizontalPodAutoscaler\nmetadata:\n  name: model-server-hpa\nspec:\n  scaleTargetRef:\n    apiVersion: apps/v1\n    kind: Deployment\n    name: model-server\n  minReplicas: 2\n  maxReplicas: 10\n  metrics:\n  - type: Resource\n    resource:\n      name: cpu\n      target:\n        type: Utilization\n        averageUtilization: 70\n  - type: Pods\n    pods:\n      metric:\n        name: requests_per_second\n      target:\n        type: AverageValue\n        averageValue: \"100\"\n  behavior:\n    scaleDown:\n      stabilizationWindowSeconds: 300\n      policies:\n      - type: Pods\n        value: 1\n        periodSeconds: 60"
+                }
+              },
+              {
+                "title": "KServe for Model Serving",
+                "codeExample": {
+                  "language": "yaml",
+                  "code": "# inference-service.yaml\napiVersion: serving.kserve.io/v1beta1\nkind: InferenceService\nmetadata:\n  name: sklearn-classifier\nspec:\n  predictor:\n    model:\n      modelFormat:\n        name: sklearn\n      storageUri: \"gs://my-bucket/models/classifier\"\n      resources:\n        requests:\n          cpu: \"1\"\n          memory: \"2Gi\"\n        limits:\n          cpu: \"2\"\n          memory: \"4Gi\"\n  transformer:\n    containers:\n    - name: preprocessor\n      image: myregistry/preprocessor:v1\n---\n# Canary deployment\napiVersion: serving.kserve.io/v1beta1\nkind: InferenceService\nmetadata:\n  name: sklearn-classifier\nspec:\n  predictor:\n    canaryTrafficPercent: 10  # 10% to new version\n    model:\n      modelFormat:\n        name: sklearn\n      storageUri: \"gs://my-bucket/models/classifier-v2\""
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Kubernetes enables scalable ML infrastructure",
+              "Use GPU scheduling for training and inference",
+              "HPA scales based on load automatically",
+              "KServe provides serverless model serving"
+            ]
+          }
+        },
+        {
+          "id": "pipeline-orchestration",
+          "title": "ML Pipeline Orchestration",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Orchestration tools manage complex ML workflows with dependencies, retries, and scheduling.",
+            "sections": [
+              {
+                "title": "Apache Airflow for ML",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from airflow import DAG\nfrom airflow.operators.python import PythonOperator\nfrom airflow.providers.docker.operators.docker import DockerOperator\nfrom datetime import datetime, timedelta\n\ndefault_args = {\n    \"owner\": \"data-team\",\n    \"depends_on_past\": False,\n    \"retries\": 3,\n    \"retry_delay\": timedelta(minutes=5)\n}\n\nwith DAG(\n    \"ml_training_pipeline\",\n    default_args=default_args,\n    schedule_interval=\"@daily\",\n    start_date=datetime(2024, 1, 1),\n    catchup=False\n) as dag:\n    \n    extract_data = PythonOperator(\n        task_id=\"extract_data\",\n        python_callable=extract_training_data,\n        op_kwargs={\"date\": \"{{ ds }}\"}\n    )\n    \n    validate_data = PythonOperator(\n        task_id=\"validate_data\",\n        python_callable=run_data_validation\n    )\n    \n    train_model = DockerOperator(\n        task_id=\"train_model\",\n        image=\"myregistry/trainer:latest\",\n        command=\"python train.py --date {{ ds }}\"\n    )\n    \n    evaluate_model = PythonOperator(\n        task_id=\"evaluate_model\",\n        python_callable=evaluate_and_register\n    )\n    \n    deploy_model = PythonOperator(\n        task_id=\"deploy_model\",\n        python_callable=deploy_if_better,\n        trigger_rule=\"all_success\"\n    )\n    \n    extract_data >> validate_data >> train_model >> evaluate_model >> deploy_model"
+                }
+              },
+              {
+                "title": "Kubeflow Pipelines",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from kfp import dsl\nfrom kfp.components import create_component_from_func\nimport kfp\n\n@create_component_from_func\ndef preprocess_data(input_path: str, output_path: str):\n    import pandas as pd\n    df = pd.read_parquet(input_path)\n    # Preprocessing logic\n    df.to_parquet(output_path)\n\n@create_component_from_func  \ndef train_model(\n    data_path: str, \n    model_path: str,\n    learning_rate: float = 0.001,\n    epochs: int = 10\n):\n    import torch\n    # Training logic\n    torch.save(model.state_dict(), model_path)\n\n@create_component_from_func\ndef evaluate_model(model_path: str, test_data_path: str) -> float:\n    # Evaluation logic\n    return accuracy\n\n@dsl.pipeline(name=\"Training Pipeline\")\ndef training_pipeline(input_data: str, learning_rate: float = 0.001):\n    preprocess = preprocess_data(\n        input_path=input_data,\n        output_path=\"/tmp/processed.parquet\"\n    )\n    \n    train = train_model(\n        data_path=preprocess.output,\n        model_path=\"/tmp/model.pt\",\n        learning_rate=learning_rate\n    ).set_gpu_limit(1)\n    \n    evaluate = evaluate_model(\n        model_path=train.output,\n        test_data_path=\"gs://bucket/test.parquet\"\n    )\n\n# Compile and run\nkfp.compiler.Compiler().compile(training_pipeline, \"pipeline.yaml\")"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Orchestration handles dependencies and retries",
+              "Airflow is flexible, Kubeflow is Kubernetes-native",
+              "Version pipelines alongside code",
+              "Schedule retraining based on triggers"
+            ]
+          }
+        },
+        {
+          "id": "ab-testing-ml",
+          "title": "A/B Testing for ML Models",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "A/B testing validates that model improvements translate to business value before full deployment.",
+            "sections": [
+              {
+                "title": "A/B Test Design",
+                "content": "**Key Decisions**\n- **Metric**: What are you measuring? (CTR, conversion, engagement)\n- **Sample Size**: How much traffic for significance?\n- **Duration**: How long to run the test?\n- **Segments**: Who gets which version?\n\n**Common Patterns**\n- 50/50 split for equal comparison\n- 90/10 for risk mitigation\n- Multi-armed bandit for optimization"
+              },
+              {
+                "title": "Traffic Splitting",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import hashlib\nimport random\nfrom typing import Literal\n\nclass ABRouter:\n    def __init__(self, experiment_config: dict):\n        self.config = experiment_config\n    \n    def get_variant(\n        self, \n        user_id: str, \n        experiment_name: str\n    ) -> str:\n        \"\"\"Deterministic assignment based on user_id.\"\"\"\n        config = self.config[experiment_name]\n        \n        # Hash user_id for consistent assignment\n        hash_value = int(\n            hashlib.md5(f\"{user_id}:{experiment_name}\".encode()).hexdigest(), \n            16\n        )\n        percentage = (hash_value % 100) / 100\n        \n        cumulative = 0\n        for variant, weight in config[\"variants\"].items():\n            cumulative += weight\n            if percentage < cumulative:\n                return variant\n        \n        return list(config[\"variants\"].keys())[-1]\n\n# Usage\nrouter = ABRouter({\n    \"recommendation_model\": {\n        \"variants\": {\n            \"control\": 0.5,      # 50% get current model\n            \"treatment\": 0.5     # 50% get new model\n        }\n    }\n})\n\nvariant = router.get_variant(user_id=\"user123\", experiment_name=\"recommendation_model\")\nmodel = load_model(variant)"
+                }
+              },
+              {
+                "title": "Statistical Analysis",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import scipy.stats as stats\nimport numpy as np\n\ndef analyze_ab_test(control_data, treatment_data, metric=\"conversion\"):\n    \"\"\"Analyze A/B test results.\"\"\"\n    \n    control_rate = control_data[metric].mean()\n    treatment_rate = treatment_data[metric].mean()\n    \n    # Two-proportion z-test\n    n_control = len(control_data)\n    n_treatment = len(treatment_data)\n    \n    pooled = (control_rate * n_control + treatment_rate * n_treatment) / \\\n             (n_control + n_treatment)\n    \n    se = np.sqrt(pooled * (1 - pooled) * (1/n_control + 1/n_treatment))\n    z_score = (treatment_rate - control_rate) / se\n    p_value = 2 * (1 - stats.norm.cdf(abs(z_score)))\n    \n    # Confidence interval\n    ci_95 = 1.96 * se\n    lift = (treatment_rate - control_rate) / control_rate\n    \n    return {\n        \"control_rate\": control_rate,\n        \"treatment_rate\": treatment_rate,\n        \"lift\": lift,\n        \"p_value\": p_value,\n        \"significant\": p_value < 0.05,\n        \"confidence_interval\": (lift - ci_95, lift + ci_95)\n    }"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "A/B tests validate business impact",
+              "Use deterministic assignment for consistency",
+              "Wait for statistical significance",
+              "Consider practical significance too"
+            ]
+          }
+        },
+        {
+          "id": "data-versioning",
+          "title": "Data Versioning with DVC",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Data Version Control (DVC) tracks datasets and models alongside code for full reproducibility.",
+            "sections": [
+              {
+                "title": "DVC Basics",
+                "codeExample": {
+                  "language": "bash",
+                  "code": "# Initialize DVC in git repo\ndvc init\n\n# Track data file\ndvc add data/training_data.parquet\n# Creates: data/training_data.parquet.dvc\n# Adds to .gitignore: data/training_data.parquet\n\n# Commit the .dvc file\ngit add data/training_data.parquet.dvc .gitignore\ngit commit -m \"Add training data v1\"\n\n# Configure remote storage\ndvc remote add -d myremote s3://my-bucket/dvc-storage\ndvc remote modify myremote profile my-aws-profile\n\n# Push data to remote\ndvc push\n\n# Pull data on another machine\ngit clone <repo>\ndvc pull  # Downloads data from remote"
+                }
+              },
+              {
+                "title": "DVC Pipelines",
+                "codeExample": {
+                  "language": "yaml",
+                  "code": "# dvc.yaml - Define reproducible pipeline\nstages:\n  preprocess:\n    cmd: python src/preprocess.py data/raw data/processed\n    deps:\n      - src/preprocess.py\n      - data/raw\n    outs:\n      - data/processed\n\n  train:\n    cmd: python src/train.py data/processed models/model.pkl\n    deps:\n      - src/train.py\n      - data/processed\n    params:\n      - train.learning_rate\n      - train.n_estimators\n    outs:\n      - models/model.pkl\n    metrics:\n      - metrics.json:\n          cache: false\n\n  evaluate:\n    cmd: python src/evaluate.py models/model.pkl data/test\n    deps:\n      - src/evaluate.py\n      - models/model.pkl\n      - data/test\n    metrics:\n      - evaluation_report.json:\n          cache: false"
+                }
+              },
+              {
+                "title": "Running Experiments",
+                "codeExample": {
+                  "language": "bash",
+                  "code": "# Run pipeline\ndvc repro\n\n# Only runs stages with changed dependencies\ndvc repro  # \"Stage 'preprocess' didn't change, skipping\"\n\n# Run experiments with different params\ndvc exp run --set-param train.learning_rate=0.01\ndvc exp run --set-param train.learning_rate=0.001\ndvc exp run --set-param train.n_estimators=200\n\n# Compare experiments\ndvc exp show\n# \u250f\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2513\n# \u2503 Experiment     \u2503 accuracy \u2503 learning_rate  \u2503\n# \u2521\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2529\n# \u2502 exp-1          \u2502 0.92     \u2502 0.01           \u2502\n# \u2502 exp-2          \u2502 0.94     \u2502 0.001          \u2502\n# \u2502 exp-3          \u2502 0.93     \u2502 0.001          \u2502\n# \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n\n# Apply best experiment\ndvc exp apply exp-2\ngit commit -am \"Apply best experiment\""
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "DVC tracks data like Git tracks code",
+              "Pipelines ensure reproducibility",
+              "Experiments enable hyperparameter search",
+              "Remote storage handles large files"
+            ]
+          }
+        },
+        {
+          "id": "security-compliance",
+          "title": "ML Security & Compliance",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Secure ML systems against attacks and ensure compliance with regulations.",
+            "sections": [
+              {
+                "title": "ML Security Threats",
+                "content": "**Data Poisoning**: Adversary corrupts training data\n- Inject malicious samples\n- Label flipping attacks\n\n**Model Stealing**: Extracting model through queries\n- Query the API repeatedly\n- Train surrogate model\n\n**Adversarial Examples**: Crafted inputs to fool model\n- Imperceptible perturbations\n- Physical-world attacks\n\n**Model Inversion**: Reconstruct training data\n- Privacy violation\n- Expose sensitive information"
+              },
+              {
+                "title": "Security Best Practices",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from typing import Optional\nimport logging\nimport hashlib\n\nclass SecureModelServer:\n    def __init__(self, model, rate_limit: int = 100):\n        self.model = model\n        self.rate_limit = rate_limit\n        self.query_counts = {}\n        self.logger = logging.getLogger(__name__)\n    \n    def predict(self, user_id: str, features: list) -> Optional[dict]:\n        # Rate limiting\n        if not self._check_rate_limit(user_id):\n            self.logger.warning(f\"Rate limit exceeded for {user_id}\")\n            return None\n        \n        # Input validation\n        if not self._validate_input(features):\n            self.logger.warning(f\"Invalid input from {user_id}\")\n            return None\n        \n        # Prediction with limited info\n        raw_output = self.model.predict([features])\n        \n        # Don't expose raw logits (prevents model stealing)\n        prediction = int(raw_output.argmax())\n        \n        # Log for audit\n        self._log_prediction(user_id, features, prediction)\n        \n        return {\"prediction\": prediction}\n    \n    def _check_rate_limit(self, user_id: str) -> bool:\n        count = self.query_counts.get(user_id, 0)\n        if count >= self.rate_limit:\n            return False\n        self.query_counts[user_id] = count + 1\n        return True\n    \n    def _validate_input(self, features: list) -> bool:\n        # Check for adversarial patterns\n        if len(features) != self.model.n_features:\n            return False\n        if any(abs(f) > 1000 for f in features):\n            return False\n        return True"
+                }
+              },
+              {
+                "title": "Audit Logging",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import json\nimport datetime\nfrom dataclasses import dataclass, asdict\n\n@dataclass\nclass PredictionLog:\n    timestamp: str\n    user_id: str\n    model_version: str\n    input_hash: str  # Hash of input, not raw data\n    prediction: int\n    confidence: float\n    latency_ms: float\n    \nclass AuditLogger:\n    def __init__(self, log_path: str):\n        self.log_path = log_path\n    \n    def log_prediction(\n        self,\n        user_id: str,\n        model_version: str,\n        input_data: list,\n        prediction: int,\n        confidence: float,\n        latency_ms: float\n    ):\n        log_entry = PredictionLog(\n            timestamp=datetime.datetime.utcnow().isoformat(),\n            user_id=user_id,\n            model_version=model_version,\n            input_hash=hashlib.sha256(str(input_data).encode()).hexdigest(),\n            prediction=prediction,\n            confidence=confidence,\n            latency_ms=latency_ms\n        )\n        \n        with open(self.log_path, \"a\") as f:\n            f.write(json.dumps(asdict(log_entry)) + \"\\n\")"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "ML systems have unique security vulnerabilities",
+              "Rate limiting prevents model stealing",
+              "Don't expose raw model outputs",
+              "Maintain audit logs for compliance"
+            ]
+          }
+        },
+        {
+          "id": "mlops-project",
+          "title": "Capstone: End-to-End MLOps Pipeline",
+          "type": "project",
+          "duration": "120 min",
+          "content": {
+            "overview": "Build a complete MLOps pipeline from data versioning to production monitoring.",
+            "sections": [
+              {
+                "title": "Project: Customer Churn Prediction Pipeline",
+                "content": "**Objective**: Build production MLOps infrastructure for a churn prediction model.\n\n**Requirements**:\n1. Version data and models with DVC\n2. Track experiments with MLflow\n3. Build training pipeline with Airflow/Prefect\n4. Deploy model with Docker and FastAPI\n5. Implement monitoring and alerting\n6. Set up CI/CD for automatic deployment\n\n**Deliverables**:\n- Git repo with full pipeline code\n- Running model API endpoint\n- Monitoring dashboard\n- Documentation",
+                "diagram": {
+                  "title": "End-to-End MLOps Pipeline",
+                  "code": "flowchart TB\n    subgraph Dev[Development]\n        Code[Code (Git)]\n        Data[Data (DVC)]\n        Exp[Experiments (MLflow)]\n    end\n    \n    subgraph CI[CI/CD Pipeline]\n        Test[Unit Tests]\n        Build[Build Image]\n        Push[Push to Registry]\n    end\n    \n    subgraph Prod[Production]\n        Deploy[K8s Deployment]\n        Serve[Model Service]\n        Monitor[Monitoring]\n    end\n    \n    Code --> Test\n    Data --> Exp\n    Exp -->|Best Model| Code\n    Test --> Build\n    Build --> Push\n    Push --> Deploy\n    Deploy --> Serve\n    Serve --> Monitor\n    Monitor -->|Drift Alert| Dev\n    \n    style Dev fill:#dbeafe,stroke:#2563eb\n    style CI fill:#fce7f3,stroke:#db2777\n    style Prod fill:#dcfce7,stroke:#16a34a"
+                }
+              },
+              {
+                "title": "Implementation Guide",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Complete MLOps Pipeline Structure\n\"\"\"\nchurn-prediction/\n\u251c\u2500\u2500 .github/\n\u2502   \u2514\u2500\u2500 workflows/\n\u2502       \u2514\u2500\u2500 ml-pipeline.yml\n\u251c\u2500\u2500 data/\n\u2502   \u2514\u2500\u2500 .gitkeep\n\u251c\u2500\u2500 src/\n\u2502   \u251c\u2500\u2500 __init__.py\n\u2502   \u251c\u2500\u2500 data/\n\u2502   \u2502   \u251c\u2500\u2500 preprocess.py\n\u2502   \u2502   \u2514\u2500\u2500 validate.py\n\u2502   \u251c\u2500\u2500 training/\n\u2502   \u2502   \u251c\u2500\u2500 train.py\n\u2502   \u2502   \u2514\u2500\u2500 evaluate.py\n\u2502   \u251c\u2500\u2500 serving/\n\u2502   \u2502   \u251c\u2500\u2500 app.py\n\u2502   \u2502   \u2514\u2500\u2500 model_loader.py\n\u2502   \u2514\u2500\u2500 monitoring/\n\u2502       \u251c\u2500\u2500 drift_detection.py\n\u2502       \u2514\u2500\u2500 metrics.py\n\u251c\u2500\u2500 tests/\n\u2502   \u251c\u2500\u2500 test_data.py\n\u2502   \u251c\u2500\u2500 test_model.py\n\u2502   \u2514\u2500\u2500 test_api.py\n\u251c\u2500\u2500 pipelines/\n\u2502   \u2514\u2500\u2500 training_dag.py\n\u251c\u2500\u2500 docker/\n\u2502   \u251c\u2500\u2500 Dockerfile.training\n\u2502   \u2514\u2500\u2500 Dockerfile.serving\n\u251c\u2500\u2500 k8s/\n\u2502   \u251c\u2500\u2500 deployment.yaml\n\u2502   \u2514\u2500\u2500 service.yaml\n\u251c\u2500\u2500 dvc.yaml\n\u251c\u2500\u2500 params.yaml\n\u251c\u2500\u2500 requirements.txt\n\u2514\u2500\u2500 README.md\n\"\"\"\n\n# Key components\n\n# 1. Training pipeline (pipelines/training_dag.py)\nfrom prefect import flow, task\n\n@flow(name=\"Training Pipeline\")\ndef training_pipeline():\n    data = extract_data()\n    validated = validate_data(data)\n    processed = preprocess(validated)\n    model, metrics = train_model(processed)\n    \n    if metrics[\"f1\"] > 0.85:\n        register_model(model, metrics)\n        deploy_if_approved(model)\n\n# 2. Serving API (src/serving/app.py)\nfrom fastapi import FastAPI\nimport mlflow\n\napp = FastAPI()\nmodel = mlflow.pyfunc.load_model(\"models:/churn-model/Production\")\n\n@app.post(\"/predict\")\nasync def predict(request: PredictRequest):\n    prediction = model.predict([request.features])\n    log_prediction(request, prediction)\n    return {\"churn_probability\": prediction[0]}\n\n# 3. Monitoring (src/monitoring/drift_detection.py)\ndef check_drift_and_alert():\n    current_data = get_recent_predictions()\n    reference_data = get_training_data()\n    \n    drift_report = detect_drift(reference_data, current_data)\n    \n    if drift_report[\"drift_detected\"]:\n        send_alert(\"Data drift detected!\")\n        trigger_retraining()"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "MLOps is infrastructure + process + culture",
+              "Start simple, add complexity as needed",
+              "Automate everything repeatable",
+              "Monitor continuously, improve iteratively"
+            ]
+          }
+        },
+        {
+          "id": "mlops-quiz",
+          "title": "MLOps Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is the primary purpose of a feature store?",
+              "options": [
+                "Store trained models",
+                "Ensure consistent features between training and serving",
+                "Cache API responses",
+                "Store training logs"
+              ],
+              "correct": 1,
+              "explanation": "Feature stores ensure the same feature engineering code produces consistent features during both model training and production inference, preventing training/serving skew."
+            },
+            {
+              "question": "What is data drift?",
+              "options": [
+                "Model weights changing",
+                "Input data distribution changing over time",
+                "Training data being deleted",
+                "API latency increasing"
+              ],
+              "correct": 1,
+              "explanation": "Data drift occurs when the statistical distribution of production input data differs from the training data distribution, potentially degrading model performance."
+            },
+            {
+              "question": "Why use MLflow Model Registry?",
+              "options": [
+                "Train models faster",
+                "Track model versions and manage deployment stages",
+                "Store training data",
+                "Run experiments in parallel"
+              ],
+              "correct": 1,
+              "explanation": "MLflow Model Registry tracks all model versions, manages stages (Staging, Production), stores metadata, and enables governance for model lifecycle management."
+            },
+            {
+              "question": "What does DVC (Data Version Control) primarily track?",
+              "options": [
+                "Python package versions",
+                "Large data files and model artifacts",
+                "Git commits",
+                "Database schemas"
+              ],
+              "correct": 1,
+              "explanation": "DVC tracks large files (datasets, models) that are too big for Git, storing them in remote storage while keeping lightweight pointers in the Git repo."
+            },
+            {
+              "question": "What is the benefit of canary deployments for ML models?",
+              "options": [
+                "Faster training",
+                "Test new model on small traffic percentage before full rollout",
+                "Reduce model size",
+                "Improve accuracy"
+              ],
+              "correct": 1,
+              "explanation": "Canary deployments route a small percentage of traffic (e.g., 10%) to the new model, allowing you to detect issues before exposing all users to potential problems."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

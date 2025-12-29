@@ -1,0 +1,344 @@
+{
+  "tools": [
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "icon": "🤖",
+      "description": "OpenAI's conversational AI assistant powered by GPT-4. Capable of answering questions, writing code, creating content, and helping with various tasks.",
+      "category": "llm",
+      "pricing": "Freemium",
+      "url": "https://chat.openai.com",
+      "tags": ["chatbot", "gpt-4", "openai", "writing", "coding"],
+      "features": [
+        "Natural language conversations",
+        "Code generation and debugging",
+        "Content writing and editing",
+        "Image analysis (GPT-4V)",
+        "Custom GPTs creation"
+      ]
+    },
+    {
+      "id": "claude",
+      "name": "Claude",
+      "icon": "🧠",
+      "description": "Anthropic's AI assistant focused on being helpful, harmless, and honest. Excellent for long-form content, analysis, and coding tasks.",
+      "category": "llm",
+      "pricing": "Freemium",
+      "url": "https://claude.ai",
+      "tags": ["chatbot", "anthropic", "writing", "analysis", "coding"],
+      "features": [
+        "200K context window",
+        "Document analysis",
+        "Code generation",
+        "Long-form writing",
+        "Computer use capabilities"
+      ]
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini",
+      "icon": "💎",
+      "description": "Google's multimodal AI model that can understand and generate text, code, images, audio, and video.",
+      "category": "llm",
+      "pricing": "Freemium",
+      "url": "https://gemini.google.com",
+      "tags": ["google", "multimodal", "chatbot", "search"],
+      "features": [
+        "Multimodal understanding",
+        "Google Search integration",
+        "Image generation",
+        "Long context support",
+        "Code execution"
+      ]
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity AI",
+      "icon": "🔍",
+      "description": "AI-powered search engine that provides accurate, cited answers by searching the web in real-time.",
+      "category": "research",
+      "pricing": "Freemium",
+      "url": "https://perplexity.ai",
+      "tags": ["search", "research", "citations", "web"],
+      "features": [
+        "Real-time web search",
+        "Source citations",
+        "Follow-up questions",
+        "Multiple AI models",
+        "Pro Search for deep research"
+      ]
+    },
+    {
+      "id": "midjourney",
+      "name": "Midjourney",
+      "icon": "🎨",
+      "description": "AI art generator creating stunning images from text descriptions. Known for artistic, high-quality outputs.",
+      "category": "image",
+      "pricing": "Paid",
+      "url": "https://midjourney.com",
+      "tags": ["image-generation", "art", "creative", "design"],
+      "features": [
+        "Text-to-image generation",
+        "Style customization",
+        "Upscaling and variations",
+        "Image editing",
+        "Discord integration"
+      ]
+    },
+    {
+      "id": "dalle",
+      "name": "DALL-E 3",
+      "icon": "🖼️",
+      "description": "OpenAI's image generation model integrated into ChatGPT. Creates detailed images from natural language descriptions.",
+      "category": "image",
+      "pricing": "Included in ChatGPT Plus",
+      "url": "https://openai.com/dall-e-3",
+      "tags": ["image-generation", "openai", "art", "design"],
+      "features": [
+        "Natural language prompts",
+        "High fidelity images",
+        "ChatGPT integration",
+        "Text rendering in images",
+        "Style flexibility"
+      ]
+    },
+    {
+      "id": "stable-diffusion",
+      "name": "Stable Diffusion",
+      "icon": "🌀",
+      "description": "Open-source image generation model that can run locally. Highly customizable with community models.",
+      "category": "image",
+      "pricing": "Free/Open Source",
+      "url": "https://stability.ai",
+      "tags": ["image-generation", "open-source", "local", "customizable"],
+      "features": [
+        "Run locally or in cloud",
+        "Custom model training",
+        "ControlNet support",
+        "Inpainting/Outpainting",
+        "Community models (LoRA)"
+      ]
+    },
+    {
+      "id": "github-copilot",
+      "name": "GitHub Copilot",
+      "icon": "👨‍✈️",
+      "description": "AI-powered code completion tool that suggests code as you type. Trained on billions of lines of code.",
+      "category": "code",
+      "pricing": "Paid",
+      "url": "https://github.com/features/copilot",
+      "tags": ["coding", "autocomplete", "github", "vscode"],
+      "features": [
+        "Code completion",
+        "Natural language to code",
+        "Multi-language support",
+        "IDE integration",
+        "Chat interface"
+      ]
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "icon": "⌨️",
+      "description": "AI-first code editor built on VSCode. Features intelligent code generation, editing, and understanding.",
+      "category": "code",
+      "pricing": "Freemium",
+      "url": "https://cursor.sh",
+      "tags": ["ide", "coding", "ai-editor", "vscode"],
+      "features": [
+        "AI code generation",
+        "Codebase understanding",
+        "Natural language editing",
+        "Multi-file editing",
+        "Multiple AI models"
+      ]
+    },
+    {
+      "id": "replit",
+      "name": "Replit AI",
+      "icon": "💻",
+      "description": "Cloud-based IDE with AI assistant for coding, debugging, and explaining code.",
+      "category": "code",
+      "pricing": "Freemium",
+      "url": "https://replit.com",
+      "tags": ["ide", "coding", "cloud", "collaboration"],
+      "features": [
+        "Browser-based coding",
+        "AI code generation",
+        "Instant deployment",
+        "Multiplayer coding",
+        "50+ languages"
+      ]
+    },
+    {
+      "id": "runway",
+      "name": "Runway",
+      "icon": "🎬",
+      "description": "AI-powered creative tools for video generation, editing, and visual effects.",
+      "category": "video",
+      "pricing": "Freemium",
+      "url": "https://runwayml.com",
+      "tags": ["video", "generation", "editing", "creative"],
+      "features": [
+        "Text-to-video (Gen-2)",
+        "Video editing",
+        "Background removal",
+        "Motion capture",
+        "Color grading"
+      ]
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "icon": "🎙️",
+      "description": "AI voice generation and cloning platform. Create realistic speech from text in any voice.",
+      "category": "audio",
+      "pricing": "Freemium",
+      "url": "https://elevenlabs.io",
+      "tags": ["voice", "tts", "cloning", "audio"],
+      "features": [
+        "Text-to-speech",
+        "Voice cloning",
+        "Multiple languages",
+        "Voice library",
+        "API access"
+      ]
+    },
+    {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "icon": "🤗",
+      "description": "The GitHub of machine learning. Host, share, and deploy AI models, datasets, and applications.",
+      "category": "research",
+      "pricing": "Freemium",
+      "url": "https://huggingface.co",
+      "tags": ["models", "datasets", "community", "deployment"],
+      "features": [
+        "Model hosting",
+        "Datasets library",
+        "Spaces (demos)",
+        "Transformers library",
+        "Inference API"
+      ]
+    },
+    {
+      "id": "langchain",
+      "name": "LangChain",
+      "icon": "🔗",
+      "description": "Framework for building applications with LLMs. Chain together AI capabilities for complex workflows.",
+      "category": "code",
+      "pricing": "Free/Open Source",
+      "url": "https://langchain.com",
+      "tags": ["framework", "llm", "agents", "rag"],
+      "features": [
+        "LLM abstraction",
+        "Chain composition",
+        "Agent creation",
+        "RAG support",
+        "Memory management"
+      ]
+    },
+    {
+      "id": "pinecone",
+      "name": "Pinecone",
+      "icon": "🌲",
+      "description": "Vector database for AI applications. Store and search embeddings for semantic search and RAG.",
+      "category": "data",
+      "pricing": "Freemium",
+      "url": "https://pinecone.io",
+      "tags": ["vector-db", "embeddings", "search", "rag"],
+      "features": [
+        "Vector storage",
+        "Semantic search",
+        "Metadata filtering",
+        "Real-time updates",
+        "Managed infrastructure"
+      ]
+    },
+    {
+      "id": "notion-ai",
+      "name": "Notion AI",
+      "icon": "📝",
+      "description": "AI writing assistant built into Notion. Summarize, brainstorm, and draft content within your workspace.",
+      "category": "writing",
+      "pricing": "Add-on",
+      "url": "https://notion.so/product/ai",
+      "tags": ["writing", "productivity", "notes", "summarization"],
+      "features": [
+        "Content generation",
+        "Summarization",
+        "Translation",
+        "Action items extraction",
+        "Q&A on documents"
+      ]
+    },
+    {
+      "id": "jasper",
+      "name": "Jasper",
+      "icon": "✍️",
+      "description": "AI content platform for marketing teams. Generate blog posts, social media, and marketing copy.",
+      "category": "writing",
+      "pricing": "Paid",
+      "url": "https://jasper.ai",
+      "tags": ["marketing", "copywriting", "content", "brand"],
+      "features": [
+        "Marketing copy",
+        "Blog writing",
+        "Social media content",
+        "Brand voice",
+        "Team collaboration"
+      ]
+    },
+    {
+      "id": "otter",
+      "name": "Otter.ai",
+      "icon": "📋",
+      "description": "AI meeting assistant that records, transcribes, and summarizes your meetings in real-time.",
+      "category": "productivity",
+      "pricing": "Freemium",
+      "url": "https://otter.ai",
+      "tags": ["transcription", "meetings", "notes", "voice"],
+      "features": [
+        "Live transcription",
+        "Meeting summaries",
+        "Speaker identification",
+        "Calendar integration",
+        "Search recordings"
+      ]
+    },
+    {
+      "id": "tome",
+      "name": "Tome",
+      "icon": "📊",
+      "description": "AI-powered presentation builder. Create beautiful slides and narratives from simple prompts.",
+      "category": "productivity",
+      "pricing": "Freemium",
+      "url": "https://tome.app",
+      "tags": ["presentations", "slides", "storytelling", "design"],
+      "features": [
+        "AI slide generation",
+        "Image integration",
+        "Narrative structure",
+        "Templates",
+        "Collaboration"
+      ]
+    },
+    {
+      "id": "phind",
+      "name": "Phind",
+      "icon": "🔎",
+      "description": "AI search engine for developers. Get accurate coding answers with sources from documentation and forums.",
+      "category": "code",
+      "pricing": "Freemium",
+      "url": "https://phind.com",
+      "tags": ["search", "coding", "documentation", "stackoverflow"],
+      "features": [
+        "Code-focused search",
+        "Source citations",
+        "Code generation",
+        "Follow-up questions",
+        "VS Code extension"
+      ]
+    }
+  ]
+}

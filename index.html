@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="NeuralPath - Master Generative AI from fundamentals to production with interactive courses, knowledge maps, and career guidance">
+    <meta name="theme-color" content="#6366f1" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#6366f1" media="(prefers-color-scheme: light)">
+    <title>NeuralPath - Master Generative AI</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="NeuralPath">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NeuralPath">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#0a0a0f">
+    <meta name="msapplication-tap-highlight" content="no">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="icons/icon-192.svg">
+    <link rel="mask-icon" href="favicon.svg" color="#6366f1">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- D3.js for graph visualization -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <!-- MathJax for LaTeX rendering -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+            },
+            svg: {
+                fontCache: 'global'
+            },
+            startup: {
+                ready: () => {
+                    MathJax.startup.defaultReady();
+                    // Re-typeset when content changes
+                    window.typesetMath = () => {
+                        if (MathJax.typesetPromise) {
+                            MathJax.typesetPromise().catch(err => console.log('MathJax error:', err));
+                        }
+                    };
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    
+    <!-- Mermaid for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        // Mermaid theme configuration for dark/light mode
+        const getMermaidConfig = (isDark) => ({
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'base',
+            themeVariables: isDark ? {
+                // Dark mode - high contrast, accessible colors
+                primaryColor: '#6366f1',
+                primaryTextColor: '#ffffff',
+                primaryBorderColor: '#818cf8',
+                lineColor: '#94a3b8',
+                secondaryColor: '#1e1b4b',
+                tertiaryColor: '#312e81',
+                background: '#0f0f1a',
+                mainBkg: '#1e1b4b',
+                secondBkg: '#312e81',
+                nodeBorder: '#818cf8',
+                clusterBkg: '#1e1b4b',
+                clusterBorder: '#6366f1',
+                titleColor: '#f8fafc',
+                edgeLabelBackground: '#1e1b4b',
+                textColor: '#e2e8f0',
+                nodeTextColor: '#ffffff',
+                // Sequence diagram
+                actorBkg: '#6366f1',
+                actorTextColor: '#ffffff',
+                actorBorder: '#818cf8',
+                actorLineColor: '#94a3b8',
+                signalColor: '#e2e8f0',
+                signalTextColor: '#e2e8f0',
+                labelBoxBkgColor: '#1e1b4b',
+                labelTextColor: '#e2e8f0',
+                loopTextColor: '#e2e8f0',
+                noteBkgColor: '#312e81',
+                noteTextColor: '#e2e8f0',
+                noteBorderColor: '#6366f1',
+                // Flowchart specific
+                nodeBkg: '#1e1b4b',
+                labelColor: '#e2e8f0'
+            } : {
+                // Light mode - softer colors with good contrast
+                primaryColor: '#6366f1',
+                primaryTextColor: '#1e1b4b',
+                primaryBorderColor: '#4f46e5',
+                lineColor: '#64748b',
+                secondaryColor: '#e0e7ff',
+                tertiaryColor: '#c7d2fe',
+                background: '#ffffff',
+                mainBkg: '#eef2ff',
+                secondBkg: '#e0e7ff',
+                nodeBorder: '#4f46e5',
+                clusterBkg: '#f5f3ff',
+                clusterBorder: '#6366f1',
+                titleColor: '#1e1b4b',
+                edgeLabelBackground: '#eef2ff',
+                textColor: '#334155',
+                nodeTextColor: '#1e1b4b',
+                // Sequence diagram
+                actorBkg: '#6366f1',
+                actorTextColor: '#ffffff',
+                actorBorder: '#4f46e5',
+                actorLineColor: '#64748b',
+                signalColor: '#334155',
+                signalTextColor: '#334155',
+                labelBoxBkgColor: '#eef2ff',
+                labelTextColor: '#334155',
+                loopTextColor: '#334155',
+                noteBkgColor: '#e0e7ff',
+                noteTextColor: '#1e1b4b',
+                noteBorderColor: '#6366f1',
+                // Flowchart specific
+                nodeBkg: '#eef2ff',
+                labelColor: '#334155'
+            },
+            flowchart: { 
+                curve: 'basis', 
+                padding: 20,
+                nodeSpacing: 50,
+                rankSpacing: 50,
+                htmlLabels: true
+            },
+            sequence: { 
+                actorMargin: 80, 
+                mirrorActors: false,
+                messageMargin: 40,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                useMaxWidth: true
+            }
+        });
+        
+        // Initialize Mermaid with theme support
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+            mermaid.initialize(getMermaidConfig(isDark));
+            
+            // Global function to render mermaid diagrams
+            window.renderMermaidDiagrams = async () => {
+                const diagrams = document.querySelectorAll('.mermaid-diagram:not([data-processed])');
+                for (const el of diagrams) {
+                    try {
+                        const code = el.getAttribute('data-mermaid');
+                        const id = 'mermaid-' + Math.random().toString(36).substr(2, 9);
+                        const { svg } = await mermaid.render(id, code);
+                        el.innerHTML = svg;
+                        el.setAttribute('data-processed', 'true');
+                    } catch (err) {
+                        console.error('Mermaid error:', err);
+                        el.innerHTML = '<div style="color: var(--color-error); padding: 1rem; text-align: left;"><strong>Diagram Error:</strong> ' + err.message + '</div>';
+                    }
+                }
+            };
+            
+            // Re-render diagrams when theme changes
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'data-theme') {
+                        const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+                        mermaid.initialize(getMermaidConfig(isDark));
+                        
+                        // Re-render all diagrams with new theme
+                        document.querySelectorAll('.mermaid-diagram[data-processed]').forEach(el => {
+                            el.removeAttribute('data-processed');
+                        });
+                        window.renderMermaidDiagrams();
+                    }
+                });
+            });
+            observer.observe(document.documentElement, { attributes: true });
+        });
+    </script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+    <!-- App Shell -->
+    <div id="app">
+        <!-- Header -->
+        <header class="header" id="header">
+            <div class="header-left">
+                <a href="#/" class="logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">NeuralPath</span>
+                </a>
+            </div>
+            
+            <nav class="nav" id="nav">
+                <a href="#/explore" class="nav-link" data-route="explore">
+                    <span class="nav-icon">🗺️</span>
+                    <span class="nav-text">Explore</span>
+                </a>
+                <a href="#/courses" class="nav-link" data-route="courses">
+                    <span class="nav-icon">📚</span>
+                    <span class="nav-text">Courses</span>
+                </a>
+                <a href="#/tools" class="nav-link" data-route="tools">
+                    <span class="nav-icon">🔧</span>
+                    <span class="nav-text">Tools</span>
+                </a>
+                <a href="#/resources" class="nav-link" data-route="resources">
+                    <span class="nav-icon">🌐</span>
+                    <span class="nav-text">Resources</span>
+                </a>
+                <a href="#/jobs" class="nav-link" data-route="jobs">
+                    <span class="nav-icon">💼</span>
+                    <span class="nav-text">Jobs</span>
+                </a>
+            </nav>
+            
+            <div class="header-right">
+                <button class="search-trigger" id="search-trigger" aria-label="Search">
+                    <span class="search-icon">🔍</span>
+                    <span class="search-hint">Search</span>
+                    <kbd class="search-kbd">⌘K</kbd>
+                </button>
+                
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon" id="theme-icon">🌙</span>
+                </button>
+                
+                <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+                    <span class="menu-icon">☰</span>
+                </button>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="main" id="main">
+            <!-- Content will be injected here by router -->
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading...</p>
+            </div>
+        </main>
+        
+        <!-- Search Modal -->
+        <div class="modal-overlay" id="search-modal">
+            <div class="search-modal">
+                <div class="search-header">
+                    <span class="search-modal-icon">🔍</span>
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        id="search-input" 
+                        placeholder="Search courses, tools, topics..."
+                        autocomplete="off"
+                    >
+                    <kbd class="search-close-kbd">ESC</kbd>
+                </div>
+                <div class="search-categories" id="search-categories">
+                    <button class="search-cat-btn active" data-category="all">All</button>
+                    <button class="search-cat-btn" data-category="course">📚 Courses</button>
+                    <button class="search-cat-btn" data-category="tool">🔧 Tools</button>
+                    <button class="search-cat-btn" data-category="graph">🗺️ Explore</button>
+                    <button class="search-cat-btn" data-category="job">💼 Jobs</button>
+                </div>
+                <div class="search-results" id="search-results">
+                    <div class="search-empty">
+                        <p>Type to search across all content</p>
+                        <div class="search-hints">
+                            <span class="hint"><kbd>Tab</kbd> Categories</span>
+                            <span class="hint"><kbd>↑↓</kbd> Navigate</span>
+                            <span class="hint"><kbd>↵</kbd> Open</span>
+                            <span class="hint"><kbd>ESC</kbd> Close</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toast Container -->
+        <div class="toast-container" id="toast-container"></div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/utils/storage.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/core/router.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/search.js"></script>
+    <script src="js/components/components.js"></script>
+    <script src="js/pages/home.js"></script>
+    <script src="js/pages/explore.js"></script>
+    <script src="js/pages/courses.js"></script>
+    <script src="js/pages/tools.js"></script>
+    <script src="js/pages/jobs.js"></script>
+    <script src="js/pages/resources.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js', {
+                        scope: '/'
+                    });
+                    
+                    console.log('✅ ServiceWorker registered:', registration.scope);
+                    
+                    // Check for updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        console.log('🔄 New service worker installing...');
+                        
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // New content available
+                                showUpdateNotification();
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.warn('ServiceWorker registration failed:', error);
+                }
+            });
+            
+            // Handle controller change (new SW activated)
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                console.log('🔄 New service worker activated');
+            });
+        }
+        
+        // Show update notification
+        function showUpdateNotification() {
+            if (typeof Components !== 'undefined' && Components.toast) {
+                const toast = document.createElement('div');
+                toast.className = 'toast toast-info';
+                toast.innerHTML = `
+                    <span>🔄 Update available!</span>
+                    <button onclick="location.reload()" style="margin-left: 12px; padding: 4px 12px; background: var(--color-accent-primary); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                        Refresh
+                    </button>
+                `;
+                document.getElementById('toast-container')?.appendChild(toast);
+                setTimeout(() => toast.remove(), 10000);
+            }
+        }
+        
+        // Install prompt handling
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button after a delay (optional UX)
+            setTimeout(() => {
+                showInstallPrompt();
+            }, 30000); // Show after 30 seconds
+        });
+        
+        function showInstallPrompt() {
+            if (!deferredPrompt) return;
+            
+            const installBanner = document.createElement('div');
+            installBanner.id = 'install-banner';
+            installBanner.innerHTML = `
+                <div style="
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--color-bg-secondary);
+                    border: 1px solid var(--color-border);
+                    border-radius: 16px;
+                    padding: 16px 24px;
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+                    z-index: 1000;
+                    animation: slideUp 0.3s ease-out;
+                ">
+                    <span style="font-size: 2rem;">⚡</span>
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 4px;">Install NeuralPath</div>
+                        <div style="font-size: 0.875rem; color: var(--color-text-muted);">Learn offline, faster access</div>
+                    </div>
+                    <button onclick="installApp()" style="
+                        padding: 8px 20px;
+                        background: var(--gradient-aurora);
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    ">Install</button>
+                    <button onclick="dismissInstall()" style="
+                        padding: 8px;
+                        background: transparent;
+                        border: none;
+                        color: var(--color-text-muted);
+                        cursor: pointer;
+                        font-size: 1.25rem;
+                    ">✕</button>
+                </div>
+            `;
+            document.body.appendChild(installBanner);
+        }
+        
+        async function installApp() {
+            if (!deferredPrompt) return;
+            
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            console.log('Install prompt outcome:', outcome);
+            deferredPrompt = null;
+            dismissInstall();
+            
+            if (outcome === 'accepted') {
+                if (typeof Components !== 'undefined') {
+                    Components.toast('🎉 NeuralPath installed!', 'success');
+                }
+            }
+        }
+        
+        function dismissInstall() {
+            document.getElementById('install-banner')?.remove();
+        }
+        
+        // Track app installed event
+        window.addEventListener('appinstalled', () => {
+            console.log('✅ NeuralPath was installed');
+            deferredPrompt = null;
+        });
+    </script>
+    
+    <style>
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+    </style>
+</body>
+</html>

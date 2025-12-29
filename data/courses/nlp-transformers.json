@@ -1,0 +1,808 @@
+{
+  "id": "nlp-transformers",
+  "title": "NLP & Transformers",
+  "icon": "\ud83d\udcdd",
+  "description": "Master Natural Language Processing from text preprocessing to building transformer models.",
+  "level": "intermediate",
+  "duration": "7 weeks",
+  "totalLessons": 20,
+  "prerequisites": [
+    "Python Fundamentals",
+    "Deep Learning Basics"
+  ],
+  "outcomes": [
+    "Process and analyze text data effectively",
+    "Understand transformer architecture deeply",
+    "Fine-tune models with Hugging Face",
+    "Build NLP applications: classification, NER, Q&A",
+    "Master text generation and summarization",
+    "Deploy NLP models to production"
+  ],
+  "modules": [
+    {
+      "title": "NLP Basics",
+      "description": "NLP Basics module",
+      "lessons": [
+        {
+          "id": "intro-nlp",
+          "title": "Introduction to NLP",
+          "type": "lesson",
+          "duration": "20 min",
+          "content": {
+            "overview": "Natural Language Processing (NLP) enables computers to understand, interpret, and generate human language. It powers search engines, chatbots, translation, and LLMs.",
+            "sections": [
+              {
+                "title": "NLP Tasks Overview",
+                "content": "NLP encompasses a wide range of tasks:\n\n**Understanding:**\n- Text Classification (sentiment, topic)\n- Named Entity Recognition (NER)\n- Question Answering\n- Reading Comprehension\n\n**Generation:**\n- Machine Translation\n- Text Summarization\n- Content Generation\n- Dialogue Systems",
+                "keyPoints": [
+                  "NLP bridges human language and computer understanding",
+                  "Transformers have unified most NLP tasks",
+                  "Pre-training + fine-tuning is the dominant paradigm",
+                  "LLMs are NLP models at massive scale"
+                ]
+              },
+              {
+                "title": "Text Preprocessing Pipeline",
+                "diagram": {
+                  "title": "Standard NLP Preprocessing Pipeline",
+                  "code": "flowchart LR\n    Raw[Raw Text] --> Clean[Cleaning]\n    Clean --> Token[Tokenization]\n    Token --> Stop[Stopword Removal]\n    Stop --> Norm[Normalization]\n    Norm --> Vector[Vectorization]\n    \n    subgraph Cleaning\n        C1[Lowercasing]\n        C2[Remove HTML/URLs]\n        C3[Remove Special Chars]\n    end\n    \n    subgraph Normalization\n        N1[Stemming]\n        N2[Lemmatization]\n    end\n    \n    Clean -.-> C1\n    Norm -.-> N1\n    \n    style Raw fill:#fff,stroke:#333\n    style Clean fill:#dbeafe,stroke:#2563eb\n    style Token fill:#fce7f3,stroke:#db2777\n    style Vector fill:#dcfce7,stroke:#16a34a"
+                },
+                "codeExample": {
+                  "language": "python",
+                  "code": "import re\nimport nltk\nfrom nltk.tokenize import word_tokenize\nfrom nltk.corpus import stopwords\nfrom nltk.stem import WordNetLemmatizer\n\nnltk.download('punkt')\nnltk.download('stopwords')\nnltk.download('wordnet')\n\ndef preprocess(text):\n    # Lowercase\n    text = text.lower()\n    \n    # Remove special characters\n    text = re.sub(r'[^a-zA-Z\\s]', '', text)\n    \n    # Tokenize\n    tokens = word_tokenize(text)\n    \n    # Remove stopwords\n    stop_words = set(stopwords.words('english'))\n    tokens = [t for t in tokens if t not in stop_words]\n    \n    # Lemmatize\n    lemmatizer = WordNetLemmatizer()\n    tokens = [lemmatizer.lemmatize(t) for t in tokens]\n    \n    return tokens\n\ntext = \"The cats are running quickly in the gardens!\"\nprint(preprocess(text))  # ['cat', 'running', 'quickly', 'garden']"
+                }
+              },
+              {
+                "title": "Modern NLP with Hugging Face",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import pipeline\n\n# Sentiment analysis\nsentiment = pipeline('sentiment-analysis')\nresult = sentiment('I love learning about AI!')\nprint(result)  # [{'label': 'POSITIVE', 'score': 0.999}]\n\n# Named Entity Recognition\nner = pipeline('ner', grouped_entities=True)\nentities = ner('Elon Musk founded SpaceX in California.')\nprint(entities)\n# [{'entity_group': 'PER', 'word': 'Elon Musk'},\n#  {'entity_group': 'ORG', 'word': 'SpaceX'},\n#  {'entity_group': 'LOC', 'word': 'California'}]\n\n# Question Answering\nqa = pipeline('question-answering')\nanswer = qa(\n    question='What is the capital of France?',\n    context='Paris is the capital and largest city of France.'\n)\nprint(answer)  # {'answer': 'Paris', 'score': 0.98}"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "NLP converts unstructured text into structured insights",
+              "Preprocessing is still important but less critical with transformers",
+              "Hugging Face makes state-of-the-art NLP accessible",
+              "Most NLP tasks can be solved with pre-trained + fine-tuned models"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Additional Topics",
+      "description": "Additional course content",
+      "lessons": [
+        {
+          "id": "word-embeddings",
+          "title": "Word Embeddings",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Word embeddings represent words as dense vectors where semantically similar words are close in vector space. They capture meaning in a way computers can process.",
+            "sections": [
+              {
+                "title": "From One-Hot to Embeddings",
+                "content": "One-hot encoding creates sparse, high-dimensional vectors where each word is a unique dimension. Embeddings compress this into dense, meaningful vectors.\n\n**One-hot:** [0,0,1,0,0...] (10,000 dims)\n**Embedding:** [0.25, -0.8, 0.1, ...] (300 dims)\n\nKey property: king - man + woman \u2248 queen"
+              },
+              {
+                "title": "Word2Vec & GloVe",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import gensim.downloader as api\n\n# Load pre-trained Word2Vec\nmodel = api.load('word2vec-google-news-300')\n\n# Get word vector\nvector = model['computer']  # 300-dimensional\n\n# Find similar words\nprint(model.most_similar('king', topn=5))\n# [('kings', 0.71), ('queen', 0.65), ('monarch', 0.64), ...]\n\n# Analogy: king - man + woman = ?\nresult = model.most_similar(\n    positive=['king', 'woman'],\n    negative=['man']\n)\nprint(result[0])  # ('queen', 0.71)\n\n# Similarity\nprint(model.similarity('cat', 'dog'))  # 0.76\nprint(model.similarity('cat', 'car'))  # 0.19"
+                }
+              },
+              {
+                "title": "Using Embeddings in PyTorch",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torch.nn as nn\n\n# Embedding layer\nvocab_size = 10000\nembedding_dim = 300\n\nembedding = nn.Embedding(vocab_size, embedding_dim)\n\n# Convert word indices to embeddings\nword_indices = torch.LongTensor([1, 245, 3, 1090])\nword_vectors = embedding(word_indices)\nprint(word_vectors.shape)  # [4, 300]\n\n# Load pre-trained embeddings\nimport gensim.downloader as api\nw2v = api.load('glove-wiki-gigaword-300')\n\n# Create embedding matrix\nembedding_matrix = torch.zeros(vocab_size, 300)\nfor idx, word in enumerate(vocab):\n    if word in w2v:\n        embedding_matrix[idx] = torch.tensor(w2v[word])\n\n# Initialize embedding with pre-trained weights\nembedding = nn.Embedding.from_pretrained(embedding_matrix)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Embeddings capture semantic relationships",
+              "Pre-trained embeddings transfer knowledge",
+              "Contextual embeddings (BERT) adapt to context",
+              "Embeddings are fundamental to all modern NLP"
+            ]
+          }
+        },
+        {
+          "id": "attention-mechanism",
+          "title": "Attention Mechanism",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Attention allows models to focus on relevant parts of the input when producing output. It's the key innovation that enabled transformers to revolutionize NLP.",
+            "sections": [
+              {
+                "title": "The Intuition",
+                "content": "When translating 'The cat sat on the mat' to French, attention helps the model focus on 'cat' when generating 'chat'.\n\nAttention computes a weighted sum of values, where weights are determined by how relevant each value is to the current query."
+              },
+              {
+                "title": "Scaled Dot-Product Attention",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torch.nn.functional as F\nimport math\n\ndef attention(query, key, value, mask=None):\n    \"\"\"\n    Compute scaled dot-product attention.\n    \n    Args:\n        query: (batch, seq_len, d_k)\n        key: (batch, seq_len, d_k)\n        value: (batch, seq_len, d_v)\n    \"\"\"\n    d_k = query.size(-1)\n    \n    # Compute attention scores\n    scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)\n    \n    # Apply mask (for decoder self-attention)\n    if mask is not None:\n        scores = scores.masked_fill(mask == 0, -1e9)\n    \n    # Softmax to get attention weights\n    attn_weights = F.softmax(scores, dim=-1)\n    \n    # Weighted sum of values\n    output = torch.matmul(attn_weights, value)\n    \n    return output, attn_weights"
+                }
+              },
+              {
+                "title": "Multi-Head Attention",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torch.nn as nn\n\nclass MultiHeadAttention(nn.Module):\n    def __init__(self, d_model=512, num_heads=8):\n        super().__init__()\n        self.num_heads = num_heads\n        self.d_k = d_model // num_heads\n        \n        self.W_q = nn.Linear(d_model, d_model)\n        self.W_k = nn.Linear(d_model, d_model)\n        self.W_v = nn.Linear(d_model, d_model)\n        self.W_o = nn.Linear(d_model, d_model)\n    \n    def forward(self, query, key, value, mask=None):\n        batch_size = query.size(0)\n        \n        # Linear projections and reshape to (batch, heads, seq, d_k)\n        Q = self.W_q(query).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)\n        K = self.W_k(key).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)\n        V = self.W_v(value).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)\n        \n        # Attention\n        attn_output, _ = attention(Q, K, V, mask)\n        \n        # Concat heads\n        attn_output = attn_output.transpose(1, 2).contiguous().view(batch_size, -1, self.num_heads * self.d_k)\n        \n        return self.W_o(attn_output)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Attention enables dynamic focus on relevant inputs",
+              "Scaling prevents softmax from saturating",
+              "Multi-head attention captures different relationships",
+              "Attention is O(n\u00b2) in sequence length"
+            ]
+          }
+        },
+        {
+          "id": "transformer-architecture",
+          "title": "Transformer Architecture",
+          "type": "lesson",
+          "duration": "40 min",
+          "content": {
+            "overview": "The Transformer (Vaswani et al., 2017) replaced recurrence with self-attention, enabling parallelization and capturing long-range dependencies. It's the foundation of GPT, BERT, and all modern LLMs.",
+            "sections": [
+              {
+                "title": "Architecture Overview",
+                "content": "The original Transformer has an encoder-decoder structure:\n\n**Encoder**: Processes input sequence\n- Self-attention (attend to all positions)\n- Feed-forward network\n- Layer normalization & residual connections\n\n**Decoder**: Generates output sequence\n- Masked self-attention (causal)\n- Cross-attention (attend to encoder)\n- Feed-forward network",
+                "diagram": {
+                  "title": "Transformer Architecture",
+                  "code": "flowchart TB\n    subgraph Encoder[\"Encoder Stack\"]\n        E_IN[Input Embedding] --> E_POS[+ Positional Encoding]\n        E_POS --> E_ATT[Multi-Head Self-Attention]\n        E_ATT --> E_ADD1[Add & Norm]\n        E_ADD1 --> E_FF[Feed Forward]\n        E_FF --> E_ADD2[Add & Norm]\n    end\n    \n    subgraph Decoder[\"Decoder Stack\"]\n        D_IN[Output Embedding] --> D_POS[+ Positional Encoding]\n        D_POS --> D_ATT1[Masked Multi-Head Attention]\n        D_ATT1 --> D_ADD1[Add & Norm]\n        D_ADD1 --> D_ATT2[Cross-Attention]\n        E_ADD2 --> D_ATT2\n        D_ATT2 --> D_ADD2[Add & Norm]\n        D_ADD2 --> D_FF[Feed Forward]\n        D_FF --> D_ADD3[Add & Norm]\n    end\n    \n    D_ADD3 --> LINEAR[Linear]\n    LINEAR --> SOFT[Softmax]\n    SOFT --> OUT[Output Probabilities]"
+                }
+              },
+              {
+                "title": "Positional Encoding",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport math\n\nclass PositionalEncoding(nn.Module):\n    def __init__(self, d_model, max_len=5000):\n        super().__init__()\n        \n        # Create positional encoding matrix\n        pe = torch.zeros(max_len, d_model)\n        position = torch.arange(0, max_len).unsqueeze(1).float()\n        div_term = torch.exp(torch.arange(0, d_model, 2).float() * \n                            (-math.log(10000.0) / d_model))\n        \n        pe[:, 0::2] = torch.sin(position * div_term)  # Even indices\n        pe[:, 1::2] = torch.cos(position * div_term)  # Odd indices\n        \n        self.register_buffer('pe', pe.unsqueeze(0))\n    \n    def forward(self, x):\n        # x: (batch, seq_len, d_model)\n        return x + self.pe[:, :x.size(1)]"
+                }
+              },
+              {
+                "title": "Transformer Block",
+                "codeExample": {
+                  "language": "python",
+                  "code": "class TransformerBlock(nn.Module):\n    def __init__(self, d_model=512, num_heads=8, d_ff=2048, dropout=0.1):\n        super().__init__()\n        \n        self.attention = MultiHeadAttention(d_model, num_heads)\n        self.norm1 = nn.LayerNorm(d_model)\n        self.norm2 = nn.LayerNorm(d_model)\n        \n        self.feed_forward = nn.Sequential(\n            nn.Linear(d_model, d_ff),\n            nn.GELU(),\n            nn.Dropout(dropout),\n            nn.Linear(d_ff, d_model)\n        )\n        \n        self.dropout = nn.Dropout(dropout)\n    \n    def forward(self, x, mask=None):\n        # Self-attention with residual\n        attn_out = self.attention(x, x, x, mask)\n        x = self.norm1(x + self.dropout(attn_out))\n        \n        # Feed-forward with residual\n        ff_out = self.feed_forward(x)\n        x = self.norm2(x + self.dropout(ff_out))\n        \n        return x"
+                }
+              },
+              {
+                "title": "Transformer Variants",
+                "content": "Different variants use different parts:\n\n**Encoder-only (BERT)**: Bidirectional, good for understanding\n- Classification, NER, Q&A\n\n**Decoder-only (GPT)**: Causal/autoregressive, good for generation\n- Text generation, chatbots, code\n\n**Encoder-Decoder (T5, BART)**: Full architecture\n- Translation, summarization",
+                "diagram": {
+                  "title": "Transformer Variants Comparison",
+                  "code": "flowchart TB\n    subgraph BERT[\"Encoder-Only (BERT)\"]\n        B1[Input] --> B2[Encoder]\n        B2 --> B3[Classification]\n    end\n    \n    subgraph GPT[\"Decoder-Only (GPT)\"]\n        G1[Prompt] --> G2[Decoder]\n        G2 --> G3[Next Token]\n        G3 -.-> G2\n    end\n    \n    subgraph T5[\"Encoder-Decoder (T5)\"]\n        T1[Input] --> T2[Encoder]\n        T2 --> T3[Decoder]\n        T3 --> T4[Output]\n    end"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Transformers replaced RNNs for sequence modeling",
+              "Self-attention enables parallel processing",
+              "Positional encodings inject sequence order",
+              "Layer norm + residuals enable deep networks"
+            ]
+          }
+        },
+        {
+          "id": "huggingface-transformers",
+          "title": "Hugging Face Transformers",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "Hugging Face provides the most popular library for working with transformer models. It offers pre-trained models, tokenizers, and training utilities.",
+            "sections": [
+              {
+                "title": "Loading Models and Tokenizers",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassification\n\n# Load tokenizer and model\nmodel_name = 'bert-base-uncased'\ntokenizer = AutoTokenizer.from_pretrained(model_name)\nmodel = AutoModel.from_pretrained(model_name)\n\n# Tokenize text\ntext = \"Hello, how are you?\"\nencoded = tokenizer(\n    text,\n    padding=True,\n    truncation=True,\n    max_length=512,\n    return_tensors='pt'\n)\n\nprint(encoded.keys())  # input_ids, attention_mask\nprint(tokenizer.decode(encoded['input_ids'][0]))\n\n# Get embeddings\nwith torch.no_grad():\n    outputs = model(**encoded)\n    last_hidden = outputs.last_hidden_state  # (1, seq_len, 768)\n    cls_embedding = last_hidden[:, 0, :]      # CLS token"
+                }
+              },
+              {
+                "title": "Fine-tuning for Classification",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import (\n    AutoTokenizer,\n    AutoModelForSequenceClassification,\n    TrainingArguments,\n    Trainer\n)\nfrom datasets import load_dataset\n\n# Load dataset\ndataset = load_dataset('imdb')\n\n# Load model for classification\nmodel_name = 'distilbert-base-uncased'\ntokenizer = AutoTokenizer.from_pretrained(model_name)\nmodel = AutoModelForSequenceClassification.from_pretrained(\n    model_name,\n    num_labels=2\n)\n\n# Tokenize dataset\ndef tokenize(batch):\n    return tokenizer(batch['text'], padding=True, truncation=True, max_length=512)\n\ntokenized = dataset.map(tokenize, batched=True)\n\n# Training arguments\nargs = TrainingArguments(\n    output_dir='./results',\n    num_train_epochs=3,\n    per_device_train_batch_size=16,\n    evaluation_strategy='epoch',\n    save_strategy='epoch',\n    learning_rate=2e-5,\n    weight_decay=0.01,\n    load_best_model_at_end=True\n)\n\n# Train\ntrainer = Trainer(\n    model=model,\n    args=args,\n    train_dataset=tokenized['train'],\n    eval_dataset=tokenized['test']\n)\n\ntrainer.train()"
+                }
+              },
+              {
+                "title": "Using Pipelines",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import pipeline\n\n# Text generation\ngenerator = pipeline('text-generation', model='gpt2')\nresult = generator('The future of AI is', max_length=50, num_return_sequences=3)\n\n# Summarization\nsummarizer = pipeline('summarization', model='facebook/bart-large-cnn')\nsummary = summarizer(long_text, max_length=130, min_length=30)\n\n# Translation\ntranslator = pipeline('translation_en_to_fr', model='Helsinki-NLP/opus-mt-en-fr')\ntranslation = translator('Hello, how are you?')\n\n# Zero-shot classification\nclassifier = pipeline('zero-shot-classification')\nresult = classifier(\n    'I love playing soccer on weekends',\n    candidate_labels=['sports', 'cooking', 'technology']\n)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Auto classes automatically detect model architecture",
+              "Trainer API simplifies fine-tuning",
+              "Pipelines provide easy inference for common tasks",
+              "Hub has thousands of pre-trained models"
+            ]
+          }
+        },
+        {
+          "id": "bert-deep-dive",
+          "title": "BERT Deep Dive",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "BERT (Bidirectional Encoder Representations from Transformers) revolutionized NLP by introducing bidirectional pre-training. Understand how it works and when to use it.",
+            "sections": [
+              {
+                "title": "BERT Pre-training",
+                "content": "BERT is pre-trained with two objectives:\n\n**1. Masked Language Modeling (MLM)**\n- Randomly mask 15% of tokens\n- Predict the masked tokens\n- Forces bidirectional understanding\n\n**2. Next Sentence Prediction (NSP)**\n- Predict if sentence B follows sentence A\n- Helps with sentence-pair tasks\n- Removed in later models (RoBERTa)"
+              },
+              {
+                "title": "BERT Tokenization",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import BertTokenizer\n\ntokenizer = BertTokenizer.from_pretrained('bert-base-uncased')\n\n# Single sentence\ntext = \"Hello, I'm learning NLP!\"\ntokens = tokenizer.tokenize(text)\nprint(tokens)  # ['hello', ',', 'i', \"'\", 'm', 'learning', 'nl', '##p', '!']\n\n# WordPiece tokenization splits unknown words\nprint(tokenizer.tokenize('Transformers'))  # ['transform', '##ers']\n\n# Special tokens\nencoded = tokenizer.encode_plus(\n    \"First sentence.\",\n    \"Second sentence.\",\n    return_tensors='pt'\n)\n# [CLS] First sentence . [SEP] Second sentence . [SEP]\n\n# Token type IDs distinguish sentences\nprint(encoded['token_type_ids'])  # [0,0,0,0,0,1,1,1,1]"
+                }
+              },
+              {
+                "title": "BERT Variants",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoModel\n\n# BERT variants\nbert = AutoModel.from_pretrained('bert-base-uncased')      # 110M params\nbert_large = AutoModel.from_pretrained('bert-large-uncased')  # 340M params\n\n# RoBERTa - Robustly optimized BERT\n# - No NSP, dynamic masking, more data\nroberta = AutoModel.from_pretrained('roberta-base')\n\n# DistilBERT - Distilled (smaller, faster)\n# - 40% smaller, 60% faster, 97% performance\ndistilbert = AutoModel.from_pretrained('distilbert-base-uncased')\n\n# ALBERT - A Lite BERT\n# - Parameter sharing, factorized embeddings\nalbert = AutoModel.from_pretrained('albert-base-v2')\n\n# DeBERTa - Disentangled attention\n# - Separate content and position representations\ndeberta = AutoModel.from_pretrained('microsoft/deberta-v3-base')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "BERT's bidirectionality captures rich context",
+              "WordPiece handles unknown words gracefully",
+              "DistilBERT is great for production",
+              "DeBERTa often outperforms BERT on benchmarks"
+            ]
+          }
+        },
+        {
+          "id": "gpt-architecture",
+          "title": "GPT and Causal Language Models",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "GPT (Generative Pre-trained Transformer) uses a decoder-only architecture for autoregressive text generation. It's the foundation of ChatGPT and modern LLMs.",
+            "sections": [
+              {
+                "title": "Autoregressive Generation",
+                "content": "GPT predicts the next token given all previous tokens:\n\nP(x\u2081, x\u2082, ..., x\u2099) = P(x\u2081) \u00d7 P(x\u2082|x\u2081) \u00d7 P(x\u2083|x\u2081,x\u2082) \u00d7 ...\n\n**Causal Masking**: Each position can only attend to previous positions (left context). This enables generation one token at a time."
+              },
+              {
+                "title": "Text Generation Strategies",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import GPT2LMHeadModel, GPT2Tokenizer\n\nmodel = GPT2LMHeadModel.from_pretrained('gpt2')\ntokenizer = GPT2Tokenizer.from_pretrained('gpt2')\n\nprompt = \"The future of artificial intelligence\"\ninputs = tokenizer(prompt, return_tensors='pt')\n\n# Greedy decoding (deterministic)\ngreedy = model.generate(**inputs, max_length=50, do_sample=False)\n\n# Top-k sampling\ntopk = model.generate(**inputs, max_length=50, do_sample=True, top_k=50)\n\n# Top-p (nucleus) sampling\ntopp = model.generate(**inputs, max_length=50, do_sample=True, top_p=0.95)\n\n# Temperature (controls randomness)\ntemp = model.generate(**inputs, max_length=50, do_sample=True, temperature=0.7)\n\n# Beam search (consider multiple paths)\nbeam = model.generate(**inputs, max_length=50, num_beams=5)\n\nprint(tokenizer.decode(topp[0], skip_special_tokens=True))"
+                }
+              },
+              {
+                "title": "GPT Family Evolution",
+                "content": "**GPT-1 (2018)**: 117M params, showed transfer learning works for NLP\n\n**GPT-2 (2019)**: 1.5B params, zero-shot capabilities, \"too dangerous to release\"\n\n**GPT-3 (2020)**: 175B params, in-context learning, few-shot prompting\n\n**GPT-4 (2023)**: Multimodal, RLHF training, ChatGPT foundation\n\n**Open alternatives**:\n- LLaMA (Meta)\n- Mistral\n- Falcon\n- Phi (Microsoft)"
+              }
+            ],
+            "keyTakeaways": [
+              "GPT uses causal masking for autoregressive generation",
+              "Temperature controls creativity vs coherence",
+              "Top-p sampling often produces best results",
+              "Scale + data + RLHF = modern LLMs"
+            ]
+          }
+        },
+        {
+          "id": "text-classification",
+          "title": "Text Classification",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Text classification assigns categories to text. Applications include sentiment analysis, spam detection, topic categorization, and intent detection.",
+            "sections": [
+              {
+                "title": "Multi-class Classification",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoModelForSequenceClassification, AutoTokenizer\nimport torch\n\n# Load fine-tuned model\nmodel_name = 'cardiffnlp/twitter-roberta-base-sentiment'\ntokenizer = AutoTokenizer.from_pretrained(model_name)\nmodel = AutoModelForSequenceClassification.from_pretrained(model_name)\n\n# Predict\ntext = \"I absolutely love this product!\"\ninputs = tokenizer(text, return_tensors='pt', truncation=True, max_length=512)\n\nwith torch.no_grad():\n    outputs = model(**inputs)\n    probs = torch.softmax(outputs.logits, dim=1)\n    predicted_class = probs.argmax().item()\n\nlabels = ['Negative', 'Neutral', 'Positive']\nprint(f'Prediction: {labels[predicted_class]} ({probs[0][predicted_class]:.2%})')"
+                }
+              },
+              {
+                "title": "Multi-label Classification",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoModelForSequenceClassification, AutoTokenizer\nimport torch\n\n# Multi-label: multiple labels can be true\nmodel = AutoModelForSequenceClassification.from_pretrained(\n    'bert-base-uncased',\n    num_labels=5,\n    problem_type='multi_label_classification'\n)\n\n# Custom training loop for multi-label\ndef compute_loss(logits, labels):\n    return torch.nn.BCEWithLogitsLoss()(logits, labels.float())\n\n# Inference\nwith torch.no_grad():\n    outputs = model(**inputs)\n    probs = torch.sigmoid(outputs.logits)\n    predictions = (probs > 0.5).int()  # Threshold for each label\n\n# Example: text can be tagged as [tech, business, science]\ntags = ['tech', 'business', 'science', 'sports', 'politics']\nactive_tags = [tag for tag, pred in zip(tags, predictions[0]) if pred]"
+                }
+              },
+              {
+                "title": "Zero-shot Classification",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import pipeline\n\n# Zero-shot: classify without training examples\nclassifier = pipeline('zero-shot-classification', model='facebook/bart-large-mnli')\n\ntext = \"I need to book a flight to Paris next week\"\ncandidate_labels = ['travel', 'finance', 'food', 'technology', 'sports']\n\nresult = classifier(text, candidate_labels)\nprint(f\"Label: {result['labels'][0]}\")\nprint(f\"Score: {result['scores'][0]:.2%}\")\n\n# Multi-label mode\nresult = classifier(\n    \"Apple announced record iPhone sales and new AI features\",\n    candidate_labels=['technology', 'business', 'politics'],\n    multi_label=True  # Multiple labels can be true\n)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Use softmax for multi-class, sigmoid for multi-label",
+              "Zero-shot classification requires no training data",
+              "Fine-tuning beats zero-shot when you have labeled data",
+              "Class imbalance needs weighted loss or sampling"
+            ]
+          }
+        },
+        {
+          "id": "named-entity-recognition",
+          "title": "Named Entity Recognition (NER)",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "NER identifies and classifies named entities in text: people, organizations, locations, dates, etc. It's fundamental for information extraction.",
+            "sections": [
+              {
+                "title": "Token Classification",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoModelForTokenClassification, AutoTokenizer, pipeline\n\n# Using pipeline\nner = pipeline('ner', model='dbmdz/bert-large-cased-finetuned-conll03-english',\n               grouped_entities=True)\n\ntext = \"Bill Gates founded Microsoft in Albuquerque, New Mexico in 1975.\"\nentities = ner(text)\n\nfor entity in entities:\n    print(f\"{entity['word']}: {entity['entity_group']} ({entity['score']:.2%})\")\n# Bill Gates: PER (99.8%)\n# Microsoft: ORG (99.9%)\n# Albuquerque: LOC (99.7%)\n# New Mexico: LOC (99.4%)"
+                }
+              },
+              {
+                "title": "Custom NER Model",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoModelForTokenClassification, TrainingArguments, Trainer\nfrom datasets import load_dataset\nimport evaluate\n\n# Load CoNLL-2003 dataset\ndataset = load_dataset('conll2003')\nlabel_names = dataset['train'].features['ner_tags'].feature.names\n# ['O', 'B-PER', 'I-PER', 'B-ORG', 'I-ORG', 'B-LOC', 'I-LOC', 'B-MISC', 'I-MISC']\n\n# Load model\nmodel = AutoModelForTokenClassification.from_pretrained(\n    'bert-base-cased',\n    num_labels=len(label_names),\n    id2label={i: l for i, l in enumerate(label_names)},\n    label2id={l: i for i, l in enumerate(label_names)}\n)\n\n# Tokenize with label alignment\ndef tokenize_and_align(examples):\n    tokenized = tokenizer(examples['tokens'], truncation=True, is_split_into_words=True)\n    \n    labels = []\n    for i, label in enumerate(examples['ner_tags']):\n        word_ids = tokenized.word_ids(batch_index=i)\n        label_ids = []\n        previous_word_id = None\n        for word_id in word_ids:\n            if word_id is None:\n                label_ids.append(-100)  # Ignore special tokens\n            elif word_id != previous_word_id:\n                label_ids.append(label[word_id])\n            else:\n                label_ids.append(-100)  # Only first subword gets label\n            previous_word_id = word_id\n        labels.append(label_ids)\n    \n    tokenized['labels'] = labels\n    return tokenized"
+                }
+              },
+              {
+                "title": "Entity Linking",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Entity Linking: Connect entities to knowledge base (e.g., Wikipedia)\nimport spacy\n\n# Load spaCy with entity linker\nnlp = spacy.load('en_core_web_lg')\nnlp.add_pipe('entityLinker', last=True)  # Requires spacy-entity-linker\n\ndoc = nlp(\"Albert Einstein developed the theory of relativity.\")\n\nfor ent in doc._.linkedEntities:\n    print(f\"{ent.get_span()}: {ent.get_label()} -> {ent.get_url()}\")\n# Albert Einstein: PERSON -> https://en.wikipedia.org/wiki/Albert_Einstein\n\n# Or use Hugging Face\nfrom transformers import pipeline\nel = pipeline('entity-linking', model='facebook/genre-kilt')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "NER uses BIO tagging: Begin, Inside, Outside",
+              "Subword tokenization requires label alignment",
+              "Entity linking connects entities to knowledge bases",
+              "seqeval is the standard NER evaluation metric"
+            ]
+          }
+        },
+        {
+          "id": "question-answering",
+          "title": "Question Answering",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "QA systems extract answers from context or generate them directly. Learn extractive and generative approaches.",
+            "sections": [
+              {
+                "title": "Extractive QA",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import pipeline, AutoModelForQuestionAnswering, AutoTokenizer\nimport torch\n\n# Using pipeline\nqa = pipeline('question-answering', model='deepset/roberta-base-squad2')\n\ncontext = \"\"\"\nThe Apollo 11 mission was launched on July 16, 1969, and landed the \nfirst humans on the Moon on July 20, 1969. Commander Neil Armstrong \nand lunar module pilot Buzz Aldrin landed the Apollo Lunar Module Eagle.\n\"\"\"\n\nresult = qa(\n    question='Who was the commander of Apollo 11?',\n    context=context\n)\nprint(f\"Answer: {result['answer']}\")\nprint(f\"Score: {result['score']:.2%}\")\nprint(f\"Position: {result['start']} - {result['end']}\")\n# Answer: Neil Armstrong\n# Score: 98.4%"
+                }
+              },
+              {
+                "title": "Handling Long Contexts",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Documents longer than model max length (512 tokens)\ndef qa_long_context(question, context, tokenizer, model, max_length=512, stride=128):\n    # Tokenize with sliding window\n    encodings = tokenizer(\n        question,\n        context,\n        truncation='only_second',\n        max_length=max_length,\n        stride=stride,\n        return_overflowing_tokens=True,\n        return_offsets_mapping=True,\n        padding=True,\n        return_tensors='pt'\n    )\n    \n    best_answer = {'score': 0, 'text': ''}\n    \n    with torch.no_grad():\n        for i in range(encodings.input_ids.shape[0]):\n            outputs = model(\n                input_ids=encodings.input_ids[i:i+1],\n                attention_mask=encodings.attention_mask[i:i+1]\n            )\n            \n            start_idx = outputs.start_logits.argmax()\n            end_idx = outputs.end_logits.argmax()\n            score = outputs.start_logits[0, start_idx] + outputs.end_logits[0, end_idx]\n            \n            if score > best_answer['score']:\n                # Extract answer from offsets\n                offsets = encodings.offset_mapping[i]\n                start_char = offsets[start_idx][0]\n                end_char = offsets[end_idx][1]\n                best_answer = {'score': float(score), 'text': context[start_char:end_char]}\n    \n    return best_answer"
+                }
+              },
+              {
+                "title": "Generative QA",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import T5ForConditionalGeneration, T5Tokenizer\n\n# T5 for generative QA\nmodel = T5ForConditionalGeneration.from_pretrained('t5-base')\ntokenizer = T5Tokenizer.from_pretrained('t5-base')\n\n# Format input\ncontext = \"The capital of France is Paris.\"\nquestion = \"What is the capital of France?\"\ninput_text = f\"question: {question} context: {context}\"\n\ninputs = tokenizer(input_text, return_tensors='pt', max_length=512, truncation=True)\noutputs = model.generate(**inputs, max_length=50)\nanswer = tokenizer.decode(outputs[0], skip_special_tokens=True)\nprint(answer)  # Paris\n\n# Open-domain QA (no context provided)\nfrom transformers import pipeline\nqa = pipeline('text2text-generation', model='google/flan-t5-large')\nresult = qa('Answer the question: What is the capital of France?')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Extractive QA points to answer spans in context",
+              "Generative QA creates answers from scratch",
+              "Sliding window handles long documents",
+              "SQuAD 2.0 includes unanswerable questions"
+            ]
+          }
+        },
+        {
+          "id": "text-summarization",
+          "title": "Text Summarization",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Summarization condenses long documents into shorter versions while preserving key information. Learn extractive and abstractive approaches.",
+            "sections": [
+              {
+                "title": "Abstractive Summarization",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import pipeline\n\n# BART for summarization\nsummarizer = pipeline('summarization', model='facebook/bart-large-cnn')\n\narticle = \"\"\"\nResearchers at OpenAI have developed GPT-4, a large multimodal model \nthat accepts image and text inputs and produces text outputs. While \nless capable than humans in many real-world scenarios, GPT-4 exhibits \nhuman-level performance on various professional and academic benchmarks. \nFor example, it passes a simulated bar exam with a score around the top \n10% of test takers.\n\"\"\"\n\nsummary = summarizer(\n    article,\n    max_length=50,\n    min_length=20,\n    do_sample=False\n)\nprint(summary[0]['summary_text'])"
+                }
+              },
+              {
+                "title": "Controlling Summary Length",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import T5ForConditionalGeneration, T5Tokenizer\n\nmodel = T5ForConditionalGeneration.from_pretrained('t5-base')\ntokenizer = T5Tokenizer.from_pretrained('t5-base')\n\ndef summarize(text, max_length=150, min_length=40):\n    input_text = f\"summarize: {text}\"\n    inputs = tokenizer(input_text, return_tensors='pt', max_length=1024, truncation=True)\n    \n    outputs = model.generate(\n        **inputs,\n        max_length=max_length,\n        min_length=min_length,\n        length_penalty=2.0,  # Encourage longer summaries\n        num_beams=4,\n        early_stopping=True\n    )\n    \n    return tokenizer.decode(outputs[0], skip_special_tokens=True)\n\n# Pegasus for abstractive summarization\nfrom transformers import PegasusForConditionalGeneration\npegasus = PegasusForConditionalGeneration.from_pretrained('google/pegasus-cnn_dailymail')"
+                }
+              },
+              {
+                "title": "Summarization Metrics",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from evaluate import load\n\n# ROUGE score\nrouge = load('rouge')\n\npredictions = [\"The cat sat on the mat.\"]\nreferences = [\"The cat was sitting on the mat.\"]\n\nresults = rouge.compute(predictions=predictions, references=references)\nprint(f\"ROUGE-1: {results['rouge1']:.3f}\")  # Unigram overlap\nprint(f\"ROUGE-2: {results['rouge2']:.3f}\")  # Bigram overlap\nprint(f\"ROUGE-L: {results['rougeL']:.3f}\")  # Longest common subsequence\n\n# BERTScore (semantic similarity)\nbertscore = load('bertscore')\nresults = bertscore.compute(\n    predictions=predictions,\n    references=references,\n    model_type='microsoft/deberta-xlarge-mnli'\n)\nprint(f\"BERTScore F1: {results['f1'][0]:.3f}\")"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Abstractive generates new text, extractive selects sentences",
+              "BART and Pegasus are strong summarization models",
+              "ROUGE measures n-gram overlap",
+              "BERTScore captures semantic similarity"
+            ]
+          }
+        },
+        {
+          "id": "machine-translation",
+          "title": "Machine Translation",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Neural Machine Translation (NMT) uses sequence-to-sequence models to translate between languages. Modern systems achieve near-human quality for many language pairs.",
+            "sections": [
+              {
+                "title": "Translation with Transformers",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import pipeline, MarianMTModel, MarianTokenizer\n\n# Using pipeline\ntranslator = pipeline('translation_en_to_fr', model='Helsinki-NLP/opus-mt-en-fr')\nresult = translator('Hello, how are you today?')\nprint(result[0]['translation_text'])  # Bonjour, comment allez-vous aujourd'hui?\n\n# Direct model usage for more control\nmodel_name = 'Helsinki-NLP/opus-mt-en-de'\ntokenizer = MarianTokenizer.from_pretrained(model_name)\nmodel = MarianMTModel.from_pretrained(model_name)\n\ntext = \"Machine learning is transforming every industry.\"\ninputs = tokenizer(text, return_tensors='pt', padding=True)\n\noutputs = model.generate(\n    **inputs,\n    max_length=100,\n    num_beams=5,\n    early_stopping=True\n)\n\ntranslation = tokenizer.decode(outputs[0], skip_special_tokens=True)\nprint(translation)  # Maschinelles Lernen ver\u00e4ndert jede Branche."
+                }
+              },
+              {
+                "title": "Multilingual Models",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import MBartForConditionalGeneration, MBart50TokenizerFast\n\n# mBART-50: translate between 50 languages\nmodel = MBartForConditionalGeneration.from_pretrained('facebook/mbart-large-50-many-to-many-mmt')\ntokenizer = MBart50TokenizerFast.from_pretrained('facebook/mbart-large-50-many-to-many-mmt')\n\n# Set source language\ntokenizer.src_lang = 'en_XX'\ntext = \"The weather is beautiful today.\"\ninputs = tokenizer(text, return_tensors='pt')\n\n# Generate translation with forced target language\ngenerated = model.generate(\n    **inputs,\n    forced_bos_token_id=tokenizer.lang_code_to_id['ja_XX']  # Japanese\n)\n\ntranslation = tokenizer.decode(generated[0], skip_special_tokens=True)\nprint(translation)\n\n# Or use NLLB-200 for 200 languages\n# 'facebook/nllb-200-distilled-600M'"
+                }
+              },
+              {
+                "title": "Evaluation: BLEU Score",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from evaluate import load\n\nbleu = load('bleu')\n\npredictions = [\"The cat sat on the mat.\"]\nreferences = [[\"The cat is sitting on the mat.\", \"A cat sat on the mat.\"]]\n\nresults = bleu.compute(predictions=predictions, references=references)\nprint(f\"BLEU: {results['bleu']:.3f}\")\nprint(f\"Precisions: {results['precisions']}\")\n\n# COMET (learned metric, better correlation with human judgment)\ncomet = load('comet')\nresults = comet.compute(\n    sources=[\"The cat sat on the mat.\"],\n    predictions=[\"Le chat \u00e9tait assis sur le tapis.\"],\n    references=[\"Le chat s'est assis sur le tapis.\"]\n)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Encoder-decoder models excel at translation",
+              "mBART and NLLB support many languages",
+              "BLEU measures n-gram precision",
+              "COMET correlates better with human judgment"
+            ]
+          }
+        },
+        {
+          "id": "text-generation",
+          "title": "Advanced Text Generation",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Learn advanced techniques for controlling and improving text generation quality: prompting, constrained decoding, and post-processing.",
+            "sections": [
+              {
+                "title": "Prompt Engineering",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import pipeline\n\ngenerator = pipeline('text-generation', model='gpt2-large')\n\n# Zero-shot prompting\nprompt = \"\"\"Task: Classify the sentiment of the following review.\nReview: This movie was absolutely fantastic!\nSentiment:\"\"\"\n\nresult = generator(prompt, max_length=100, num_return_sequences=1)\n\n# Few-shot prompting\nprompt = \"\"\"Translate English to French:\n\nEnglish: Hello, how are you?\nFrench: Bonjour, comment allez-vous?\n\nEnglish: Thank you very much.\nFrench: Merci beaucoup.\n\nEnglish: I love machine learning.\nFrench:\"\"\"\n\n# Chain-of-thought prompting\nprompt = \"\"\"Q: If there are 3 cars in a parking lot and 2 more arrive, how many cars are there?\nA: Let's think step by step.\n1. Initially there are 3 cars\n2. 2 more cars arrive\n3. Total = 3 + 2 = 5\nTherefore, there are 5 cars.\n\nQ: If there are 10 apples and you eat 3, how many remain?\nA: Let's think step by step.\"\"\""
+                }
+              },
+              {
+                "title": "Constrained Generation",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoModelForCausalLM, AutoTokenizer\nimport torch\n\nmodel = AutoModelForCausalLM.from_pretrained('gpt2')\ntokenizer = AutoTokenizer.from_pretrained('gpt2')\n\n# Force certain words in output\nforce_words = ['artificial intelligence', 'machine learning']\nforce_words_ids = [tokenizer.encode(word, add_special_tokens=False) for word in force_words]\n\ninputs = tokenizer('The future of technology includes', return_tensors='pt')\noutputs = model.generate(\n    **inputs,\n    max_length=50,\n    force_words_ids=force_words_ids,\n    num_beams=4\n)\n\n# Bad words (prevent certain outputs)\nbad_words = ['bad', 'terrible', 'awful']\nbad_words_ids = [tokenizer.encode(word) for word in bad_words]\n\noutputs = model.generate(\n    **inputs,\n    max_length=50,\n    bad_words_ids=bad_words_ids\n)"
+                }
+              },
+              {
+                "title": "Sampling Strategies",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Combine multiple sampling strategies\noutputs = model.generate(\n    **inputs,\n    max_length=100,\n    \n    # Enable sampling\n    do_sample=True,\n    \n    # Temperature: < 1 = more focused, > 1 = more random\n    temperature=0.8,\n    \n    # Top-k: only sample from top k tokens\n    top_k=50,\n    \n    # Top-p (nucleus): sample from tokens comprising top p probability\n    top_p=0.95,\n    \n    # Repetition penalty: discourage repeating tokens\n    repetition_penalty=1.2,\n    \n    # No repeat n-gram: prevent repeating any n-gram\n    no_repeat_ngram_size=3,\n    \n    # Multiple sequences\n    num_return_sequences=3\n)\n\n# Print all generations\nfor i, output in enumerate(outputs):\n    print(f\"\\n--- Generation {i+1} ---\")\n    print(tokenizer.decode(output, skip_special_tokens=True))"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Prompt engineering guides model behavior",
+              "Few-shot examples improve task performance",
+              "Temperature and top-p balance creativity/coherence",
+              "Repetition penalty prevents degenerate outputs"
+            ]
+          }
+        },
+        {
+          "id": "semantic-similarity",
+          "title": "Semantic Similarity & Embeddings",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Semantic similarity measures how alike two pieces of text are in meaning. Learn to create and use sentence embeddings for search, clustering, and more.",
+            "sections": [
+              {
+                "title": "Sentence Transformers",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from sentence_transformers import SentenceTransformer\nfrom sklearn.metrics.pairwise import cosine_similarity\n\n# Load model\nmodel = SentenceTransformer('all-MiniLM-L6-v2')  # Fast, good quality\n\n# Encode sentences\nsentences = [\n    \"The cat sits on the mat.\",\n    \"A cat is sitting on a rug.\",\n    \"Machine learning is fascinating.\"\n]\n\nembeddings = model.encode(sentences)\nprint(f\"Embedding shape: {embeddings.shape}\")  # (3, 384)\n\n# Compute similarity\nsimilarities = cosine_similarity(embeddings)\nprint(\"Similarity matrix:\")\nprint(similarities)\n# [[1.0, 0.8, 0.1],\n#  [0.8, 1.0, 0.1],\n#  [0.1, 0.1, 1.0]]"
+                }
+              },
+              {
+                "title": "Semantic Search",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from sentence_transformers import SentenceTransformer, util\nimport torch\n\nmodel = SentenceTransformer('multi-qa-MiniLM-L6-cos-v1')\n\n# Document corpus\ndocuments = [\n    \"Python is a popular programming language.\",\n    \"Machine learning enables computers to learn from data.\",\n    \"Natural language processing deals with text and speech.\",\n    \"Deep learning uses neural networks with many layers.\"\n]\n\n# Encode corpus (do once, store for later)\ncorpus_embeddings = model.encode(documents, convert_to_tensor=True)\n\n# Search query\nquery = \"How do computers understand language?\"\nquery_embedding = model.encode(query, convert_to_tensor=True)\n\n# Find most similar\nscores = util.cos_sim(query_embedding, corpus_embeddings)[0]\ntop_results = torch.topk(scores, k=2)\n\nfor score, idx in zip(top_results.values, top_results.indices):\n    print(f\"{score:.3f}: {documents[idx]}\")\n# 0.72: Natural language processing deals with text and speech."
+                }
+              },
+              {
+                "title": "Clustering Text",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from sentence_transformers import SentenceTransformer\nfrom sklearn.cluster import KMeans\nfrom sklearn.manifold import TSNE\nimport matplotlib.pyplot as plt\n\nmodel = SentenceTransformer('all-MiniLM-L6-v2')\n\n# Encode documents\ndocuments = [...]  # Your texts\nembeddings = model.encode(documents)\n\n# Cluster\nnum_clusters = 5\nkmeans = KMeans(n_clusters=num_clusters, random_state=42)\ncluster_labels = kmeans.fit_predict(embeddings)\n\n# Visualize with t-SNE\ntsne = TSNE(n_components=2, random_state=42)\nembeddings_2d = tsne.fit_transform(embeddings)\n\nplt.figure(figsize=(10, 8))\nfor cluster in range(num_clusters):\n    mask = cluster_labels == cluster\n    plt.scatter(embeddings_2d[mask, 0], embeddings_2d[mask, 1], label=f'Cluster {cluster}')\nplt.legend()\nplt.title('Document Clusters')\nplt.show()"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Sentence embeddings capture semantic meaning",
+              "Cosine similarity measures embedding closeness",
+              "Pre-compute embeddings for fast search",
+              "Use asymmetric models for queries vs documents"
+            ]
+          }
+        },
+        {
+          "id": "tokenization-deep-dive",
+          "title": "Tokenization Deep Dive",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Tokenization is how models break text into pieces. Different strategies have trade-offs for vocabulary size, unknown words, and semantic meaning.",
+            "sections": [
+              {
+                "title": "Tokenization Algorithms",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoTokenizer\n\n# BPE (Byte Pair Encoding) - GPT family\ngpt_tok = AutoTokenizer.from_pretrained('gpt2')\nprint(gpt_tok.tokenize('Tokenization'))  # ['Token', 'ization']\n\n# WordPiece - BERT family\nbert_tok = AutoTokenizer.from_pretrained('bert-base-uncased')\nprint(bert_tok.tokenize('Tokenization'))  # ['token', '##ization']\n\n# SentencePiece/Unigram - T5, ALBERT\nt5_tok = AutoTokenizer.from_pretrained('t5-base')\nprint(t5_tok.tokenize('Tokenization'))  # ['\u2581Token', 'ization']\n\n# Byte-level BPE - handles any unicode\nroberta_tok = AutoTokenizer.from_pretrained('roberta-base')\nprint(roberta_tok.tokenize('\ud83e\udd16 AI'))  # Handles emojis!"
+                }
+              },
+              {
+                "title": "Vocabulary Analysis",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoTokenizer\nfrom collections import Counter\n\ntokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')\n\n# Vocabulary size\nprint(f\"Vocab size: {tokenizer.vocab_size}\")  # 30,522\n\n# Special tokens\nprint(f\"CLS: {tokenizer.cls_token} ({tokenizer.cls_token_id})\")\nprint(f\"SEP: {tokenizer.sep_token} ({tokenizer.sep_token_id})\")\nprint(f\"PAD: {tokenizer.pad_token} ({tokenizer.pad_token_id})\")\nprint(f\"UNK: {tokenizer.unk_token} ({tokenizer.unk_token_id})\")\n\n# Analyze tokenization efficiency\ntext = \"The quick brown fox jumps over the lazy dog.\"\ntokens = tokenizer.tokenize(text)\nprint(f\"Words: {len(text.split())}, Tokens: {len(tokens)}\")\nprint(f\"Efficiency: {len(text.split()) / len(tokens):.2f}\")"
+                }
+              },
+              {
+                "title": "Custom Tokenizers",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from tokenizers import Tokenizer\nfrom tokenizers.models import BPE\nfrom tokenizers.trainers import BpeTrainer\nfrom tokenizers.pre_tokenizers import Whitespace\n\n# Train custom tokenizer\ntokenizer = Tokenizer(BPE(unk_token='[UNK]'))\ntokenizer.pre_tokenizer = Whitespace()\n\ntrainer = BpeTrainer(\n    vocab_size=10000,\n    special_tokens=['[PAD]', '[UNK]', '[CLS]', '[SEP]', '[MASK]']\n)\n\n# Train on your corpus\nfiles = ['data/corpus1.txt', 'data/corpus2.txt']\ntokenizer.train(files, trainer)\n\n# Save and load\ntokenizer.save('my_tokenizer.json')\n\n# Convert to Hugging Face format\nfrom transformers import PreTrainedTokenizerFast\nhf_tokenizer = PreTrainedTokenizerFast(tokenizer_object=tokenizer)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "BPE, WordPiece, and SentencePiece are common algorithms",
+              "Subword tokenization handles unknown words",
+              "Byte-level BPE handles any Unicode",
+              "Train custom tokenizers for specialized domains"
+            ]
+          }
+        },
+        {
+          "id": "efficient-transformers",
+          "title": "Efficient Transformers",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Transformers have O(n\u00b2) complexity in sequence length. Learn techniques to scale to longer sequences and reduce computational costs.",
+            "sections": [
+              {
+                "title": "The Efficiency Problem",
+                "content": "Self-attention computes all pairwise relationships:\n- 512 tokens \u2192 262K attention scores\n- 4K tokens \u2192 16M attention scores\n- 128K tokens \u2192 16B attention scores\n\nApproaches to solve this:\n1. **Sparse attention** - Attend to subset of positions\n2. **Linear attention** - Replace softmax with linear ops\n3. **Compression** - Reduce sequence length"
+              },
+              {
+                "title": "Efficient Architectures",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoModel\n\n# Longformer - Local + global attention\n# Handles 4K+ tokens\nlongformer = AutoModel.from_pretrained('allenai/longformer-base-4096')\n# Uses sliding window attention + global attention on special tokens\n\n# BigBird - Sparse + random + global attention\nbigbird = AutoModel.from_pretrained('google/bigbird-roberta-base')\n\n# LED (Longformer Encoder-Decoder) - For generation\nfrom transformers import LEDForConditionalGeneration\nled = LEDForConditionalGeneration.from_pretrained('allenai/led-base-16384')\n\n# Reformer - Locality-sensitive hashing attention\n# O(n log n) complexity\n\n# Flash Attention - Not a new architecture, but optimized implementation\n# Available in transformers via attn_implementation='flash_attention_2'"
+                }
+              },
+              {
+                "title": "Memory Optimization",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\n# Gradient checkpointing (trade compute for memory)\nmodel = AutoModelForCausalLM.from_pretrained('gpt2')\nmodel.gradient_checkpointing_enable()\n\n# Mixed precision training\nfrom torch.cuda.amp import autocast, GradScaler\n\nscaler = GradScaler()\nfor batch in dataloader:\n    with autocast():\n        outputs = model(**batch)\n        loss = outputs.loss\n    scaler.scale(loss).backward()\n    scaler.step(optimizer)\n    scaler.update()\n\n# Flash Attention 2 (requires compatible GPU)\nmodel = AutoModelForCausalLM.from_pretrained(\n    'meta-llama/Llama-2-7b-hf',\n    attn_implementation='flash_attention_2',\n    torch_dtype=torch.float16\n)\n\n# DeepSpeed for distributed training\n# accelerate launch --config_file deepspeed.yaml train.py"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Standard attention is O(n\u00b2), limiting sequence length",
+              "Longformer/BigBird handle long documents",
+              "Flash Attention speeds up without architecture changes",
+              "Gradient checkpointing trades compute for memory"
+            ]
+          }
+        },
+        {
+          "id": "model-evaluation",
+          "title": "NLP Model Evaluation",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Proper evaluation is crucial for understanding model performance. Learn the right metrics for each NLP task and how to compute them.",
+            "sections": [
+              {
+                "title": "Classification Metrics",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from sklearn.metrics import (\n    accuracy_score, precision_recall_fscore_support,\n    classification_report, confusion_matrix\n)\nimport numpy as np\n\ny_true = [0, 1, 1, 0, 1, 0, 1, 1]\ny_pred = [0, 1, 0, 0, 1, 1, 1, 1]\n\n# Accuracy\nprint(f\"Accuracy: {accuracy_score(y_true, y_pred):.2%}\")\n\n# Precision, Recall, F1\nprec, rec, f1, _ = precision_recall_fscore_support(y_true, y_pred, average='binary')\nprint(f\"Precision: {prec:.3f}\")\nprint(f\"Recall: {rec:.3f}\")\nprint(f\"F1: {f1:.3f}\")\n\n# Full report\nprint(classification_report(y_true, y_pred, target_names=['Negative', 'Positive']))\n\n# For multi-class: use average='macro' or 'weighted'"
+                }
+              },
+              {
+                "title": "NER Evaluation",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from seqeval.metrics import classification_report, f1_score\n\n# seqeval handles BIO tagging correctly\ny_true = [['O', 'B-PER', 'I-PER', 'O', 'B-LOC']]\ny_pred = [['O', 'B-PER', 'I-PER', 'O', 'O']]\n\n# Entity-level F1\nprint(f\"F1: {f1_score(y_true, y_pred):.3f}\")\n\n# Full report\nprint(classification_report(y_true, y_pred))\n#               precision    recall  f1-score   support\n#          LOC       0.00      0.00      0.00         1\n#          PER       1.00      1.00      1.00         1\n#    micro avg       0.50      0.50      0.50         2"
+                }
+              },
+              {
+                "title": "Generation Metrics",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from evaluate import load\n\n# Load metrics\nrouge = load('rouge')\nbleu = load('bleu')\nbertscore = load('bertscore')\n\npredictions = [\"The model generated this summary.\"]\nreferences = [\"This is the reference summary text.\"]\n\n# ROUGE (for summarization)\nrouge_scores = rouge.compute(predictions=predictions, references=references)\nprint(f\"ROUGE-L: {rouge_scores['rougeL']:.3f}\")\n\n# BLEU (for translation)\nbleu_score = bleu.compute(\n    predictions=predictions,\n    references=[[ref] for ref in references]  # BLEU expects list of references\n)\nprint(f\"BLEU: {bleu_score['bleu']:.3f}\")\n\n# BERTScore (semantic similarity)\nbert_scores = bertscore.compute(\n    predictions=predictions,\n    references=references,\n    lang='en'\n)\nprint(f\"BERTScore F1: {np.mean(bert_scores['f1']):.3f}\")\n\n# Perplexity (for language models)\nfrom evaluate import load\nperplexity = load('perplexity')\nresults = perplexity.compute(predictions=predictions, model_id='gpt2')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "F1 balances precision and recall",
+              "Use seqeval for NER to get entity-level metrics",
+              "ROUGE for summarization, BLEU for translation",
+              "BERTScore captures semantic similarity"
+            ]
+          }
+        },
+        {
+          "id": "nlp-deployment",
+          "title": "NLP Model Deployment",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Deploy NLP models to production with optimization, APIs, and serving infrastructure.",
+            "sections": [
+              {
+                "title": "Model Optimization",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoModelForSequenceClassification, AutoTokenizer\nimport torch\n\nmodel = AutoModelForSequenceClassification.from_pretrained('distilbert-base-uncased')\ntokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased')\n\n# Quantization (4x smaller, faster on CPU)\nquantized_model = torch.quantization.quantize_dynamic(\n    model, {torch.nn.Linear}, dtype=torch.qint8\n)\n\n# ONNX export\ndummy_input = tokenizer('Sample text', return_tensors='pt')\ntorch.onnx.export(\n    model,\n    (dummy_input['input_ids'], dummy_input['attention_mask']),\n    'model.onnx',\n    input_names=['input_ids', 'attention_mask'],\n    output_names=['logits'],\n    dynamic_axes={'input_ids': {0: 'batch', 1: 'seq'},\n                  'attention_mask': {0: 'batch', 1: 'seq'}}\n)\n\n# Optimum library for hardware-specific optimization\nfrom optimum.onnxruntime import ORTModelForSequenceClassification\nort_model = ORTModelForSequenceClassification.from_pretrained(\n    'distilbert-base-uncased', export=True\n)"
+                }
+              },
+              {
+                "title": "FastAPI Service",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from fastapi import FastAPI\nfrom pydantic import BaseModel\nfrom transformers import pipeline\nimport torch\n\napp = FastAPI()\n\n# Load model once at startup\n@app.on_event('startup')\nasync def load_model():\n    global classifier\n    classifier = pipeline(\n        'sentiment-analysis',\n        model='distilbert-base-uncased-finetuned-sst-2-english',\n        device=0 if torch.cuda.is_available() else -1\n    )\n\nclass TextInput(BaseModel):\n    text: str\n\nclass PredictionOutput(BaseModel):\n    label: str\n    score: float\n\n@app.post('/predict', response_model=PredictionOutput)\nasync def predict(input: TextInput):\n    result = classifier(input.text)[0]\n    return PredictionOutput(\n        label=result['label'],\n        score=result['score']\n    )\n\n# Run: uvicorn app:app --host 0.0.0.0 --port 8000"
+                }
+              },
+              {
+                "title": "Batch Processing",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import pipeline\nimport torch\nfrom torch.utils.data import DataLoader\n\n# Batch inference for throughput\nclassifier = pipeline(\n    'sentiment-analysis',\n    model='distilbert-base-uncased',\n    device=0,\n    batch_size=32  # Process 32 texts at once\n)\n\ntexts = [\"Text 1\", \"Text 2\", ...]  # Thousands of texts\nresults = classifier(texts)  # Automatically batches\n\n# Or use DataLoader for more control\nclass TextDataset(torch.utils.data.Dataset):\n    def __init__(self, texts, tokenizer, max_length=512):\n        self.encodings = tokenizer(\n            texts, truncation=True, padding=True,\n            max_length=max_length, return_tensors='pt'\n        )\n    \n    def __len__(self):\n        return len(self.encodings.input_ids)\n    \n    def __getitem__(self, idx):\n        return {k: v[idx] for k, v in self.encodings.items()}\n\ndataset = TextDataset(texts, tokenizer)\nloader = DataLoader(dataset, batch_size=64, num_workers=4)\n\nall_predictions = []\nfor batch in loader:\n    with torch.no_grad():\n        outputs = model(**{k: v.to('cuda') for k, v in batch.items()})\n        predictions = outputs.logits.argmax(dim=-1)\n        all_predictions.extend(predictions.cpu().tolist())"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Quantization reduces model size 4x",
+              "ONNX Runtime is faster than PyTorch for inference",
+              "Batch processing maximizes throughput",
+              "Use async endpoints for I/O-bound operations"
+            ]
+          }
+        },
+        {
+          "id": "nlp-project",
+          "title": "Capstone: Build a Document Q&A System",
+          "type": "project",
+          "duration": "90 min",
+          "content": {
+            "overview": "Build an end-to-end document question answering system using retrieval-augmented generation.",
+            "sections": [
+              {
+                "title": "Project Overview",
+                "content": "**Objective**: Build a Q&A system that answers questions about a set of documents.\n\n**Components**:\n1. Document ingestion and chunking\n2. Embedding generation and indexing\n3. Retrieval of relevant chunks\n4. Answer generation with context\n\n**Tech Stack**:\n- Sentence Transformers for embeddings\n- FAISS for vector search\n- Hugging Face model for answer generation"
+              },
+              {
+                "title": "Implementation",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import faiss\nimport numpy as np\nfrom sentence_transformers import SentenceTransformer\nfrom transformers import pipeline\n\nclass DocumentQA:\n    def __init__(self):\n        # Embedding model\n        self.embedder = SentenceTransformer('all-MiniLM-L6-v2')\n        \n        # QA model\n        self.qa = pipeline('question-answering', model='deepset/roberta-base-squad2')\n        \n        # Vector store\n        self.index = None\n        self.chunks = []\n    \n    def add_documents(self, documents):\n        # Chunk documents\n        for doc in documents:\n            chunks = self._chunk_text(doc, chunk_size=500, overlap=50)\n            self.chunks.extend(chunks)\n        \n        # Create embeddings\n        embeddings = self.embedder.encode(self.chunks)\n        \n        # Build FAISS index\n        dimension = embeddings.shape[1]\n        self.index = faiss.IndexFlatIP(dimension)  # Inner product\n        faiss.normalize_L2(embeddings)  # Normalize for cosine sim\n        self.index.add(embeddings.astype('float32'))\n    \n    def _chunk_text(self, text, chunk_size=500, overlap=50):\n        words = text.split()\n        chunks = []\n        for i in range(0, len(words), chunk_size - overlap):\n            chunk = ' '.join(words[i:i + chunk_size])\n            chunks.append(chunk)\n        return chunks\n    \n    def answer(self, question, top_k=3):\n        # Embed question\n        q_embedding = self.embedder.encode([question])\n        faiss.normalize_L2(q_embedding)\n        \n        # Retrieve relevant chunks\n        scores, indices = self.index.search(q_embedding.astype('float32'), top_k)\n        context = ' '.join([self.chunks[i] for i in indices[0]])\n        \n        # Generate answer\n        result = self.qa(question=question, context=context)\n        return {\n            'answer': result['answer'],\n            'confidence': result['score'],\n            'context': context[:500] + '...'\n        }\n\n# Usage\nqa_system = DocumentQA()\nqa_system.add_documents(['Document 1 content...', 'Document 2 content...'])\nresult = qa_system.answer('What is the main topic?')\nprint(result)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "RAG combines retrieval with generation",
+              "Chunking strategy affects retrieval quality",
+              "FAISS enables fast similarity search",
+              "Context window limits the answer scope"
+            ]
+          }
+        },
+        {
+          "id": "nlp-quiz",
+          "title": "NLP & Transformers Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is the main innovation of the Transformer architecture?",
+              "options": [
+                "Recurrent connections",
+                "Self-attention mechanism",
+                "Convolutional layers",
+                "Pooling operations"
+              ],
+              "correct": 1,
+              "explanation": "Self-attention allows the model to weigh the importance of different parts of the input when producing output, enabling parallel processing and capturing long-range dependencies."
+            },
+            {
+              "question": "Which BERT variant is best for production where speed matters?",
+              "options": [
+                "BERT-large",
+                "RoBERTa",
+                "DistilBERT",
+                "ALBERT"
+              ],
+              "correct": 2,
+              "explanation": "DistilBERT is 40% smaller and 60% faster than BERT while retaining 97% of its performance, making it ideal for production."
+            },
+            {
+              "question": "What tokenization algorithm does GPT-2 use?",
+              "options": [
+                "WordPiece",
+                "Byte Pair Encoding (BPE)",
+                "SentencePiece",
+                "Character-level"
+              ],
+              "correct": 1,
+              "explanation": "GPT-2 uses Byte Pair Encoding (BPE), which iteratively merges the most frequent character pairs to build a vocabulary of subword units."
+            },
+            {
+              "question": "Which metric is most appropriate for evaluating machine translation?",
+              "options": [
+                "Accuracy",
+                "F1 Score",
+                "BLEU",
+                "Perplexity"
+              ],
+              "correct": 2,
+              "explanation": "BLEU (Bilingual Evaluation Understudy) measures n-gram precision between generated and reference translations, making it the standard metric for MT."
+            },
+            {
+              "question": "What does the 'temperature' parameter control in text generation?",
+              "options": [
+                "Model size",
+                "Training speed",
+                "Output randomness",
+                "Context length"
+              ],
+              "correct": 2,
+              "explanation": "Temperature controls the randomness of predictions. Lower values (< 1) make output more focused/deterministic, while higher values (> 1) increase diversity and creativity."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

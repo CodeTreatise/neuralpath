@@ -1,0 +1,510 @@
+{
+  "id": "rag-applications",
+  "title": "Building RAG Applications",
+  "icon": "🔗",
+  "description": "Build Retrieval-Augmented Generation apps with LangChain and vector databases.",
+  "level": "advanced",
+  "duration": "4 weeks",
+  "totalLessons": 18,
+  "prerequisites": ["Python Fundamentals", "LLM Basics"],
+  "outcomes": [
+    "Understand RAG architecture and components",
+    "Build production-ready RAG applications",
+    "Implement advanced retrieval strategies",
+    "Optimize RAG performance"
+  ],
+  "modules": [
+    {
+      "title": "RAG Fundamentals",
+      "description": "Understanding RAG architecture",
+      "lessons": [
+        {
+          "id": "what-is-rag",
+          "title": "What is RAG and Why Use It?",
+          "type": "lesson",
+          "duration": "15 min",
+          "content": {
+            "overview": "Retrieval-Augmented Generation (RAG) combines the power of LLMs with external knowledge retrieval to produce accurate, up-to-date responses.",
+            "sections": [
+              {
+                "title": "The Problem RAG Solves",
+                "content": "LLMs have limitations:\n\n**Knowledge Cutoff**: Training data has a date limit\n**Hallucinations**: Can generate plausible but false information\n**No Private Data**: Cannot access your documents\n**Static Knowledge**: Cannot update without retraining\n\nRAG addresses all of these by retrieving relevant context at query time."
+              },
+              {
+                "title": "RAG Architecture",
+                "content": "The RAG pipeline has three main stages:\n\n1. **Indexing**: Documents are chunked, embedded, and stored\n2. **Retrieval**: Query is embedded and similar chunks are found\n3. **Generation**: Retrieved context + query are sent to LLM",
+                "diagram": {
+                  "title": "RAG Pipeline Overview",
+                  "code": "flowchart LR\n    subgraph Indexing[\"1. Indexing\"]\n        D[Documents] --> C[Chunking]\n        C --> E[Embedding]\n        E --> V[(Vector DB)]\n    end\n    \n    subgraph Retrieval[\"2. Retrieval\"]\n        Q[Query] --> QE[Query Embed]\n        QE --> S{Similarity Search}\n        V --> S\n        S --> R[Top-K Chunks]\n    end\n    \n    subgraph Generation[\"3. Generation\"]\n        R --> P[Prompt + Context]\n        Q --> P\n        P --> LLM[LLM]\n        LLM --> A[Answer]\n    end"
+                },
+                "code": "# Simple RAG with LangChain\nfrom langchain.embeddings import OpenAIEmbeddings\nfrom langchain.vectorstores import Chroma\nfrom langchain.chat_models import ChatOpenAI\nfrom langchain.chains import RetrievalQA\n\n# 1. Create embeddings and vector store\nembeddings = OpenAIEmbeddings()\nvectorstore = Chroma.from_documents(\n    documents=docs,\n    embedding=embeddings\n)\n\n# 2. Create retriever\nretriever = vectorstore.as_retriever(\n    search_kwargs={\"k\": 4}\n)\n\n# 3. Create RAG chain\nllm = ChatOpenAI(model=\"gpt-4\")\nrag_chain = RetrievalQA.from_chain_type(\n    llm=llm,\n    retriever=retriever,\n    return_source_documents=True\n)\n\n# Query\nresult = rag_chain({\"query\": \"What is our refund policy?\"})\nprint(result[\"result\"])"
+              }
+            ],
+            "keyTakeaways": [
+              "RAG grounds LLM responses in your data",
+              "Three stages: Index, Retrieve, Generate",
+              "Reduces hallucinations and enables private knowledge"
+            ]
+          }
+        },
+        {
+          "id": "embeddings",
+          "title": "Text Embeddings Explained",
+          "type": "lesson",
+          "duration": "20 min",
+          "content": {
+            "overview": "Embeddings are dense vector representations of text that capture semantic meaning.",
+            "sections": [
+              {
+                "title": "What Are Embeddings?",
+                "content": "Embeddings convert text into numerical vectors where:\n\n- Similar meanings = Close vectors\n- Different meanings = Distant vectors\n\nThis enables semantic search rather than keyword matching.",
+                "diagram": {
+                  "title": "Embedding Space Visualization",
+                  "code": "flowchart TB\n    subgraph Vector[\"Embedding Space\"]\n        direction TB\n        K[king] --> |\"- man + woman\"| Q[queen]\n        M[man] -.-> W[woman]\n        C[cat] --> |\"similar\"| D[dog]\n        C -.-> |\"distant\"| CAR[car]\n    end\n    \n    T[\"Text: 'king'\"] --> |Embed| V1[\"[0.2, -0.5, 0.8, ...]\"]\n    V1 --> Vector"
+                }
+              },
+              {
+                "title": "Embedding Models",
+                "code": "# OpenAI Embeddings\nfrom langchain.embeddings import OpenAIEmbeddings\nembeddings = OpenAIEmbeddings(model=\"text-embedding-3-small\")\n\n# Open-source alternatives\nfrom langchain.embeddings import HuggingFaceEmbeddings\nembeddings = HuggingFaceEmbeddings(\n    model_name=\"sentence-transformers/all-MiniLM-L6-v2\"\n)\n\n# Generate embeddings\ntext = \"The quick brown fox\"\nvector = embeddings.embed_query(text)\nprint(f\"Dimensions: {len(vector)}\")  # 1536 for OpenAI"
+              }
+            ],
+            "keyTakeaways": [
+              "Embeddings capture semantic meaning as vectors",
+              "Similar texts have similar vectors",
+              "Choose embedding model based on use case"
+            ]
+          }
+        },
+        {
+          "id": "vector-dbs",
+          "title": "Vector Databases Overview",
+          "type": "lesson",
+          "duration": "20 min",
+          "content": {
+            "overview": "Vector databases are optimized for storing and searching embedding vectors efficiently.",
+            "sections": [
+              {
+                "title": "Why Vector Databases?",
+                "content": "Regular databases cannot efficiently search by semantic similarity. Vector databases:\n\n- Index high-dimensional vectors\n- Find nearest neighbors quickly\n- Scale to millions of vectors\n- Support metadata filtering"
+              },
+              {
+                "title": "Popular Vector DBs",
+                "code": "# Chroma - Simple, local-first\nfrom langchain.vectorstores import Chroma\ndb = Chroma.from_documents(docs, embeddings, persist_directory=\"./chroma_db\")\n\n# Pinecone - Managed, scalable\nfrom langchain.vectorstores import Pinecone\nimport pinecone\npinecone.init(api_key=\"xxx\", environment=\"us-west1-gcp\")\ndb = Pinecone.from_documents(docs, embeddings, index_name=\"my-index\")\n\n# Weaviate - Open source, feature-rich\nfrom langchain.vectorstores import Weaviate\nimport weaviate\nclient = weaviate.Client(url=\"http://localhost:8080\")\ndb = Weaviate.from_documents(docs, embeddings, client=client)"
+              }
+            ],
+            "keyTakeaways": [
+              "Vector DBs enable fast similarity search",
+              "Choose based on scale, cost, and features",
+              "Chroma is great for development, Pinecone for production"
+            ]
+          }
+        },
+        {
+          "id": "architecture",
+          "title": "RAG Architecture Patterns",
+          "type": "lesson",
+          "duration": "15 min",
+          "content": {
+            "overview": "Different RAG architectures for different use cases.",
+            "sections": [
+              {
+                "title": "Naive RAG",
+                "content": "The simplest RAG pattern:\n\n1. Embed query\n2. Find top-k similar chunks\n3. Send chunks + query to LLM\n\nWorks for simple Q&A but has limitations."
+              },
+              {
+                "title": "Advanced RAG Patterns",
+                "content": "**Sentence Window**: Retrieve small chunks, expand context\n**Auto-Merging**: Retrieve children, include parents\n**Hypothetical Embeddings (HyDE)**: Generate hypothetical answer, use its embedding\n**Self-Query**: LLM generates metadata filters\n**Multi-Index**: Different indexes for different doc types"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Building with LangChain",
+      "description": "Implement RAG using LangChain",
+      "lessons": [
+        {
+          "id": "langchain-intro",
+          "title": "LangChain Introduction",
+          "type": "lesson",
+          "duration": "15 min",
+          "content": {
+            "overview": "LangChain is a framework for building LLM applications with composable components.",
+            "sections": [
+              {
+                "title": "Core Concepts",
+                "content": "LangChain provides:\n\n- **Models**: Wrappers for LLMs and embeddings\n- **Prompts**: Templates and management\n- **Chains**: Sequences of operations\n- **Agents**: LLMs that use tools\n- **Memory**: Conversation state\n- **Retrievers**: Document retrieval"
+              },
+              {
+                "title": "Basic Chain",
+                "code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.prompts import ChatPromptTemplate\nfrom langchain.schema.output_parser import StrOutputParser\n\n# Modern LCEL (LangChain Expression Language)\nprompt = ChatPromptTemplate.from_template(\n    \"Explain {topic} in simple terms\"\n)\nmodel = ChatOpenAI(model=\"gpt-4\")\nparser = StrOutputParser()\n\nchain = prompt | model | parser\n\nresult = chain.invoke({\"topic\": \"quantum computing\"})\nprint(result)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "document-loaders",
+          "title": "Document Loaders and Splitters",
+          "type": "lesson",
+          "duration": "20 min",
+          "content": {
+            "overview": "Loading and chunking documents properly is critical for RAG quality.",
+            "sections": [
+              {
+                "title": "Document Loaders",
+                "code": "from langchain.document_loaders import (\n    PyPDFLoader,\n    TextLoader,\n    WebBaseLoader,\n    DirectoryLoader\n)\n\n# Load PDF\nloader = PyPDFLoader(\"document.pdf\")\ndocs = loader.load()\n\n# Load website\nloader = WebBaseLoader(\"https://example.com\")\ndocs = loader.load()\n\n# Load directory\nloader = DirectoryLoader(\"./docs\", glob=\"**/*.md\")\ndocs = loader.load()"
+              },
+              {
+                "title": "Text Splitters",
+                "code": "from langchain.text_splitter import RecursiveCharacterTextSplitter\n\nsplitter = RecursiveCharacterTextSplitter(\n    chunk_size=1000,\n    chunk_overlap=200,\n    separators=[\"\\n\\n\", \"\\n\", \". \", \" \"]\n)\n\nchunks = splitter.split_documents(docs)\nprint(f\"Created {len(chunks)} chunks\")"
+              }
+            ]
+          }
+        },
+        {
+          "id": "retrievers",
+          "title": "Creating Retrievers",
+          "type": "lesson",
+          "duration": "20 min",
+          "content": {
+            "overview": "Retrievers find the most relevant documents for a given query.",
+            "sections": [
+              {
+                "title": "Basic Retriever",
+                "code": "# Vector store retriever\nretriever = vectorstore.as_retriever(\n    search_type=\"similarity\",\n    search_kwargs={\"k\": 4}\n)\n\n# Get relevant docs\ndocs = retriever.get_relevant_documents(\"What is the return policy?\")"
+              },
+              {
+                "title": "Advanced Retrievers",
+                "code": "# Multi-Query Retriever - generates multiple queries\nfrom langchain.retrievers import MultiQueryRetriever\nretriever = MultiQueryRetriever.from_llm(\n    retriever=base_retriever,\n    llm=llm\n)\n\n# Contextual Compression - filters results\nfrom langchain.retrievers import ContextualCompressionRetriever\nfrom langchain.retrievers.document_compressors import LLMChainExtractor\n\ncompressor = LLMChainExtractor.from_llm(llm)\nretriever = ContextualCompressionRetriever(\n    base_compressor=compressor,\n    base_retriever=base_retriever\n)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "rag-chains",
+          "title": "Building RAG Chains",
+          "type": "hands-on",
+          "duration": "30 min",
+          "content": {
+            "overview": "Putting it all together into a complete RAG application.",
+            "sections": [
+              {
+                "title": "Complete RAG Chain",
+                "code": "from langchain.chat_models import ChatOpenAI\nfrom langchain.prompts import ChatPromptTemplate\nfrom langchain.schema.runnable import RunnablePassthrough\nfrom langchain.schema.output_parser import StrOutputParser\n\n# RAG prompt\ntemplate = \"\"\"Answer based on the following context:\n\nContext: {context}\n\nQuestion: {question}\n\nAnswer:\"\"\"\n\nprompt = ChatPromptTemplate.from_template(template)\nmodel = ChatOpenAI(model=\"gpt-4\")\n\n# Format docs\ndef format_docs(docs):\n    return \"\\n\\n\".join(d.page_content for d in docs)\n\n# RAG chain with LCEL\nrag_chain = (\n    {\"context\": retriever | format_docs, \"question\": RunnablePassthrough()}\n    | prompt\n    | model\n    | StrOutputParser()\n)\n\n# Query\nresult = rag_chain.invoke(\"What is the refund policy?\")\nprint(result)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Advanced Retrieval",
+      "description": "Improve retrieval quality with advanced techniques",
+      "lessons": [
+        {
+          "id": "chunking-strategies",
+          "title": "Advanced Chunking Strategies",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Chunking strategy dramatically affects RAG quality. Learn advanced techniques beyond simple text splitting.",
+            "sections": [
+              {
+                "title": "Semantic Chunking",
+                "content": "**Problems with Fixed-Size Chunks**\n- Breaks context mid-sentence\n- Ignores document structure\n- Loses relationships between sections\n\n**Semantic Chunking Approaches**\n- Split by sentence/paragraph boundaries\n- Use heading structure for documents\n- Cluster similar sentences together\n- Consider topic boundaries",
+                "code": "from langchain.text_splitter import (\n    RecursiveCharacterTextSplitter,\n    MarkdownHeaderTextSplitter,\n    SemanticChunker\n)\nfrom langchain.embeddings import OpenAIEmbeddings\n\n# Markdown-aware splitting\nmd_splitter = MarkdownHeaderTextSplitter(\n    headers_to_split_on=[\n        (\"#\", \"Header 1\"),\n        (\"##\", \"Header 2\"),\n        (\"###\", \"Header 3\")\n    ]\n)\nmd_chunks = md_splitter.split_text(markdown_doc)\n\n# Semantic chunking based on embedding similarity\nsemantic_chunker = SemanticChunker(\n    embeddings=OpenAIEmbeddings(),\n    breakpoint_threshold_type=\"percentile\",\n    breakpoint_threshold_amount=95\n)\nsemantic_chunks = semantic_chunker.split_text(text)"
+              },
+              {
+                "title": "Parent-Child Chunking",
+                "content": "Store small chunks for precise retrieval, but return larger parent context.",
+                "code": "from langchain.retrievers import ParentDocumentRetriever\nfrom langchain.storage import InMemoryStore\n\n# Small chunks for retrieval\nchild_splitter = RecursiveCharacterTextSplitter(\n    chunk_size=400,\n    chunk_overlap=50\n)\n\n# Large chunks for context\nparent_splitter = RecursiveCharacterTextSplitter(\n    chunk_size=2000,\n    chunk_overlap=200\n)\n\n# Store parent docs\ndocstore = InMemoryStore()\n\nretriever = ParentDocumentRetriever(\n    vectorstore=vectorstore,\n    docstore=docstore,\n    child_splitter=child_splitter,\n    parent_splitter=parent_splitter\n)\n\n# Add documents\nretriever.add_documents(docs)\n\n# Retrieves parent chunks based on child matches\nresults = retriever.get_relevant_documents(\"What is the policy?\")"
+              }
+            ],
+            "keyTakeaways": [
+              "Chunking strategy is crucial for RAG quality",
+              "Respect document structure when chunking",
+              "Parent-child retrieval balances precision and context",
+              "Experiment with chunk sizes for your use case"
+            ]
+          }
+        },
+        {
+          "id": "hybrid-search",
+          "title": "Hybrid Search Strategies",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Combine semantic and keyword search for better retrieval across different query types.",
+            "sections": [
+              {
+                "title": "Why Hybrid Search?",
+                "content": "**Semantic Search Strengths**\n- Understands meaning and context\n- Handles synonyms and paraphrasing\n- Works across languages\n\n**Semantic Search Weaknesses**\n- May miss exact terms (product codes, names)\n- Can be confused by rare words\n- Computationally expensive\n\n**Keyword Search Strengths**\n- Precise for exact matches\n- Fast and efficient\n- Handles rare/technical terms\n\n**Hybrid = Best of Both Worlds**"
+              },
+              {
+                "title": "Implementing Hybrid Search",
+                "code": "from langchain.retrievers import BM25Retriever, EnsembleRetriever\n\n# Semantic retriever (vector search)\nvector_retriever = vectorstore.as_retriever(search_kwargs={\"k\": 4})\n\n# Keyword retriever (BM25)\nbm25_retriever = BM25Retriever.from_documents(docs)\nbm25_retriever.k = 4\n\n# Combine with ensemble\nensemble_retriever = EnsembleRetriever(\n    retrievers=[vector_retriever, bm25_retriever],\n    weights=[0.5, 0.5]  # Equal weights\n)\n\n# Or use reciprocal rank fusion\nfrom langchain.retrievers import RRFRetriever\n\nrrf_retriever = RRFRetriever(\n    retrievers=[vector_retriever, bm25_retriever],\n    c=60  # RRF constant\n)\n\nresults = ensemble_retriever.get_relevant_documents(\"SKU-12345\")"
+              },
+              {
+                "title": "Weaviate Hybrid Search",
+                "code": "import weaviate\n\nclient = weaviate.Client(url=\"http://localhost:8080\")\n\n# Hybrid query with alpha parameter\n# alpha=1.0: pure vector, alpha=0.0: pure keyword\nresult = client.query.get(\n    \"Document\",\n    [\"content\", \"title\"]\n).with_hybrid(\n    query=\"machine learning fundamentals\",\n    alpha=0.75  # 75% vector, 25% keyword\n).with_limit(5).do()"
+              }
+            ],
+            "keyTakeaways": [
+              "Semantic search misses exact terms",
+              "BM25 provides strong keyword matching",
+              "Hybrid search handles diverse query types",
+              "Tune weights based on your use case"
+            ]
+          }
+        },
+        {
+          "id": "reranking",
+          "title": "Reranking for Better Results",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Reranking uses a more powerful model to reorder retrieved results for higher relevance.",
+            "sections": [
+              {
+                "title": "Why Rerank?",
+                "content": "**Two-Stage Retrieval**\n1. **First Stage**: Fast retrieval of top-100 candidates\n   - Embedding similarity or BM25\n   - Optimized for speed\n2. **Second Stage**: Accurate reranking of candidates\n   - Cross-encoder or LLM\n   - Optimized for quality\n\n**Cross-Encoders vs Bi-Encoders**\n- Bi-encoder: Embed query and doc separately (fast)\n- Cross-encoder: Process query+doc together (accurate)"
+              },
+              {
+                "title": "Implementing Reranking",
+                "code": "from langchain.retrievers import ContextualCompressionRetriever\nfrom langchain.retrievers.document_compressors import CrossEncoderReranker\nfrom langchain_community.cross_encoders import HuggingFaceCrossEncoder\n\n# Cross-encoder reranker\nreranker = HuggingFaceCrossEncoder(\n    model_name=\"cross-encoder/ms-marco-MiniLM-L-6-v2\"\n)\ncompressor = CrossEncoderReranker(\n    model=reranker,\n    top_n=5  # Return top 5 after reranking\n)\n\n# Wrap the base retriever\nreranking_retriever = ContextualCompressionRetriever(\n    base_compressor=compressor,\n    base_retriever=base_retriever  # Retrieves 20 candidates\n)\n\nresults = reranking_retriever.get_relevant_documents(query)"
+              },
+              {
+                "title": "Cohere Rerank",
+                "code": "from langchain.retrievers.document_compressors import CohereRerank\nfrom langchain.retrievers import ContextualCompressionRetriever\n\n# Cohere's powerful reranker\ncompressor = CohereRerank(\n    model=\"rerank-english-v3.0\",\n    top_n=5\n)\n\nreranking_retriever = ContextualCompressionRetriever(\n    base_compressor=compressor,\n    base_retriever=base_retriever\n)\n\n# Significant quality improvement for minimal latency cost"
+              }
+            ],
+            "keyTakeaways": [
+              "Reranking significantly improves result quality",
+              "Cross-encoders are more accurate than bi-encoders",
+              "Retrieve many candidates, rerank to top-k",
+              "Cohere Rerank offers production-ready solution"
+            ]
+          }
+        },
+        {
+          "id": "query-transformation",
+          "title": "Query Transformation Techniques",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Transform user queries to improve retrieval quality through expansion, decomposition, and reformulation.",
+            "sections": [
+              {
+                "title": "Multi-Query Retrieval",
+                "content": "Generate multiple perspectives of the query to improve recall.",
+                "code": "from langchain.retrievers import MultiQueryRetriever\nfrom langchain.chat_models import ChatOpenAI\n\nllm = ChatOpenAI(temperature=0)\n\nmulti_query_retriever = MultiQueryRetriever.from_llm(\n    retriever=base_retriever,\n    llm=llm\n)\n\n# Generates multiple query versions:\n# Original: \"What are the side effects?\"\n# Generated:\n# - \"What adverse reactions can occur?\"\n# - \"List negative effects and symptoms\"\n# - \"What problems may patients experience?\"\n\nresults = multi_query_retriever.get_relevant_documents(\n    \"What are the side effects?\"\n)"
+              },
+              {
+                "title": "HyDE (Hypothetical Document Embeddings)",
+                "content": "Generate a hypothetical answer, then use its embedding for retrieval.",
+                "code": "from langchain.chains import HypotheticalDocumentEmbedder\nfrom langchain.embeddings import OpenAIEmbeddings\nfrom langchain.chat_models import ChatOpenAI\n\nbase_embeddings = OpenAIEmbeddings()\nllm = ChatOpenAI(temperature=0)\n\n# HyDE embeddings\nhyde_embeddings = HypotheticalDocumentEmbedder.from_llm(\n    llm=llm,\n    base_embeddings=base_embeddings,\n    prompt_key=\"web_search\"  # or \"question_answer\"\n)\n\n# Query: \"What is photosynthesis?\"\n# HyDE generates: \"Photosynthesis is the process by which plants...\"\n# Then uses that text's embedding for retrieval\n\nvectorstore = Chroma.from_documents(docs, hyde_embeddings)\nresults = vectorstore.similarity_search(\"What is photosynthesis?\")"
+              },
+              {
+                "title": "Step-Back Prompting",
+                "content": "Ask a more general question first, then use that context.",
+                "code": "from langchain.prompts import ChatPromptTemplate\n\n# Step-back: Get broader context first\nstep_back_prompt = ChatPromptTemplate.from_template(\n    \"\"\"Generate a more general question that would help answer: {question}\n    General question:\"\"\"\n)\n\nasync def step_back_rag(question):\n    # Generate step-back question\n    general_q = await (step_back_prompt | llm).ainvoke({\"question\": question})\n    \n    # Retrieve for both questions\n    specific_docs = await retriever.aget_relevant_documents(question)\n    general_docs = await retriever.aget_relevant_documents(general_q)\n    \n    # Combine context\n    all_docs = specific_docs + general_docs\n    \n    # Generate answer with broader context\n    return await rag_chain.ainvoke({\"context\": all_docs, \"question\": question})"
+              }
+            ],
+            "keyTakeaways": [
+              "Query transformation improves recall",
+              "Multi-query captures different perspectives",
+              "HyDE works well for complex queries",
+              "Step-back provides broader context"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Production RAG",
+      "description": "Deploy and optimize RAG systems for production",
+      "lessons": [
+        {
+          "id": "rag-evaluation",
+          "title": "Evaluating RAG Systems",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Systematic evaluation is critical for improving RAG quality. Learn metrics and frameworks for assessment.",
+            "sections": [
+              {
+                "title": "RAG Evaluation Metrics",
+                "content": "**Retrieval Metrics**\n- **Precision@k**: Relevant docs in top-k / k\n- **Recall@k**: Relevant docs in top-k / total relevant\n- **MRR**: Mean Reciprocal Rank of first relevant\n- **NDCG**: Normalized discounted cumulative gain\n\n**Generation Metrics**\n- **Faithfulness**: Is answer supported by context?\n- **Relevance**: Does answer address the question?\n- **Completeness**: Are all aspects covered?\n- **Coherence**: Is the answer well-structured?"
+              },
+              {
+                "title": "RAGAS Framework",
+                "code": "from ragas import evaluate\nfrom ragas.metrics import (\n    faithfulness,\n    answer_relevancy,\n    context_precision,\n    context_recall\n)\nfrom datasets import Dataset\n\n# Prepare evaluation data\neval_data = {\n    \"question\": questions,\n    \"answer\": generated_answers,\n    \"contexts\": [[ctx] for ctx in retrieved_contexts],\n    \"ground_truth\": ground_truth_answers\n}\n\ndataset = Dataset.from_dict(eval_data)\n\n# Evaluate\nresults = evaluate(\n    dataset,\n    metrics=[\n        faithfulness,      # Is answer grounded in context?\n        answer_relevancy,  # Is answer relevant to question?\n        context_precision, # Are retrieved docs relevant?\n        context_recall     # Did we retrieve needed info?\n    ]\n)\n\nprint(results)\n# {'faithfulness': 0.87, 'answer_relevancy': 0.92, ...}"
+              },
+              {
+                "title": "LLM-as-Judge Evaluation",
+                "code": "from langchain.evaluation import load_evaluator\n\n# Criteria-based evaluation\nevaluator = load_evaluator(\n    \"criteria\",\n    criteria=\"correctness\"\n)\n\nresult = evaluator.evaluate_strings(\n    prediction=\"The capital of France is Paris.\",\n    reference=\"Paris is the capital of France.\",\n    input=\"What is the capital of France?\"\n)\n\nprint(result[\"score\"])  # 1.0 = correct\n\n# Custom criteria\ncustom_evaluator = load_evaluator(\n    \"criteria\",\n    criteria={\n        \"factual\": \"Is the answer factually accurate based on the context?\",\n        \"complete\": \"Does the answer fully address the question?\"\n    }\n)"
+              }
+            ],
+            "keyTakeaways": [
+              "Evaluate retrieval and generation separately",
+              "RAGAS provides comprehensive RAG evaluation",
+              "LLM-as-judge scales evaluation effectively",
+              "Create domain-specific evaluation datasets"
+            ]
+          }
+        },
+        {
+          "id": "rag-optimization",
+          "title": "RAG Performance Optimization",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Optimize RAG for speed, cost, and quality in production environments.",
+            "sections": [
+              {
+                "title": "Latency Optimization",
+                "content": "**Retrieval Speed**\n- Pre-compute and cache embeddings\n- Use approximate nearest neighbor (ANN)\n- Reduce embedding dimensions\n- Limit top-k to what's needed\n\n**Generation Speed**\n- Use faster models for simple queries\n- Stream responses\n- Cache common query results\n- Batch similar requests"
+              },
+              {
+                "title": "Caching Strategies",
+                "code": "import hashlib\nfrom functools import lru_cache\nimport redis\n\n# Redis cache for embeddings\nredis_client = redis.Redis(host='localhost', port=6379)\n\ndef get_embedding_cached(text: str):\n    cache_key = f\"emb:{hashlib.md5(text.encode()).hexdigest()}\"\n    \n    # Check cache\n    cached = redis_client.get(cache_key)\n    if cached:\n        return json.loads(cached)\n    \n    # Generate and cache\n    embedding = embeddings.embed_query(text)\n    redis_client.setex(\n        cache_key, \n        3600,  # 1 hour TTL\n        json.dumps(embedding)\n    )\n    return embedding\n\n# Semantic cache for similar queries\nclass SemanticCache:\n    def __init__(self, vectorstore, threshold=0.95):\n        self.cache_store = vectorstore\n        self.threshold = threshold\n    \n    def get_or_compute(self, query, compute_fn):\n        # Search for similar cached queries\n        results = self.cache_store.similarity_search_with_score(\n            query, k=1\n        )\n        \n        if results and results[0][1] > self.threshold:\n            return results[0][0].metadata['response']\n        \n        # Compute and cache\n        response = compute_fn(query)\n        self.cache_store.add_documents([Document(\n            page_content=query,\n            metadata={'response': response}\n        )])\n        return response"
+              },
+              {
+                "title": "Cost Optimization",
+                "code": "class CostOptimizedRAG:\n    def __init__(self):\n        self.fast_model = ChatOpenAI(model=\"gpt-3.5-turbo\")\n        self.quality_model = ChatOpenAI(model=\"gpt-4\")\n        self.classifier = ChatOpenAI(model=\"gpt-3.5-turbo\")\n    \n    def query(self, question, context):\n        # Classify query complexity\n        complexity = self._classify_complexity(question)\n        \n        if complexity == \"simple\":\n            # Use faster, cheaper model\n            return self.fast_model.invoke(\n                self._build_prompt(question, context)\n            )\n        else:\n            # Use more capable model\n            return self.quality_model.invoke(\n                self._build_prompt(question, context)\n            )\n    \n    def _classify_complexity(self, question):\n        response = self.classifier.invoke(\n            f\"Classify this question as 'simple' or 'complex': {question}\"\n        )\n        return \"simple\" if \"simple\" in response.content.lower() else \"complex\""
+              }
+            ],
+            "keyTakeaways": [
+              "Cache embeddings and common queries",
+              "Use model routing for cost efficiency",
+              "Stream responses for perceived speed",
+              "Monitor and optimize hot paths"
+            ]
+          }
+        },
+        {
+          "id": "rag-production",
+          "title": "Production Deployment",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Deploy RAG applications with proper infrastructure, monitoring, and reliability patterns.",
+            "sections": [
+              {
+                "title": "RAG API Architecture",
+                "diagram": {
+                  "title": "RAG API Architecture",
+                  "code": "flowchart TB\n    Client[Client App] --> API[FastAPI Gateway]\n    \n    subgraph Service[\"RAG Service\"]\n        API --> Val[Validation]\n        Val --> Ret[Retriever]\n        Ret -->|Query| VecDB[(Vector DB)]\n        VecDB -->|Docs| Ret\n        Ret --> Gen[LLM Generator]\n        Gen -->|Response| API\n    end\n    \n    subgraph Ops[\"Observability\"]\n        Log[Logger]\n        Met[Prometheus]\n        Trace[LangSmith]\n    end\n    \n    API -.-> Log\n    API -.-> Met\n    Gen -.-> Trace\n    \n    style Client fill:#fff,stroke:#333\n    style Service fill:#dbeafe,stroke:#2563eb\n    style Ops fill:#fce7f3,stroke:#db2777"
+                },
+                "code": "from fastapi import FastAPI, HTTPException\nfrom pydantic import BaseModel\nimport logging\n\napp = FastAPI()\nlogger = logging.getLogger(__name__)\n\nclass Query(BaseModel):\n    question: str\n    filters: dict = None\n    top_k: int = 5\n\nclass RAGResponse(BaseModel):\n    answer: str\n    sources: list\n    confidence: float\n\n@app.post(\"/query\", response_model=RAGResponse)\nasync def query_rag(query: Query):\n    try:\n        # 1. Retrieve documents\n        docs = await retriever.aget_relevant_documents(\n            query.question,\n            filter=query.filters,\n            k=query.top_k\n        )\n        \n        # 2. Generate response\n        response = await rag_chain.ainvoke({\n            \"question\": query.question,\n            \"context\": docs\n        })\n        \n        # 3. Return with sources\n        return RAGResponse(\n            answer=response,\n            sources=[d.metadata.get('source') for d in docs],\n            confidence=calculate_confidence(docs)\n        )\n    except Exception as e:\n        logger.error(f\"RAG error: {e}\")\n        raise HTTPException(500, \"Failed to process query\")"
+              },
+              {
+                "title": "Monitoring & Observability",
+                "code": "from langsmith import Client\nfrom opentelemetry import trace\nimport prometheus_client as prom\n\n# Prometheus metrics\nquery_counter = prom.Counter('rag_queries_total', 'Total RAG queries')\nlatency_histogram = prom.Histogram(\n    'rag_latency_seconds', \n    'RAG query latency',\n    buckets=[0.1, 0.5, 1, 2, 5, 10]\n)\nretrieval_docs = prom.Histogram(\n    'rag_retrieved_docs',\n    'Number of docs retrieved'\n)\n\n# LangSmith for LLM tracing\nclient = Client()\n\n@trace_decorator\ndef monitored_rag_query(question: str):\n    query_counter.inc()\n    \n    with latency_histogram.time():\n        # Retrieval\n        docs = retriever.get_relevant_documents(question)\n        retrieval_docs.observe(len(docs))\n        \n        # Generation with tracing\n        with client.trace(name=\"rag_generation\") as t:\n            t.log_inputs({\"question\": question, \"num_docs\": len(docs)})\n            response = rag_chain.invoke({\"question\": question, \"context\": docs})\n            t.log_outputs({\"response\": response})\n        \n        return response"
+              },
+              {
+                "title": "Error Handling & Fallbacks",
+                "code": "class ResilientRAG:\n    def __init__(self, primary_retriever, fallback_retriever):\n        self.primary = primary_retriever\n        self.fallback = fallback_retriever\n        self.circuit_breaker = CircuitBreaker(failure_threshold=5)\n    \n    async def query(self, question: str) -> str:\n        try:\n            # Try primary with circuit breaker\n            if self.circuit_breaker.is_open:\n                return await self._use_fallback(question)\n            \n            docs = await asyncio.wait_for(\n                self.primary.aget_relevant_documents(question),\n                timeout=5.0\n            )\n            \n            if not docs:\n                return await self._use_fallback(question)\n            \n            return await self._generate(question, docs)\n            \n        except asyncio.TimeoutError:\n            self.circuit_breaker.record_failure()\n            return await self._use_fallback(question)\n        except Exception as e:\n            logger.error(f\"Primary failed: {e}\")\n            return await self._use_fallback(question)\n    \n    async def _use_fallback(self, question: str) -> str:\n        docs = await self.fallback.aget_relevant_documents(question)\n        if not docs:\n            return \"I couldn't find relevant information to answer your question.\"\n        return await self._generate(question, docs)"
+              }
+            ],
+            "keyTakeaways": [
+              "Build RAG as a proper API service",
+              "Monitor latency, throughput, and quality",
+              "Implement circuit breakers and fallbacks",
+              "Use LangSmith/similar for LLM observability"
+            ]
+          }
+        },
+        {
+          "id": "conversational-rag",
+          "title": "Conversational RAG",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Build RAG systems that maintain conversation context and handle follow-up questions.",
+            "sections": [
+              {
+                "title": "Chat History Integration",
+                "code": "from langchain.memory import ConversationBufferWindowMemory\nfrom langchain.chains import ConversationalRetrievalChain\n\n# Memory to store conversation\nmemory = ConversationBufferWindowMemory(\n    k=5,  # Keep last 5 exchanges\n    memory_key=\"chat_history\",\n    return_messages=True,\n    output_key=\"answer\"\n)\n\n# Conversational RAG chain\nconvo_rag = ConversationalRetrievalChain.from_llm(\n    llm=ChatOpenAI(model=\"gpt-4\"),\n    retriever=retriever,\n    memory=memory,\n    return_source_documents=True,\n    verbose=True\n)\n\n# Multi-turn conversation\nq1 = convo_rag({\"question\": \"What is the return policy?\"})\nprint(q1[\"answer\"])\n\nq2 = convo_rag({\"question\": \"What about electronics?\"})  # Uses context\nprint(q2[\"answer\"])\n\nq3 = convo_rag({\"question\": \"How long do I have?\"})  # Continues topic\nprint(q3[\"answer\"])"
+              },
+              {
+                "title": "Query Contextualization",
+                "code": "from langchain.prompts import ChatPromptTemplate\n\n# Reformulate question with chat history\ncontextualize_prompt = ChatPromptTemplate.from_messages([\n    (\"system\", \"\"\"Given a chat history and the latest user question, \n    reformulate the question to be standalone (understandable without history).\n    Do NOT answer the question, just reformulate it if needed.\"\"\"),\n    (\"placeholder\", \"{chat_history}\"),\n    (\"human\", \"{question}\")\n])\n\ndef get_standalone_question(question, chat_history):\n    if not chat_history:\n        return question\n    \n    response = llm.invoke(\n        contextualize_prompt.format(\n            chat_history=chat_history,\n            question=question\n        )\n    )\n    return response.content\n\n# Example:\n# History: \"What is the return policy?\" -> \"You have 30 days...\"\n# Question: \"What about electronics?\"\n# Standalone: \"What is the return policy for electronics?\""
+              }
+            ],
+            "keyTakeaways": [
+              "Conversational RAG requires query contextualization",
+              "Reformulate follow-up questions to be standalone",
+              "Limit history window to control context size",
+              "Track conversation state for coherent responses"
+            ]
+          }
+        },
+        {
+          "id": "rag-project",
+          "title": "Capstone: Production RAG System",
+          "type": "project",
+          "duration": "90 min",
+          "content": {
+            "overview": "Build a complete production-ready RAG system with advanced retrieval, evaluation, and monitoring.",
+            "sections": [
+              {
+                "title": "Project: Document Q&A System",
+                "content": "**Objective**: Build a production RAG system for technical documentation.\n\n**Requirements**:\n1. Ingest markdown/PDF documentation\n2. Implement hybrid search with reranking\n3. Support conversational queries\n4. Add source attribution\n5. Include evaluation pipeline\n6. Deploy as API with monitoring\n\n**Deliverables**:\n- Working API endpoint\n- Evaluation results on test set\n- Monitoring dashboard\n- Documentation"
+              },
+              {
+                "title": "Implementation Guide",
+                "code": "# Complete Production RAG System\n\nfrom langchain.document_loaders import DirectoryLoader\nfrom langchain.text_splitter import RecursiveCharacterTextSplitter\nfrom langchain.embeddings import OpenAIEmbeddings\nfrom langchain.vectorstores import Chroma\nfrom langchain.retrievers import BM25Retriever, EnsembleRetriever\nfrom langchain.retrievers.document_compressors import CohereRerank\nfrom langchain.retrievers import ContextualCompressionRetriever\nfrom langchain.chains import ConversationalRetrievalChain\nfrom langchain.chat_models import ChatOpenAI\nfrom fastapi import FastAPI\nfrom pydantic import BaseModel\n\nclass ProductionRAG:\n    def __init__(self, docs_path: str):\n        # 1. Load and chunk documents\n        loader = DirectoryLoader(docs_path, glob=\"**/*.md\")\n        docs = loader.load()\n        \n        splitter = RecursiveCharacterTextSplitter(\n            chunk_size=1000,\n            chunk_overlap=200\n        )\n        chunks = splitter.split_documents(docs)\n        \n        # 2. Create vector store\n        embeddings = OpenAIEmbeddings()\n        self.vectorstore = Chroma.from_documents(chunks, embeddings)\n        \n        # 3. Setup hybrid retriever\n        vector_retriever = self.vectorstore.as_retriever(search_kwargs={\"k\": 10})\n        bm25_retriever = BM25Retriever.from_documents(chunks, k=10)\n        \n        ensemble = EnsembleRetriever(\n            retrievers=[vector_retriever, bm25_retriever],\n            weights=[0.6, 0.4]\n        )\n        \n        # 4. Add reranking\n        reranker = CohereRerank(top_n=5)\n        self.retriever = ContextualCompressionRetriever(\n            base_compressor=reranker,\n            base_retriever=ensemble\n        )\n        \n        # 5. Setup conversational chain\n        self.llm = ChatOpenAI(model=\"gpt-4\", temperature=0)\n        self.chain = ConversationalRetrievalChain.from_llm(\n            llm=self.llm,\n            retriever=self.retriever,\n            return_source_documents=True\n        )\n        \n        self.chat_history = []\n    \n    def query(self, question: str):\n        result = self.chain({\n            \"question\": question,\n            \"chat_history\": self.chat_history\n        })\n        \n        self.chat_history.append((question, result[\"answer\"]))\n        \n        return {\n            \"answer\": result[\"answer\"],\n            \"sources\": [doc.metadata for doc in result[\"source_documents\"]]\n        }"
+              }
+            ],
+            "keyTakeaways": [
+              "Production RAG requires multiple components",
+              "Hybrid search + reranking improves quality",
+              "Evaluation is essential for iteration",
+              "Monitoring enables continuous improvement"
+            ]
+          }
+        },
+        {
+          "id": "rag-quiz",
+          "title": "RAG Applications Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is the main purpose of text chunking in RAG?",
+              "options": ["Make files smaller", "Split documents into retrievable units", "Compress data", "Encrypt content"],
+              "correct": 1,
+              "explanation": "Chunking splits documents into smaller pieces that can be individually embedded and retrieved based on relevance to a query."
+            },
+            {
+              "question": "Why use hybrid search in RAG?",
+              "options": ["It's faster", "Combines semantic and keyword matching", "Uses less memory", "Requires no embeddings"],
+              "correct": 1,
+              "explanation": "Hybrid search combines semantic (embedding) search with keyword (BM25) search to handle both conceptual queries and exact term matching."
+            },
+            {
+              "question": "What does a reranker do in RAG?",
+              "options": ["Generates embeddings", "Reorders retrieved results by relevance", "Chunks documents", "Stores vectors"],
+              "correct": 1,
+              "explanation": "A reranker uses a more powerful model (cross-encoder) to reorder initially retrieved candidates by their actual relevance to the query."
+            },
+            {
+              "question": "What is 'faithfulness' in RAG evaluation?",
+              "options": ["Speed of retrieval", "Whether answer is supported by retrieved context", "Number of sources used", "Model temperature"],
+              "correct": 1,
+              "explanation": "Faithfulness measures whether the generated answer is actually supported by and grounded in the retrieved context, avoiding hallucinations."
+            },
+            {
+              "question": "What is HyDE (Hypothetical Document Embeddings)?",
+              "options": ["A vector database", "Generate hypothetical answer, use its embedding for retrieval", "A caching strategy", "A chunking method"],
+              "correct": 1,
+              "explanation": "HyDE generates a hypothetical answer to the query first, then uses that answer's embedding to find similar real documents, often improving retrieval for complex queries."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

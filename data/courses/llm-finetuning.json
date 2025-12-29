@@ -1,0 +1,441 @@
+{
+  "id": "llm-finetuning",
+  "title": "LLM Fine-tuning Mastery",
+  "description": "Customize large language models for your specific use cases",
+  "icon": "\ud83c\udfaf",
+  "level": "advanced",
+  "duration": "6 weeks",
+  "prerequisites": [
+    "Deep learning fundamentals",
+    "PyTorch experience",
+    "Transformer understanding"
+  ],
+  "learningOutcomes": [
+    "Understand when and why to fine-tune LLMs",
+    "Implement LoRA and QLoRA for efficient fine-tuning",
+    "Prepare high-quality instruction datasets",
+    "Evaluate and deploy fine-tuned models"
+  ],
+  "modules": [
+    {
+      "id": "finetuning-fundamentals",
+      "title": "Fine-tuning Fundamentals",
+      "lessons": [
+        {
+          "id": "when-to-finetune",
+          "title": "When and Why to Fine-tune",
+          "duration": "30 min",
+          "content": {
+            "overview": "Fine-tuning adapts a pre-trained LLM to your specific domain or task. But it's not always the right choice\u2014understanding when to fine-tune versus when to use prompt engineering or RAG is crucial for efficient development.",
+            "sections": [
+              {
+                "title": "The Fine-tuning Decision Framework",
+                "content": "Consider fine-tuning when:\n\n**\u2705 Good candidates for fine-tuning**:\n- Need consistent output format/style across many queries\n- Domain-specific terminology or jargon\n- Task requires behavior change (not just knowledge)\n- High-volume production with cost constraints\n- Privacy: Can't send data to external API\n\n**\u274c Consider alternatives first**:\n- Need up-to-date information \u2192 **RAG**\n- Want to add knowledge \u2192 **RAG**\n- One-off customization \u2192 **Prompt engineering**\n- Complex multi-step reasoning \u2192 **Agent systems**\n\n**Cost comparison** (rough estimates):\n| Approach | Setup Cost | Per-query Cost | Flexibility |\n|----------|------------|----------------|-------------|\n| Prompt Engineering | Low | Higher (more tokens) | High |\n| RAG | Medium | Medium | High |\n| Fine-tuning | High | Lower | Low |",
+                "code": "# Decision tree implementation\ndef should_finetune(requirements: dict) -> str:\n    \"\"\"\n    Simple decision framework for fine-tuning.\n    \n    requirements = {\n        'need_current_info': bool,\n        'consistent_format': bool,\n        'domain_specific': bool,\n        'high_volume': bool,\n        'privacy_required': bool,\n        'behavior_change': bool\n    }\n    \"\"\"\n    # RAG is better for knowledge needs\n    if requirements.get('need_current_info'):\n        return \"Use RAG - fine-tuning can't provide current information\"\n    \n    # Strong indicators for fine-tuning\n    finetune_score = sum([\n        requirements.get('consistent_format', False) * 2,\n        requirements.get('domain_specific', False) * 1.5,\n        requirements.get('high_volume', False) * 2,\n        requirements.get('privacy_required', False) * 2,\n        requirements.get('behavior_change', False) * 2\n    ])\n    \n    if finetune_score >= 5:\n        return \"Fine-tuning recommended\"\n    elif finetune_score >= 3:\n        return \"Consider fine-tuning, but start with prompting\"\n    else:\n        return \"Start with prompt engineering or RAG\"\n\n# Example usage\nreqs = {\n    'need_current_info': False,\n    'consistent_format': True,\n    'domain_specific': True,\n    'high_volume': True,\n    'privacy_required': False,\n    'behavior_change': True\n}\n\nprint(should_finetune(reqs))  # \"Fine-tuning recommended\""
+              },
+              {
+                "title": "Types of Fine-tuning",
+                "content": "**Full Fine-tuning**: Update all model parameters\n- Most powerful but expensive\n- Requires significant compute (multiple GPUs)\n- Risk of catastrophic forgetting\n\n**Parameter-Efficient Fine-tuning (PEFT)**: Update only a small subset\n- LoRA, QLoRA, Adapters, Prefix Tuning\n- Can run on consumer hardware\n- Preserves base model capabilities\n\n**Instruction Fine-tuning**: Teach model to follow instructions\n- Most common for LLMs\n- Uses instruction-response pairs\n\n**RLHF/DPO**: Align with human preferences\n- Requires preference data (chosen vs rejected)\n- More complex pipeline",
+                "diagram": {
+                  "title": "Fine-tuning Methods Comparison",
+                  "code": "flowchart LR\n    subgraph Full[\"Full Fine-tuning\"]\n        F1[All Parameters]\n        F2[High Memory]\n        F3[Most Powerful]\n    end\n    \n    subgraph PEFT[\"Parameter Efficient\"]\n        P1[LoRA]\n        P2[QLoRA]\n        P3[Adapters]\n    end\n    \n    subgraph Alignment[\"Alignment\"]\n        A1[RLHF]\n        A2[DPO]\n    end\n    \n    BASE[Base Model] --> Full\n    BASE --> PEFT\n    Full --> Alignment\n    PEFT --> Alignment"
+                },
+                "code": "# Overview of fine-tuning landscape\nFINETUNING_METHODS = {\n    \"full_finetuning\": {\n        \"description\": \"Update all parameters\",\n        \"memory\": \"Very High (8x model size)\",\n        \"examples\": [\"Standard PyTorch training\"],\n        \"when_to_use\": \"Maximum control, large compute budget\"\n    },\n    \"lora\": {\n        \"description\": \"Low-Rank Adaptation - add small trainable matrices\",\n        \"memory\": \"Low (1-2x model size)\",\n        \"examples\": [\"peft\", \"unsloth\"],\n        \"when_to_use\": \"Most common choice, good balance\"\n    },\n    \"qlora\": {\n        \"description\": \"LoRA with 4-bit quantized base model\",\n        \"memory\": \"Very Low (0.5x model size)\",\n        \"examples\": [\"bitsandbytes + peft\"],\n        \"when_to_use\": \"Consumer GPU, limited memory\"\n    },\n    \"prefix_tuning\": {\n        \"description\": \"Learn virtual prefix tokens\",\n        \"memory\": \"Very Low\",\n        \"examples\": [\"peft PrefixTuning\"],\n        \"when_to_use\": \"Very parameter-efficient, less powerful\"\n    },\n    \"dpo\": {\n        \"description\": \"Direct Preference Optimization\",\n        \"memory\": \"Medium-High\",\n        \"examples\": [\"trl DPOTrainer\"],\n        \"when_to_use\": \"Alignment, preference learning\"\n    }\n}\n\n# Memory requirements for 7B model\ndef estimate_memory(model_size_b: float, method: str) -> str:\n    base_fp16 = model_size_b * 2  # 2 bytes per param in FP16\n    \n    multipliers = {\n        \"full_finetuning\": 8,     # Model + gradients + optimizer states\n        \"lora\": 1.1,              # Base + small adapters\n        \"qlora\": 0.5,             # 4-bit quantized\n        \"inference\": 1.0          # Just model weights\n    }\n    \n    memory_gb = base_fp16 * multipliers.get(method, 1.0)\n    return f\"{method}: ~{memory_gb:.1f} GB VRAM needed\"\n\nfor method in [\"full_finetuning\", \"lora\", \"qlora\"]:\n    print(estimate_memory(7, method))\n# full_finetuning: ~112.0 GB VRAM needed\n# lora: ~15.4 GB VRAM needed  \n# qlora: ~7.0 GB VRAM needed"
+              }
+            ],
+            "keyTakeaways": [
+              "Fine-tune for consistent style/format, not for adding knowledge",
+              "RAG is better when you need current or extensive factual information",
+              "LoRA/QLoRA makes fine-tuning accessible on consumer hardware"
+            ],
+            "exercises": [
+              {
+                "title": "Use Case Analysis",
+                "description": "Analyze 5 real-world scenarios and recommend fine-tuning vs RAG vs prompting"
+              }
+            ],
+            "sources": [
+              {
+                "title": "LoRA Paper",
+                "author": "Hu et al.",
+                "url": "https://arxiv.org/abs/2106.09685"
+              },
+              {
+                "title": "QLoRA Paper",
+                "author": "Dettmers et al.",
+                "url": "https://arxiv.org/abs/2305.14314"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lora-qlora",
+      "title": "LoRA and QLoRA",
+      "lessons": [
+        {
+          "id": "lora-explained",
+          "title": "Understanding LoRA",
+          "duration": "45 min",
+          "content": {
+            "overview": "Low-Rank Adaptation (LoRA) is a parameter-efficient fine-tuning method that adds small trainable matrices to frozen model weights. Instead of updating millions of parameters, LoRA updates thousands\u2014dramatically reducing memory and compute requirements.",
+            "sections": [
+              {
+                "title": "The LoRA Intuition",
+                "content": "**Key insight**: Weight updates during fine-tuning have low intrinsic rank.\n\nInstead of updating $W$ directly:\n$$W' = W + \\Delta W$$\n\nLoRA decomposes the update as:\n$$W' = W + BA$$\n\nWhere:\n- $W$ is frozen (original weights): $d \\times k$\n- $B$ is trainable: $d \\times r$\n- $A$ is trainable: $r \\times k$\n- $r$ is the rank (typically 8-64)\n\n**Parameter reduction**:\n- Full update: $d \\times k$ parameters\n- LoRA: $r \\times (d + k)$ parameters\n- For $d=k=4096$, $r=16$: 16M \u2192 131K (99.2% reduction!)",
+                "code": "import torch\nimport torch.nn as nn\nimport math\n\nclass LoRALayer(nn.Module):\n    \"\"\"LoRA adapter for a linear layer.\"\"\"\n    \n    def __init__(\n        self, \n        in_features: int, \n        out_features: int, \n        rank: int = 8,\n        alpha: float = 16,\n        dropout: float = 0.0\n    ):\n        super().__init__()\n        \n        self.rank = rank\n        self.alpha = alpha\n        self.scaling = alpha / rank\n        \n        # LoRA matrices\n        self.lora_A = nn.Parameter(torch.zeros(in_features, rank))\n        self.lora_B = nn.Parameter(torch.zeros(rank, out_features))\n        \n        # Initialize A with kaiming, B with zeros\n        nn.init.kaiming_uniform_(self.lora_A, a=math.sqrt(5))\n        nn.init.zeros_(self.lora_B)\n        \n        self.dropout = nn.Dropout(dropout) if dropout > 0 else nn.Identity()\n    \n    def forward(self, x: torch.Tensor) -> torch.Tensor:\n        # x @ A @ B * scaling\n        return self.dropout(x) @ self.lora_A @ self.lora_B * self.scaling\n\nclass LinearWithLoRA(nn.Module):\n    \"\"\"Linear layer with LoRA adapter.\"\"\"\n    \n    def __init__(self, linear: nn.Linear, rank: int = 8, alpha: float = 16):\n        super().__init__()\n        \n        self.linear = linear\n        self.linear.weight.requires_grad = False  # Freeze original\n        if linear.bias is not None:\n            self.linear.bias.requires_grad = False\n        \n        self.lora = LoRALayer(\n            linear.in_features,\n            linear.out_features,\n            rank=rank,\n            alpha=alpha\n        )\n    \n    def forward(self, x: torch.Tensor) -> torch.Tensor:\n        # Original output + LoRA output\n        return self.linear(x) + self.lora(x)\n\n# Example usage\noriginal_linear = nn.Linear(4096, 4096)\nlora_linear = LinearWithLoRA(original_linear, rank=16)\n\n# Count parameters\ntotal = sum(p.numel() for p in lora_linear.parameters())\ntrainable = sum(p.numel() for p in lora_linear.parameters() if p.requires_grad)\nprint(f\"Total: {total:,}, Trainable: {trainable:,}\")  \n# Total: 16,908,288, Trainable: 131,072"
+              },
+              {
+                "title": "LoRA Hyperparameters",
+                "content": "**Rank (r)**: Controls capacity of adaptation\n- Higher rank = more parameters, more expressive\n- Common values: 8, 16, 32, 64\n- Start with 8-16, increase if underfitting\n\n**Alpha (\u03b1)**: Scaling factor\n- Controls strength of LoRA updates\n- Effective learning rate: \u03b1/r\n- Common: \u03b1 = 2\u00d7r or \u03b1 = r\n\n**Target modules**: Which layers to adapt\n- Attention: q_proj, k_proj, v_proj, o_proj\n- MLP: gate_proj, up_proj, down_proj\n- Start with attention, add MLP if needed",
+                "code": "from peft import LoraConfig, get_peft_model, TaskType\nfrom transformers import AutoModelForCausalLM\n\n# LoRA configuration\nlora_config = LoraConfig(\n    r=16,                          # Rank\n    lora_alpha=32,                  # Alpha (scaling = alpha/r = 2)\n    target_modules=[               # Which modules to adapt\n        \"q_proj\",\n        \"k_proj\", \n        \"v_proj\",\n        \"o_proj\",\n        \"gate_proj\",\n        \"up_proj\",\n        \"down_proj\"\n    ],\n    lora_dropout=0.05,             # Dropout for regularization\n    bias=\"none\",                   # Don't train biases\n    task_type=TaskType.CAUSAL_LM   # Task type for model\n)\n\n# Apply LoRA to model\nmodel = AutoModelForCausalLM.from_pretrained(\n    \"meta-llama/Llama-2-7b-hf\",\n    torch_dtype=torch.float16,\n    device_map=\"auto\"\n)\n\nmodel = get_peft_model(model, lora_config)\nmodel.print_trainable_parameters()\n# trainable params: 4,194,304 || all params: 6,742,609,920 || trainable%: 0.0622"
+              },
+              {
+                "title": "QLoRA: Quantized LoRA",
+                "content": "QLoRA combines LoRA with 4-bit quantization:\n\n1. **4-bit NormalFloat (NF4)**: Information-theoretically optimal quantization\n2. **Double Quantization**: Quantize the quantization constants too\n3. **Paged Optimizers**: Handle memory spikes gracefully\n\nThis enables fine-tuning a 65B model on a single 48GB GPU!",
+                "code": "from transformers import AutoModelForCausalLM, BitsAndBytesConfig\nfrom peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training\nimport torch\n\n# 4-bit quantization config\nbnb_config = BitsAndBytesConfig(\n    load_in_4bit=True,                    # Use 4-bit\n    bnb_4bit_quant_type=\"nf4\",            # NormalFloat4\n    bnb_4bit_compute_dtype=torch.bfloat16, # Compute in bf16\n    bnb_4bit_use_double_quant=True         # Double quantization\n)\n\n# Load quantized model\nmodel = AutoModelForCausalLM.from_pretrained(\n    \"meta-llama/Llama-2-7b-hf\",\n    quantization_config=bnb_config,\n    device_map=\"auto\",\n    trust_remote_code=True\n)\n\n# Prepare for k-bit training\nmodel = prepare_model_for_kbit_training(model)\n\n# Add LoRA adapters\nlora_config = LoraConfig(\n    r=16,\n    lora_alpha=32,\n    target_modules=[\"q_proj\", \"k_proj\", \"v_proj\", \"o_proj\"],\n    lora_dropout=0.05,\n    bias=\"none\",\n    task_type=\"CAUSAL_LM\"\n)\n\nmodel = get_peft_model(model, lora_config)\n\n# Memory usage: ~7GB for 7B model!\nprint(f\"GPU memory: {torch.cuda.memory_allocated() / 1e9:.2f} GB\")"
+              }
+            ],
+            "keyTakeaways": [
+              "LoRA adds small trainable matrices instead of updating all weights",
+              "Rank 8-16 is usually sufficient; increase if model underperforms",
+              "QLoRA enables fine-tuning large models on consumer GPUs"
+            ],
+            "exercises": [
+              {
+                "title": "LoRA from Scratch",
+                "description": "Implement LoRA without using the peft library"
+              },
+              {
+                "title": "Rank Ablation",
+                "description": "Fine-tune with r=4, 8, 16, 32, 64 and compare performance"
+              }
+            ],
+            "sources": [
+              {
+                "title": "LoRA: Low-Rank Adaptation",
+                "url": "https://arxiv.org/abs/2106.09685"
+              },
+              {
+                "title": "QLoRA Paper",
+                "url": "https://arxiv.org/abs/2305.14314"
+              },
+              {
+                "title": "PEFT Library",
+                "url": "https://github.com/huggingface/peft"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "dataset-preparation",
+      "title": "Dataset Preparation",
+      "lessons": [
+        {
+          "id": "instruction-datasets",
+          "title": "Building Instruction Datasets",
+          "duration": "60 min",
+          "content": {
+            "overview": "The quality of your fine-tuning dataset is the most important factor for success. A small, high-quality dataset often outperforms a large, noisy one. This lesson covers how to create, format, and validate instruction datasets.",
+            "sections": [
+              {
+                "title": "Instruction Dataset Formats",
+                "content": "**Alpaca Format** (most common):\n```json\n{\n  \"instruction\": \"What to do\",\n  \"input\": \"Optional context\",\n  \"output\": \"Expected response\"\n}\n```\n\n**ChatML Format** (for chat models):\n```json\n{\n  \"messages\": [\n    {\"role\": \"system\", \"content\": \"You are...\"},\n    {\"role\": \"user\", \"content\": \"Question\"},\n    {\"role\": \"assistant\", \"content\": \"Response\"}\n  ]\n}\n```\n\n**Completion Format** (simple):\n```json\n{\n  \"prompt\": \"Question:\",\n  \"completion\": \"Answer\"\n}\n```",
+                "code": "from datasets import Dataset\nimport json\n\n# Alpaca format dataset\nalpaca_data = [\n    {\n        \"instruction\": \"Write a Python function to calculate factorial.\",\n        \"input\": \"\",\n        \"output\": \"\"\"def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\"\"\"\n    },\n    {\n        \"instruction\": \"Explain the concept in simple terms.\",\n        \"input\": \"Recursion in programming\",\n        \"output\": \"Recursion is when a function calls itself to solve a smaller version of the same problem. Like looking up a word in a dictionary and finding it defined using other words you also need to look up.\"\n    }\n]\n\n# Convert to prompt format\ndef format_alpaca(example):\n    if example[\"input\"]:\n        prompt = f\"\"\"### Instruction:\n{example['instruction']}\n\n### Input:\n{example['input']}\n\n### Response:\n{example['output']}\"\"\"\n    else:\n        prompt = f\"\"\"### Instruction:\n{example['instruction']}\n\n### Response:\n{example['output']}\"\"\"\n    return {\"text\": prompt}\n\n# ChatML format\nchat_data = [\n    {\n        \"messages\": [\n            {\"role\": \"system\", \"content\": \"You are a helpful coding assistant.\"},\n            {\"role\": \"user\", \"content\": \"Write a factorial function\"},\n            {\"role\": \"assistant\", \"content\": \"def factorial(n):\\n    return 1 if n <= 1 else n * factorial(n-1)\"}\n        ]\n    }\n]\n\ndef format_chatml(example):\n    text = \"\"\n    for msg in example[\"messages\"]:\n        if msg[\"role\"] == \"system\":\n            text += f\"<|im_start|>system\\n{msg['content']}<|im_end|>\\n\"\n        elif msg[\"role\"] == \"user\":\n            text += f\"<|im_start|>user\\n{msg['content']}<|im_end|>\\n\"\n        else:\n            text += f\"<|im_start|>assistant\\n{msg['content']}<|im_end|>\\n\"\n    return {\"text\": text}"
+              },
+              {
+                "title": "Data Quality Guidelines",
+                "content": "**Quality > Quantity**: 1000 excellent examples beat 100,000 mediocre ones.\n\n**Guidelines**:\n1. **Clear instructions**: Unambiguous, specific\n2. **High-quality outputs**: Well-formatted, correct, comprehensive\n3. **Diverse tasks**: Cover range of expected use cases\n4. **Consistent format**: Same structure throughout\n5. **No contradictions**: Don't train conflicting behaviors\n\n**Common mistakes**:\n- Mixing styles (formal/casual) without labels\n- Truncated or incomplete responses\n- Incorrect information in outputs\n- Too narrow task distribution",
+                "code": "from typing import List, Dict\nimport re\n\ndef validate_dataset(examples: List[Dict]) -> Dict:\n    \"\"\"Validate instruction dataset quality.\"\"\"\n    issues = {\n        \"empty_instruction\": [],\n        \"empty_output\": [],\n        \"too_short\": [],\n        \"too_long\": [],\n        \"duplicates\": [],\n        \"format_issues\": []\n    }\n    \n    seen_instructions = set()\n    \n    for i, ex in enumerate(examples):\n        instruction = ex.get(\"instruction\", \"\")\n        output = ex.get(\"output\", \"\")\n        \n        # Check for empty fields\n        if not instruction.strip():\n            issues[\"empty_instruction\"].append(i)\n        if not output.strip():\n            issues[\"empty_output\"].append(i)\n        \n        # Check length\n        if len(output.split()) < 10:\n            issues[\"too_short\"].append(i)\n        if len(output.split()) > 2000:\n            issues[\"too_long\"].append(i)\n        \n        # Check duplicates\n        instr_norm = instruction.lower().strip()\n        if instr_norm in seen_instructions:\n            issues[\"duplicates\"].append(i)\n        seen_instructions.add(instr_norm)\n        \n        # Check format (example: code blocks for code tasks)\n        if \"code\" in instruction.lower() or \"function\" in instruction.lower():\n            if \"def \" not in output and \"class \" not in output:\n                issues[\"format_issues\"].append(i)\n    \n    # Summary\n    total_issues = sum(len(v) for v in issues.values())\n    return {\n        \"total_examples\": len(examples),\n        \"issues_found\": total_issues,\n        \"issue_details\": issues,\n        \"quality_score\": 1 - (total_issues / len(examples))\n    }\n\n# Example\nresult = validate_dataset(alpaca_data)\nprint(f\"Quality Score: {result['quality_score']:.2%}\")"
+              },
+              {
+                "title": "Synthetic Data Generation",
+                "content": "When you don't have enough real data, generate synthetic examples using LLMs:",
+                "code": "from openai import OpenAI\nimport json\n\nclient = OpenAI()\n\ndef generate_instruction_pairs(\n    domain: str,\n    task_types: list,\n    n_examples: int = 10\n) -> list:\n    \"\"\"Generate synthetic instruction-response pairs.\"\"\"\n    \n    prompt = f\"\"\"Generate {n_examples} instruction-response pairs for fine-tuning an LLM.\n\nDomain: {domain}\nTask types: {', '.join(task_types)}\n\nRequirements:\n- Instructions should be clear and specific\n- Responses should be high-quality and comprehensive\n- Include diverse examples across task types\n- Format as JSON array with \"instruction\" and \"output\" fields\n\nReturn ONLY valid JSON.\"\"\"\n\n    response = client.chat.completions.create(\n        model=\"gpt-4\",\n        messages=[{\"role\": \"user\", \"content\": prompt}],\n        temperature=0.8  # More variety\n    )\n    \n    try:\n        data = json.loads(response.choices[0].message.content)\n        return data\n    except json.JSONDecodeError:\n        return []\n\n# Generate coding examples\nsynthetic_data = generate_instruction_pairs(\n    domain=\"Python programming\",\n    task_types=[\"code generation\", \"debugging\", \"code explanation\"],\n    n_examples=5\n)\n\n# Self-instruct: Use model to improve its own training data\ndef augment_example(example: dict) -> list:\n    \"\"\"Generate variations of an example.\"\"\"\n    prompt = f\"\"\"Given this instruction-response pair:\n    \nInstruction: {example['instruction']}\nResponse: {example['output']}\n\nGenerate 3 variations with:\n1. Same intent, different wording\n2. More specific version\n3. Harder/more complex version\n\nReturn as JSON array.\"\"\"\n    \n    response = client.chat.completions.create(\n        model=\"gpt-4\",\n        messages=[{\"role\": \"user\", \"content\": prompt}]\n    )\n    \n    return json.loads(response.choices[0].message.content)"
+              }
+            ],
+            "keyTakeaways": [
+              "Dataset quality is the #1 factor in fine-tuning success",
+              "Use consistent formats (Alpaca or ChatML) throughout",
+              "Synthetic data generation can bootstrap your dataset"
+            ],
+            "exercises": [
+              {
+                "title": "Dataset Builder",
+                "description": "Create a 100-example dataset for a customer service chatbot"
+              },
+              {
+                "title": "Quality Audit",
+                "description": "Download an open-source dataset and audit it for quality issues"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Self-Instruct Paper",
+                "url": "https://arxiv.org/abs/2212.10560"
+              },
+              {
+                "title": "LIMA: Less Is More for Alignment",
+                "url": "https://arxiv.org/abs/2305.11206"
+              },
+              {
+                "title": "Alpaca Dataset",
+                "url": "https://github.com/tatsu-lab/stanford_alpaca"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "training-evaluation",
+      "title": "Training and Evaluation",
+      "lessons": [
+        {
+          "id": "training-with-trl",
+          "title": "Fine-tuning with TRL",
+          "duration": "60 min",
+          "content": {
+            "overview": "The TRL (Transformer Reinforcement Learning) library from Hugging Face provides high-level trainers for fine-tuning LLMs. We'll use SFTTrainer for supervised fine-tuning, the most common approach.",
+            "sections": [
+              {
+                "title": "SFTTrainer Setup",
+                "content": "SFTTrainer handles the complexities of LLM training:\n- Packing multiple examples into sequences\n- Gradient accumulation for larger effective batch sizes\n- Gradient checkpointing for memory efficiency\n- Proper loss masking for instruction tuning",
+                "code": "from transformers import (\n    AutoModelForCausalLM,\n    AutoTokenizer,\n    BitsAndBytesConfig,\n    TrainingArguments\n)\nfrom peft import LoraConfig, get_peft_model\nfrom trl import SFTTrainer\nfrom datasets import load_dataset\nimport torch\n\n# Load model with quantization\nbnb_config = BitsAndBytesConfig(\n    load_in_4bit=True,\n    bnb_4bit_quant_type=\"nf4\",\n    bnb_4bit_compute_dtype=torch.bfloat16,\n    bnb_4bit_use_double_quant=True\n)\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    \"mistralai/Mistral-7B-v0.1\",\n    quantization_config=bnb_config,\n    device_map=\"auto\",\n    attn_implementation=\"flash_attention_2\"  # Faster attention\n)\n\ntokenizer = AutoTokenizer.from_pretrained(\"mistralai/Mistral-7B-v0.1\")\ntokenizer.pad_token = tokenizer.eos_token\ntokenizer.padding_side = \"right\"\n\n# LoRA config\npeft_config = LoraConfig(\n    r=16,\n    lora_alpha=32,\n    lora_dropout=0.05,\n    target_modules=[\"q_proj\", \"k_proj\", \"v_proj\", \"o_proj\"],\n    bias=\"none\",\n    task_type=\"CAUSAL_LM\"\n)\n\n# Load dataset\ndataset = load_dataset(\"your_dataset\", split=\"train\")\n\n# Format function\ndef format_prompt(example):\n    return f\"\"\"### Instruction:\n{example['instruction']}\n\n### Response:\n{example['output']}<|endoftext|>\"\"\""
+              },
+              {
+                "title": "Training Arguments",
+                "content": "Key training hyperparameters for LLM fine-tuning:",
+                "code": "training_args = TrainingArguments(\n    output_dir=\"./output\",\n    \n    # Batch size and accumulation\n    per_device_train_batch_size=4,\n    gradient_accumulation_steps=4,  # Effective batch = 4*4 = 16\n    \n    # Learning rate\n    learning_rate=2e-4,\n    lr_scheduler_type=\"cosine\",\n    warmup_ratio=0.03,\n    \n    # Training duration\n    num_train_epochs=3,\n    max_steps=-1,  # Or set specific step count\n    \n    # Memory optimization\n    fp16=False,\n    bf16=True,  # Better for modern GPUs\n    gradient_checkpointing=True,\n    optim=\"paged_adamw_8bit\",  # Memory-efficient optimizer\n    \n    # Logging and saving\n    logging_steps=10,\n    save_strategy=\"steps\",\n    save_steps=100,\n    save_total_limit=3,\n    \n    # Evaluation\n    evaluation_strategy=\"steps\",\n    eval_steps=100,\n    \n    # Other\n    group_by_length=True,  # Efficient batching\n    report_to=\"wandb\",  # Track with Weights & Biases\n)\n\n# Create trainer\ntrainer = SFTTrainer(\n    model=model,\n    train_dataset=dataset,\n    peft_config=peft_config,\n    tokenizer=tokenizer,\n    args=training_args,\n    formatting_func=format_prompt,\n    max_seq_length=2048,\n    packing=True,  # Pack multiple examples per sequence\n)\n\n# Train\ntrainer.train()\n\n# Save\ntrainer.save_model(\"./final_model\")"
+              },
+              {
+                "title": "Monitoring Training",
+                "content": "Track these metrics during training:\n\n**Loss curves**: Should decrease smoothly\n**Learning rate**: Watch warmup and decay\n**Gradient norm**: Spikes indicate instability\n**Memory usage**: Watch for OOM risks",
+                "code": "import wandb\nfrom transformers import TrainerCallback\n\nclass CustomCallback(TrainerCallback):\n    def on_log(self, args, state, control, logs=None, **kwargs):\n        if logs:\n            # Log custom metrics\n            if \"loss\" in logs:\n                print(f\"Step {state.global_step}: loss={logs['loss']:.4f}\")\n    \n    def on_step_end(self, args, state, control, **kwargs):\n        # Early stopping if loss explodes\n        if state.log_history and state.log_history[-1].get(\"loss\", 0) > 10:\n            print(\"Loss exploded! Stopping training.\")\n            control.should_training_stop = True\n\n# Add to trainer\ntrainer.add_callback(CustomCallback())\n\n# Manual evaluation during training\ndef generate_sample(model, tokenizer, prompt):\n    inputs = tokenizer(prompt, return_tensors=\"pt\").to(model.device)\n    \n    with torch.no_grad():\n        outputs = model.generate(\n            **inputs,\n            max_new_tokens=256,\n            temperature=0.7,\n            do_sample=True,\n            pad_token_id=tokenizer.pad_token_id\n        )\n    \n    return tokenizer.decode(outputs[0], skip_special_tokens=True)\n\n# Test during training\ntest_prompt = \"\"\"### Instruction:\nExplain what a neural network is.\n\n### Response:\"\"\"\n\nprint(generate_sample(model, tokenizer, test_prompt))"
+              }
+            ],
+            "keyTakeaways": [
+              "Use SFTTrainer for streamlined instruction fine-tuning",
+              "Gradient checkpointing + paged optimizer saves significant memory",
+              "Monitor loss curves and sample outputs during training"
+            ],
+            "exercises": [
+              {
+                "title": "Fine-tune Mistral",
+                "description": "Fine-tune Mistral-7B on a custom dataset using QLoRA"
+              },
+              {
+                "title": "Hyperparameter Search",
+                "description": "Compare different learning rates and LoRA ranks"
+              }
+            ],
+            "sources": [
+              {
+                "title": "TRL Documentation",
+                "url": "https://huggingface.co/docs/trl"
+              },
+              {
+                "title": "Fine-tuning LLMs with PEFT",
+                "url": "https://huggingface.co/blog/peft"
+              },
+              {
+                "title": "Unsloth - Fast Fine-tuning",
+                "url": "https://github.com/unslothai/unsloth"
+              }
+            ]
+          }
+        },
+        {
+          "id": "evaluation-methods",
+          "title": "Evaluating Fine-tuned Models",
+          "duration": "45 min",
+          "content": {
+            "overview": "Evaluating fine-tuned LLMs is challenging because traditional metrics often don't capture what matters. This lesson covers multiple evaluation approaches from automated metrics to human evaluation.",
+            "sections": [
+              {
+                "title": "Automated Metrics",
+                "content": "**Perplexity**: How surprised the model is by test data\n- Lower is better\n- Only meaningful on held-out data from same distribution\n\n**BLEU/ROUGE**: Text similarity to references\n- Limited for open-ended generation\n- Useful for translation/summarization\n\n**Task-specific accuracy**: Best for structured outputs",
+                "code": "import torch\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\nfrom evaluate import load\nimport numpy as np\n\ndef calculate_perplexity(model, tokenizer, texts):\n    \"\"\"Calculate perplexity on a list of texts.\"\"\"\n    model.eval()\n    total_loss = 0\n    total_tokens = 0\n    \n    for text in texts:\n        inputs = tokenizer(text, return_tensors=\"pt\").to(model.device)\n        \n        with torch.no_grad():\n            outputs = model(**inputs, labels=inputs[\"input_ids\"])\n            loss = outputs.loss\n        \n        total_loss += loss.item() * inputs[\"input_ids\"].size(1)\n        total_tokens += inputs[\"input_ids\"].size(1)\n    \n    avg_loss = total_loss / total_tokens\n    perplexity = np.exp(avg_loss)\n    return perplexity\n\n# ROUGE for summarization\nrouge = load(\"rouge\")\n\ndef evaluate_rouge(predictions, references):\n    results = rouge.compute(\n        predictions=predictions,\n        references=references,\n        use_stemmer=True\n    )\n    return {\n        \"rouge1\": results[\"rouge1\"],\n        \"rouge2\": results[\"rouge2\"],\n        \"rougeL\": results[\"rougeL\"]\n    }\n\n# Task accuracy (for structured outputs)\ndef evaluate_json_accuracy(model, tokenizer, test_cases):\n    \"\"\"Evaluate if model produces valid JSON.\"\"\"\n    correct = 0\n    \n    for case in test_cases:\n        output = generate_sample(model, tokenizer, case[\"prompt\"])\n        \n        try:\n            import json\n            parsed = json.loads(output)\n            if parsed == case[\"expected\"]:\n                correct += 1\n        except:\n            pass\n    \n    return correct / len(test_cases)"
+              },
+              {
+                "title": "LLM-as-Judge",
+                "content": "Use a stronger model to evaluate outputs. This correlates well with human judgment and scales better:",
+                "code": "from openai import OpenAI\n\nclient = OpenAI()\n\ndef llm_evaluate(\n    instruction: str,\n    response_a: str,\n    response_b: str\n) -> dict:\n    \"\"\"Use GPT-4 to compare two responses.\"\"\"\n    \n    prompt = f\"\"\"You are an expert evaluator. Compare these two responses to the instruction.\n\n## Instruction\n{instruction}\n\n## Response A\n{response_a}\n\n## Response B  \n{response_b}\n\nEvaluate on:\n1. Correctness (0-10)\n2. Helpfulness (0-10)\n3. Clarity (0-10)\n4. Overall preference (A/B/Tie)\n\nProvide scores for both and explain your reasoning.\nFormat as JSON with keys: scores_a, scores_b, preference, reasoning\"\"\"\n\n    response = client.chat.completions.create(\n        model=\"gpt-4\",\n        messages=[{\"role\": \"user\", \"content\": prompt}],\n        temperature=0\n    )\n    \n    return json.loads(response.choices[0].message.content)\n\n# Compare base vs fine-tuned\ndef compare_models(base_model, finetuned_model, test_prompts):\n    results = {\"base_wins\": 0, \"finetuned_wins\": 0, \"ties\": 0}\n    \n    for prompt in test_prompts:\n        base_response = generate_sample(base_model, tokenizer, prompt)\n        ft_response = generate_sample(finetuned_model, tokenizer, prompt)\n        \n        eval_result = llm_evaluate(prompt, base_response, ft_response)\n        \n        if eval_result[\"preference\"] == \"A\":\n            results[\"base_wins\"] += 1\n        elif eval_result[\"preference\"] == \"B\":\n            results[\"finetuned_wins\"] += 1\n        else:\n            results[\"ties\"] += 1\n    \n    return results"
+              },
+              {
+                "title": "Benchmark Evaluation",
+                "content": "Run on standard benchmarks to check for capability preservation and improvement:",
+                "code": "# Using lm-evaluation-harness\nimport subprocess\n\ndef run_benchmarks(model_path: str, tasks: list):\n    \"\"\"\n    Run lm-evaluation-harness benchmarks.\n    \n    Install: pip install lm-eval\n    \"\"\"\n    task_str = \",\".join(tasks)\n    \n    cmd = f\"\"\"\n    lm_eval --model hf \\\n        --model_args pretrained={model_path} \\\n        --tasks {task_str} \\\n        --batch_size 8 \\\n        --output_path ./eval_results\n    \"\"\"\n    \n    subprocess.run(cmd, shell=True)\n\n# Common benchmarks for fine-tuned models\nBENCHMARKS = {\n    \"general\": [\"mmlu\", \"hellaswag\", \"arc_challenge\"],\n    \"reasoning\": [\"gsm8k\", \"math\"],\n    \"coding\": [\"humaneval\", \"mbpp\"],\n    \"instruction_following\": [\"ifeval\"]\n}\n\n# Quick custom benchmark\ndef custom_benchmark(model, tokenizer, test_suite):\n    \"\"\"Run custom evaluation suite.\"\"\"\n    results = {}\n    \n    for category, tests in test_suite.items():\n        correct = 0\n        for test in tests:\n            response = generate_sample(model, tokenizer, test[\"prompt\"])\n            if test[\"check_fn\"](response):\n                correct += 1\n        results[category] = correct / len(tests)\n    \n    return results\n\n# Example test suite\ntest_suite = {\n    \"json_output\": [\n        {\n            \"prompt\": \"Return a JSON with name and age fields.\",\n            \"check_fn\": lambda r: '\"name\"' in r and '\"age\"' in r\n        }\n    ],\n    \"code_generation\": [\n        {\n            \"prompt\": \"Write a Python function to reverse a string.\",\n            \"check_fn\": lambda r: \"def \" in r and \"return\" in r\n        }\n    ]\n}"
+              }
+            ],
+            "keyTakeaways": [
+              "Perplexity measures fit but not quality",
+              "LLM-as-Judge scales better than human evaluation",
+              "Always check benchmark performance to verify no regression"
+            ],
+            "exercises": [
+              {
+                "title": "Evaluation Pipeline",
+                "description": "Build an end-to-end evaluation pipeline for a fine-tuned model"
+              },
+              {
+                "title": "Human Eval Setup",
+                "description": "Design a human evaluation protocol with clear rubrics"
+              }
+            ],
+            "sources": [
+              {
+                "title": "LM Evaluation Harness",
+                "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+              },
+              {
+                "title": "Judging LLM-as-a-Judge",
+                "url": "https://arxiv.org/abs/2306.05685"
+              },
+              {
+                "title": "AlpacaEval",
+                "url": "https://github.com/tatsu-lab/alpaca_eval"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "deployment",
+      "title": "Deployment",
+      "lessons": [
+        {
+          "id": "merging-serving",
+          "title": "Merging Adapters and Serving",
+          "duration": "45 min",
+          "content": {
+            "overview": "After fine-tuning, you need to prepare your model for production. This includes merging LoRA weights, quantization for efficient inference, and setting up serving infrastructure.",
+            "sections": [
+              {
+                "title": "Merging LoRA Weights",
+                "content": "Merge adapters into base model for simpler deployment:",
+                "code": "from peft import PeftModel, PeftConfig\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\nimport torch\n\ndef merge_lora_weights(base_model_path: str, adapter_path: str, output_path: str):\n    \"\"\"Merge LoRA adapters into base model.\"\"\"\n    \n    # Load base model\n    base_model = AutoModelForCausalLM.from_pretrained(\n        base_model_path,\n        torch_dtype=torch.float16,\n        device_map=\"auto\"\n    )\n    \n    # Load and merge adapters\n    model = PeftModel.from_pretrained(base_model, adapter_path)\n    model = model.merge_and_unload()  # Merge weights\n    \n    # Save merged model\n    model.save_pretrained(output_path)\n    \n    # Save tokenizer\n    tokenizer = AutoTokenizer.from_pretrained(base_model_path)\n    tokenizer.save_pretrained(output_path)\n    \n    print(f\"Merged model saved to {output_path}\")\n    return model\n\n# Merge\nmerged = merge_lora_weights(\n    base_model_path=\"mistralai/Mistral-7B-v0.1\",\n    adapter_path=\"./output/checkpoint-1000\",\n    output_path=\"./merged_model\"\n)\n\n# Alternative: Keep adapters separate (useful for A/B testing)\n# Load base + adapters at inference time"
+              },
+              {
+                "title": "Quantization for Inference",
+                "content": "Reduce model size for faster inference:",
+                "code": "from transformers import AutoModelForCausalLM, AutoTokenizer\nfrom awq import AutoAWQForCausalLM\n\n# GGUF quantization (for llama.cpp)\ndef quantize_to_gguf(model_path: str, output_path: str, quant_type: str = \"q4_k_m\"):\n    \"\"\"\n    Quantize to GGUF format using llama.cpp.\n    \n    quant_types: q4_0, q4_1, q4_k_m, q5_0, q5_k_m, q8_0\n    \"\"\"\n    import subprocess\n    \n    # Convert to GGUF\n    subprocess.run([\n        \"python\", \"llama.cpp/convert.py\",\n        model_path,\n        \"--outfile\", f\"{output_path}/model.gguf\",\n        \"--outtype\", \"f16\"\n    ])\n    \n    # Quantize\n    subprocess.run([\n        \"./llama.cpp/quantize\",\n        f\"{output_path}/model.gguf\",\n        f\"{output_path}/model-{quant_type}.gguf\",\n        quant_type\n    ])\n\n# AWQ quantization (faster than GPTQ)\ndef quantize_awq(model_path: str, output_path: str):\n    model = AutoAWQForCausalLM.from_pretrained(model_path)\n    tokenizer = AutoTokenizer.from_pretrained(model_path)\n    \n    quant_config = {\n        \"zero_point\": True,\n        \"q_group_size\": 128,\n        \"w_bit\": 4,\n        \"version\": \"GEMM\"\n    }\n    \n    model.quantize(tokenizer, quant_config=quant_config)\n    model.save_quantized(output_path)\n    tokenizer.save_pretrained(output_path)"
+              },
+              {
+                "title": "Serving with vLLM",
+                "content": "vLLM provides high-throughput inference with continuous batching:",
+                "code": "from vllm import LLM, SamplingParams\n\n# Load model\nllm = LLM(\n    model=\"./merged_model\",\n    tensor_parallel_size=1,  # Number of GPUs\n    dtype=\"float16\",\n    max_model_len=4096,\n    gpu_memory_utilization=0.9\n)\n\n# Sampling parameters\nsampling_params = SamplingParams(\n    temperature=0.7,\n    top_p=0.9,\n    max_tokens=256,\n    stop=[\"### Instruction:\", \"\\n\\n\\n\"]\n)\n\n# Generate\nprompts = [\n    \"### Instruction:\\nWrite a haiku about coding.\\n\\n### Response:\",\n    \"### Instruction:\\nExplain quantum computing.\\n\\n### Response:\"\n]\n\noutputs = llm.generate(prompts, sampling_params)\n\nfor output in outputs:\n    print(f\"Prompt: {output.prompt[:50]}...\")\n    print(f\"Response: {output.outputs[0].text}\")\n    print()\n\n# OpenAI-compatible server\n# Run: python -m vllm.entrypoints.openai.api_server \\\n#        --model ./merged_model --port 8000"
+              },
+              {
+                "title": "Production API with FastAPI",
+                "content": "Wrap your model in a production-ready API:",
+                "code": "from fastapi import FastAPI, HTTPException\nfrom pydantic import BaseModel\nfrom vllm import LLM, SamplingParams\nimport uvicorn\n\napp = FastAPI()\n\n# Load model at startup\nllm = None\n\n@app.on_event(\"startup\")\nasync def load_model():\n    global llm\n    llm = LLM(model=\"./merged_model\", dtype=\"float16\")\n\nclass GenerateRequest(BaseModel):\n    instruction: str\n    max_tokens: int = 256\n    temperature: float = 0.7\n\nclass GenerateResponse(BaseModel):\n    response: str\n    tokens_used: int\n\n@app.post(\"/generate\", response_model=GenerateResponse)\nasync def generate(request: GenerateRequest):\n    prompt = f\"\"\"### Instruction:\n{request.instruction}\n\n### Response:\"\"\"\n    \n    sampling_params = SamplingParams(\n        temperature=request.temperature,\n        max_tokens=request.max_tokens,\n        stop=[\"### Instruction:\"]\n    )\n    \n    outputs = llm.generate([prompt], sampling_params)\n    response_text = outputs[0].outputs[0].text.strip()\n    tokens = len(outputs[0].outputs[0].token_ids)\n    \n    return GenerateResponse(\n        response=response_text,\n        tokens_used=tokens\n    )\n\n@app.get(\"/health\")\nasync def health():\n    return {\"status\": \"healthy\"}\n\nif __name__ == \"__main__\":\n    uvicorn.run(app, host=\"0.0.0.0\", port=8000)"
+              }
+            ],
+            "keyTakeaways": [
+              "Merge LoRA weights for simpler deployment",
+              "Quantize to 4-bit for 4x memory reduction with minimal quality loss",
+              "vLLM provides high-throughput inference with continuous batching"
+            ],
+            "exercises": [
+              {
+                "title": "End-to-End Pipeline",
+                "description": "Build a complete pipeline from training to deployed API"
+              },
+              {
+                "title": "Benchmark Serving",
+                "description": "Compare vLLM vs Text Generation Inference latency and throughput"
+              }
+            ],
+            "sources": [
+              {
+                "title": "vLLM Documentation",
+                "url": "https://docs.vllm.ai/"
+              },
+              {
+                "title": "AWQ Quantization",
+                "url": "https://github.com/mit-han-lab/llm-awq"
+              },
+              {
+                "title": "Text Generation Inference",
+                "url": "https://github.com/huggingface/text-generation-inference"
+              }
+            ]
+          }
+        },
+        {
+          "id": "llm-finetuning-quiz",
+          "title": "LLM Fine-tuning Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "id": "finetune-vs-rag",
+              "question": "When is fine-tuning generally preferred over RAG?",
+              "options": [
+                "When you need the model to know about breaking news from yesterday",
+                "When you want to change the model's behavior, style, or format",
+                "When you have a very small budget and no GPU",
+                "When you need to cite sources accurately"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Fine-tuning is best for adapting behavior, style, and format. RAG is better for injecting new knowledge or retrieving specific facts."
+            },
+            {
+              "id": "lora-mechanism",
+              "question": "How does LoRA (Low-Rank Adaptation) reduce memory usage during training?",
+              "options": [
+                "It deletes half the layers of the model",
+                "It freezes the pre-trained weights and trains only small rank-decomposition matrices",
+                "It uses lower precision (8-bit) for all calculations",
+                "It reduces the context window size"
+              ],
+              "correctAnswer": 1,
+              "explanation": "LoRA freezes the massive pre-trained weights and injects trainable low-rank matrices, significantly reducing the number of trainable parameters and memory footprint."
+            },
+            {
+              "id": "dataset-quality",
+              "question": "What is the most critical factor for a successful instruction fine-tuning dataset?",
+              "options": [
+                "Quantity (having millions of examples)",
+                "Quality (clear instructions and high-quality responses)",
+                "Length (having very long prompts)",
+                "Complexity (having only difficult math problems)"
+              ],
+              "correctAnswer": 1,
+              "explanation": "A small, high-quality dataset (e.g., 1,000 excellent examples) often outperforms a large, noisy dataset. 'Garbage in, garbage out' applies strongly to fine-tuning."
+            },
+            {
+              "id": "catastrophic-forgetting",
+              "question": "What is 'Catastrophic Forgetting' in the context of fine-tuning?",
+              "options": [
+                "When the model runs out of memory",
+                "When the model loses its ability to perform tasks it was previously trained on",
+                "When the training data is lost due to disk failure",
+                "When the model refuses to answer questions"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Catastrophic forgetting occurs when a model forgets its general pre-training knowledge while over-optimizing for the specific fine-tuning task."
+            },
+            {
+              "id": "qlora-advantage",
+              "question": "What is the main advantage of QLoRA over standard LoRA?",
+              "options": [
+                "It is faster to train",
+                "It allows fine-tuning large models on consumer GPUs by quantizing the base model to 4-bit",
+                "It eliminates the need for a GPU entirely",
+                "It produces higher accuracy models"
+              ],
+              "correctAnswer": 1,
+              "explanation": "QLoRA combines 4-bit quantization of the frozen base model with LoRA, drastically reducing VRAM requirements (e.g., fine-tuning a 65B model on a single 48GB GPU)."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

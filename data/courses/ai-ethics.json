@@ -1,0 +1,566 @@
+{
+  "id": "ai-ethics",
+  "title": "AI Ethics & Safety",
+  "icon": "\u2696\ufe0f",
+  "description": "Understand responsible AI development, bias mitigation, safety considerations, and ethical frameworks.",
+  "level": "intermediate",
+  "duration": "4 weeks",
+  "totalLessons": 14,
+  "prerequisites": [
+    "ML Fundamentals"
+  ],
+  "outcomes": [
+    "Identify and mitigate algorithmic bias",
+    "Implement fairness metrics and constraints",
+    "Apply safety practices in AI development",
+    "Navigate ethical dilemmas in AI",
+    "Understand privacy-preserving techniques",
+    "Prepare for AI regulations and compliance",
+    "Build inclusive and accessible AI systems"
+  ],
+  "modules": [
+    {
+      "title": "Foundations",
+      "description": "Foundations module",
+      "lessons": [
+        {
+          "id": "intro-ethics",
+          "title": "Introduction to AI Ethics",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "As AI systems become more powerful and widespread, ethical considerations are crucial. AI ethics addresses how we build, deploy, and govern AI responsibly.",
+            "sections": [
+              {
+                "title": "Why AI Ethics Matters",
+                "content": "AI systems make consequential decisions affecting people's lives: hiring, lending, healthcare, criminal justice. Unethical AI can cause real harm at scale.",
+                "keyPoints": [
+                  "AI amplifies existing biases at scale",
+                  "Lack of transparency erodes trust",
+                  "Autonomous systems raise accountability questions",
+                  "Privacy concerns with data-hungry models"
+                ]
+              },
+              {
+                "title": "Key Ethical Principles",
+                "content": "**Fairness**: AI should treat all groups equitably\n\n**Transparency**: Decisions should be explainable\n\n**Privacy**: Respect data rights and consent\n\n**Accountability**: Clear responsibility for AI outcomes\n\n**Safety**: Prevent harm, have safeguards\n\n**Beneficence**: AI should benefit humanity",
+                "diagram": {
+                  "title": "AI Ethics Principles",
+                  "code": "flowchart TB\n    subgraph Core[\"Core Ethical Principles\"]\n        F[Fairness]\n        T[Transparency]\n        P[Privacy]\n    end\n    \n    subgraph Support[\"Supporting Principles\"]\n        A[Accountability]\n        S[Safety]\n        B[Beneficence]\n    end\n    \n    Core --> TRUST[Trustworthy AI]\n    Support --> TRUST\n    \n    F -.-> |\"Equal treatment\"| TRUST\n    T -.-> |\"Explainable\"| TRUST\n    P -.-> |\"Data rights\"| TRUST"
+                }
+              },
+              {
+                "title": "Real-World Failures",
+                "content": "**Hiring Bias**: Amazon's recruiting AI penalized women\n\n**Healthcare Bias**: Algorithm disadvantaged Black patients\n\n**Facial Recognition**: Higher error rates for minorities\n\n**Content Moderation**: Reinforcing harmful stereotypes\n\n**Autonomous Vehicles**: Trolley problem in real life"
+              }
+            ],
+            "keyTakeaways": [
+              "Ethics isn't optional\u2014it's essential for AI adoption",
+              "Technical solutions alone aren't enough",
+              "Diverse teams build more equitable AI",
+              "Regulation is increasing globally"
+            ]
+          }
+        },
+        {
+          "id": "algorithmic-bias",
+          "title": "Understanding Algorithmic Bias",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Algorithmic bias occurs when ML systems produce systematically prejudiced results. Understanding its sources is the first step to mitigation.",
+            "sections": [
+              {
+                "title": "Sources of Bias",
+                "content": "**Historical Bias**: Training data reflects past discrimination\n- Criminal justice data encodes policing patterns\n- Hiring data reflects historical preferences\n\n**Representation Bias**: Training data doesn't represent population\n- Facial recognition trained mostly on light-skinned faces\n- Medical AI trained on specific demographics\n\n**Measurement Bias**: Features are proxies that correlate with protected attributes\n- Zip code correlating with race\n- Name style correlating with gender\n\n**Aggregation Bias**: One model for heterogeneous groups\n- Medical symptoms differ by demographic"
+              },
+              {
+                "title": "Detecting Bias",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from fairlearn.metrics import (\n    demographic_parity_difference,\n    equalized_odds_difference,\n    MetricFrame\n)\nfrom sklearn.metrics import accuracy_score, recall_score\n\n# Predictions and sensitive attribute\ny_true = [...]  # Actual outcomes\ny_pred = [...]  # Model predictions\nsensitive = [...]  # e.g., gender, race\n\n# Demographic parity: equal positive rates across groups\ndp_diff = demographic_parity_difference(\n    y_true, y_pred,\n    sensitive_features=sensitive\n)\nprint(f'Demographic parity difference: {dp_diff:.3f}')\n\n# Equalized odds: equal TPR and FPR across groups\neo_diff = equalized_odds_difference(\n    y_true, y_pred,\n    sensitive_features=sensitive\n)\nprint(f'Equalized odds difference: {eo_diff:.3f}')\n\n# Detailed metrics by group\nmetric_frame = MetricFrame(\n    metrics={'accuracy': accuracy_score, 'recall': recall_score},\n    y_true=y_true,\n    y_pred=y_pred,\n    sensitive_features=sensitive\n)\nprint(metric_frame.by_group)"
+                }
+              },
+              {
+                "title": "Fairness Metrics",
+                "content": "Different fairness definitions can conflict\u2014you must choose based on context:\n\n**Demographic Parity**: Equal positive prediction rates\n- P(\u0176=1|A=0) = P(\u0176=1|A=1)\n\n**Equalized Odds**: Equal TPR and FPR across groups\n- P(\u0176=1|Y=1,A=0) = P(\u0176=1|Y=1,A=1)\n\n**Predictive Parity**: Equal precision across groups\n- P(Y=1|\u0176=1,A=0) = P(Y=1|\u0176=1,A=1)\n\n**Individual Fairness**: Similar individuals get similar predictions"
+              }
+            ],
+            "keyTakeaways": [
+              "Bias can enter at any stage of the ML pipeline",
+              "Multiple fairness definitions exist\u2014choose carefully",
+              "Perfect fairness across all metrics is mathematically impossible",
+              "Context determines which fairness definition matters most"
+            ]
+          }
+        },
+        {
+          "id": "bias-mitigation",
+          "title": "Bias Mitigation Techniques",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "Bias mitigation can occur at three stages: pre-processing (data), in-processing (training), and post-processing (predictions).",
+            "sections": [
+              {
+                "title": "Pre-processing: Data Interventions",
+                "diagram": {
+                  "title": "Bias Mitigation Stages",
+                  "code": "flowchart LR\n    subgraph Pre[Pre-processing]\n        direction TB\n        Raw[Raw Data] --> Clean[Reweighing/Sampling]\n        Clean --> Balanced[Balanced Data]\n    end\n    \n    subgraph In[In-processing]\n        direction TB\n        Balanced --> Train[Model Training]\n        Train --> Constr{Fairness\\nConstraints}\n        Constr -->|Adjust| Train\n    end\n    \n    subgraph Post[Post-processing]\n        direction TB\n        Train --> Preds[Raw Predictions]\n        Preds --> Thresh[Threshold Adjustment]\n        Thresh --> Final[Fair Outcomes]\n    end"
+                },
+                "codeExample": {
+                  "language": "python",
+                  "code": "from imblearn.over_sampling import SMOTE\nimport pandas as pd\n\n# 1. Resampling to balance representation\nsmote = SMOTE(random_state=42)\nX_balanced, y_balanced = smote.fit_resample(X, y)\n\n# 2. Removing or transforming biased features\n# Don't use protected attributes directly\ndf = df.drop(columns=['gender', 'race'])\n\n# But also check for proxies\ncorrelations = df.corrwith(df['protected_attribute'])\nproxy_features = correlations[correlations.abs() > 0.5].index\nprint(f'Potential proxy features: {proxy_features.tolist()}')\n\n# 3. Fair representation learning\n# Transform data to remove protected attribute information\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.decomposition import PCA\n\n# Remove correlation with protected attribute\nresiduals = X - X.groupby(sensitive).transform('mean')"
+                }
+              },
+              {
+                "title": "In-processing: Fair Training",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from fairlearn.reductions import (\n    ExponentiatedGradient,\n    DemographicParity,\n    EqualizedOdds\n)\nfrom sklearn.linear_model import LogisticRegression\n\n# Base classifier\nbase_model = LogisticRegression()\n\n# Constraint: Demographic Parity\nconstraint = DemographicParity()\n\n# Fair classifier\nfair_model = ExponentiatedGradient(\n    estimator=base_model,\n    constraints=constraint,\n    eps=0.01  # Fairness tolerance\n)\n\nfair_model.fit(X_train, y_train, sensitive_features=sensitive_train)\n\n# Predict\ny_pred = fair_model.predict(X_test)"
+                }
+              },
+              {
+                "title": "Post-processing: Adjusting Predictions",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from fairlearn.postprocessing import ThresholdOptimizer\n\n# Train regular model\nfrom sklearn.ensemble import RandomForestClassifier\nmodel = RandomForestClassifier().fit(X_train, y_train)\n\n# Post-process for fairness\npostprocessor = ThresholdOptimizer(\n    estimator=model,\n    constraints='demographic_parity',\n    objective='balanced_accuracy_score'\n)\n\npostprocessor.fit(\n    X_train, y_train,\n    sensitive_features=sensitive_train\n)\n\n# Fair predictions\ny_pred_fair = postprocessor.predict(\n    X_test,\n    sensitive_features=sensitive_test\n)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Pre-processing fixes data, in-processing changes training, post-processing adjusts outputs",
+              "Fairness often trades off with accuracy",
+              "Document fairness choices and their rationale",
+              "Regular auditing is essential"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Fairness & Transparency",
+      "description": "Fairness & Transparency module",
+      "lessons": [
+        {
+          "id": "explainability",
+          "title": "Explainability & Interpretability",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Explainability helps users understand why AI makes certain decisions. It's essential for trust, debugging, and regulatory compliance.",
+            "sections": [
+              {
+                "title": "Interpretable Models",
+                "content": "Some models are inherently interpretable:\n\n**Linear Regression**: Coefficients show feature importance\n**Decision Trees**: Follow the decision path\n**Rule Lists**: IF-THEN-ELSE logic\n\nFor complex models (deep learning), we need post-hoc explanations.",
+                "diagram": {
+                  "title": "Model Interpretability",
+                  "code": "graph TD\n    A[Model Type] --> B{Interpretable?}\n    B -->|Yes| C[Linear Regression]\n    B -->|Yes| D[Decision Trees]\n    B -->|No| E[Deep Neural Networks]\n    E --> F[Post-hoc Explanation]\n    F --> G[SHAP/LIME]"
+                }
+              },
+              {
+                "title": "SHAP Values",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import shap\nimport matplotlib.pyplot as plt\n\n# Create explainer\nexplainer = shap.TreeExplainer(model)\nshap_values = explainer.shap_values(X_test)\n\n# Summary plot: feature importance\nshap.summary_plot(shap_values, X_test, feature_names=feature_names)\n\n# Explain single prediction\nshap.waterfall_plot(shap.Explanation(\n    values=shap_values[0],\n    base_values=explainer.expected_value,\n    data=X_test.iloc[0],\n    feature_names=feature_names\n))\n\n# Force plot for single prediction\nshap.force_plot(\n    explainer.expected_value,\n    shap_values[0],\n    X_test.iloc[0],\n    feature_names=feature_names\n)"
+                }
+              },
+              {
+                "title": "LIME Explanations",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from lime.lime_tabular import LimeTabularExplainer\n\n# Create explainer\nexplainer = LimeTabularExplainer(\n    training_data=X_train.values,\n    feature_names=feature_names,\n    class_names=['Rejected', 'Approved'],\n    mode='classification'\n)\n\n# Explain a prediction\nexplanation = explainer.explain_instance(\n    X_test.iloc[0].values,\n    model.predict_proba,\n    num_features=10\n)\n\n# View explanation\nexplanation.show_in_notebook()\n\n# Get feature weights\nweights = explanation.as_list()\nfor feature, weight in weights:\n    print(f'{feature}: {weight:.3f}')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Use interpretable models when possible",
+              "SHAP provides theoretically grounded global and local explanations",
+              "LIME creates local, model-agnostic explanations",
+              "Explanations must be understandable to the audience"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Safety & Privacy",
+      "description": "Safety & Privacy module",
+      "lessons": [
+        {
+          "id": "ai-safety",
+          "title": "AI Safety Fundamentals",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "AI safety ensures AI systems behave as intended and don't cause unintended harm. It's especially critical for powerful, autonomous systems.",
+            "sections": [
+              {
+                "title": "Key Safety Concepts",
+                "content": "**Alignment**: AI goals match human intentions\n\n**Robustness**: Reliable under distribution shift and attacks\n\n**Corrigibility**: Can be safely modified or shut down\n\n**Transparency**: Internal workings are understandable\n\n**Value Learning**: AI learns human values correctly"
+              },
+              {
+                "title": "LLM Safety Techniques",
+                "content": "**RLHF (Reinforcement Learning from Human Feedback)**\n- Train reward model from human preferences\n- Fine-tune LLM to maximize reward\n- Aligns outputs with human values\n\n**Constitutional AI**\n- Train model with explicit principles/constitution\n- Model critiques and revises its own outputs\n\n**Red Teaming**\n- Adversarial testing to find failure modes\n- Try to elicit harmful outputs\n\n**Content Filters**\n- Classifier to block harmful inputs/outputs\n- Last line of defense"
+              },
+              {
+                "title": "Safety Best Practices",
+                "content": "**Development**\n1. Define clear scope and limitations\n2. Include diverse perspectives in design\n3. Test extensively for edge cases\n4. Document failure modes\n\n**Deployment**\n1. Start with limited deployment\n2. Monitor for unexpected behaviors\n3. Have rollback mechanisms\n4. Establish incident response\n\n**Governance**\n1. Regular safety audits\n2. Clear accountability\n3. User feedback channels\n4. Transparency reports"
+              }
+            ],
+            "keyTakeaways": [
+              "Safety is about preventing all types of harm",
+              "Alignment is an unsolved research problem",
+              "Multiple layers of defense are necessary",
+              "Safety must be built in from the start"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Additional Topics",
+      "description": "Additional course content",
+      "lessons": [
+        {
+          "id": "privacy",
+          "title": "Privacy in AI Systems",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "AI systems often require large amounts of personal data. Learn techniques to protect privacy while building effective models.",
+            "sections": [
+              {
+                "title": "Privacy Risks in AI",
+                "content": "**Data Collection**\n- Collecting more data than needed\n- Lack of informed consent\n- Data retention beyond purpose\n\n**Model Risks**\n- Membership inference: Was this person in training data?\n- Model inversion: Reconstructing training examples\n- Attribute inference: Learning sensitive attributes\n\n**Deployment Risks**\n- Exposing personal data through predictions\n- Unauthorized access to model outputs\n- Correlation attacks across systems"
+              },
+              {
+                "title": "Differential Privacy",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\nfrom diffprivlib.models import LogisticRegression\nfrom diffprivlib import tools as dp\n\n# Differentially private logistic regression\nmodel = LogisticRegression(\n    epsilon=1.0,  # Privacy budget\n    bounds=(X.min(axis=0), X.max(axis=0))\n)\nmodel.fit(X_train, y_train)\n\n# Private mean computation\nmean = dp.mean(data, epsilon=0.5, bounds=(0, 100))\n\n# Understanding epsilon:\n# Lower epsilon = more privacy = more noise = less accuracy\n# Typical values: 0.1 (high privacy) to 10 (low privacy)\n\n# Privacy budget is consumed with each query\n# Need to balance privacy vs utility"
+                }
+              },
+              {
+                "title": "Federated Learning",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Federated Learning: Train on distributed data without centralizing it\n# Each client trains locally, only shares model updates\n\nclass FederatedClient:\n    def __init__(self, data, labels):\n        self.data = data\n        self.labels = labels\n        self.model = create_model()\n    \n    def train_local(self, global_weights, epochs=5):\n        self.model.set_weights(global_weights)\n        self.model.fit(self.data, self.labels, epochs=epochs)\n        return self.model.get_weights()\n\nclass FederatedServer:\n    def __init__(self, clients):\n        self.clients = clients\n        self.global_model = create_model()\n    \n    def aggregate(self, client_weights):\n        # FedAvg: Average client weights\n        avg_weights = []\n        for weights_list_tuple in zip(*client_weights):\n            avg_weights.append(np.mean(weights_list_tuple, axis=0))\n        return avg_weights\n    \n    def train_round(self):\n        global_weights = self.global_model.get_weights()\n        \n        # Clients train locally\n        client_updates = []\n        for client in self.clients:\n            updates = client.train_local(global_weights)\n            client_updates.append(updates)\n        \n        # Aggregate updates\n        new_weights = self.aggregate(client_updates)\n        self.global_model.set_weights(new_weights)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Collect only necessary data (data minimization)",
+              "Differential privacy provides mathematical guarantees",
+              "Federated learning keeps data decentralized",
+              "Privacy techniques often trade off with accuracy"
+            ]
+          }
+        },
+        {
+          "id": "regulation",
+          "title": "AI Regulation & Governance",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "AI regulation is evolving rapidly worldwide. Understand the legal landscape and prepare your systems for compliance.",
+            "sections": [
+              {
+                "title": "Major Regulatory Frameworks",
+                "content": "**EU AI Act (2024)**\n- Risk-based classification: Unacceptable, High, Limited, Minimal\n- High-risk: Hiring, credit, healthcare, law enforcement\n- Requirements: Risk assessment, documentation, human oversight\n- Heavy fines: Up to 7% of global revenue\n\n**US Approach**\n- Sector-specific: FDA for medical AI, SEC for finance\n- NIST AI Risk Management Framework (voluntary)\n- State laws: California, Illinois privacy laws\n\n**China AI Regulations**\n- Content generation requirements\n- Algorithm recommendation rules\n- Deep synthesis (deepfake) regulations\n\n**Other**\n- Canada AIDA (proposed)\n- UK pro-innovation approach\n- Singapore Model AI Governance Framework"
+              },
+              {
+                "title": "Compliance Requirements",
+                "content": "**Documentation**\n- Model cards describing capabilities and limitations\n- Datasheets for datasets\n- Risk assessments\n- Testing results\n\n**Technical Requirements**\n- Explainability for high-risk decisions\n- Human-in-the-loop for certain applications\n- Logging and audit trails\n- Regular bias testing\n\n**Organizational**\n- Designated AI governance roles\n- Training for developers\n- Incident reporting procedures\n- Regular compliance audits"
+              },
+              {
+                "title": "Model Documentation",
+                "diagram": {
+                  "title": "Model Card Structure",
+                  "code": "classDiagram\n    class ModelCard {\n        +Model Details\n        +Intended Use\n        +Factors\n        +Metrics\n        +Training Data\n        +Ethical Considerations\n        +Caveats\n    }"
+                },
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Model Card Template\nmodel_card = {\n    \"model_details\": {\n        \"name\": \"Credit Risk Classifier v2.1\",\n        \"version\": \"2.1.0\",\n        \"type\": \"Binary Classification\",\n        \"developed_by\": \"Risk Team\",\n        \"date\": \"2024-03-15\"\n    },\n    \"intended_use\": {\n        \"primary_use\": \"Assess credit default risk for loan applications\",\n        \"users\": \"Credit analysts, automated underwriting\",\n        \"out_of_scope\": \"Employment decisions, insurance pricing\"\n    },\n    \"metrics\": {\n        \"overall_accuracy\": 0.87,\n        \"auc_roc\": 0.91,\n        \"fairness_metrics\": {\n            \"demographic_parity_ratio\": 0.92,\n            \"equalized_odds_difference\": 0.05\n        }\n    },\n    \"training_data\": {\n        \"source\": \"Historical loan applications 2019-2023\",\n        \"size\": \"2.3M records\",\n        \"demographics\": \"US applicants, 18+ years\"\n    },\n    \"limitations\": [\n        \"Limited data for age group 65+\",\n        \"Not validated for international applicants\",\n        \"Performance may degrade with economic shifts\"\n    ],\n    \"ethical_considerations\": [\n        \"Regular fairness audits required\",\n        \"Human review for borderline decisions\"\n    ]\n}"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "EU AI Act is the most comprehensive regulation",
+              "High-risk AI requires extensive documentation",
+              "Model cards are becoming standard practice",
+              "Prepare for increasing regulatory scrutiny"
+            ]
+          }
+        },
+        {
+          "id": "llm-ethics",
+          "title": "Ethics of Large Language Models",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "LLMs present unique ethical challenges around misinformation, manipulation, job displacement, and environmental impact.",
+            "sections": [
+              {
+                "title": "LLM-Specific Concerns",
+                "content": "**Misinformation**\n- Hallucinations presented as facts\n- Convincing but false content at scale\n- Difficulty detecting AI-generated text\n\n**Manipulation**\n- Personalized persuasion\n- Synthetic personas/relationships\n- Undermining trust in information\n\n**Labor Impact**\n- Automation of knowledge work\n- Changing skill requirements\n- Economic displacement\n\n**Environmental**\n- Training: Thousands of GPU-hours\n- Inference: Energy for every query\n- Data centers and cooling"
+              },
+              {
+                "title": "Responsible LLM Deployment",
+                "codeExample": {
+                  "language": "python",
+                  "code": "class ResponsibleLLMWrapper:\n    def __init__(self, llm_client):\n        self.client = llm_client\n        self.usage_log = []\n    \n    def generate(self, prompt, **kwargs):\n        # 1. Input validation\n        if self._is_harmful_request(prompt):\n            return \"I cannot help with that request.\"\n        \n        # 2. Add safety system prompt\n        full_prompt = self._add_safety_instructions(prompt)\n        \n        # 3. Generate with safeguards\n        response = self.client.generate(\n            full_prompt,\n            stop_sequences=['[HARMFUL]', '[PRIVATE]'],\n            **kwargs\n        )\n        \n        # 4. Output filtering\n        response = self._filter_output(response)\n        \n        # 5. Transparency\n        response = self._add_ai_disclosure(response)\n        \n        # 6. Logging for audit\n        self._log_interaction(prompt, response)\n        \n        return response\n    \n    def _add_safety_instructions(self, prompt):\n        safety_prefix = \"\"\"\n        You are a helpful assistant. Follow these rules:\n        - Never generate harmful, illegal, or deceptive content\n        - Clearly state when you're uncertain\n        - Don't pretend to be human\n        - Respect privacy and copyrights\n        \"\"\"\n        return safety_prefix + prompt\n    \n    def _add_ai_disclosure(self, response):\n        return f\"{response}\\n\\n[This response was generated by AI]\""
+                }
+              },
+              {
+                "title": "Combating Misinformation",
+                "content": "**Technical Measures**\n- Watermarking AI-generated content\n- Confidence calibration (expressing uncertainty)\n- Retrieval-augmented generation for factuality\n- Source attribution\n\n**Policy Measures**\n- Clear labeling requirements\n- User education on AI limitations\n- Fact-checking partnerships\n- Accountability for misuse\n\n**Research Directions**\n- Reliable hallucination detection\n- Truthfulness fine-tuning\n- Verifiable AI outputs"
+              }
+            ],
+            "keyTakeaways": [
+              "LLMs can generate convincing misinformation",
+              "Multiple layers of safeguards are needed",
+              "Transparency about AI generation is crucial",
+              "Consider environmental impact of large models"
+            ]
+          }
+        },
+        {
+          "id": "human-ai-interaction",
+          "title": "Human-AI Interaction Design",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Designing how humans interact with AI systems is crucial for safety, trust, and effectiveness. Learn principles for human-centered AI.",
+            "sections": [
+              {
+                "title": "Human-in-the-Loop Design",
+                "content": "**Levels of Automation**\n1. **Human Only**: AI provides no assistance\n2. **AI Suggests**: Human makes final decision\n3. **AI Recommends**: Human can override\n4. **AI Decides**: Human can intervene\n5. **AI Autonomous**: No human involvement\n\n**Choose Level Based On**\n- Stakes of the decision\n- AI accuracy and reliability\n- User expertise\n- Time constraints\n- Reversibility of decision",
+                "diagram": {
+                  "title": "Levels of Automation",
+                  "code": "graph LR\n    L1[Human Only] --> L2[AI Suggests]\n    L2 --> L3[AI Recommends]\n    L3 --> L4[AI Decides]\n    L4 --> L5[AI Autonomous]\n    style L1 fill:#e1f5fe\n    style L5 fill:#ffebee"
+                }
+              },
+              {
+                "title": "Trust Calibration",
+                "codeExample": {
+                  "language": "python",
+                  "code": "class CalibratedAIResponse:\n    def __init__(self, prediction, confidence, explanation):\n        self.prediction = prediction\n        self.confidence = confidence\n        self.explanation = explanation\n    \n    def format_for_user(self):\n        confidence_text = {\n            (0.9, 1.0): \"I'm very confident\",\n            (0.7, 0.9): \"I'm fairly confident\",\n            (0.5, 0.7): \"I'm somewhat uncertain\",\n            (0.0, 0.5): \"I'm quite uncertain\"\n        }\n        \n        for (low, high), text in confidence_text.items():\n            if low <= self.confidence < high:\n                conf_msg = text\n                break\n        \n        return f\"\"\"\n        Recommendation: {self.prediction}\n        \n        {conf_msg} about this ({self.confidence:.0%}).\n        \n        Reasoning: {self.explanation}\n        \n        {self._get_action_guidance()}\n        \"\"\"\n    \n    def _get_action_guidance(self):\n        if self.confidence < 0.7:\n            return \"\u26a0\ufe0f Please verify this with additional sources.\"\n        elif self.confidence < 0.9:\n            return \"Consider reviewing before acting.\"\n        return \"This assessment appears reliable.\""
+                }
+              },
+              {
+                "title": "Effective AI Interfaces",
+                "content": "**Do's**\n- Show confidence levels clearly\n- Explain reasoning in plain language\n- Make it easy to override AI\n- Provide feedback mechanisms\n- Show AI limitations upfront\n\n**Don'ts**\n- Don't hide that it's AI\n- Don't show false precision\n- Don't make AI seem infallible\n- Don't ignore user expertise\n- Don't force AI recommendations"
+              }
+            ],
+            "keyTakeaways": [
+              "Match automation level to decision stakes",
+              "Calibrated confidence prevents over/under-reliance",
+              "Always allow human override for important decisions",
+              "Design for appropriate trust, not maximum trust"
+            ]
+          }
+        },
+        {
+          "id": "ai-audit",
+          "title": "AI Auditing & Assessment",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Regular auditing ensures AI systems remain fair, accurate, and safe over time. Learn frameworks for comprehensive AI assessment.",
+            "sections": [
+              {
+                "title": "Audit Framework",
+                "diagram": {
+                  "title": "Audit Pipeline Flow",
+                  "code": "flowchart TD\n    Data[Test Data] --> Model\n    Model --> Preds[Predictions]\n    Preds --> Metrics{Calculate Metrics}\n    Metrics --> Acc[Accuracy]\n    Metrics --> Fair[Fairness]\n    Metrics --> Rob[Robustness]\n    Acc & Fair & Rob --> Report[Audit Report]\n    Report --> Pass{Pass?}\n    Pass -->|Yes| Deploy\n    Pass -->|No| Fix"
+                },
+                "content": "**Pre-deployment Audit**\n1. Data quality and bias assessment\n2. Model performance across subgroups\n3. Explainability review\n4. Security and adversarial testing\n5. Documentation completeness\n\n**Post-deployment Monitoring**\n1. Performance drift detection\n2. Fairness metric tracking\n3. User feedback analysis\n4. Incident logging\n5. Periodic re-evaluation"
+              },
+              {
+                "title": "Automated Auditing Pipeline",
+                "diagram": {
+                  "title": "Automated Audit Sequence",
+                  "code": "sequenceDiagram\n    participant CI as CI/CD Pipeline\n    participant A as Auditor\n    participant M as Model\n    participant D as Test Data\n    \n    CI->>A: Trigger Audit\n    A->>M: Load Model\n    A->>D: Fetch Test Set\n    \n    loop For Each Metric\n        A->>M: Predict(Batch)\n        M-->>A: Predictions\n        A->>A: Calculate Metric\n    end\n    \n    A->>A: Check Thresholds\n    alt All Passed\n        A-->>CI: Pass\n    else Failed\n        A-->>CI: Fail (with Report)\n    end"
+                },
+                "codeExample": {
+                  "language": "python",
+                  "code": "from dataclasses import dataclass\nfrom typing import Dict, List\nimport datetime\n\n@dataclass\nclass AuditResult:\n    timestamp: datetime.datetime\n    metric_name: str\n    value: float\n    threshold: float\n    passed: bool\n    details: str\n\nclass AIAuditor:\n    def __init__(self, model, test_data, sensitive_features):\n        self.model = model\n        self.test_data = test_data\n        self.sensitive_features = sensitive_features\n        self.results: List[AuditResult] = []\n    \n    def run_full_audit(self):\n        self.check_accuracy()\n        self.check_fairness()\n        self.check_calibration()\n        self.check_robustness()\n        return self.generate_report()\n    \n    def check_fairness(self):\n        for feature in self.sensitive_features:\n            # Check demographic parity\n            groups = self.test_data[feature].unique()\n            positive_rates = {}\n            \n            for group in groups:\n                mask = self.test_data[feature] == group\n                y_pred = self.model.predict(self.test_data[mask])\n                positive_rates[group] = y_pred.mean()\n            \n            disparity = max(positive_rates.values()) - min(positive_rates.values())\n            \n            self.results.append(AuditResult(\n                timestamp=datetime.datetime.now(),\n                metric_name=f'demographic_parity_{feature}',\n                value=disparity,\n                threshold=0.1,\n                passed=disparity < 0.1,\n                details=f'Positive rates by group: {positive_rates}'\n            ))\n    \n    def generate_report(self) -> Dict:\n        passed = sum(1 for r in self.results if r.passed)\n        total = len(self.results)\n        \n        return {\n            'overall_status': 'PASS' if passed == total else 'FAIL',\n            'checks_passed': f'{passed}/{total}',\n            'results': [vars(r) for r in self.results]\n        }"
+                }
+              },
+              {
+                "title": "Third-Party Audits",
+                "content": "**When to Use External Auditors**\n- High-stakes applications\n- Regulatory requirements\n- Public-facing systems\n- After incidents\n\n**What Auditors Assess**\n- Technical performance\n- Fairness and bias\n- Security vulnerabilities\n- Governance and processes\n- Documentation quality\n\n**Preparing for Audit**\n- Document all design decisions\n- Maintain data and model lineage\n- Prepare test datasets\n- Have access controls ready"
+              }
+            ],
+            "keyTakeaways": [
+              "Audit before deployment and continuously after",
+              "Automate routine checks, use humans for judgment",
+              "Third-party audits provide independent validation",
+              "Maintain audit trails for accountability"
+            ]
+          }
+        },
+        {
+          "id": "inclusive-ai",
+          "title": "Building Inclusive AI",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Inclusive AI works for everyone, regardless of ability, language, culture, or background. Learn to design AI that serves diverse users.",
+            "sections": [
+              {
+                "title": "Accessibility in AI",
+                "content": "**Visual Impairment**\n- Alt text generation for images\n- Screen reader compatibility\n- Voice interfaces\n\n**Hearing Impairment**\n- Accurate captions and transcripts\n- Visual alternatives to audio cues\n- Sign language translation\n\n**Motor Impairment**\n- Voice control options\n- Reduced input requirements\n- Adjustable interaction speeds\n\n**Cognitive Diversity**\n- Clear, simple explanations\n- Consistent interfaces\n- Customizable complexity levels"
+              },
+              {
+                "title": "Multilingual AI",
+                "codeExample": {
+                  "language": "python",
+                  "code": "class MultilingualAISystem:\n    def __init__(self):\n        self.language_detector = LanguageDetector()\n        self.models = {\n            'en': load_model('english'),\n            'es': load_model('spanish'),\n            'zh': load_model('chinese'),\n            # Add more languages\n        }\n    \n    def process(self, text, target_language='en'):\n        # Detect input language\n        input_lang = self.language_detector.detect(text)\n        \n        # Process in native language if available\n        if input_lang in self.models:\n            result = self.models[input_lang].process(text)\n        else:\n            # Fall back to English with translation\n            translated = self.translate(text, 'en')\n            result = self.models['en'].process(translated)\n        \n        # Translate output if needed\n        if target_language != 'en' and result.language == 'en':\n            result = self.translate_result(result, target_language)\n        \n        return result\n    \n    def evaluate_multilingual_fairness(self, test_data_by_language):\n        results = {}\n        for lang, data in test_data_by_language.items():\n            accuracy = self.evaluate(data)\n            results[lang] = accuracy\n        \n        # Check for disparities\n        max_gap = max(results.values()) - min(results.values())\n        print(f'Performance gap across languages: {max_gap:.2%}')\n        return results"
+                }
+              },
+              {
+                "title": "Cultural Considerations",
+                "content": "**Content Sensitivity**\n- Cultural norms vary widely\n- Religious and political sensitivities\n- Local laws and customs\n- Context-appropriate examples\n\n**Representation**\n- Diverse training data\n- Varied examples and personas\n- Avoid stereotypes\n- Include non-Western perspectives\n\n**Testing**\n- Test with diverse user groups\n- Include cultural consultants\n- Localize, don't just translate"
+              }
+            ],
+            "keyTakeaways": [
+              "Accessibility benefits everyone, not just disabled users",
+              "Test across languages and cultures",
+              "Involve diverse users in development",
+              "Localization goes beyond translation"
+            ]
+          }
+        },
+        {
+          "id": "environmental-impact",
+          "title": "Environmental Impact of AI",
+          "type": "lesson",
+          "duration": "20 min",
+          "content": {
+            "overview": "AI systems consume significant energy and resources. Learn to measure and reduce the environmental footprint of your AI work.",
+            "sections": [
+              {
+                "title": "AI's Carbon Footprint",
+                "content": "**Training Large Models**\n- GPT-3: ~552 tons CO2 (equivalent to 120 cars/year)\n- Training once saves vs. training many times\n- Transfer learning reduces training needs\n\n**Inference**\n- Smaller per-query, but billions of queries\n- Data center energy consumption\n- Cooling requirements\n\n**Hardware**\n- GPU manufacturing impact\n- E-waste from rapid hardware cycles\n- Rare earth minerals"
+              },
+              {
+                "title": "Measuring Impact",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from codecarbon import EmissionsTracker\nimport time\n\n# Track emissions during training\ntracker = EmissionsTracker()\ntracker.start()\n\n# Your training code\nmodel.fit(X_train, y_train, epochs=10)\n\nemissions = tracker.stop()\nprint(f'Emissions: {emissions:.4f} kg CO2')\n\n# Compare model efficiency\ndef compare_model_efficiency(models, X_test, y_test):\n    results = []\n    for name, model in models:\n        tracker = EmissionsTracker()\n        tracker.start()\n        \n        start = time.time()\n        accuracy = model.score(X_test, y_test)\n        latency = time.time() - start\n        \n        emissions = tracker.stop()\n        \n        results.append({\n            'model': name,\n            'accuracy': accuracy,\n            'latency_ms': latency * 1000,\n            'emissions_kg': emissions,\n            'efficiency': accuracy / emissions  # Accuracy per kg CO2\n        })\n    \n    return results"
+                }
+              },
+              {
+                "title": "Reducing Environmental Impact",
+                "content": "**Model Efficiency**\n- Use smaller models when possible\n- Distillation and pruning\n- Quantization\n- Efficient architectures\n\n**Training Efficiency**\n- Transfer learning and fine-tuning\n- Early stopping\n- Hyperparameter efficiency (Optuna, etc.)\n- Train in green regions\n\n**Infrastructure**\n- Renewable energy data centers\n- Efficient cooling\n- Hardware lifespan extension\n- Batch inference when possible"
+              }
+            ],
+            "keyTakeaways": [
+              "Large model training has significant carbon footprint",
+              "Measure emissions to understand impact",
+              "Smaller, efficient models are often sufficient",
+              "Choose green cloud regions when possible"
+            ]
+          }
+        },
+        {
+          "id": "ethics-project",
+          "title": "Capstone: Ethical AI Assessment",
+          "type": "project",
+          "duration": "90 min",
+          "content": {
+            "overview": "Conduct a comprehensive ethical assessment of an AI system, identifying risks and recommending mitigations.",
+            "sections": [
+              {
+                "title": "Project: Audit a Loan Approval Model",
+                "content": "**Objective**: Perform an ethical audit of a credit scoring model.\n\n**Tasks**:\n1. Analyze training data for bias\n2. Evaluate fairness across protected groups\n3. Assess explainability of decisions\n4. Document limitations and risks\n5. Recommend mitigations\n\n**Deliverables**:\n- Fairness metrics report\n- Bias mitigation implementation\n- Model card documentation\n- Recommendations for deployment",
+                "diagram": {
+                  "title": "Project Timeline",
+                  "code": "gantt\n    title Audit Project Timeline\n    dateFormat  X\n    axisFormat %d\n    section Phases\n    Data Analysis       :a1, 0, 2d\n    Fairness Eval       :a2, after a1, 2d\n    Explainability      :a3, after a2, 2d\n    Reporting           :a4, after a3, 1d"
+                }
+              },
+              {
+                "title": "Assessment Implementation",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\nimport numpy as np\nfrom fairlearn.metrics import MetricFrame, demographic_parity_difference\nfrom sklearn.metrics import accuracy_score, precision_score, recall_score\nimport shap\n\nclass EthicalAssessment:\n    def __init__(self, model, X, y, sensitive_features):\n        self.model = model\n        self.X = X\n        self.y = y\n        self.sensitive = sensitive_features\n        self.y_pred = model.predict(X)\n        self.report = {}\n    \n    def analyze_data(self):\n        \"\"\"Analyze training data for representation.\"\"\"\n        for col in self.sensitive.columns:\n            distribution = self.sensitive[col].value_counts(normalize=True)\n            self.report[f'data_distribution_{col}'] = distribution.to_dict()\n    \n    def evaluate_fairness(self):\n        \"\"\"Calculate fairness metrics.\"\"\"\n        for col in self.sensitive.columns:\n            mf = MetricFrame(\n                metrics={'accuracy': accuracy_score, 'precision': precision_score},\n                y_true=self.y,\n                y_pred=self.y_pred,\n                sensitive_features=self.sensitive[col]\n            )\n            self.report[f'metrics_by_{col}'] = mf.by_group.to_dict()\n            \n            dp_diff = demographic_parity_difference(\n                self.y, self.y_pred, sensitive_features=self.sensitive[col]\n            )\n            self.report[f'demographic_parity_diff_{col}'] = dp_diff\n    \n    def assess_explainability(self, sample_size=100):\n        \"\"\"Generate explanations for sample predictions.\"\"\"\n        explainer = shap.TreeExplainer(self.model)\n        sample = self.X.sample(sample_size)\n        shap_values = explainer.shap_values(sample)\n        \n        # Feature importance\n        importance = np.abs(shap_values).mean(axis=0)\n        self.report['feature_importance'] = dict(zip(self.X.columns, importance))\n    \n    def generate_model_card(self):\n        return {\n            'model_details': {'type': type(self.model).__name__},\n            'fairness_assessment': self.report,\n            'limitations': self._identify_limitations(),\n            'recommendations': self._generate_recommendations()\n        }"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Ethical assessment is a comprehensive process",
+              "Multiple fairness metrics provide different views",
+              "Documentation is essential for accountability",
+              "Recommendations should be actionable"
+            ]
+          }
+        },
+        {
+          "id": "ethics-quiz",
+          "title": "AI Ethics Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is demographic parity in fairness?",
+              "options": [
+                "Equal accuracy for all groups",
+                "Equal positive prediction rates across groups",
+                "Equal training data for all groups",
+                "Equal model complexity for all groups"
+              ],
+              "correct": 1,
+              "explanation": "Demographic parity means the positive prediction rate (e.g., approval rate) is equal across protected groups, regardless of the base rate in each group."
+            },
+            {
+              "question": "What does SHAP help you understand?",
+              "options": [
+                "Model training speed",
+                "Feature contributions to predictions",
+                "Data privacy leaks",
+                "Hardware requirements"
+              ],
+              "correct": 1,
+              "explanation": "SHAP (SHapley Additive exPlanations) calculates how much each feature contributes to a prediction, providing both local (individual) and global (overall) explanations."
+            },
+            {
+              "question": "What is the main benefit of federated learning for privacy?",
+              "options": [
+                "Faster training",
+                "Data stays on local devices",
+                "Better accuracy",
+                "Smaller models"
+              ],
+              "correct": 1,
+              "explanation": "Federated learning trains models on distributed data without centralizing it. Only model updates are shared, keeping raw data on local devices."
+            },
+            {
+              "question": "Under the EU AI Act, which application is classified as 'high-risk'?",
+              "options": [
+                "Spam filtering",
+                "Music recommendations",
+                "Credit scoring",
+                "Game AI"
+              ],
+              "correct": 2,
+              "explanation": "Credit scoring, along with hiring, healthcare diagnostics, and law enforcement applications, is classified as high-risk under the EU AI Act, requiring extensive documentation and oversight."
+            },
+            {
+              "question": "What is model inversion attack?",
+              "options": [
+                "Flipping model predictions",
+                "Reconstructing training data from model",
+                "Making model slower",
+                "Changing model architecture"
+              ],
+              "correct": 1,
+              "explanation": "Model inversion is a privacy attack that attempts to reconstruct training examples or sensitive attributes from a trained model's outputs or parameters."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

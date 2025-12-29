@@ -1,0 +1,527 @@
+{
+  "courses": [
+    {
+      "id": "math-for-ai",
+      "title": "Mathematics for AI",
+      "icon": "🧮",
+      "description": "Master the essential mathematical foundations needed for machine learning and deep learning.",
+      "level": "beginner",
+      "duration": "6 weeks",
+      "totalLessons": 24,
+      "modules": [
+        {
+          "title": "Linear Algebra Essentials",
+          "description": "Vectors, matrices, and transformations - the language of ML",
+          "lessons": [
+            { "id": "vectors", "title": "Vectors and Vector Operations", "type": "lesson", "duration": "25 min" },
+            { "id": "matrices", "title": "Matrices and Matrix Operations", "type": "lesson", "duration": "30 min" },
+            { "id": "transformations", "title": "Linear Transformations", "type": "lesson", "duration": "25 min" },
+            { "id": "eigenvalues", "title": "Eigenvalues and Eigenvectors", "type": "lesson", "duration": "30 min" },
+            { "id": "la-quiz", "title": "Linear Algebra Quiz", "type": "quiz", "duration": "10 min" }
+          ]
+        },
+        {
+          "title": "Calculus for Optimization",
+          "description": "Derivatives, gradients, and the chain rule - how neural networks learn",
+          "lessons": [
+            { "id": "derivatives", "title": "Derivatives and Slopes", "type": "lesson", "duration": "25 min" },
+            { "id": "gradients", "title": "Gradients and Partial Derivatives", "type": "lesson", "duration": "30 min" },
+            { "id": "chain-rule", "title": "The Chain Rule and Backpropagation", "type": "lesson", "duration": "35 min" },
+            { "id": "calculus-quiz", "title": "Calculus Quiz", "type": "quiz", "duration": "10 min" }
+          ]
+        },
+        {
+          "title": "Probability and Statistics",
+          "description": "Uncertainty, distributions, and Bayesian thinking for ML",
+          "lessons": [
+            { "id": "probability-basics", "title": "Probability Fundamentals", "type": "lesson", "duration": "25 min" },
+            { "id": "distributions", "title": "Probability Distributions", "type": "lesson", "duration": "30 min" },
+            { "id": "bayes", "title": "Bayes' Theorem", "type": "lesson", "duration": "30 min" },
+            { "id": "stats-quiz", "title": "Probability Quiz", "type": "quiz", "duration": "10 min" }
+          ]
+        },
+        {
+          "title": "Optimization Techniques",
+          "description": "From vanilla gradient descent to Adam - how models learn",
+          "lessons": [
+            { "id": "loss-functions", "title": "Loss Functions", "type": "lesson", "duration": "25 min" },
+            { "id": "gradient-descent", "title": "Gradient Descent Variants", "type": "lesson", "duration": "30 min" },
+            { "id": "adam", "title": "Adam and Modern Optimizers", "type": "lesson", "duration": "30 min" },
+            { "id": "regularization", "title": "Regularization Techniques", "type": "lesson", "duration": "25 min" },
+            { "id": "optimization-quiz", "title": "Optimization Quiz", "type": "quiz", "duration": "10 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python-ai",
+      "title": "Python Fundamentals for AI",
+      "icon": "🐍",
+      "description": "Master Python programming essentials needed for machine learning and AI development.",
+      "level": "beginner",
+      "duration": "4 weeks",
+      "totalLessons": 20,
+      "modules": [
+        {
+          "title": "Getting Started with Python",
+          "description": "Set up your development environment and write your first Python code",
+          "lessons": [
+            { "id": "intro", "title": "Why Python for AI?", "type": "lesson", "duration": "10 min" },
+            { "id": "setup", "title": "Setting Up Your Environment", "type": "lesson", "duration": "15 min" },
+            { "id": "first-program", "title": "Your First Python Program", "type": "hands-on", "duration": "20 min" },
+            { "id": "variables", "title": "Variables and Data Types", "type": "lesson", "duration": "15 min" }
+          ]
+        },
+        {
+          "title": "Control Flow & Functions",
+          "description": "Learn to control program flow and write reusable functions",
+          "lessons": [
+            { "id": "conditionals", "title": "If Statements and Conditionals", "type": "lesson", "duration": "15 min" },
+            { "id": "loops", "title": "Loops: For and While", "type": "lesson", "duration": "15 min" },
+            { "id": "functions", "title": "Writing Functions", "type": "lesson", "duration": "20 min" },
+            { "id": "scope", "title": "Variable Scope and Best Practices", "type": "lesson", "duration": "10 min" }
+          ]
+        },
+        {
+          "title": "Data Structures",
+          "description": "Master Python's built-in data structures essential for AI",
+          "lessons": [
+            { "id": "lists", "title": "Lists and List Comprehensions", "type": "lesson", "duration": "20 min" },
+            { "id": "dicts", "title": "Dictionaries and Sets", "type": "lesson", "duration": "15 min" },
+            { "id": "tuples", "title": "Tuples and Named Tuples", "type": "lesson", "duration": "10 min" },
+            { "id": "project", "title": "Project: Data Processing Pipeline", "type": "project", "duration": "45 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "data-science",
+      "title": "Data Science Fundamentals",
+      "icon": "📊",
+      "description": "Master data analysis, visualization, and statistical thinking for AI applications.",
+      "level": "beginner",
+      "duration": "5 weeks",
+      "totalLessons": 20,
+      "modules": [
+        {
+          "title": "Data Analysis Foundations",
+          "description": "NumPy, Pandas, and data manipulation",
+          "lessons": [
+            { "id": "intro-ds", "title": "Introduction to Data Science", "type": "lesson", "duration": "15 min" },
+            { "id": "numpy-essentials", "title": "NumPy Essentials", "type": "lesson", "duration": "25 min" },
+            { "id": "pandas-dataframes", "title": "Pandas DataFrames", "type": "lesson", "duration": "30 min" },
+            { "id": "data-cleaning", "title": "Data Cleaning Techniques", "type": "lesson", "duration": "25 min" }
+          ]
+        },
+        {
+          "title": "Analysis & Visualization",
+          "description": "EDA, statistics, and compelling visualizations",
+          "lessons": [
+            { "id": "visualization", "title": "Visualization with Matplotlib & Seaborn", "type": "lesson", "duration": "30 min" },
+            { "id": "eda", "title": "Exploratory Data Analysis", "type": "lesson", "duration": "35 min" },
+            { "id": "statistics", "title": "Statistics for Data Science", "type": "lesson", "duration": "30 min" },
+            { "id": "feature-engineering", "title": "Feature Engineering", "type": "lesson", "duration": "30 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ml-fundamentals",
+      "title": "Machine Learning Fundamentals",
+      "icon": "🤖",
+      "description": "Understand the core concepts of machine learning from theory to practice.",
+      "level": "intermediate",
+      "duration": "6 weeks",
+      "totalLessons": 24,
+      "modules": [
+        {
+          "title": "Introduction to ML",
+          "description": "Understand what machine learning is and its applications",
+          "lessons": [
+            { "id": "what-is-ml", "title": "What is Machine Learning?", "type": "lesson", "duration": "15 min" },
+            { "id": "types", "title": "Types of ML: Supervised, Unsupervised, Reinforcement", "type": "lesson", "duration": "20 min" },
+            { "id": "workflow", "title": "The ML Workflow", "type": "lesson", "duration": "15 min" },
+            { "id": "tools", "title": "ML Tools and Libraries Overview", "type": "lesson", "duration": "10 min" }
+          ]
+        },
+        {
+          "title": "Supervised Learning",
+          "description": "Learn regression and classification algorithms",
+          "lessons": [
+            { "id": "linear-reg", "title": "Linear Regression", "type": "lesson", "duration": "20 min" },
+            { "id": "logistic-reg", "title": "Logistic Regression", "type": "lesson", "duration": "20 min" },
+            { "id": "decision-trees", "title": "Decision Trees", "type": "lesson", "duration": "20 min" },
+            { "id": "evaluation", "title": "Model Evaluation Metrics", "type": "lesson", "duration": "15 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prompt-engineering",
+      "title": "Prompt Engineering Mastery",
+      "icon": "💬",
+      "description": "Learn to write effective prompts for LLMs to get better results.",
+      "level": "intermediate",
+      "duration": "2 weeks",
+      "totalLessons": 12,
+      "modules": [
+        {
+          "title": "Prompt Basics",
+          "description": "Foundation of effective prompting",
+          "lessons": [
+            { "id": "intro", "title": "What is Prompt Engineering?", "type": "lesson", "duration": "10 min" },
+            { "id": "anatomy", "title": "Anatomy of a Good Prompt", "type": "lesson", "duration": "15 min" },
+            { "id": "zero-shot", "title": "Zero-Shot Prompting", "type": "lesson", "duration": "15 min" },
+            { "id": "few-shot", "title": "Few-Shot Learning with Examples", "type": "lesson", "duration": "20 min" }
+          ]
+        },
+        {
+          "title": "Advanced Techniques",
+          "description": "Master advanced prompting strategies",
+          "lessons": [
+            { "id": "cot", "title": "Chain of Thought Prompting", "type": "lesson", "duration": "20 min" },
+            { "id": "role", "title": "Role and Persona Prompts", "type": "lesson", "duration": "15 min" },
+            { "id": "structured", "title": "Structured Output Formats", "type": "lesson", "duration": "15 min" },
+            { "id": "project", "title": "Project: Building a Prompt Library", "type": "project", "duration": "30 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rag-applications",
+      "title": "Building RAG Applications",
+      "icon": "🔗",
+      "description": "Build Retrieval-Augmented Generation apps with LangChain and vector databases.",
+      "level": "advanced",
+      "duration": "4 weeks",
+      "totalLessons": 16,
+      "modules": [
+        {
+          "title": "RAG Fundamentals",
+          "description": "Understanding RAG architecture",
+          "lessons": [
+            { "id": "what-is-rag", "title": "What is RAG and Why Use It?", "type": "lesson", "duration": "15 min" },
+            { "id": "embeddings", "title": "Text Embeddings Explained", "type": "lesson", "duration": "20 min" },
+            { "id": "vector-dbs", "title": "Vector Databases Overview", "type": "lesson", "duration": "20 min" },
+            { "id": "architecture", "title": "RAG Architecture Patterns", "type": "lesson", "duration": "15 min" }
+          ]
+        },
+        {
+          "title": "Building with LangChain",
+          "description": "Implement RAG using LangChain",
+          "lessons": [
+            { "id": "langchain-intro", "title": "LangChain Introduction", "type": "lesson", "duration": "15 min" },
+            { "id": "document-loaders", "title": "Document Loaders and Splitters", "type": "lesson", "duration": "20 min" },
+            { "id": "retrievers", "title": "Creating Retrievers", "type": "lesson", "duration": "20 min" },
+            { "id": "chains", "title": "Building RAG Chains", "type": "hands-on", "duration": "30 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deep-learning-pytorch",
+      "title": "Deep Learning with PyTorch",
+      "icon": "🧬",
+      "description": "Build and train neural networks using PyTorch framework.",
+      "level": "intermediate",
+      "duration": "8 weeks",
+      "totalLessons": 32,
+      "modules": [
+        {
+          "title": "Neural Network Basics",
+          "description": "Understand how neural networks work",
+          "lessons": [
+            { "id": "perceptron", "title": "The Perceptron", "type": "lesson", "duration": "20 min" },
+            { "id": "activation", "title": "Activation Functions", "type": "lesson", "duration": "15 min" },
+            { "id": "backprop", "title": "Backpropagation", "type": "lesson", "duration": "25 min" },
+            { "id": "pytorch-intro", "title": "PyTorch Tensors and Autograd", "type": "hands-on", "duration": "30 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llm-finetuning",
+      "title": "Fine-tuning LLMs",
+      "icon": "🔧",
+      "description": "Learn to customize large language models for specific use cases.",
+      "level": "advanced",
+      "duration": "4 weeks",
+      "totalLessons": 16,
+      "modules": [
+        {
+          "title": "Fine-tuning Fundamentals",
+          "description": "When and how to fine-tune",
+          "lessons": [
+            { "id": "when-finetune", "title": "When to Fine-tune vs Prompt", "type": "lesson", "duration": "15 min" },
+            { "id": "data-prep", "title": "Preparing Training Data", "type": "lesson", "duration": "20 min" },
+            { "id": "lora", "title": "LoRA and Efficient Fine-tuning", "type": "lesson", "duration": "25 min" },
+            { "id": "evaluation", "title": "Evaluating Fine-tuned Models", "type": "lesson", "duration": "15 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "computer-vision",
+      "title": "Computer Vision with PyTorch",
+      "icon": "👁️",
+      "description": "Build vision AI systems from image classification to object detection and beyond.",
+      "level": "intermediate",
+      "duration": "6 weeks",
+      "totalLessons": 18,
+      "modules": [
+        {
+          "title": "Vision Fundamentals",
+          "description": "Image processing and CNNs",
+          "lessons": [
+            { "id": "intro-cv", "title": "Introduction to Computer Vision", "type": "lesson", "duration": "20 min" },
+            { "id": "cnn-architecture", "title": "Convolutional Neural Networks", "type": "lesson", "duration": "35 min" },
+            { "id": "transfer-learning", "title": "Transfer Learning for Vision", "type": "lesson", "duration": "25 min" }
+          ]
+        },
+        {
+          "title": "Advanced Vision",
+          "description": "Detection and segmentation",
+          "lessons": [
+            { "id": "object-detection", "title": "Object Detection", "type": "lesson", "duration": "35 min" },
+            { "id": "segmentation", "title": "Image Segmentation", "type": "lesson", "duration": "30 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nlp-transformers",
+      "title": "NLP & Transformers",
+      "icon": "📝",
+      "description": "Master Natural Language Processing from text preprocessing to building transformer models.",
+      "level": "intermediate",
+      "duration": "7 weeks",
+      "totalLessons": 20,
+      "modules": [
+        {
+          "title": "NLP Foundations",
+          "description": "Text processing and embeddings",
+          "lessons": [
+            { "id": "intro-nlp", "title": "Introduction to NLP", "type": "lesson", "duration": "20 min" },
+            { "id": "word-embeddings", "title": "Word Embeddings", "type": "lesson", "duration": "25 min" }
+          ]
+        },
+        {
+          "title": "Transformers",
+          "description": "Attention and modern architectures",
+          "lessons": [
+            { "id": "attention-mechanism", "title": "Attention Mechanism", "type": "lesson", "duration": "30 min" },
+            { "id": "transformer-architecture", "title": "Transformer Architecture", "type": "lesson", "duration": "40 min" },
+            { "id": "huggingface-transformers", "title": "Hugging Face Transformers", "type": "lesson", "duration": "35 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "genai-applications",
+      "title": "Generative AI Applications",
+      "icon": "✨",
+      "description": "Build practical applications with LLMs, image generation, and multi-modal AI systems.",
+      "level": "intermediate",
+      "duration": "6 weeks",
+      "totalLessons": 18,
+      "modules": [
+        {
+          "title": "LLM Applications",
+          "description": "Build chatbots and assistants",
+          "lessons": [
+            { "id": "intro-genai-apps", "title": "GenAI Application Landscape", "type": "lesson", "duration": "20 min" },
+            { "id": "chatbot-basics", "title": "Building Chatbots with LLMs", "type": "lesson", "duration": "30 min" },
+            { "id": "langchain-basics", "title": "Building with LangChain", "type": "lesson", "duration": "35 min" }
+          ]
+        },
+        {
+          "title": "Multi-Modal AI",
+          "description": "Image, audio, and beyond",
+          "lessons": [
+            { "id": "image-generation", "title": "Image Generation with AI", "type": "lesson", "duration": "30 min" },
+            { "id": "multimodal", "title": "Multi-Modal AI Applications", "type": "lesson", "duration": "30 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlops",
+      "title": "MLOps & Model Deployment",
+      "icon": "🚀",
+      "description": "Learn to deploy, monitor, and maintain ML models in production environments.",
+      "level": "advanced",
+      "duration": "5 weeks",
+      "totalLessons": 16,
+      "modules": [
+        {
+          "title": "Deployment Fundamentals",
+          "description": "Packaging and containerization",
+          "lessons": [
+            { "id": "intro-mlops", "title": "Introduction to MLOps", "type": "lesson", "duration": "20 min" },
+            { "id": "model-packaging", "title": "Model Packaging & Serialization", "type": "lesson", "duration": "25 min" },
+            { "id": "docker-deployment", "title": "Docker for ML Deployment", "type": "lesson", "duration": "30 min" }
+          ]
+        },
+        {
+          "title": "Production Systems",
+          "description": "Serving and monitoring",
+          "lessons": [
+            { "id": "model-serving", "title": "Model Serving Frameworks", "type": "lesson", "duration": "30 min" },
+            { "id": "monitoring-observability", "title": "Model Monitoring & Observability", "type": "lesson", "duration": "30 min" },
+            { "id": "cicd-ml", "title": "CI/CD for Machine Learning", "type": "lesson", "duration": "30 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ai-ethics",
+      "title": "AI Ethics & Safety",
+      "icon": "⚖️",
+      "description": "Understand responsible AI development, bias mitigation, safety considerations, and ethical frameworks.",
+      "level": "intermediate",
+      "duration": "4 weeks",
+      "totalLessons": 14,
+      "modules": [
+        {
+          "title": "Ethics Foundations",
+          "description": "Principles and frameworks",
+          "lessons": [
+            { "id": "intro-ethics", "title": "Introduction to AI Ethics", "type": "lesson", "duration": "25 min" },
+            { "id": "algorithmic-bias", "title": "Understanding Algorithmic Bias", "type": "lesson", "duration": "30 min" },
+            { "id": "bias-mitigation", "title": "Bias Mitigation Techniques", "type": "lesson", "duration": "35 min" }
+          ]
+        },
+        {
+          "title": "Safety & Responsibility",
+          "description": "Building safe AI systems",
+          "lessons": [
+            { "id": "explainability", "title": "Explainability & Interpretability", "type": "lesson", "duration": "30 min" },
+            { "id": "ai-safety", "title": "AI Safety Fundamentals", "type": "lesson", "duration": "30 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-node-ai",
+      "title": "Angular & Node.js AI Engineering",
+      "icon": "🅰️",
+      "description": "Deep dive into building production-grade AI applications using the MEAN stack",
+      "level": "advanced",
+      "duration": "4 weeks",
+      "totalLessons": 7,
+      "modules": [
+        {
+          "title": "Module 0: AI Fundamentals",
+          "description": "Tokens, Temperature & Models",
+          "lessons": [
+            { "id": "thinking-in-tokens", "title": "Thinking in Tokens", "type": "lesson", "duration": "30 min" }
+          ]
+        },
+        {
+          "title": "Module 1: The AI Backend (Node.js)",
+          "description": "LangChain.js and RAG with Node",
+          "lessons": [
+            { "id": "langchain-js-basics", "title": "LangChain.js Fundamentals", "type": "lesson", "duration": "90 min" },
+            { "id": "rag-node", "title": "Building RAG with Node.js", "type": "hands-on", "duration": "90 min" }
+          ]
+        },
+        {
+          "title": "Module 2: The AI Frontend (Angular)",
+          "description": "Streaming and UI components",
+          "lessons": [
+            { "id": "streaming-responses", "title": "Streaming with RxJS", "type": "hands-on", "duration": "60 min" }
+          ]
+        },
+        {
+          "title": "Module 3: Production & Ops",
+          "description": "Caching, Security & Docker",
+          "lessons": [
+            { "id": "caching-evals", "title": "Caching, Security & Evals", "type": "lesson", "duration": "60 min" },
+            { "id": "docker-deploy", "title": "Dockerizing the Stack", "type": "hands-on", "duration": "45 min" }
+          ]
+        },
+        {
+          "title": "Module 4: Autonomous Agents",
+          "description": "Tool Calling & ReAct Pattern",
+          "lessons": [
+            { "id": "tool-calling-node", "title": "Tool Calling & Agents", "type": "hands-on", "duration": "90 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "agentic-ai",
+      "title": "Building AI Agents",
+      "icon": "🤖",
+      "description": "Master the architecture and implementation of autonomous AI agents with tool use, memory, and multi-agent orchestration.",
+      "level": "advanced",
+      "duration": "5 weeks",
+      "totalLessons": 8,
+      "modules": [
+        {
+          "title": "Agent Fundamentals",
+          "description": "Core concepts, ReAct pattern, and agent architectures",
+          "lessons": [
+            { "id": "what-are-agents", "title": "What Are AI Agents?", "type": "lesson", "duration": "40 min" },
+            { "id": "agent-frameworks", "title": "Agent Frameworks Overview", "type": "lesson", "duration": "35 min" }
+          ]
+        },
+        {
+          "title": "Tool Use & Function Calling",
+          "description": "Function calling, tool design, and parallel execution",
+          "lessons": [
+            { "id": "function-calling", "title": "Function Calling Fundamentals", "type": "lesson", "duration": "45 min" },
+            { "id": "tool-design", "title": "Designing Effective Tools", "type": "lesson", "duration": "40 min" }
+          ]
+        },
+        {
+          "title": "Agent Memory Systems",
+          "description": "Working memory, long-term memory, and reflection",
+          "lessons": [
+            { "id": "memory-types", "title": "Types of Agent Memory", "type": "lesson", "duration": "45 min" }
+          ]
+        },
+        {
+          "title": "Multi-Agent Systems",
+          "description": "Orchestration patterns, supervisor, debate, and human-in-the-loop",
+          "lessons": [
+            { "id": "multi-agent-patterns", "title": "Multi-Agent Orchestration Patterns", "type": "lesson", "duration": "50 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llm-evaluation",
+      "title": "LLM Evaluation & Testing",
+      "icon": "📏",
+      "description": "Master techniques for evaluating and testing LLM-powered applications with RAGAS, LangSmith, and human evaluation.",
+      "level": "intermediate",
+      "duration": "3 weeks",
+      "totalLessons": 4,
+      "modules": [
+        {
+          "title": "Evaluation Fundamentals",
+          "description": "Why evaluation matters, dimensions, and pipeline design",
+          "lessons": [
+            { "id": "why-eval-matters", "title": "Why LLM Evaluation Matters", "type": "lesson", "duration": "35 min" }
+          ]
+        },
+        {
+          "title": "Automated Evaluation",
+          "description": "RAGAS for RAG, LangSmith for tracing and experiments",
+          "lessons": [
+            { "id": "ragas-eval", "title": "Evaluating RAG with RAGAS", "type": "lesson", "duration": "50 min" },
+            { "id": "langsmith-eval", "title": "Evaluation with LangSmith", "type": "lesson", "duration": "45 min" }
+          ]
+        },
+        {
+          "title": "Human Evaluation",
+          "description": "Rubric design, inter-rater reliability, and workflows",
+          "lessons": [
+            { "id": "human-eval-design", "title": "Designing Human Evaluation", "type": "lesson", "duration": "40 min" }
+          ]
+        }
+      ]
+    }
+  ]
+}

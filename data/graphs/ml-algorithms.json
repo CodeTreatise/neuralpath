@@ -1,0 +1,86 @@
+{
+  "id": "ml-algorithms",
+  "title": "ML Algorithms Family Tree",
+  "description": "Hierarchical view of machine learning algorithms",
+  "sections": [
+    { "id": "supervised", "title": "Supervised Learning", "color": "#3b82f6" },
+    { "id": "unsupervised", "title": "Unsupervised Learning", "color": "#10b981" },
+    { "id": "reinforcement", "title": "Reinforcement Learning", "color": "#f59e0b" },
+    { "id": "deep-learning", "title": "Deep Learning", "color": "#8b5cf6" }
+  ],
+  "nodes": [
+    { "id": "ml", "label": "Machine Learning", "type": "root", "description": "Systems that learn from data", "url": "https://en.wikipedia.org/wiki/Machine_learning" },
+    
+    { "id": "supervised", "label": "Supervised Learning", "type": "category", "section": "supervised", "description": "Learning from labeled data", "url": "https://scikit-learn.org/stable/supervised_learning.html" },
+    { "id": "regression", "label": "Regression", "type": "concept", "section": "supervised", "description": "Predicting continuous values", "difficulty": "Beginner" },
+    { "id": "linear-reg", "label": "Linear Regression", "type": "model", "section": "supervised", "description": "Fitting a line to data", "difficulty": "Beginner", "url": "https://scikit-learn.org/stable/modules/linear_model.html#ordinary-least-squares" },
+    { "id": "poly-reg", "label": "Polynomial Regression", "type": "model", "section": "supervised", "description": "Non-linear relationships", "difficulty": "Intermediate" },
+    { "id": "classification", "label": "Classification", "type": "concept", "section": "supervised", "description": "Predicting categories", "difficulty": "Beginner" },
+    { "id": "logistic", "label": "Logistic Regression", "type": "model", "section": "supervised", "description": "Binary classification", "difficulty": "Beginner", "url": "https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression" },
+    { "id": "svm", "label": "Support Vector Machines", "type": "model", "section": "supervised", "description": "Maximum margin classifier", "difficulty": "Intermediate", "url": "https://scikit-learn.org/stable/modules/svm.html" },
+    { "id": "decision-tree", "label": "Decision Trees", "type": "model", "section": "supervised", "description": "Tree-based decisions", "difficulty": "Beginner", "url": "https://scikit-learn.org/stable/modules/tree.html" },
+    { "id": "random-forest", "label": "Random Forest", "type": "model", "section": "supervised", "description": "Ensemble of trees", "difficulty": "Intermediate", "url": "https://scikit-learn.org/stable/modules/ensemble.html#forests-of-randomized-trees" },
+    { "id": "xgboost", "label": "XGBoost", "type": "model", "section": "supervised", "description": "Gradient boosted trees", "difficulty": "Advanced", "url": "https://xgboost.readthedocs.io/" },
+    { "id": "knn", "label": "K-Nearest Neighbors", "type": "model", "section": "supervised", "description": "Instance-based learning", "difficulty": "Beginner", "url": "https://scikit-learn.org/stable/modules/neighbors.html" },
+    { "id": "naive-bayes", "label": "Naive Bayes", "type": "model", "section": "supervised", "description": "Probabilistic classifier", "difficulty": "Beginner", "url": "https://scikit-learn.org/stable/modules/naive_bayes.html" },
+    
+    { "id": "unsupervised", "label": "Unsupervised Learning", "type": "category", "section": "unsupervised", "description": "Learning from unlabeled data", "url": "https://scikit-learn.org/stable/unsupervised_learning.html" },
+    { "id": "clustering", "label": "Clustering", "type": "concept", "section": "unsupervised", "description": "Grouping similar data", "difficulty": "Beginner" },
+    { "id": "kmeans", "label": "K-Means", "type": "model", "section": "unsupervised", "description": "Centroid-based clustering", "difficulty": "Beginner", "url": "https://scikit-learn.org/stable/modules/clustering.html#k-means" },
+    { "id": "dbscan", "label": "DBSCAN", "type": "model", "section": "unsupervised", "description": "Density-based clustering", "difficulty": "Intermediate", "url": "https://scikit-learn.org/stable/modules/clustering.html#dbscan" },
+    { "id": "hierarchical", "label": "Hierarchical Clustering", "type": "model", "section": "unsupervised", "description": "Tree of clusters", "difficulty": "Intermediate", "url": "https://scikit-learn.org/stable/modules/clustering.html#hierarchical-clustering" },
+    { "id": "dim-reduction", "label": "Dimensionality Reduction", "type": "concept", "section": "unsupervised", "description": "Reducing feature space", "difficulty": "Intermediate" },
+    { "id": "pca", "label": "PCA", "type": "model", "section": "unsupervised", "description": "Principal Component Analysis", "difficulty": "Intermediate", "url": "https://scikit-learn.org/stable/modules/decomposition.html#pca" },
+    { "id": "tsne", "label": "t-SNE", "type": "model", "section": "unsupervised", "description": "Visualization technique", "difficulty": "Advanced", "url": "https://scikit-learn.org/stable/modules/manifold.html#t-sne" },
+    
+    { "id": "reinforcement", "label": "Reinforcement Learning", "type": "category", "section": "reinforcement", "description": "Learning through rewards", "url": "https://spinningup.openai.com/en/latest/" },
+    { "id": "q-learning", "label": "Q-Learning", "type": "model", "section": "reinforcement", "description": "Value-based learning", "difficulty": "Intermediate" },
+    { "id": "policy-grad", "label": "Policy Gradient", "type": "model", "section": "reinforcement", "description": "Direct policy optimization", "difficulty": "Advanced" },
+    { "id": "dqn", "label": "Deep Q-Network", "type": "model", "section": "reinforcement", "description": "Neural network Q-learning", "difficulty": "Advanced", "url": "https://www.deepmind.com/publications/human-level-control-through-deep-reinforcement-learning" },
+    { "id": "ppo", "label": "PPO", "type": "model", "section": "reinforcement", "description": "Proximal Policy Optimization", "difficulty": "Advanced", "url": "https://arxiv.org/abs/1707.06347" },
+    
+    { "id": "deep-learning", "label": "Deep Learning", "type": "category", "section": "deep-learning", "description": "Neural network based learning", "url": "https://www.deeplearningbook.org/" },
+    { "id": "mlp", "label": "MLP", "type": "model", "section": "deep-learning", "description": "Multi-Layer Perceptron", "difficulty": "Intermediate" },
+    { "id": "cnn", "label": "CNN", "type": "model", "section": "deep-learning", "description": "Convolutional Neural Networks", "difficulty": "Intermediate" },
+    { "id": "rnn", "label": "RNN", "type": "model", "section": "deep-learning", "description": "Recurrent Neural Networks", "difficulty": "Intermediate" },
+    { "id": "lstm", "label": "LSTM", "type": "model", "section": "deep-learning", "description": "Long Short-Term Memory", "difficulty": "Advanced" },
+    { "id": "transformer-ml", "label": "Transformers", "type": "model", "section": "deep-learning", "description": "Attention-based architecture", "difficulty": "Advanced" }
+  ],
+  "links": [
+    { "source": "ml", "target": "supervised", "type": "contains" },
+    { "source": "ml", "target": "unsupervised", "type": "contains" },
+    { "source": "ml", "target": "reinforcement", "type": "contains" },
+    { "source": "ml", "target": "deep-learning", "type": "contains" },
+    
+    { "source": "supervised", "target": "regression", "type": "includes" },
+    { "source": "supervised", "target": "classification", "type": "includes" },
+    { "source": "regression", "target": "linear-reg", "type": "example" },
+    { "source": "regression", "target": "poly-reg", "type": "example" },
+    { "source": "classification", "target": "logistic", "type": "example" },
+    { "source": "classification", "target": "svm", "type": "example" },
+    { "source": "classification", "target": "decision-tree", "type": "example" },
+    { "source": "classification", "target": "knn", "type": "example" },
+    { "source": "classification", "target": "naive-bayes", "type": "example" },
+    { "source": "decision-tree", "target": "random-forest", "type": "extends" },
+    { "source": "decision-tree", "target": "xgboost", "type": "extends" },
+    
+    { "source": "unsupervised", "target": "clustering", "type": "includes" },
+    { "source": "unsupervised", "target": "dim-reduction", "type": "includes" },
+    { "source": "clustering", "target": "kmeans", "type": "example" },
+    { "source": "clustering", "target": "dbscan", "type": "example" },
+    { "source": "clustering", "target": "hierarchical", "type": "example" },
+    { "source": "dim-reduction", "target": "pca", "type": "example" },
+    { "source": "dim-reduction", "target": "tsne", "type": "example" },
+    
+    { "source": "reinforcement", "target": "q-learning", "type": "includes" },
+    { "source": "reinforcement", "target": "policy-grad", "type": "includes" },
+    { "source": "q-learning", "target": "dqn", "type": "extends" },
+    { "source": "policy-grad", "target": "ppo", "type": "extends" },
+    
+    { "source": "deep-learning", "target": "mlp", "type": "includes" },
+    { "source": "deep-learning", "target": "cnn", "type": "includes" },
+    { "source": "deep-learning", "target": "rnn", "type": "includes" },
+    { "source": "deep-learning", "target": "transformer-ml", "type": "includes" },
+    { "source": "rnn", "target": "lstm", "type": "extends" }
+  ]
+}

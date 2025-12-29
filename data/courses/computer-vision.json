@@ -1,0 +1,751 @@
+{
+  "id": "computer-vision",
+  "title": "Computer Vision with PyTorch",
+  "icon": "\ud83d\udc41\ufe0f",
+  "description": "Build vision AI systems from image classification to object detection and beyond.",
+  "level": "intermediate",
+  "duration": "6 weeks",
+  "totalLessons": 18,
+  "prerequisites": [
+    "Python Fundamentals",
+    "Deep Learning Basics"
+  ],
+  "outcomes": [
+    "Build CNNs for image classification",
+    "Implement object detection models",
+    "Apply transfer learning effectively",
+    "Deploy vision models in production",
+    "Work with Vision Transformers",
+    "Perform face recognition and pose estimation",
+    "Deploy models on edge devices"
+  ],
+  "modules": [
+    {
+      "title": "CV Fundamentals",
+      "description": "CV Fundamentals module",
+      "lessons": [
+        {
+          "id": "intro-cv",
+          "title": "Introduction to Computer Vision",
+          "type": "lesson",
+          "duration": "20 min",
+          "content": {
+            "overview": "Computer Vision enables machines to interpret and understand visual information from images and videos, powering applications from autonomous vehicles to medical imaging.",
+            "sections": [
+              {
+                "title": "What is Computer Vision?",
+                "content": "Computer vision is a field of AI that trains computers to interpret and understand the visual world. Using digital images and deep learning models, machines can identify and classify objects, and react to what they 'see'.",
+                "keyPoints": [
+                  "Images are represented as numerical matrices",
+                  "Pixels contain color/intensity information",
+                  "CNNs revolutionized image understanding",
+                  "Applications: autonomous driving, medical imaging, security, AR/VR"
+                ]
+              },
+              {
+                "title": "Image Fundamentals",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\nimport cv2\nfrom PIL import Image\nimport matplotlib.pyplot as plt\n\n# Load image\nimg = cv2.imread('image.jpg')\nprint(f'Shape: {img.shape}')  # (height, width, channels)\nprint(f'Dtype: {img.dtype}')  # uint8 (0-255)\n\n# Color spaces\nimg_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)\nimg_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\nimg_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)\n\n# Display\nplt.figure(figsize=(12, 4))\nplt.subplot(131), plt.imshow(img_rgb), plt.title('RGB')\nplt.subplot(132), plt.imshow(img_gray, cmap='gray'), plt.title('Grayscale')\nplt.subplot(133), plt.imshow(img_hsv), plt.title('HSV')\nplt.show()"
+                }
+              },
+              {
+                "title": "Core CV Tasks",
+                "content": "Computer vision encompasses several key tasks:\n\n1. **Image Classification**: What is in this image? (cat, dog, car)\n2. **Object Detection**: Where are objects and what are they?\n3. **Semantic Segmentation**: Classify every pixel\n4. **Instance Segmentation**: Detect and segment individual objects\n5. **Pose Estimation**: Detect human body keypoints\n6. **Image Generation**: Create new images (GANs, Diffusion)",
+                "diagram": {
+                  "title": "Computer Vision Tasks Hierarchy",
+                  "code": "flowchart TB\n    subgraph Understanding[\"Image Understanding\"]\n        IC[Image Classification]\n        OD[Object Detection]\n        SS[Semantic Segmentation]\n        IS[Instance Segmentation]\n    end\n    \n    subgraph Analysis[\"Advanced Analysis\"]\n        PE[Pose Estimation]\n        FR[Face Recognition]\n        OCR[Text Recognition]\n    end\n    \n    subgraph Generation[\"Image Generation\"]\n        GAN[GANs]\n        DM[Diffusion Models]\n        SR[Super Resolution]\n    end\n    \n    IC --> OD --> SS --> IS\n    Understanding --> Analysis\n    Understanding --> Generation"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Images are 3D tensors: (height, width, channels)",
+              "Different color spaces serve different purposes",
+              "CNNs are the backbone of modern computer vision",
+              "CV tasks range from classification to generation"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Image Classification",
+      "description": "Image Classification module",
+      "lessons": [
+        {
+          "id": "transfer-learning",
+          "title": "Transfer Learning for Vision",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Transfer learning leverages pre-trained models to achieve high accuracy with less data and training time. It's the most practical approach for real-world CV applications.",
+            "sections": [
+              {
+                "title": "Pre-trained Models",
+                "content": "Models trained on ImageNet (1.2M images, 1000 classes) have learned rich visual features that transfer well to other tasks.",
+                "diagram": {
+                  "title": "Transfer Learning Strategies",
+                  "code": "flowchart TD\n    subgraph FE[Feature Extraction]\n        I1[Input] --> B1[Frozen Base]\n        B1 --> H1[New Head]\n        H1 --> O1[Output]\n        style B1 fill:#e5e7eb,stroke:#9ca3af\n        style H1 fill:#93c5fd,stroke:#3b82f6\n    end\n    \n    subgraph FT[Fine-Tuning]\n        I2[Input] --> B2[Trainable Base]\n        B2 --> H2[New Head]\n        H2 --> O2[Output]\n        style B2 fill:#93c5fd,stroke:#3b82f6\n        style H2 fill:#93c5fd,stroke:#3b82f6\n    end"
+                },
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torchvision.models as models\n\n# Load pre-trained models\nresnet50 = models.resnet50(pretrained=True)\nefficientnet = models.efficientnet_b0(pretrained=True)\nvit = models.vit_b_16(pretrained=True)  # Vision Transformer\n\n# Check available models\nprint([m for m in dir(models) if not m.startswith('_')])"
+                }
+              },
+              {
+                "title": "Fine-tuning Strategy",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torch.nn as nn\nimport torchvision.models as models\n\n# Load pretrained ResNet\nmodel = models.resnet50(pretrained=True)\n\n# Freeze base layers\nfor param in model.parameters():\n    param.requires_grad = False\n\n# Replace classifier head\nnum_classes = 5  # Your number of classes\nmodel.fc = nn.Sequential(\n    nn.Linear(model.fc.in_features, 512),\n    nn.ReLU(),\n    nn.Dropout(0.3),\n    nn.Linear(512, num_classes)\n)\n\n# Only train the new head\noptimizer = torch.optim.Adam(model.fc.parameters(), lr=0.001)\n\n# Later: unfreeze and fine-tune all layers with lower LR\nfor param in model.parameters():\n    param.requires_grad = True\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-5)"
+                }
+              },
+              {
+                "title": "Data Augmentation",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from torchvision import transforms\n\n# Training augmentations\ntrain_transform = transforms.Compose([\n    transforms.RandomResizedCrop(224),\n    transforms.RandomHorizontalFlip(),\n    transforms.RandomRotation(15),\n    transforms.ColorJitter(brightness=0.2, contrast=0.2),\n    transforms.ToTensor(),\n    transforms.Normalize([0.485, 0.456, 0.406],\n                        [0.229, 0.224, 0.225])\n])\n\n# Validation (no augmentation)\nval_transform = transforms.Compose([\n    transforms.Resize(256),\n    transforms.CenterCrop(224),\n    transforms.ToTensor(),\n    transforms.Normalize([0.485, 0.456, 0.406],\n                        [0.229, 0.224, 0.225])\n])"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Pre-trained models provide powerful feature extractors",
+              "Freeze base, train head first, then fine-tune all",
+              "Data augmentation prevents overfitting",
+              "Use ImageNet normalization for pre-trained models"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Advanced Topics",
+      "description": "Advanced Topics module",
+      "lessons": [
+        {
+          "id": "segmentation",
+          "title": "Image Segmentation",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Segmentation assigns a class label to every pixel in an image. It's crucial for medical imaging, autonomous driving, and image editing.",
+            "sections": [
+              {
+                "title": "Types of Segmentation",
+                "content": "There are three main types:\n\n1. **Semantic Segmentation**: Classify each pixel (all cars = same class)\n2. **Instance Segmentation**: Separate individual objects (car1, car2)\n3. **Panoptic Segmentation**: Combine both approaches"
+              },
+              {
+                "title": "U-Net Architecture",
+                "diagram": {
+                  "title": "U-Net Architecture",
+                  "code": "flowchart TB\n    subgraph Encoder[Encoder (Contracting Path)]\n        E1[Conv Block 1] --> P1[MaxPool]\n        P1 --> E2[Conv Block 2]\n        E2 --> P2[MaxPool]\n        P2 --> E3[Conv Block 3]\n        E3 --> P3[MaxPool]\n        P3 --> E4[Conv Block 4]\n        E4 --> P4[MaxPool]\n    end\n    \n    subgraph Bridge[Bottleneck]\n        P4 --> B[Conv Block 5]\n    end\n    \n    subgraph Decoder[Decoder (Expansive Path)]\n        B --> U1[UpConv 1]\n        U1 --> D1[Conv Block 4]\n        D1 --> U2[UpConv 2]\n        U2 --> D2[Conv Block 3]\n        D2 --> U3[UpConv 3]\n        U3 --> D3[Conv Block 2]\n        D3 --> U4[UpConv 4]\n        U4 --> D4[Conv Block 1]\n    end\n    \n    D4 --> Out[1x1 Conv (Output)]\n    \n    E4 -.->|Skip Connection| D1\n    E3 -.->|Skip Connection| D2\n    E2 -.->|Skip Connection| D3\n    E1 -.->|Skip Connection| D4\n    \n    style Encoder fill:#dbeafe,stroke:#2563eb\n    style Bridge fill:#fef3c7,stroke:#d97706\n    style Decoder fill:#fce7f3,stroke:#db2777"
+                },
+                "codeExample": {
+                  "language": "python",
+                  "code": "import segmentation_models_pytorch as smp\n\n# U-Net with ResNet encoder\nmodel = smp.Unet(\n    encoder_name='resnet34',\n    encoder_weights='imagenet',\n    in_channels=3,\n    classes=21  # Number of segmentation classes\n)\n\n# Other architectures\nmodel = smp.DeepLabV3Plus(encoder_name='efficientnet-b4')\nmodel = smp.FPN(encoder_name='resnet50')\nmodel = smp.PSPNet(encoder_name='resnet101')"
+                }
+              },
+              {
+                "title": "SAM - Segment Anything",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from segment_anything import sam_model_registry, SamPredictor\nimport cv2\n\n# Load SAM model\nsam = sam_model_registry['vit_h'](checkpoint='sam_vit_h.pth')\npredictor = SamPredictor(sam)\n\n# Set image\nimage = cv2.imread('image.jpg')\npredictor.set_image(image)\n\n# Segment with point prompt\nmasks, scores, logits = predictor.predict(\n    point_coords=np.array([[500, 375]]),  # Click point\n    point_labels=np.array([1]),  # 1 = foreground\n    multimask_output=True\n)\n\n# Use best mask\nbest_mask = masks[np.argmax(scores)]"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "U-Net's encoder-decoder with skip connections is foundational",
+              "IoU (Intersection over Union) is the key metric",
+              "SAM provides zero-shot segmentation capabilities",
+              "Pre-trained encoders dramatically improve results"
+            ]
+          }
+        },
+        {
+          "id": "pose-estimation",
+          "title": "Pose Estimation",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Pose estimation detects human body keypoints (joints) in images. It's used in fitness apps, AR, motion capture, and action recognition.",
+            "sections": [
+              {
+                "title": "Pose Estimation Approaches",
+                "content": "Two main approaches:\n\n**Top-Down**: First detect people, then estimate pose for each\n- More accurate for individual poses\n- Slower with many people\n\n**Bottom-Up**: Detect all keypoints, then group into people\n- Faster with crowds\n- OpenPose, HigherHRNet"
+              },
+              {
+                "title": "Using MediaPipe",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import mediapipe as mp\nimport cv2\n\n# Initialize pose detector\nmp_pose = mp.solutions.pose\nmp_draw = mp.solutions.drawing_utils\n\npose = mp_pose.Pose(\n    static_image_mode=False,\n    model_complexity=1,\n    min_detection_confidence=0.5\n)\n\n# Process video\ncap = cv2.VideoCapture(0)\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    results = pose.process(rgb)\n    \n    if results.pose_landmarks:\n        mp_draw.draw_landmarks(\n            frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)\n        \n        # Access specific landmarks\n        nose = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE]\n        print(f'Nose: ({nose.x:.2f}, {nose.y:.2f})')\n    \n    cv2.imshow('Pose', frame)\n    if cv2.waitKey(1) & 0xFF == ord('q'):\n        break"
+                }
+              },
+              {
+                "title": "YOLO Pose",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from ultralytics import YOLO\n\n# Load YOLOv8 pose model\nmodel = YOLO('yolov8n-pose.pt')  # nano pose model\n\n# Inference\nresults = model('image.jpg')\n\n# Process keypoints\nfor result in results:\n    keypoints = result.keypoints\n    \n    if keypoints is not None:\n        # Shape: (num_people, 17, 3) - x, y, confidence\n        kpts = keypoints.data[0]  # First person\n        \n        # COCO keypoint order:\n        # 0: nose, 1-2: eyes, 3-4: ears, 5-6: shoulders\n        # 7-8: elbows, 9-10: wrists, 11-12: hips\n        # 13-14: knees, 15-16: ankles\n        \n        left_wrist = kpts[9]\n        print(f'Left wrist: ({left_wrist[0]:.0f}, {left_wrist[1]:.0f})')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "MediaPipe is great for real-time single-person pose",
+              "YOLO Pose handles multi-person efficiently",
+              "17 keypoints in COCO format is standard",
+              "PCK and OKS are pose estimation metrics"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Deployment",
+      "description": "Deployment module",
+      "lessons": [
+        {
+          "id": "edge-deployment",
+          "title": "Edge & Mobile Deployment",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Deploy CV models on edge devices like mobile phones, Raspberry Pi, and NVIDIA Jetson for real-time inference.",
+            "sections": [
+              {
+                "title": "Mobile-Optimized Architectures",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torchvision.models as models\n\n# Mobile-optimized models\nmobilenet = models.mobilenet_v3_small(pretrained=True)  # 2.5M params\nshufflenet = models.shufflenet_v2_x1_0(pretrained=True)  # 2.3M params\nefficientnet_lite = models.efficientnet_b0(pretrained=True)  # 5.3M params\n\n# Compare model size and speed\nimport time\n\nmodels_to_test = [\n    ('MobileNetV3-Small', models.mobilenet_v3_small(pretrained=True)),\n    ('EfficientNet-B0', models.efficientnet_b0(pretrained=True)),\n    ('ResNet-18', models.resnet18(pretrained=True)),\n]\n\nx = torch.randn(1, 3, 224, 224)\nfor name, model in models_to_test:\n    model.eval()\n    params = sum(p.numel() for p in model.parameters()) / 1e6\n    start = time.time()\n    for _ in range(100):\n        with torch.no_grad():\n            model(x)\n    fps = 100 / (time.time() - start)\n    print(f'{name}: {params:.1f}M params, {fps:.0f} FPS')"
+                }
+              },
+              {
+                "title": "TensorFlow Lite for Mobile",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import tensorflow as tf\n\n# Convert to TFLite\nconverter = tf.lite.TFLiteConverter.from_saved_model('saved_model')\n\n# Optimize for mobile\nconverter.optimizations = [tf.lite.Optimize.DEFAULT]\nconverter.target_spec.supported_types = [tf.float16]\n\ntflite_model = converter.convert()\nwith open('model.tflite', 'wb') as f:\n    f.write(tflite_model)\n\n# Run inference\ninterpreter = tf.lite.Interpreter(model_path='model.tflite')\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninterpreter.set_tensor(input_details[0]['index'], input_data)\ninterpreter.invoke()\noutput = interpreter.get_tensor(output_details[0]['index'])"
+                }
+              },
+              {
+                "title": "NVIDIA Jetson Deployment",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# On Jetson - use jetson-inference for optimized models\nimport jetson.inference\nimport jetson.utils\n\n# Load optimized image classification\nnet = jetson.inference.imageNet('googlenet')  # Pre-optimized for Jetson\n\n# Camera input\ncamera = jetson.utils.videoSource('/dev/video0')\ndisplay = jetson.utils.videoOutput('display://0')\n\nwhile True:\n    img = camera.Capture()\n    class_id, confidence = net.Classify(img)\n    class_label = net.GetClassDesc(class_id)\n    \n    jetson.utils.cudaDrawText(img, f'{class_label}: {confidence:.1%}', 5, 5)\n    display.Render(img)\n\n# Object detection\nnet = jetson.inference.detectNet('ssd-mobilenet-v2', threshold=0.5)\ndetections = net.Detect(img)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "MobileNet and ShuffleNet are designed for edge devices",
+              "TFLite is the standard for Android/iOS deployment",
+              "Jetson provides GPU acceleration for edge AI",
+              "Benchmark on target device, not just desktop"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Additional Topics",
+      "description": "Additional course content",
+      "lessons": [
+        {
+          "id": "cnn-architecture",
+          "title": "Convolutional Neural Networks",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "CNNs are specialized neural networks designed to process grid-like data such as images. They use convolutional layers to automatically learn spatial hierarchies of features.",
+            "sections": [
+              {
+                "title": "Convolution Operation",
+                "content": "A convolution slides a small matrix (kernel/filter) across the image, computing dot products to create feature maps that detect patterns like edges, textures, and shapes.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torch.nn as nn\n\n# 2D Convolution layer\nconv = nn.Conv2d(\n    in_channels=3,      # RGB input\n    out_channels=32,    # 32 filters\n    kernel_size=3,      # 3x3 kernel\n    stride=1,           # Step size\n    padding=1           # Preserve spatial size\n)\n\n# Input: (batch, channels, height, width)\nx = torch.randn(1, 3, 224, 224)\nout = conv(x)\nprint(f'Output shape: {out.shape}')  # [1, 32, 224, 224]"
+                }
+              },
+              {
+                "title": "Building a CNN",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch.nn as nn\nimport torch.nn.functional as F\n\nclass SimpleCNN(nn.Module):\n    def __init__(self, num_classes=10):\n        super().__init__()\n        # Convolutional layers\n        self.conv1 = nn.Conv2d(3, 32, 3, padding=1)\n        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)\n        self.conv3 = nn.Conv2d(64, 128, 3, padding=1)\n        \n        # Pooling\n        self.pool = nn.MaxPool2d(2, 2)\n        \n        # Fully connected\n        self.fc1 = nn.Linear(128 * 28 * 28, 512)\n        self.fc2 = nn.Linear(512, num_classes)\n        self.dropout = nn.Dropout(0.5)\n    \n    def forward(self, x):\n        # Conv blocks\n        x = self.pool(F.relu(self.conv1(x)))  # 224->112\n        x = self.pool(F.relu(self.conv2(x)))  # 112->56\n        x = self.pool(F.relu(self.conv3(x)))  # 56->28\n        \n        # Flatten and classify\n        x = x.view(x.size(0), -1)\n        x = self.dropout(F.relu(self.fc1(x)))\n        x = self.fc2(x)\n        return x"
+                }
+              },
+              {
+                "title": "Key CNN Components",
+                "content": "Modern CNNs combine several key building blocks:\n\n1. **Convolution**: Extract spatial features\n2. **Activation (ReLU)**: Add non-linearity\n3. **Pooling**: Downsample and add translation invariance\n4. **Batch Normalization**: Stabilize training\n5. **Dropout**: Prevent overfitting\n6. **Skip Connections**: Enable deeper networks (ResNet)",
+                "diagram": {
+                  "title": "Standard CNN Architecture",
+                  "code": "flowchart LR\n    Input[Input Image] --> Conv1[Conv + ReLU]\n    Conv1 --> Pool1[MaxPool]\n    Pool1 --> Conv2[Conv + ReLU]\n    Conv2 --> Pool2[MaxPool]\n    Pool2 --> Flat[Flatten]\n    Flat --> FC1[Dense Layer]\n    FC1 --> FC2[Output Layer]\n    \n    style Input fill:#fff,stroke:#333\n    style Conv1 fill:#dbeafe,stroke:#2563eb\n    style Pool1 fill:#fce7f3,stroke:#db2777\n    style Conv2 fill:#dbeafe,stroke:#2563eb\n    style Pool2 fill:#fce7f3,stroke:#db2777\n    style FC1 fill:#dcfce7,stroke:#16a34a"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Convolutions learn local patterns hierarchically",
+              "Pooling reduces spatial dimensions and adds invariance",
+              "Modern architectures use skip connections for depth",
+              "Batch normalization is essential for training stability"
+            ]
+          }
+        },
+        {
+          "id": "object-detection",
+          "title": "Object Detection",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "Object detection identifies and localizes multiple objects in an image, returning bounding boxes and class labels. It's essential for autonomous driving, surveillance, and more.",
+            "sections": [
+              {
+                "title": "Detection Approaches",
+                "content": "Object detection has evolved through several paradigms:\n\n1. **Two-stage detectors**: R-CNN \u2192 Fast R-CNN \u2192 Faster R-CNN\n   - First propose regions, then classify\n   - More accurate, slower\n\n2. **Single-stage detectors**: YOLO, SSD, RetinaNet\n   - Directly predict boxes and classes\n   - Faster, good for real-time\n\n3. **Transformer-based**: DETR, DINO\n   - End-to-end with attention\n   - State-of-the-art accuracy"
+              },
+              {
+                "title": "YOLO with Ultralytics",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from ultralytics import YOLO\n\n# Load pre-trained YOLOv8\nmodel = YOLO('yolov8n.pt')  # nano, small, medium, large, xlarge\n\n# Inference\nresults = model('image.jpg')\n\n# Process results\nfor result in results:\n    boxes = result.boxes  # Bounding boxes\n    for box in boxes:\n        x1, y1, x2, y2 = box.xyxy[0].tolist()\n        confidence = box.conf[0].item()\n        class_id = int(box.cls[0].item())\n        class_name = model.names[class_id]\n        print(f'{class_name}: {confidence:.2f} at [{x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f}]')\n\n# Save annotated image\nresults[0].save('output.jpg')"
+                }
+              },
+              {
+                "title": "Training Custom Detector",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from ultralytics import YOLO\n\n# Load base model\nmodel = YOLO('yolov8n.pt')\n\n# Train on custom dataset\n# Dataset format: images/ and labels/ folders\n# YOLO format: class_id x_center y_center width height (normalized)\nresults = model.train(\n    data='dataset.yaml',  # Dataset config\n    epochs=100,\n    imgsz=640,\n    batch=16,\n    patience=20,  # Early stopping\n    device='cuda'\n)\n\n# Validate\nmetrics = model.val()\nprint(f'mAP50: {metrics.box.map50:.3f}')\nprint(f'mAP50-95: {metrics.box.map:.3f}')\n\n# Export for deployment\nmodel.export(format='onnx')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "YOLO is the go-to for real-time detection",
+              "mAP (mean Average Precision) is the key metric",
+              "Anchor-free models are simpler and often better",
+              "Always start with pre-trained weights"
+            ]
+          }
+        },
+        {
+          "id": "image-preprocessing",
+          "title": "Image Preprocessing & Augmentation",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Proper image preprocessing and augmentation are essential for training robust computer vision models. Learn techniques to prepare data and artificially expand your dataset.",
+            "sections": [
+              {
+                "title": "Image Preprocessing",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import cv2\nimport numpy as np\nfrom PIL import Image\n\n# Resize with aspect ratio preservation\ndef resize_with_padding(img, target_size):\n    h, w = img.shape[:2]\n    scale = min(target_size[0]/h, target_size[1]/w)\n    new_h, new_w = int(h*scale), int(w*scale)\n    resized = cv2.resize(img, (new_w, new_h))\n    \n    # Add padding\n    pad_h = (target_size[0] - new_h) // 2\n    pad_w = (target_size[1] - new_w) // 2\n    padded = cv2.copyMakeBorder(resized, pad_h, pad_h, pad_w, pad_w,\n                                 cv2.BORDER_CONSTANT, value=(0,0,0))\n    return padded\n\n# Histogram equalization (improve contrast)\nimg_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\nequalized = cv2.equalizeHist(img_gray)\n\n# CLAHE (adaptive histogram equalization)\nclahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))\nclahe_img = clahe.apply(img_gray)"
+                }
+              },
+              {
+                "title": "Advanced Augmentation with Albumentations",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import albumentations as A\nfrom albumentations.pytorch import ToTensorV2\n\n# Comprehensive augmentation pipeline\ntrain_transform = A.Compose([\n    A.RandomResizedCrop(224, 224, scale=(0.8, 1.0)),\n    A.HorizontalFlip(p=0.5),\n    A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.2, rotate_limit=30, p=0.5),\n    A.OneOf([\n        A.GaussNoise(var_limit=(10, 50)),\n        A.GaussianBlur(blur_limit=3),\n        A.MotionBlur(blur_limit=3),\n    ], p=0.3),\n    A.OneOf([\n        A.RandomBrightnessContrast(p=0.5),\n        A.ColorJitter(p=0.5),\n        A.HueSaturationValue(p=0.5),\n    ], p=0.5),\n    A.CoarseDropout(max_holes=8, max_height=20, max_width=20, p=0.3),\n    A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),\n    ToTensorV2()\n])\n\n# Apply\naugmented = train_transform(image=image)['image']"
+                }
+              },
+              {
+                "title": "Augmentation for Detection",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import albumentations as A\n\n# Detection augmentations (must transform bboxes too)\ndetection_transform = A.Compose([\n    A.RandomResizedCrop(640, 640, scale=(0.5, 1.0)),\n    A.HorizontalFlip(p=0.5),\n    A.RandomBrightnessContrast(p=0.3),\n    A.Normalize(),\n], bbox_params=A.BboxParams(\n    format='yolo',  # or 'pascal_voc', 'coco'\n    label_fields=['class_labels'],\n    min_visibility=0.3  # Drop boxes that become too small\n))\n\n# Apply with bboxes\nresult = detection_transform(\n    image=image,\n    bboxes=[[0.5, 0.5, 0.2, 0.3]],  # YOLO format\n    class_labels=[0]\n)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Always preserve aspect ratio when resizing",
+              "Albumentations is faster than torchvision transforms",
+              "Use OneOf to apply random choice of augmentations",
+              "Detection augmentations must transform bboxes together"
+            ]
+          }
+        },
+        {
+          "id": "modern-architectures",
+          "title": "Modern CNN Architectures",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Explore the evolution of CNN architectures from AlexNet to modern efficient networks like EfficientNet and ConvNeXt.",
+            "sections": [
+              {
+                "title": "Architecture Timeline",
+                "content": "Key milestones in CNN development:\n\n- **AlexNet (2012)**: Deep CNNs work! 8 layers, ReLU, Dropout\n- **VGG (2014)**: Deeper is better. 16-19 layers, 3x3 convs\n- **GoogLeNet/Inception (2014)**: Multi-scale features with inception modules\n- **ResNet (2015)**: Skip connections enable 152+ layers\n- **DenseNet (2017)**: Connect every layer to every other layer\n- **EfficientNet (2019)**: Optimal scaling of depth/width/resolution\n- **ConvNeXt (2022)**: Modernized ResNet competitive with Transformers"
+              },
+              {
+                "title": "ResNet and Skip Connections",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torch.nn as nn\n\nclass ResidualBlock(nn.Module):\n    def __init__(self, channels):\n        super().__init__()\n        self.conv1 = nn.Conv2d(channels, channels, 3, padding=1)\n        self.bn1 = nn.BatchNorm2d(channels)\n        self.conv2 = nn.Conv2d(channels, channels, 3, padding=1)\n        self.bn2 = nn.BatchNorm2d(channels)\n    \n    def forward(self, x):\n        residual = x  # Save input\n        out = F.relu(self.bn1(self.conv1(x)))\n        out = self.bn2(self.conv2(out))\n        out += residual  # Skip connection\n        return F.relu(out)\n\n# Why skip connections work:\n# - Gradient flows directly through identity mapping\n# - Easier to learn residual F(x) than full mapping H(x)\n# - Enables training of very deep networks (100+ layers)"
+                }
+              },
+              {
+                "title": "EfficientNet Scaling",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torchvision.models as models\n\n# EfficientNet family (B0 to B7)\n# Each version scales depth, width, and resolution together\nmodel = models.efficientnet_b0(pretrained=True)  # 5.3M params, 224px\nmodel = models.efficientnet_b4(pretrained=True)  # 19M params, 380px\nmodel = models.efficientnet_v2_m(pretrained=True)  # Faster training\n\n# ConvNeXt - modernized ResNet\nmodel = models.convnext_tiny(pretrained=True)  # Competitive with ViT\nmodel = models.convnext_base(pretrained=True)\n\n# Choosing architecture:\n# - Mobile/Edge: MobileNetV3, EfficientNet-B0\n# - Server: EfficientNet-B4+, ConvNeXt, ViT\n# - Accuracy-first: ConvNeXt-L, ViT-L, Swin-L"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "ResNet's skip connections solved the degradation problem",
+              "EfficientNet scales depth, width, and resolution together",
+              "ConvNeXt shows CNNs can match Transformers",
+              "Choose architecture based on compute budget"
+            ]
+          }
+        },
+        {
+          "id": "vision-transformers",
+          "title": "Vision Transformers (ViT)",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Vision Transformers apply the Transformer architecture to images, achieving state-of-the-art results by treating images as sequences of patches.",
+            "sections": [
+              {
+                "title": "How ViT Works",
+                "content": "Vision Transformer (ViT) treats an image as a sequence of patches:\n\n1. **Patch Embedding**: Split image into 16x16 patches \u2192 linear projection\n2. **Position Embedding**: Add learnable position information\n3. **Transformer Encoder**: Self-attention across all patches\n4. **Classification**: CLS token through MLP head\n\nA 224x224 image \u2192 196 patches of 16x16 \u2192 sequence like text!"
+              },
+              {
+                "title": "Using Pre-trained ViT",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torchvision.models as models\nfrom transformers import ViTForImageClassification, ViTImageProcessor\n\n# PyTorch Vision\nvit = models.vit_b_16(pretrained=True)\n\n# Hugging Face (more models)\nprocessor = ViTImageProcessor.from_pretrained('google/vit-base-patch16-224')\nmodel = ViTForImageClassification.from_pretrained('google/vit-base-patch16-224')\n\n# Inference\nfrom PIL import Image\nimage = Image.open('image.jpg')\ninputs = processor(images=image, return_tensors='pt')\noutputs = model(**inputs)\npredicted_class = outputs.logits.argmax(-1).item()"
+                }
+              },
+              {
+                "title": "ViT Variants",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoModel\n\n# Different ViT architectures\n# ViT - Original Vision Transformer\nmodel = AutoModel.from_pretrained('google/vit-base-patch16-224')\n\n# DeiT - Data-efficient Image Transformer (trains with less data)\nmodel = AutoModel.from_pretrained('facebook/deit-base-patch16-224')\n\n# Swin Transformer - Shifted windows for efficiency\nmodel = AutoModel.from_pretrained('microsoft/swin-base-patch4-window7-224')\n\n# BEiT - BERT-style pre-training for vision\nmodel = AutoModel.from_pretrained('microsoft/beit-base-patch16-224')\n\n# CLIP - Vision-language model\nfrom transformers import CLIPModel\nclip = CLIPModel.from_pretrained('openai/clip-vit-base-patch32')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "ViT treats images as sequences of patches",
+              "Self-attention captures global relationships",
+              "Requires more data than CNNs to train from scratch",
+              "Swin Transformer adds efficiency with shifted windows"
+            ]
+          }
+        },
+        {
+          "id": "face-recognition",
+          "title": "Face Detection & Recognition",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Face technology powers authentication, photo organization, and AR filters. Learn face detection, alignment, embedding, and recognition.",
+            "sections": [
+              {
+                "title": "Face Detection",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Using RetinaFace (accurate)\nfrom retinaface import RetinaFace\nfaces = RetinaFace.detect_faces('image.jpg')\n\nfor face_id, face_data in faces.items():\n    bbox = face_data['facial_area']  # [x1, y1, x2, y2]\n    landmarks = face_data['landmarks']\n    # landmarks: left_eye, right_eye, nose, mouth_left, mouth_right\n\n# Using MediaPipe (fast, real-time)\nimport mediapipe as mp\n\nface_detection = mp.solutions.face_detection.FaceDetection(\n    model_selection=1, min_detection_confidence=0.5)\n\nresults = face_detection.process(rgb_image)\nfor detection in results.detections:\n    bbox = detection.location_data.relative_bounding_box"
+                }
+              },
+              {
+                "title": "Face Embeddings",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from deepface import DeepFace\nimport numpy as np\n\n# Extract face embedding (512-dimensional vector)\nembedding = DeepFace.represent(\n    img_path='face.jpg',\n    model_name='ArcFace',  # VGG-Face, Facenet, Facenet512, ArcFace\n    detector_backend='retinaface'\n)[0]['embedding']\n\n# Compare two faces\nresult = DeepFace.verify(\n    img1_path='person1.jpg',\n    img2_path='person2.jpg',\n    model_name='ArcFace'\n)\nprint(f\"Same person: {result['verified']}\")\nprint(f\"Distance: {result['distance']:.3f}\")\n\n# Find matches in database\nresults = DeepFace.find(\n    img_path='query.jpg',\n    db_path='face_database/',\n    model_name='ArcFace'\n)"
+                }
+              },
+              {
+                "title": "Face Recognition Pipeline",
+                "diagram": {
+                  "title": "Face Recognition Workflow",
+                  "code": "flowchart LR\n    Input[Input Image] --> Detect[Face Detection]\n    Detect --> Align[Face Alignment]\n    Align --> Embed[Feature Extraction\\n(Embedding)]\n    Embed --> Match{Matching}\n    \n    subgraph Database\n        DB[(Face DB)]\n    end\n    \n    DB --> Match\n    Match -->|Score > Threshold| ID[Identified]\n    Match -->|Score < Threshold| Unk[Unknown]\n    \n    style Input fill:#fff,stroke:#333\n    style Detect fill:#dbeafe,stroke:#2563eb\n    style Embed fill:#fce7f3,stroke:#db2777\n    style Match fill:#fef3c7,stroke:#d97706"
+                },
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\nfrom sklearn.metrics.pairwise import cosine_similarity\n\nclass FaceRecognizer:\n    def __init__(self):\n        self.known_embeddings = {}  # name -> embedding\n    \n    def register(self, name, image_path):\n        embedding = DeepFace.represent(\n            image_path, model_name='ArcFace'\n        )[0]['embedding']\n        self.known_embeddings[name] = embedding\n    \n    def recognize(self, image_path, threshold=0.5):\n        query_embedding = DeepFace.represent(\n            image_path, model_name='ArcFace'\n        )[0]['embedding']\n        \n        best_match, best_score = None, -1\n        for name, known_emb in self.known_embeddings.items():\n            score = cosine_similarity(\n                [query_embedding], [known_emb]\n            )[0][0]\n            if score > best_score:\n                best_score, best_match = score, name\n        \n        if best_score > threshold:\n            return best_match, best_score\n        return 'Unknown', best_score"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Face detection \u2192 alignment \u2192 embedding \u2192 matching",
+              "ArcFace and Facenet produce discriminative embeddings",
+              "Cosine similarity measures face similarity",
+              "Consider privacy and bias in face recognition systems"
+            ]
+          }
+        },
+        {
+          "id": "ocr",
+          "title": "OCR and Document Understanding",
+          "type": "lesson",
+          "duration": "25 min",
+          "content": {
+            "overview": "Optical Character Recognition (OCR) extracts text from images. Modern OCR goes beyond text to understand document structure.",
+            "sections": [
+              {
+                "title": "Traditional OCR with Tesseract",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pytesseract\nfrom PIL import Image\nimport cv2\n\n# Basic OCR\nimage = Image.open('document.png')\ntext = pytesseract.image_to_string(image)\nprint(text)\n\n# With bounding boxes\ndata = pytesseract.image_to_data(image, output_type=pytesseract.Output.DICT)\nfor i, word in enumerate(data['text']):\n    if word.strip():\n        x, y, w, h = (data['left'][i], data['top'][i],\n                      data['width'][i], data['height'][i])\n        conf = data['conf'][i]\n        print(f'{word}: ({x}, {y}) confidence: {conf}%')\n\n# Specify language\ntext = pytesseract.image_to_string(image, lang='eng+fra')"
+                }
+              },
+              {
+                "title": "Deep Learning OCR with EasyOCR",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import easyocr\n\n# Initialize reader (downloads model on first use)\nreader = easyocr.Reader(['en', 'fr'])  # Languages\n\n# Detect and recognize\nresults = reader.readtext('image.jpg')\n\nfor bbox, text, confidence in results:\n    print(f'{text} ({confidence:.2%})')\n    # bbox = [[x1,y1], [x2,y2], [x3,y3], [x4,y4]] - polygon\n\n# Scene text (text in natural images)\nresults = reader.readtext('street_sign.jpg', detail=0)  # Just text\n\n# PDF extraction\nimport pdf2image\npages = pdf2image.convert_from_path('document.pdf')\nfor i, page in enumerate(pages):\n    text = reader.readtext(np.array(page), detail=0)\n    print(f'Page {i+1}: {\" \".join(text)}')"
+                }
+              },
+              {
+                "title": "Document AI with LayoutLM",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import LayoutLMv3Processor, LayoutLMv3ForTokenClassification\nfrom PIL import Image\n\n# Load model for document understanding\nprocessor = LayoutLMv3Processor.from_pretrained('microsoft/layoutlmv3-base')\nmodel = LayoutLMv3ForTokenClassification.from_pretrained(\n    'microsoft/layoutlmv3-base-finetuned-funsd'  # Form understanding\n)\n\n# Process document image\nimage = Image.open('form.png').convert('RGB')\nencoding = processor(image, return_tensors='pt')\n\n# Get predictions\noutputs = model(**encoding)\npredictions = outputs.logits.argmax(-1).squeeze().tolist()\n\n# LayoutLM understands:\n# - Document structure (headers, paragraphs, tables)\n# - Form fields (questions, answers)\n# - Key-value pairs"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Tesseract is free and works for clean documents",
+              "EasyOCR handles scene text and multiple languages",
+              "LayoutLM understands document structure, not just text",
+              "Preprocess images (binarize, deskew) for better OCR"
+            ]
+          }
+        },
+        {
+          "id": "video-understanding",
+          "title": "Video Understanding",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Video adds the temporal dimension to vision. Learn to process videos, track objects, and classify actions.",
+            "sections": [
+              {
+                "title": "Video Processing Basics",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import cv2\nimport torch\nfrom torchvision.io import read_video\n\n# OpenCV video reading\ncap = cv2.VideoCapture('video.mp4')\nfps = cap.get(cv2.CAP_PROP_FPS)\nframe_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))\nwidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nheight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nframes = []\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    frames.append(frame)\ncap.release()\n\n# TorchVision (loads as tensor)\nvideo, audio, info = read_video('video.mp4')\nprint(f'Video shape: {video.shape}')  # (T, H, W, C)\n\n# Sample frames uniformly\ndef sample_frames(video, num_frames=16):\n    indices = torch.linspace(0, len(video)-1, num_frames).long()\n    return video[indices]"
+                }
+              },
+              {
+                "title": "Object Tracking",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from ultralytics import YOLO\n\n# Load YOLO with tracking\nmodel = YOLO('yolov8n.pt')\n\n# Track objects across frames\nresults = model.track(\n    source='video.mp4',\n    persist=True,  # Keep track IDs across frames\n    tracker='bytetrack.yaml'  # or botsort.yaml\n)\n\n# Process tracked results\nfor result in results:\n    boxes = result.boxes\n    if boxes.id is not None:\n        track_ids = boxes.id.int().tolist()\n        for box, track_id in zip(boxes, track_ids):\n            x1, y1, x2, y2 = box.xyxy[0].tolist()\n            cls = int(box.cls[0])\n            print(f'Track {track_id}: {model.names[cls]} at {x1:.0f},{y1:.0f}')\n\n# Save tracked video\nresults = model.track('video.mp4', save=True)"
+                }
+              },
+              {
+                "title": "Action Recognition",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nfrom transformers import VideoMAEForVideoClassification, VideoMAEImageProcessor\n\n# Load VideoMAE model\nprocessor = VideoMAEImageProcessor.from_pretrained('MCG-NJU/videomae-base-finetuned-kinetics')\nmodel = VideoMAEForVideoClassification.from_pretrained('MCG-NJU/videomae-base-finetuned-kinetics')\n\n# Prepare video frames (16 frames of 224x224)\ndef prepare_video(video_path, num_frames=16):\n    frames = sample_frames_from_video(video_path, num_frames)\n    frames = [Image.fromarray(f) for f in frames]\n    return frames\n\nframes = prepare_video('action.mp4')\ninputs = processor(frames, return_tensors='pt')\n\n# Classify action\noutputs = model(**inputs)\npredicted_class = outputs.logits.argmax(-1).item()\naction = model.config.id2label[predicted_class]\nprint(f'Action: {action}')\n\n# Kinetics-400 has 400 action classes:\n# playing guitar, riding bike, cooking, dancing, etc."
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Sample frames uniformly for action recognition",
+              "ByteTrack and BoTSORT are SOTA multi-object trackers",
+              "VideoMAE extends Vision Transformers to video",
+              "3D CNNs (I3D, SlowFast) also work for video"
+            ]
+          }
+        },
+        {
+          "id": "image-generation",
+          "title": "Image Generation",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Generative models create new images from noise or text. Learn about GANs, VAEs, and Diffusion models.",
+            "sections": [
+              {
+                "title": "Generative Approaches",
+                "content": "Three main paradigms for image generation:\n\n**GANs (Generative Adversarial Networks)**\n- Generator vs Discriminator game\n- Fast inference, training can be unstable\n- StyleGAN, BigGAN\n\n**VAEs (Variational Autoencoders)**\n- Learn latent space, probabilistic\n- Smooth interpolation, slightly blurry\n\n**Diffusion Models**\n- Iteratively denoise from pure noise\n- Current SOTA quality\n- Stable Diffusion, DALL-E, Imagen"
+              },
+              {
+                "title": "Stable Diffusion",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from diffusers import StableDiffusionPipeline\nimport torch\n\n# Load Stable Diffusion\npipe = StableDiffusionPipeline.from_pretrained(\n    'stabilityai/stable-diffusion-2-1',\n    torch_dtype=torch.float16\n)\npipe = pipe.to('cuda')\n\n# Text-to-image\nimage = pipe(\n    prompt='a photo of an astronaut riding a horse on mars',\n    negative_prompt='blurry, low quality',\n    num_inference_steps=50,\n    guidance_scale=7.5\n).images[0]\n\nimage.save('generated.png')\n\n# Image-to-image\nfrom diffusers import StableDiffusionImg2ImgPipeline\nimg2img = StableDiffusionImg2ImgPipeline.from_pretrained(...)\nresult = img2img(prompt='...', image=init_image, strength=0.75)"
+                }
+              },
+              {
+                "title": "ControlNet for Guided Generation",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from diffusers import ControlNetModel, StableDiffusionControlNetPipeline\nimport torch\n\n# Load ControlNet (edge detection guided)\ncontrolnet = ControlNetModel.from_pretrained(\n    'lllyasviel/sd-controlnet-canny',\n    torch_dtype=torch.float16\n)\npipe = StableDiffusionControlNetPipeline.from_pretrained(\n    'runwayml/stable-diffusion-v1-5',\n    controlnet=controlnet,\n    torch_dtype=torch.float16\n).to('cuda')\n\n# Generate with edge control\nimport cv2\nfrom PIL import Image\n\nimage = cv2.imread('input.jpg')\nedges = cv2.Canny(image, 100, 200)\ncontrol_image = Image.fromarray(edges)\n\nresult = pipe(\n    prompt='detailed painting of a castle',\n    image=control_image,\n    num_inference_steps=30\n).images[0]"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Diffusion models are current SOTA for quality",
+              "Negative prompts help avoid unwanted features",
+              "ControlNet adds structural guidance",
+              "CFG scale controls prompt adherence vs creativity"
+            ]
+          }
+        },
+        {
+          "id": "model-optimization",
+          "title": "Model Optimization & Deployment",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Production CV models need to be fast and efficient. Learn quantization, pruning, and deployment strategies.",
+            "sections": [
+              {
+                "title": "Model Quantization",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nfrom torch.quantization import quantize_dynamic, get_default_qconfig\n\n# Dynamic quantization (easy, good for CPU)\nmodel_quantized = quantize_dynamic(\n    model, {torch.nn.Linear, torch.nn.Conv2d}, dtype=torch.qint8\n)\n\n# Static quantization (better accuracy, needs calibration)\nmodel.qconfig = get_default_qconfig('fbgemm')  # or 'qnnpack' for mobile\nmodel_prepared = torch.quantization.prepare(model)\n\n# Calibrate with representative data\nwith torch.no_grad():\n    for batch in calibration_loader:\n        model_prepared(batch)\n\nmodel_quantized = torch.quantization.convert(model_prepared)\n\n# Size comparison\nprint(f'Original: {os.path.getsize(\"model.pt\") / 1e6:.1f} MB')\nprint(f'Quantized: {os.path.getsize(\"model_q.pt\") / 1e6:.1f} MB')  # ~4x smaller"
+                }
+              },
+              {
+                "title": "ONNX Export",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport onnx\nimport onnxruntime as ort\n\n# Export to ONNX\ndummy_input = torch.randn(1, 3, 224, 224)\ntorch.onnx.export(\n    model,\n    dummy_input,\n    'model.onnx',\n    input_names=['input'],\n    output_names=['output'],\n    dynamic_axes={'input': {0: 'batch_size'}, 'output': {0: 'batch_size'}}\n)\n\n# Verify\nonnx_model = onnx.load('model.onnx')\nonnx.checker.check_model(onnx_model)\n\n# Run with ONNX Runtime\nsession = ort.InferenceSession('model.onnx', providers=['CUDAExecutionProvider'])\ninputs = {session.get_inputs()[0].name: input_tensor.numpy()}\noutputs = session.run(None, inputs)"
+                }
+              },
+              {
+                "title": "TensorRT Optimization",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Convert ONNX to TensorRT\nimport tensorrt as trt\n\nlogger = trt.Logger(trt.Logger.WARNING)\nbuilder = trt.Builder(logger)\nnetwork = builder.create_network(1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))\nparser = trt.OnnxParser(network, logger)\n\nwith open('model.onnx', 'rb') as f:\n    parser.parse(f.read())\n\nconfig = builder.create_builder_config()\nconfig.set_flag(trt.BuilderFlag.FP16)  # Enable FP16\n\nengine = builder.build_engine(network, config)\n\n# Or use torch-tensorrt for easier conversion\nimport torch_tensorrt\n\nmodel_trt = torch_tensorrt.compile(\n    model,\n    inputs=[torch_tensorrt.Input((1, 3, 224, 224))],\n    enabled_precisions={torch.float16}\n)\n# 2-5x faster inference on NVIDIA GPUs"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Quantization reduces model size 4x with minimal accuracy loss",
+              "ONNX provides framework-agnostic deployment",
+              "TensorRT optimizes inference on NVIDIA GPUs",
+              "Profile before optimizing - find the actual bottleneck"
+            ]
+          }
+        },
+        {
+          "id": "cv-best-practices",
+          "title": "CV Best Practices",
+          "type": "lesson",
+          "duration": "20 min",
+          "content": {
+            "overview": "Learn practical tips and common pitfalls in computer vision projects from data collection to production.",
+            "sections": [
+              {
+                "title": "Data Quality",
+                "content": "**Data Collection**\n- Collect diverse data: lighting, angles, backgrounds\n- Balance classes or use weighted sampling\n- Include edge cases and failure modes\n\n**Labeling**\n- Use consistent labeling guidelines\n- Have multiple annotators for quality\n- Track inter-annotator agreement\n\n**Splits**\n- Ensure no data leakage between train/val/test\n- Stratify by important attributes\n- Consider temporal splits for time-sensitive data"
+              },
+              {
+                "title": "Training Best Practices",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Learning rate finder\nfrom torch_lr_finder import LRFinder\n\nlr_finder = LRFinder(model, optimizer, criterion)\nlr_finder.range_test(train_loader, end_lr=10, num_iter=100)\nlr_finder.plot()\nbest_lr = lr_finder.suggestion()\n\n# Cosine annealing with warmup\nfrom torch.optim.lr_scheduler import CosineAnnealingWarmRestarts\n\nscheduler = CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2)\n\n# Mixed precision training\nfrom torch.cuda.amp import autocast, GradScaler\n\nscaler = GradScaler()\nfor inputs, labels in train_loader:\n    optimizer.zero_grad()\n    with autocast():\n        outputs = model(inputs)\n        loss = criterion(outputs, labels)\n    scaler.scale(loss).backward()\n    scaler.step(optimizer)\n    scaler.update()"
+                }
+              },
+              {
+                "title": "Evaluation & Debugging",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Confusion matrix analysis\nfrom sklearn.metrics import confusion_matrix, classification_report\nimport seaborn as sns\n\ncm = confusion_matrix(y_true, y_pred)\nsns.heatmap(cm, annot=True, fmt='d', xticklabels=classes, yticklabels=classes)\n\n# Per-class metrics\nprint(classification_report(y_true, y_pred, target_names=classes))\n\n# Visualize failure cases\nwrong_indices = np.where(y_pred != y_true)[0]\nfor idx in wrong_indices[:10]:\n    img = test_dataset[idx][0]\n    print(f'True: {classes[y_true[idx]]}, Pred: {classes[y_pred[idx]]}')\n    plt.imshow(img.permute(1,2,0))\n    plt.show()\n\n# GradCAM for interpretability\nfrom pytorch_grad_cam import GradCAM\ncam = GradCAM(model, target_layers=[model.layer4[-1]])\ngrayscale_cam = cam(input_tensor=input_tensor)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Diverse, quality data beats bigger models",
+              "Always visualize your data and predictions",
+              "LR finder and mixed precision accelerate training",
+              "GradCAM helps understand model decisions"
+            ]
+          }
+        },
+        {
+          "id": "cv-project",
+          "title": "Capstone: End-to-End CV Project",
+          "type": "project",
+          "duration": "90 min",
+          "content": {
+            "overview": "Build a complete computer vision application from data to deployment.",
+            "sections": [
+              {
+                "title": "Project: Product Image Classifier",
+                "content": "**Objective**: Build an image classification system for e-commerce product categories.\n\n**Requirements**:\n1. Train a model to classify products into categories\n2. Handle images of varying quality and backgrounds\n3. Deploy as a REST API\n4. Include confidence thresholds and error handling"
+              },
+              {
+                "title": "Project Implementation",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Complete pipeline\nimport torch\nimport torch.nn as nn\nfrom torchvision import models, transforms\nfrom PIL import Image\nimport io\nfrom fastapi import FastAPI, UploadFile, File\n\n# 1. Model definition\nclass ProductClassifier:\n    def __init__(self, num_classes, checkpoint_path):\n        self.model = models.efficientnet_b0(pretrained=False)\n        self.model.classifier[-1] = nn.Linear(1280, num_classes)\n        self.model.load_state_dict(torch.load(checkpoint_path))\n        self.model.eval()\n        \n        self.transform = transforms.Compose([\n            transforms.Resize(256),\n            transforms.CenterCrop(224),\n            transforms.ToTensor(),\n            transforms.Normalize([0.485, 0.456, 0.406],\n                                [0.229, 0.224, 0.225])\n        ])\n        \n        self.classes = ['electronics', 'clothing', 'furniture', 'toys', 'food']\n    \n    def predict(self, image_bytes):\n        image = Image.open(io.BytesIO(image_bytes)).convert('RGB')\n        tensor = self.transform(image).unsqueeze(0)\n        \n        with torch.no_grad():\n            logits = self.model(tensor)\n            probs = torch.softmax(logits, dim=1)[0]\n        \n        top_prob, top_idx = probs.max(0)\n        return {\n            'class': self.classes[top_idx],\n            'confidence': float(top_prob),\n            'all_probs': {c: float(p) for c, p in zip(self.classes, probs)}\n        }\n\n# 2. FastAPI service\napp = FastAPI()\nclassifier = ProductClassifier(5, 'model.pt')\n\n@app.post('/classify')\nasync def classify(file: UploadFile = File(...)):\n    image_bytes = await file.read()\n    result = classifier.predict(image_bytes)\n    \n    if result['confidence'] < 0.5:\n        result['warning'] = 'Low confidence prediction'\n    \n    return result"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Build complete pipelines, not just models",
+              "Handle edge cases and low-confidence predictions",
+              "APIs need input validation and error handling",
+              "Monitor model performance in production"
+            ]
+          }
+        },
+        {
+          "id": "cv-quiz",
+          "title": "Computer Vision Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is the main advantage of skip connections in ResNet?",
+              "options": [
+                "Faster inference",
+                "Enables training deeper networks",
+                "Reduces model size",
+                "Improves color accuracy"
+              ],
+              "correct": 1,
+              "explanation": "Skip connections allow gradients to flow directly through the network, solving the vanishing gradient problem and enabling training of networks with 100+ layers."
+            },
+            {
+              "question": "Which metric is commonly used to evaluate object detection models?",
+              "options": [
+                "Accuracy",
+                "F1 Score",
+                "mAP (mean Average Precision)",
+                "R-squared"
+              ],
+              "correct": 2,
+              "explanation": "mAP measures both localization (IoU threshold) and classification accuracy across all classes, making it the standard metric for detection."
+            },
+            {
+              "question": "What does a Vision Transformer (ViT) use as input instead of raw pixels?",
+              "options": [
+                "Edge maps",
+                "Image patches",
+                "Color histograms",
+                "Fourier transforms"
+              ],
+              "correct": 1,
+              "explanation": "ViT splits an image into fixed-size patches (typically 16x16), which are then linearly embedded and processed as a sequence like text tokens."
+            },
+            {
+              "question": "Which approach is best for generating images from text prompts?",
+              "options": [
+                "CNNs",
+                "GANs",
+                "Diffusion Models",
+                "Autoencoders"
+              ],
+              "correct": 2,
+              "explanation": "Diffusion models (like Stable Diffusion, DALL-E 3) are the current state-of-the-art for text-to-image generation, producing high-quality, diverse images."
+            },
+            {
+              "question": "What is the purpose of TensorRT?",
+              "options": [
+                "Training neural networks",
+                "Data augmentation",
+                "Optimizing inference on NVIDIA GPUs",
+                "Image labeling"
+              ],
+              "correct": 2,
+              "explanation": "TensorRT optimizes neural network inference through techniques like layer fusion, precision calibration, and kernel auto-tuning for NVIDIA GPUs."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

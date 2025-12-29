@@ -1,0 +1,68 @@
+{
+  "id": "angular-node-ai-roadmap",
+  "title": "Angular & Node.js AI Roadmap",
+  "description": "A specialized path for MEAN stack developers to become AI Engineers without switching to Python.",
+  "sections": [
+    { "id": "foundation", "title": "1. AI Foundations (Node)", "color": "#6366f1" },
+    { "id": "orchestration", "title": "2. Orchestration (LangChain)", "color": "#10b981" },
+    { "id": "data", "title": "3. Vector Data & RAG", "color": "#f59e0b" },
+    { "id": "frontend", "title": "4. Angular AI UI", "color": "#ec4899" },
+    { "id": "production", "title": "5. Production & Ops", "color": "#8b5cf6" }
+  ],
+  "nodes": [
+    { "id": "mean-dev", "label": "MEAN Developer", "type": "root", "section": "foundation", "description": "Your starting point (Node/Angular)", "difficulty": "Beginner", "courseId": "angular-node-ai" },
+    
+    { "id": "llm-api", "label": "LLM APIs", "type": "concept", "section": "foundation", "description": "OpenAI, Anthropic, Mistral APIs", "difficulty": "Beginner", "url": "https://platform.openai.com/docs/introduction" },
+    { "id": "prompt-eng", "label": "Prompt Engineering", "type": "concept", "section": "foundation", "description": "System prompts, few-shot prompting", "difficulty": "Beginner", "url": "https://www.promptingguide.ai/" },
+    { "id": "openai-node", "label": "OpenAI Node SDK", "type": "tool", "section": "foundation", "description": "Official Node.js library", "difficulty": "Beginner", "url": "https://github.com/openai/openai-node" },
+    
+    { "id": "langchain-js", "label": "LangChain.js", "type": "tool", "section": "orchestration", "description": "The framework for AI apps", "difficulty": "Intermediate", "url": "https://js.langchain.com/docs/get_started/introduction" },
+    { "id": "chains", "label": "Chains & Runnables", "type": "concept", "section": "orchestration", "description": "LCEL: Composing AI steps", "difficulty": "Intermediate" },
+    { "id": "agents", "label": "AI Agents", "type": "concept", "section": "orchestration", "description": "Tool-using AI systems", "difficulty": "Advanced" },
+    { "id": "tool-calling", "label": "Tool Calling", "type": "concept", "section": "orchestration", "description": "Connecting AI to APIs", "difficulty": "Intermediate" },
+    
+    { "id": "embeddings", "label": "Embeddings", "type": "concept", "section": "data", "description": "Text to vector conversion", "difficulty": "Intermediate" },
+    { "id": "vector-db", "label": "Vector Databases", "type": "concept", "section": "data", "description": "Storing semantic data", "difficulty": "Intermediate" },
+    { "id": "mongo-vector", "label": "MongoDB Vector", "type": "tool", "section": "data", "description": "Atlas Vector Search", "difficulty": "Intermediate", "url": "https://www.mongodb.com/products/platform/atlas-vector-search" },
+    { "id": "rag", "label": "RAG Pattern", "type": "concept", "section": "data", "description": "Retrieval-Augmented Generation", "difficulty": "Advanced" },
+    { "id": "document-loaders", "label": "Document Loaders", "type": "tool", "section": "data", "description": "Parsing PDFs, CSVs in Node", "difficulty": "Intermediate" },
+    
+    { "id": "streaming", "label": "Streaming UI", "type": "concept", "section": "frontend", "description": "Handling SSE in Angular", "difficulty": "Intermediate" },
+    { "id": "rxjs-stream", "label": "RxJS for AI", "type": "tool", "section": "frontend", "description": "Observables for token streams", "difficulty": "Advanced" },
+    { "id": "markdown-ui", "label": "Markdown Rendering", "type": "tool", "section": "frontend", "description": "ngx-markdown integration", "difficulty": "Beginner" },
+    { "id": "gen-ui", "label": "Generative UI", "type": "concept", "section": "frontend", "description": "Rendering components from AI", "difficulty": "Advanced" },
+    
+    { "id": "evals", "label": "Evaluations", "type": "concept", "section": "production", "description": "Testing AI accuracy", "difficulty": "Advanced" },
+    { "id": "langsmith", "label": "LangSmith", "type": "tool", "section": "production", "description": "Tracing & Debugging", "difficulty": "Intermediate", "url": "https://smith.langchain.com/" },
+    { "id": "caching", "label": "Semantic Caching", "type": "concept", "section": "production", "description": "Reducing API costs", "difficulty": "Advanced" },
+    { "id": "security", "label": "AI Security", "type": "concept", "section": "production", "description": "Prompt Injection & PII", "difficulty": "Advanced" },
+    { "id": "docker", "label": "Docker & Containers", "type": "tool", "section": "production", "description": "Containerizing MEAN Stack", "difficulty": "Intermediate", "url": "https://docs.docker.com/" }
+  ],
+  "links": [
+    { "source": "mean-dev", "target": "llm-api", "type": "starts-with" },
+    { "source": "mean-dev", "target": "docker", "type": "deploys-with" },
+    { "source": "llm-api", "target": "openai-node", "type": "uses" },
+    { "source": "llm-api", "target": "prompt-eng", "type": "requires" },
+    
+    { "source": "openai-node", "target": "langchain-js", "type": "evolves-to" },
+    { "source": "langchain-js", "target": "chains", "type": "includes" },
+    { "source": "langchain-js", "target": "tool-calling", "type": "includes" },
+    { "source": "tool-calling", "target": "agents", "type": "enables" },
+    
+    { "source": "langchain-js", "target": "rag", "type": "implements" },
+    { "source": "rag", "target": "embeddings", "type": "requires" },
+    { "source": "embeddings", "target": "vector-db", "type": "stored-in" },
+    { "source": "vector-db", "target": "mongo-vector", "type": "example" },
+    { "source": "rag", "target": "document-loaders", "type": "uses" },
+    
+    { "source": "mean-dev", "target": "streaming", "type": "frontend-skill" },
+    { "source": "streaming", "target": "rxjs-stream", "type": "implemented-with" },
+    { "source": "streaming", "target": "markdown-ui", "type": "displayed-with" },
+    { "source": "markdown-ui", "target": "gen-ui", "type": "evolves-to" },
+    
+    { "source": "agents", "target": "langsmith", "type": "monitored-by" },
+    { "source": "rag", "target": "evals", "type": "tested-by" },
+    { "source": "llm-api", "target": "caching", "type": "optimized-by" },
+    { "source": "llm-api", "target": "security", "type": "secured-by" }
+  ]
+}

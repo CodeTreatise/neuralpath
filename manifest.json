@@ -1,0 +1,94 @@
+{
+    "name": "NeuralPath - Master Generative AI",
+    "short_name": "NeuralPath",
+    "description": "Master Generative AI from fundamentals to production with interactive courses, knowledge maps, and career guidance",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a0f",
+    "theme_color": "#6366f1",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "lang": "en",
+    "categories": ["education", "productivity", "developer tools"],
+    "icons": [
+        {
+            "src": "icons/icon-72.svg",
+            "sizes": "72x72",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/icon-192.svg",
+            "sizes": "192x192",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/icon-512.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "screenshots/home.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "NeuralPath Home"
+        },
+        {
+            "src": "screenshots/courses.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Learning Courses"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Explore Maps",
+            "short_name": "Explore",
+            "description": "Browse AI knowledge maps",
+            "url": "/#/explore",
+            "icons": [{ "src": "icons/icon-72.svg", "sizes": "72x72", "type": "image/svg+xml" }]
+        },
+        {
+            "name": "Courses",
+            "short_name": "Courses",
+            "description": "Continue learning",
+            "url": "/#/courses",
+            "icons": [{ "src": "icons/icon-72.svg", "sizes": "72x72", "type": "image/svg+xml" }]
+        },
+        {
+            "name": "AI Tools",
+            "short_name": "Tools",
+            "description": "Discover AI tools",
+            "url": "/#/tools",
+            "icons": [{ "src": "icons/icon-72.svg", "sizes": "72x72", "type": "image/svg+xml" }]
+        },
+        {
+            "name": "Resources",
+            "short_name": "Resources",
+            "description": "Curated learning resources",
+            "url": "/#/resources",
+            "icons": [{ "src": "icons/icon-72.svg", "sizes": "72x72", "type": "image/svg+xml" }]
+        },
+        {
+            "name": "AI Careers",
+            "short_name": "Jobs",
+            "description": "Explore AI careers in India",
+            "url": "/#/jobs",
+            "icons": [{ "src": "icons/icon-72.svg", "sizes": "72x72", "type": "image/svg+xml" }]
+        }
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false
+}

@@ -1,0 +1,3279 @@
+{
+  "categories": [
+    {
+      "id": "courses",
+      "title": "Free Courses",
+      "icon": "🎓",
+      "description": "World-class AI/ML courses from top universities and practitioners",
+      "items": [
+        {
+          "id": "fastai",
+          "title": "Practical Deep Learning for Coders",
+          "provider": "fast.ai",
+          "author": "Jeremy Howard",
+          "url": "https://course.fast.ai/",
+          "description": "Top-down, practical approach to deep learning. Build real projects from day 1.",
+          "level": "beginner",
+          "duration": "7 weeks",
+          "tags": ["deep learning", "pytorch", "practical"],
+          "rating": 4.9,
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "karpathy-zero-to-hero",
+          "title": "Neural Networks: Zero to Hero",
+          "provider": "YouTube",
+          "author": "Andrej Karpathy",
+          "url": "https://karpathy.ai/zero-to-hero.html",
+          "description": "Build GPT from scratch. Former Tesla AI Director teaches neural networks fundamentals.",
+          "level": "intermediate",
+          "duration": "~20 hours",
+          "tags": ["transformers", "gpt", "from scratch"],
+          "rating": 5.0,
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "cs229",
+          "title": "CS229: Machine Learning",
+          "provider": "Stanford",
+          "author": "Andrew Ng",
+          "url": "https://cs229.stanford.edu/",
+          "description": "The legendary Stanford ML course. Deep mathematical foundations.",
+          "level": "intermediate",
+          "duration": "10 weeks",
+          "tags": ["machine learning", "theory", "stanford"],
+          "rating": 4.9,
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "cs231n",
+          "title": "CS231n: CNNs for Visual Recognition",
+          "provider": "Stanford",
+          "author": "Fei-Fei Li, Andrej Karpathy",
+          "url": "https://cs231n.stanford.edu/",
+          "description": "Best computer vision course. Covers CNNs, object detection, segmentation.",
+          "level": "intermediate",
+          "duration": "10 weeks",
+          "tags": ["computer vision", "cnn", "stanford"],
+          "rating": 4.9,
+          "free": true
+        },
+        {
+          "id": "cs224n",
+          "title": "CS224n: NLP with Deep Learning",
+          "provider": "Stanford",
+          "author": "Chris Manning",
+          "url": "https://web.stanford.edu/class/cs224n/",
+          "description": "Comprehensive NLP course covering transformers, attention, and LLMs.",
+          "level": "intermediate",
+          "duration": "10 weeks",
+          "tags": ["nlp", "transformers", "stanford"],
+          "rating": 4.8,
+          "free": true
+        },
+        {
+          "id": "deeplearning-ai-specialization",
+          "title": "Deep Learning Specialization",
+          "provider": "Coursera",
+          "author": "Andrew Ng",
+          "url": "https://www.coursera.org/specializations/deep-learning",
+          "description": "5-course specialization covering neural networks, CNNs, RNNs, and more.",
+          "level": "beginner",
+          "duration": "3 months",
+          "tags": ["deep learning", "neural networks", "coursera"],
+          "rating": 4.9,
+          "free": false,
+          "freeTier": "Audit free"
+        },
+        {
+          "id": "huggingface-nlp",
+          "title": "NLP Course",
+          "provider": "Hugging Face",
+          "author": "Hugging Face Team",
+          "url": "https://huggingface.co/learn/nlp-course",
+          "description": "Learn transformers and NLP with the Hugging Face ecosystem.",
+          "level": "intermediate",
+          "duration": "~15 hours",
+          "tags": ["nlp", "transformers", "huggingface"],
+          "rating": 4.8,
+          "free": true
+        },
+        {
+          "id": "fullstack-llm",
+          "title": "Full Stack LLM Bootcamp",
+          "provider": "The Full Stack",
+          "author": "Charles Frye, Sergey Karayev",
+          "url": "https://fullstackdeeplearning.com/llm-bootcamp/",
+          "description": "Building LLM-powered applications. Prompt engineering, RAG, agents.",
+          "level": "intermediate",
+          "duration": "~10 hours",
+          "tags": ["llm", "rag", "agents", "production"],
+          "rating": 4.7,
+          "free": true
+        },
+        {
+          "id": "google-ml-crash",
+          "title": "Machine Learning Crash Course",
+          "provider": "Google",
+          "author": "Google AI",
+          "url": "https://developers.google.com/machine-learning/crash-course",
+          "description": "Fast-paced introduction to ML with TensorFlow exercises.",
+          "level": "beginner",
+          "duration": "15 hours",
+          "tags": ["machine learning", "tensorflow", "google"],
+          "rating": 4.6,
+          "free": true
+        },
+        {
+          "id": "mit-intro-dl",
+          "title": "6.S191: Introduction to Deep Learning",
+          "provider": "MIT",
+          "author": "Alexander Amini",
+          "url": "https://introtodeeplearning.com/",
+          "description": "MIT's intro deep learning course with hands-on labs.",
+          "level": "beginner",
+          "duration": "1 week intensive",
+          "tags": ["deep learning", "mit", "tensorflow"],
+          "rating": 4.7,
+          "free": true
+        },
+        {
+          "id": "hf-llm-course",
+          "title": "LLM Course",
+          "provider": "Hugging Face",
+          "author": "Hugging Face Team",
+          "url": "https://huggingface.co/learn/llm-course",
+          "description": "Comprehensive course on large language models using HF ecosystem.",
+          "level": "intermediate",
+          "duration": "~20 hours",
+          "tags": ["llm", "huggingface", "transformers"],
+          "rating": 4.8,
+          "free": true
+        },
+        {
+          "id": "hf-agents-course",
+          "title": "AI Agents Course",
+          "provider": "Hugging Face",
+          "author": "Hugging Face Team",
+          "url": "https://huggingface.co/learn/agents-course",
+          "description": "Learn to build and deploy your own AI agents.",
+          "level": "intermediate",
+          "duration": "~10 hours",
+          "tags": ["agents", "huggingface", "tools"],
+          "rating": 4.7,
+          "free": true
+        },
+        {
+          "id": "hf-deep-rl",
+          "title": "Deep Reinforcement Learning Course",
+          "provider": "Hugging Face",
+          "author": "Thomas Simonini",
+          "url": "https://huggingface.co/learn/deep-rl-course",
+          "description": "Practical deep RL from beginner to expert with hands-on exercises.",
+          "level": "intermediate",
+          "duration": "~40 hours",
+          "tags": ["reinforcement learning", "huggingface", "practical"],
+          "rating": 4.8,
+          "free": true
+        },
+        {
+          "id": "hf-mcp-course",
+          "title": "Model Context Protocol Course",
+          "provider": "Hugging Face",
+          "author": "Hugging Face Team",
+          "url": "https://huggingface.co/learn/mcp-course",
+          "description": "Learn about Model Context Protocol for AI applications.",
+          "level": "intermediate",
+          "duration": "~5 hours",
+          "tags": ["mcp", "agents", "tools"],
+          "rating": 4.6,
+          "free": true
+        },
+        {
+          "id": "hf-diffusion-course",
+          "title": "Diffusion Models Course",
+          "provider": "Hugging Face",
+          "author": "Hugging Face Team",
+          "url": "https://huggingface.co/learn/diffusion-course",
+          "description": "Learn about diffusion models and how to use them with diffusers.",
+          "level": "intermediate",
+          "duration": "~8 hours",
+          "tags": ["diffusion", "image generation", "huggingface"],
+          "rating": 4.7,
+          "free": true
+        },
+        {
+          "id": "hf-audio-course",
+          "title": "Audio Transformers Course",
+          "provider": "Hugging Face",
+          "author": "Hugging Face Team",
+          "url": "https://huggingface.co/learn/audio-course",
+          "description": "Apply transformers to audio data with HF libraries.",
+          "level": "intermediate",
+          "duration": "~10 hours",
+          "tags": ["audio", "speech", "huggingface"],
+          "rating": 4.6,
+          "free": true
+        },
+        {
+          "id": "hf-cv-course",
+          "title": "Computer Vision Course",
+          "provider": "Hugging Face",
+          "author": "Hugging Face Community",
+          "url": "https://huggingface.co/learn/computer-vision-course",
+          "description": "Computer vision ML using HF ecosystem libraries and models.",
+          "level": "intermediate",
+          "duration": "~15 hours",
+          "tags": ["computer vision", "huggingface", "transformers"],
+          "rating": 4.6,
+          "free": true
+        },
+        {
+          "id": "dlai-agentic-ai",
+          "title": "Agentic AI",
+          "provider": "DeepLearning.AI",
+          "author": "Andrew Ng",
+          "url": "https://www.deeplearning.ai/courses/agentic-ai",
+          "description": "Build agentic AI systems that take action through multi-step workflows.",
+          "level": "intermediate",
+          "duration": "~8 hours",
+          "tags": ["agents", "llm", "workflows"],
+          "rating": 4.8,
+          "free": true
+        },
+        {
+          "id": "dlai-rag-course",
+          "title": "Retrieval Augmented Generation (RAG)",
+          "provider": "DeepLearning.AI",
+          "author": "DeepLearning.AI Team",
+          "url": "https://www.deeplearning.ai/courses/retrieval-augmented-generation-rag",
+          "description": "Production-ready RAG from architecture to deployment.",
+          "level": "intermediate",
+          "duration": "~10 hours",
+          "tags": ["rag", "retrieval", "production"],
+          "rating": 4.8,
+          "free": true
+        },
+        {
+          "id": "dlai-crewai",
+          "title": "Multi-Agent Systems with CrewAI",
+          "provider": "DeepLearning.AI",
+          "author": "CrewAI Team",
+          "url": "https://www.deeplearning.ai/courses/design-develop-and-deploy-multi-agent-systems-with-crewai",
+          "description": "Build practical multi-agent systems that collaborate and scale.",
+          "level": "intermediate",
+          "duration": "~6 hours",
+          "tags": ["agents", "crewai", "multi-agent"],
+          "rating": 4.7,
+          "free": true
+        },
+        {
+          "id": "dlai-llm-finetuning",
+          "title": "Fine-tuning and RL for LLMs",
+          "provider": "DeepLearning.AI",
+          "author": "AMD",
+          "url": "https://www.deeplearning.ai/courses/fine-tuning-and-reinforcement-learning-for-llms-intro-to-post-training",
+          "description": "Apply fine-tuning and reinforcement learning to shape model behavior.",
+          "level": "intermediate",
+          "duration": "~8 hours",
+          "tags": ["fine-tuning", "rlhf", "post-training"],
+          "rating": 4.7,
+          "free": true
+        },
+        {
+          "id": "dlai-pytorch-cert",
+          "title": "PyTorch for Deep Learning",
+          "provider": "DeepLearning.AI",
+          "author": "DeepLearning.AI",
+          "url": "https://www.deeplearning.ai/courses/pytorch-for-deep-learning-professional-certificate",
+          "description": "Core principles of building, optimizing, and deploying PyTorch models.",
+          "level": "beginner",
+          "duration": "~3 months",
+          "tags": ["pytorch", "deep learning", "professional"],
+          "rating": 4.8,
+          "free": false,
+          "freeTier": "Some content free"
+        },
+        {
+          "id": "dlai-langchain",
+          "title": "LangChain for LLM Application Development",
+          "provider": "DeepLearning.AI",
+          "author": "Harrison Chase",
+          "url": "https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development",
+          "description": "Build LLM apps with LangChain framework.",
+          "level": "beginner",
+          "duration": "~1 hour",
+          "tags": ["langchain", "llm", "applications"],
+          "rating": 4.8,
+          "free": true
+        },
+        {
+          "id": "dlai-prompt-engineering",
+          "title": "ChatGPT Prompt Engineering for Developers",
+          "provider": "DeepLearning.AI",
+          "author": "Isa Fulford, Andrew Ng",
+          "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers",
+          "description": "Learn prompt engineering best practices for developers.",
+          "level": "beginner",
+          "duration": "~1 hour",
+          "tags": ["prompting", "chatgpt", "developers"],
+          "rating": 4.9,
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "dl-specialization-coursera",
+          "title": "Generative AI with LLMs",
+          "provider": "Coursera",
+          "author": "AWS, DeepLearning.AI",
+          "url": "https://www.coursera.org/learn/generative-ai-with-llms",
+          "description": "Fundamentals of generative AI and LLM lifecycle.",
+          "level": "intermediate",
+          "duration": "3 weeks",
+          "tags": ["generative ai", "llm", "aws"],
+          "rating": 4.7,
+          "free": false,
+          "freeTier": "Audit free"
+        },
+        {
+          "id": "cs25-transformers",
+          "title": "CS25: Transformers United",
+          "provider": "Stanford",
+          "author": "Stanford CS",
+          "url": "https://web.stanford.edu/class/cs25/",
+          "description": "Stanford seminar on transformers with industry speakers.",
+          "level": "intermediate",
+          "duration": "10 weeks",
+          "tags": ["transformers", "research", "stanford"],
+          "rating": 4.8,
+          "free": true
+        },
+        {
+          "id": "uc-berkeley-cs182",
+          "title": "CS182: Deep Learning",
+          "provider": "UC Berkeley",
+          "author": "Sergey Levine",
+          "url": "https://cs182sp21.github.io/",
+          "description": "Berkeley's comprehensive deep learning course.",
+          "level": "intermediate",
+          "duration": "15 weeks",
+          "tags": ["deep learning", "berkeley", "comprehensive"],
+          "rating": 4.7,
+          "free": true
+        },
+        {
+          "id": "cmu-11785",
+          "title": "11-785: Introduction to Deep Learning",
+          "provider": "Carnegie Mellon",
+          "author": "Bhiksha Raj",
+          "url": "https://deeplearning.cs.cmu.edu/",
+          "description": "CMU's rigorous deep learning course with PyTorch.",
+          "level": "intermediate",
+          "duration": "15 weeks",
+          "tags": ["deep learning", "cmu", "pytorch"],
+          "rating": 4.8,
+          "free": true
+        },
+        {
+          "id": "nyu-deep-learning",
+          "title": "DS-GA 1008: Deep Learning",
+          "provider": "NYU",
+          "author": "Yann LeCun, Alfredo Canziani",
+          "url": "https://atcold.github.io/pytorch-Deep-Learning/",
+          "description": "NYU deep learning course taught by Yann LeCun.",
+          "level": "intermediate",
+          "duration": "15 weeks",
+          "tags": ["deep learning", "nyu", "yann lecun"],
+          "rating": 4.9,
+          "free": true
+        },
+        {
+          "id": "oxford-ml",
+          "title": "Machine Learning",
+          "provider": "Oxford",
+          "author": "Nando de Freitas",
+          "url": "https://www.cs.ox.ac.uk/people/nando.defreitas/machinelearning/",
+          "description": "Oxford ML course with comprehensive lecture videos.",
+          "level": "intermediate",
+          "duration": "16 weeks",
+          "tags": ["machine learning", "oxford", "theory"],
+          "rating": 4.7,
+          "free": true
+        },
+        {
+          "id": "caltech-learning-from-data",
+          "title": "Learning from Data",
+          "provider": "Caltech",
+          "author": "Yaser Abu-Mostafa",
+          "url": "https://work.caltech.edu/telecourse.html",
+          "description": "Renowned ML theory course with mathematical foundations.",
+          "level": "intermediate",
+          "duration": "18 lectures",
+          "tags": ["machine learning", "theory", "caltech"],
+          "rating": 4.9,
+          "free": true
+        },
+        {
+          "id": "spinning-up-rl",
+          "title": "Spinning Up in Deep RL",
+          "provider": "OpenAI",
+          "author": "OpenAI",
+          "url": "https://spinningup.openai.com/",
+          "description": "OpenAI's educational resource for deep reinforcement learning.",
+          "level": "intermediate",
+          "duration": "~30 hours",
+          "tags": ["reinforcement learning", "openai", "practical"],
+          "rating": 4.8,
+          "free": true
+        },
+        {
+          "id": "microsoft-ai-fundamentals",
+          "title": "AI-900: Azure AI Fundamentals",
+          "provider": "Microsoft",
+          "author": "Microsoft Learn",
+          "url": "https://learn.microsoft.com/en-us/training/paths/get-started-with-artificial-intelligence-on-azure/",
+          "description": "Foundational AI concepts and Azure AI services.",
+          "level": "beginner",
+          "duration": "~6 hours",
+          "tags": ["azure", "fundamentals", "cloud"],
+          "rating": 4.5,
+          "free": true
+        },
+        {
+          "id": "aws-ml-learning",
+          "title": "AWS Machine Learning",
+          "provider": "AWS",
+          "author": "Amazon",
+          "url": "https://aws.amazon.com/training/learn-about/machine-learning/",
+          "description": "Free ML courses from Amazon's ML university.",
+          "level": "beginner",
+          "duration": "Self-paced",
+          "tags": ["aws", "cloud", "machine learning"],
+          "rating": 4.5,
+          "free": true
+        }
+      ]
+    },
+    {
+      "id": "youtube",
+      "title": "YouTube Channels",
+      "icon": "📺",
+      "description": "Learn from the best AI educators on YouTube",
+      "items": [
+        {
+          "id": "3blue1brown",
+          "title": "3Blue1Brown",
+          "provider": "YouTube",
+          "author": "Grant Sanderson",
+          "url": "https://www.youtube.com/c/3blue1brown",
+          "description": "Beautiful visual explanations of math concepts. Neural networks, linear algebra, calculus.",
+          "tags": ["math", "visualization", "neural networks"],
+          "subscribers": "6M+",
+          "featured": true
+        },
+        {
+          "id": "yannic-kilcher",
+          "title": "Yannic Kilcher",
+          "provider": "YouTube",
+          "author": "Yannic Kilcher",
+          "url": "https://www.youtube.com/@YannicKilcher",
+          "description": "In-depth paper explanations. Covers latest AI research clearly.",
+          "tags": ["papers", "research", "explanations"],
+          "subscribers": "250K+"
+        },
+        {
+          "id": "two-minute-papers",
+          "title": "Two Minute Papers",
+          "provider": "YouTube",
+          "author": "Károly Zsolnai-Fehér",
+          "url": "https://www.youtube.com/@TwoMinutePapers",
+          "description": "Quick, exciting overviews of AI research breakthroughs.",
+          "tags": ["research", "news", "quick"],
+          "subscribers": "1.5M+"
+        },
+        {
+          "id": "sentdex",
+          "title": "sentdex",
+          "provider": "YouTube",
+          "author": "Harrison Kinsley",
+          "url": "https://www.youtube.com/@sentdex",
+          "description": "Python and ML tutorials. Practical, hands-on coding.",
+          "tags": ["python", "tutorials", "practical"],
+          "subscribers": "1.3M+"
+        },
+        {
+          "id": "statquest",
+          "title": "StatQuest",
+          "provider": "YouTube",
+          "author": "Josh Starmer",
+          "url": "https://www.youtube.com/@statquest",
+          "description": "Statistics and ML explained simply with catchy songs. BAM!",
+          "tags": ["statistics", "ml basics", "beginner"],
+          "subscribers": "1M+"
+        },
+        {
+          "id": "lex-fridman",
+          "title": "Lex Fridman Podcast",
+          "provider": "YouTube",
+          "author": "Lex Fridman",
+          "url": "https://www.youtube.com/@lexfridman",
+          "description": "Deep conversations with AI leaders: Karpathy, Sutskever, Hinton, LeCun.",
+          "tags": ["interviews", "research", "philosophy"],
+          "subscribers": "4M+"
+        },
+        {
+          "id": "ai-explained",
+          "title": "AI Explained",
+          "provider": "YouTube",
+          "author": "AI Explained",
+          "url": "https://www.youtube.com/@aiexplained-official",
+          "description": "Clear explanations of AI news and research. Well-researched.",
+          "tags": ["news", "research", "explanations"],
+          "subscribers": "400K+"
+        },
+        {
+          "id": "fireship",
+          "title": "Fireship",
+          "provider": "YouTube",
+          "author": "Jeff Delaney",
+          "url": "https://www.youtube.com/@Fireship",
+          "description": "Fast-paced tech explainers. AI tools in 100 seconds.",
+          "tags": ["quick", "tools", "development"],
+          "subscribers": "3M+"
+        },
+        {
+          "id": "code-emporium",
+          "title": "Code Emporium",
+          "provider": "YouTube",
+          "author": "Ajay Halthor",
+          "url": "https://www.youtube.com/@CodeEmporium",
+          "description": "Clear ML paper explanations with visual diagrams.",
+          "tags": ["papers", "explanations", "visual"],
+          "subscribers": "100K+"
+        },
+        {
+          "id": "sam-witteveen",
+          "title": "Sam Witteveen",
+          "provider": "YouTube",
+          "author": "Sam Witteveen",
+          "url": "https://www.youtube.com/@samwitteveenai",
+          "description": "LLM tutorials, RAG, agents, and practical implementations.",
+          "tags": ["llm", "rag", "agents", "tutorials"],
+          "subscribers": "50K+"
+        },
+        {
+          "id": "matthew-berman",
+          "title": "Matthew Berman",
+          "provider": "YouTube",
+          "author": "Matthew Berman",
+          "url": "https://www.youtube.com/@matthew_berman",
+          "description": "AI news, local LLMs, and tool reviews.",
+          "tags": ["news", "local llm", "tools"],
+          "subscribers": "300K+"
+        },
+        {
+          "id": "decoder",
+          "title": "The AI Advantage",
+          "provider": "YouTube",
+          "author": "Igor Pogany",
+          "url": "https://www.youtube.com/@aiadvantage",
+          "description": "Practical AI tool tutorials and productivity tips.",
+          "tags": ["tools", "productivity", "tutorials"],
+          "subscribers": "200K+"
+        },
+        {
+          "id": "jeremy-howard",
+          "title": "Jeremy Howard",
+          "provider": "YouTube",
+          "author": "Jeremy Howard",
+          "url": "https://www.youtube.com/@holoJH",
+          "description": "Fast.ai founder's channel. Deep learning insights.",
+          "tags": ["fast.ai", "deep learning", "research"],
+          "subscribers": "50K+"
+        },
+        {
+          "id": "machine-learning-street-talk",
+          "title": "ML Street Talk",
+          "provider": "YouTube",
+          "author": "Tim Scarfe, Keith Duggar",
+          "url": "https://www.youtube.com/@MachineLearningStreetTalk",
+          "description": "In-depth technical AI discussions and interviews.",
+          "tags": ["interviews", "technical", "research"],
+          "subscribers": "150K+"
+        },
+        {
+          "id": "aleksa-gordic",
+          "title": "Aleksa Gordić - The AI Epiphany",
+          "provider": "YouTube",
+          "author": "Aleksa Gordić",
+          "url": "https://www.youtube.com/@TheAIEpiphany",
+          "description": "Deep dives into transformers, attention, and architectures.",
+          "tags": ["transformers", "deep dives", "implementations"],
+          "subscribers": "80K+"
+        },
+        {
+          "id": "umar-jamil",
+          "title": "Umar Jamil",
+          "provider": "YouTube",
+          "author": "Umar Jamil",
+          "url": "https://www.youtube.com/@uaborjmr",
+          "description": "Excellent from-scratch implementations of transformers and LLMs.",
+          "tags": ["from scratch", "transformers", "implementations"],
+          "subscribers": "100K+",
+          "featured": true
+        },
+        {
+          "id": "data-independent",
+          "title": "Data Independent",
+          "provider": "YouTube",
+          "author": "Data Independent",
+          "url": "https://www.youtube.com/@DataIndependent",
+          "description": "LangChain, RAG, and LLM application tutorials.",
+          "tags": ["langchain", "rag", "tutorials"],
+          "subscribers": "50K+"
+        },
+        {
+          "id": "chris-hay",
+          "title": "Chris Hay",
+          "provider": "YouTube",
+          "author": "Chris Hay",
+          "url": "https://www.youtube.com/@chrishayuk",
+          "description": "Practical AI development and local LLM setups.",
+          "tags": ["local llm", "development", "practical"],
+          "subscribers": "30K+"
+        },
+        {
+          "id": "nicholas-renotte",
+          "title": "Nicholas Renotte",
+          "provider": "YouTube",
+          "author": "Nicholas Renotte",
+          "url": "https://www.youtube.com/@NicholasRenotte",
+          "description": "End-to-end ML project tutorials with TensorFlow.",
+          "tags": ["tensorflow", "projects", "tutorials"],
+          "subscribers": "300K+"
+        },
+        {
+          "id": "arize-ai",
+          "title": "Arize AI",
+          "provider": "YouTube",
+          "author": "Arize AI",
+          "url": "https://www.youtube.com/@ArizeAI",
+          "description": "MLOps, observability, and LLM evaluation content.",
+          "tags": ["mlops", "evaluation", "production"],
+          "subscribers": "10K+"
+        },
+        {
+          "id": "weights-biases",
+          "title": "Weights & Biases",
+          "provider": "YouTube",
+          "author": "Weights & Biases",
+          "url": "https://www.youtube.com/@WeightsBiases",
+          "description": "MLOps tutorials and AI practitioner interviews.",
+          "tags": ["mlops", "experiment tracking", "interviews"],
+          "subscribers": "50K+"
+        },
+        {
+          "id": "deepmind",
+          "title": "Google DeepMind",
+          "provider": "YouTube",
+          "author": "Google DeepMind",
+          "url": "https://www.youtube.com/@Google_DeepMind",
+          "description": "Official channel with research talks and announcements.",
+          "tags": ["research", "deepmind", "official"],
+          "subscribers": "500K+"
+        },
+        {
+          "id": "openai",
+          "title": "OpenAI",
+          "provider": "YouTube",
+          "author": "OpenAI",
+          "url": "https://www.youtube.com/@OpenAI",
+          "description": "Official OpenAI channel with research and product updates.",
+          "tags": ["research", "openai", "official"],
+          "subscribers": "1M+"
+        }
+      ]
+    },
+    {
+      "id": "papers",
+      "title": "Must-Read Papers",
+      "icon": "📄",
+      "description": "Foundational papers that shaped modern AI",
+      "items": [
+        {
+          "id": "attention-paper",
+          "title": "Attention Is All You Need",
+          "authors": "Vaswani et al.",
+          "year": 2017,
+          "url": "https://arxiv.org/abs/1706.03762",
+          "description": "The transformer paper that started the LLM revolution.",
+          "citations": "100K+",
+          "tags": ["transformers", "attention", "foundational"],
+          "featured": true
+        },
+        {
+          "id": "bert-paper",
+          "title": "BERT: Pre-training of Deep Bidirectional Transformers",
+          "authors": "Devlin et al. (Google)",
+          "year": 2018,
+          "url": "https://arxiv.org/abs/1810.04805",
+          "description": "Bidirectional transformers for NLP. Changed pre-training paradigm.",
+          "citations": "80K+",
+          "tags": ["bert", "pretraining", "nlp"]
+        },
+        {
+          "id": "gpt3-paper",
+          "title": "Language Models are Few-Shot Learners",
+          "authors": "Brown et al. (OpenAI)",
+          "year": 2020,
+          "url": "https://arxiv.org/abs/2005.14165",
+          "description": "GPT-3 paper. Demonstrated emergent abilities at scale.",
+          "citations": "20K+",
+          "tags": ["gpt", "few-shot", "scaling"],
+          "featured": true
+        },
+        {
+          "id": "lora-paper",
+          "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+          "authors": "Hu et al. (Microsoft)",
+          "year": 2021,
+          "url": "https://arxiv.org/abs/2106.09685",
+          "description": "Efficient fine-tuning by adding small trainable matrices.",
+          "citations": "5K+",
+          "tags": ["fine-tuning", "efficiency", "lora"]
+        },
+        {
+          "id": "chain-of-thought",
+          "title": "Chain-of-Thought Prompting",
+          "authors": "Wei et al. (Google)",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2201.11903",
+          "description": "Improve reasoning by asking models to think step-by-step.",
+          "citations": "3K+",
+          "tags": ["prompting", "reasoning", "cot"]
+        },
+        {
+          "id": "rag-paper",
+          "title": "Retrieval-Augmented Generation for Knowledge-Intensive Tasks",
+          "authors": "Lewis et al. (Meta)",
+          "year": 2020,
+          "url": "https://arxiv.org/abs/2005.11401",
+          "description": "Combine retrieval with generation for factual accuracy.",
+          "citations": "4K+",
+          "tags": ["rag", "retrieval", "generation"]
+        },
+        {
+          "id": "resnet-paper",
+          "title": "Deep Residual Learning for Image Recognition",
+          "authors": "He et al. (Microsoft)",
+          "year": 2015,
+          "url": "https://arxiv.org/abs/1512.03385",
+          "description": "Skip connections enabling very deep networks. ImageNet breakthrough.",
+          "citations": "200K+",
+          "tags": ["cnn", "residual", "computer vision"]
+        },
+        {
+          "id": "diffusion-paper",
+          "title": "Denoising Diffusion Probabilistic Models",
+          "authors": "Ho et al. (Google)",
+          "year": 2020,
+          "url": "https://arxiv.org/abs/2006.11239",
+          "description": "Foundation of modern image generation (DALL-E, Stable Diffusion).",
+          "citations": "10K+",
+          "tags": ["diffusion", "image generation", "foundational"]
+        },
+        {
+          "id": "instruct-gpt",
+          "title": "Training language models to follow instructions (InstructGPT)",
+          "authors": "Ouyang et al. (OpenAI)",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2203.02155",
+          "description": "RLHF to align models with human preferences. Led to ChatGPT.",
+          "citations": "5K+",
+          "tags": ["rlhf", "alignment", "instruction following"]
+        },
+        {
+          "id": "llama-paper",
+          "title": "LLaMA: Open and Efficient Foundation Language Models",
+          "authors": "Touvron et al. (Meta)",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2302.13971",
+          "description": "Open-source LLM that sparked the open model revolution.",
+          "citations": "3K+",
+          "tags": ["llama", "open source", "llm"]
+        },
+        {
+          "id": "mixtral-paper",
+          "title": "Mixtral of Experts",
+          "authors": "Jiang et al. (Mistral AI)",
+          "year": 2024,
+          "url": "https://arxiv.org/abs/2401.04088",
+          "description": "Sparse mixture of experts achieving state-of-the-art efficiency.",
+          "citations": "1K+",
+          "tags": ["moe", "efficiency", "mistral"]
+        },
+        {
+          "id": "flash-attention",
+          "title": "FlashAttention: Fast and Memory-Efficient Attention",
+          "authors": "Dao et al. (Stanford)",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2205.14135",
+          "description": "IO-aware attention algorithm enabling longer contexts.",
+          "citations": "2K+",
+          "tags": ["efficiency", "attention", "optimization"]
+        },
+        {
+          "id": "dpo-paper",
+          "title": "Direct Preference Optimization",
+          "authors": "Rafailov et al. (Stanford)",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2305.18290",
+          "description": "Simpler alternative to RLHF for aligning language models.",
+          "citations": "1K+",
+          "tags": ["alignment", "dpo", "preference learning"]
+        },
+        {
+          "id": "constitutional-ai",
+          "title": "Constitutional AI",
+          "authors": "Bai et al. (Anthropic)",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2212.08073",
+          "description": "Training harmless AI assistants using self-improvement.",
+          "citations": "1K+",
+          "tags": ["safety", "alignment", "anthropic"]
+        },
+        {
+          "id": "scaling-laws",
+          "title": "Scaling Laws for Neural Language Models",
+          "authors": "Kaplan et al. (OpenAI)",
+          "year": 2020,
+          "url": "https://arxiv.org/abs/2001.08361",
+          "description": "Foundational work on how LLM performance scales with compute.",
+          "citations": "3K+",
+          "tags": ["scaling", "theory", "openai"]
+        },
+        {
+          "id": "chinchilla",
+          "title": "Training Compute-Optimal Large Language Models (Chinchilla)",
+          "authors": "Hoffmann et al. (DeepMind)",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2203.15556",
+          "description": "Optimal compute allocation between model size and data.",
+          "citations": "2K+",
+          "tags": ["scaling", "efficiency", "deepmind"]
+        },
+        {
+          "id": "clip-paper",
+          "title": "Learning Transferable Visual Models From Natural Language Supervision (CLIP)",
+          "authors": "Radford et al. (OpenAI)",
+          "year": 2021,
+          "url": "https://arxiv.org/abs/2103.00020",
+          "description": "Connecting text and images for zero-shot classification.",
+          "citations": "15K+",
+          "tags": ["multimodal", "vision", "openai"],
+          "featured": true
+        },
+        {
+          "id": "vit-paper",
+          "title": "An Image is Worth 16x16 Words (Vision Transformer)",
+          "authors": "Dosovitskiy et al. (Google)",
+          "year": 2020,
+          "url": "https://arxiv.org/abs/2010.11929",
+          "description": "Applying transformers directly to image patches.",
+          "citations": "30K+",
+          "tags": ["vision", "transformer", "computer vision"]
+        },
+        {
+          "id": "gpt4-report",
+          "title": "GPT-4 Technical Report",
+          "authors": "OpenAI",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2303.08774",
+          "description": "Technical report on GPT-4's capabilities and limitations.",
+          "citations": "5K+",
+          "tags": ["gpt-4", "capabilities", "openai"]
+        },
+        {
+          "id": "gemini-paper",
+          "title": "Gemini: A Family of Highly Capable Multimodal Models",
+          "authors": "Gemini Team (Google)",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2312.11805",
+          "description": "Google's multimodal AI model technical report.",
+          "citations": "1K+",
+          "tags": ["multimodal", "gemini", "google"]
+        },
+        {
+          "id": "react-paper",
+          "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+          "authors": "Yao et al. (Princeton/Google)",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2210.03629",
+          "description": "Combining reasoning and actions for LLM agents.",
+          "citations": "2K+",
+          "tags": ["agents", "reasoning", "acting"],
+          "featured": true
+        },
+        {
+          "id": "toolformer",
+          "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+          "authors": "Schick et al. (Meta)",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2302.04761",
+          "description": "Teaching LLMs to use external tools autonomously.",
+          "citations": "1K+",
+          "tags": ["tools", "agents", "meta"]
+        },
+        {
+          "id": "mamba-paper",
+          "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+          "authors": "Gu, Dao (Carnegie Mellon)",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2312.00752",
+          "description": "State space model alternative to transformers with linear complexity.",
+          "citations": "500+",
+          "tags": ["ssm", "efficiency", "alternative architecture"]
+        },
+        {
+          "id": "retnet-paper",
+          "title": "Retentive Network: A Successor to Transformer for Large Language Models",
+          "authors": "Sun et al. (Microsoft)",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2307.08621",
+          "description": "Retention mechanism combining training parallelism with inference efficiency.",
+          "citations": "300+",
+          "tags": ["efficiency", "architecture", "microsoft"]
+        },
+        {
+          "id": "tree-of-thought",
+          "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+          "authors": "Yao et al. (Princeton)",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2305.10601",
+          "description": "Structured reasoning through exploration of thought trees.",
+          "citations": "1K+",
+          "tags": ["reasoning", "prompting", "search"]
+        },
+        {
+          "id": "self-instruct",
+          "title": "Self-Instruct: Aligning Language Models with Self-Generated Instructions",
+          "authors": "Wang et al.",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2212.10560",
+          "description": "Generating instruction data from LLMs for fine-tuning.",
+          "citations": "1K+",
+          "tags": ["instruction tuning", "data generation", "self-improvement"]
+        },
+        {
+          "id": "qlora-paper",
+          "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+          "authors": "Dettmers et al. (UW)",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2305.14314",
+          "description": "Fine-tune 65B models on single GPU with 4-bit quantization.",
+          "citations": "2K+",
+          "tags": ["quantization", "fine-tuning", "efficiency"],
+          "featured": true
+        },
+        {
+          "id": "llava-paper",
+          "title": "Visual Instruction Tuning (LLaVA)",
+          "authors": "Liu et al. (UW/Microsoft)",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2304.08485",
+          "description": "Training vision-language models with GPT-4 generated data.",
+          "citations": "2K+",
+          "tags": ["vision-language", "multimodal", "instruction tuning"]
+        },
+        {
+          "id": "whisper-paper",
+          "title": "Robust Speech Recognition via Large-Scale Weak Supervision",
+          "authors": "Radford et al. (OpenAI)",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2212.04356",
+          "description": "Whisper speech recognition trained on 680K hours of audio.",
+          "citations": "3K+",
+          "tags": ["speech", "audio", "openai"]
+        }
+      ]
+    },
+    {
+      "id": "documentation",
+      "title": "Official Documentation",
+      "icon": "📘",
+      "description": "Essential documentation for AI development",
+      "items": [
+        {
+          "id": "huggingface-docs",
+          "title": "Hugging Face Transformers",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/docs/transformers",
+          "description": "State-of-the-art NLP models. 200K+ models in hub.",
+          "tags": ["transformers", "models", "nlp"],
+          "featured": true
+        },
+        {
+          "id": "langchain-docs",
+          "title": "LangChain",
+          "provider": "LangChain",
+          "url": "https://python.langchain.com/docs/",
+          "description": "Build LLM applications with chains, agents, and RAG.",
+          "tags": ["llm", "rag", "agents"],
+          "featured": true
+        },
+        {
+          "id": "openai-docs",
+          "title": "OpenAI API",
+          "provider": "OpenAI",
+          "url": "https://platform.openai.com/docs",
+          "description": "GPT-4, DALL-E, Whisper API documentation.",
+          "tags": ["api", "gpt", "dalle"],
+          "featured": true
+        },
+        {
+          "id": "anthropic-docs",
+          "title": "Anthropic Claude",
+          "provider": "Anthropic",
+          "url": "https://docs.anthropic.com/",
+          "description": "Claude API docs. Best practices for prompting.",
+          "tags": ["api", "claude", "prompting"]
+        },
+        {
+          "id": "pytorch-docs",
+          "title": "PyTorch",
+          "provider": "PyTorch",
+          "url": "https://pytorch.org/docs/stable/",
+          "description": "Deep learning framework of choice for research.",
+          "tags": ["framework", "deep learning", "tensors"]
+        },
+        {
+          "id": "llamaindex-docs",
+          "title": "LlamaIndex",
+          "provider": "LlamaIndex",
+          "url": "https://docs.llamaindex.ai/",
+          "description": "Data framework for LLM apps. Great for RAG.",
+          "tags": ["rag", "data", "indexing"]
+        },
+        {
+          "id": "ollama-docs",
+          "title": "Ollama",
+          "provider": "Ollama",
+          "url": "https://ollama.ai/",
+          "description": "Run LLMs locally. Simple setup, great for development.",
+          "tags": ["local", "llm", "privacy"]
+        },
+        {
+          "id": "chromadb-docs",
+          "title": "ChromaDB",
+          "provider": "Chroma",
+          "url": "https://docs.trychroma.com/",
+          "description": "Open-source vector database for embeddings.",
+          "tags": ["vector db", "embeddings", "rag"]
+        },
+        {
+          "id": "pinecone-docs",
+          "title": "Pinecone",
+          "provider": "Pinecone",
+          "url": "https://docs.pinecone.io/",
+          "description": "Production vector database for similarity search.",
+          "tags": ["vector db", "production", "search"]
+        },
+        {
+          "id": "weaviate-docs",
+          "title": "Weaviate",
+          "provider": "Weaviate",
+          "url": "https://weaviate.io/developers/weaviate",
+          "description": "Open-source vector database with hybrid search.",
+          "tags": ["vector db", "open source", "hybrid search"]
+        },
+        {
+          "id": "qdrant-docs",
+          "title": "Qdrant",
+          "provider": "Qdrant",
+          "url": "https://qdrant.tech/documentation/",
+          "description": "High-performance vector similarity search engine.",
+          "tags": ["vector db", "performance", "search"]
+        },
+        {
+          "id": "vllm-docs",
+          "title": "vLLM",
+          "provider": "vLLM",
+          "url": "https://docs.vllm.ai/",
+          "description": "High-throughput LLM serving with PagedAttention.",
+          "tags": ["serving", "inference", "performance"],
+          "featured": true
+        },
+        {
+          "id": "tgi-docs",
+          "title": "Text Generation Inference",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/docs/text-generation-inference",
+          "description": "Production LLM inference server from Hugging Face.",
+          "tags": ["serving", "inference", "huggingface"]
+        },
+        {
+          "id": "mlx-docs",
+          "title": "MLX",
+          "provider": "Apple",
+          "url": "https://ml-explore.github.io/mlx/",
+          "description": "Apple's ML framework optimized for Apple Silicon.",
+          "tags": ["apple", "framework", "local"],
+          "featured": true
+        },
+        {
+          "id": "jax-docs",
+          "title": "JAX",
+          "provider": "Google",
+          "url": "https://jax.readthedocs.io/",
+          "description": "High-performance numerical computing with autograd.",
+          "tags": ["framework", "autograd", "google"]
+        },
+        {
+          "id": "flax-docs",
+          "title": "Flax",
+          "provider": "Google",
+          "url": "https://flax.readthedocs.io/",
+          "description": "Neural network library for JAX.",
+          "tags": ["jax", "neural networks", "google"]
+        },
+        {
+          "id": "einops-docs",
+          "title": "Einops",
+          "provider": "Einops",
+          "url": "https://einops.rocks/",
+          "description": "Flexible and powerful tensor operations.",
+          "tags": ["tensors", "operations", "utility"]
+        },
+        {
+          "id": "wandb-docs",
+          "title": "Weights & Biases",
+          "provider": "Weights & Biases",
+          "url": "https://docs.wandb.ai/",
+          "description": "Experiment tracking, model versioning, and hyperparameter tuning.",
+          "tags": ["mlops", "experiment tracking", "visualization"]
+        },
+        {
+          "id": "mlflow-docs",
+          "title": "MLflow",
+          "provider": "Databricks",
+          "url": "https://mlflow.org/docs/latest/",
+          "description": "Open-source platform for ML lifecycle management.",
+          "tags": ["mlops", "lifecycle", "open source"]
+        },
+        {
+          "id": "dvc-docs",
+          "title": "DVC (Data Version Control)",
+          "provider": "DVC",
+          "url": "https://dvc.org/doc",
+          "description": "Version control for ML projects and data.",
+          "tags": ["versioning", "data", "mlops"]
+        },
+        {
+          "id": "ray-docs",
+          "title": "Ray",
+          "provider": "Anyscale",
+          "url": "https://docs.ray.io/",
+          "description": "Distributed computing framework for ML workloads.",
+          "tags": ["distributed", "scaling", "training"]
+        },
+        {
+          "id": "modal-docs",
+          "title": "Modal",
+          "provider": "Modal",
+          "url": "https://modal.com/docs",
+          "description": "Serverless cloud for AI/ML with GPU access.",
+          "tags": ["serverless", "gpu", "cloud"]
+        },
+        {
+          "id": "replicate-docs",
+          "title": "Replicate",
+          "provider": "Replicate",
+          "url": "https://replicate.com/docs",
+          "description": "Run ML models in the cloud with simple API.",
+          "tags": ["api", "cloud", "models"]
+        },
+        {
+          "id": "together-docs",
+          "title": "Together AI",
+          "provider": "Together AI",
+          "url": "https://docs.together.ai/",
+          "description": "Open source model inference and fine-tuning platform.",
+          "tags": ["inference", "fine-tuning", "open source"]
+        },
+        {
+          "id": "groq-docs",
+          "title": "Groq",
+          "provider": "Groq",
+          "url": "https://console.groq.com/docs",
+          "description": "Ultra-fast LLM inference with custom hardware.",
+          "tags": ["inference", "speed", "api"]
+        },
+        {
+          "id": "dspy-docs",
+          "title": "DSPy",
+          "provider": "Stanford NLP",
+          "url": "https://dspy-docs.vercel.app/",
+          "description": "Programming framework for LLM pipelines.",
+          "tags": ["framework", "pipelines", "stanford"],
+          "featured": true
+        },
+        {
+          "id": "crewai-docs",
+          "title": "CrewAI",
+          "provider": "CrewAI",
+          "url": "https://docs.crewai.com/",
+          "description": "Framework for orchestrating AI agent teams.",
+          "tags": ["agents", "multi-agent", "orchestration"]
+        },
+        {
+          "id": "autogen-docs",
+          "title": "AutoGen",
+          "provider": "Microsoft",
+          "url": "https://microsoft.github.io/autogen/",
+          "description": "Multi-agent conversation framework from Microsoft.",
+          "tags": ["agents", "multi-agent", "microsoft"]
+        },
+        {
+          "id": "semantic-kernel-docs",
+          "title": "Semantic Kernel",
+          "provider": "Microsoft",
+          "url": "https://learn.microsoft.com/semantic-kernel/",
+          "description": "SDK for integrating LLMs into applications.",
+          "tags": ["sdk", "microsoft", "integration"]
+        },
+        {
+          "id": "instructor-docs",
+          "title": "Instructor",
+          "provider": "Jason Liu",
+          "url": "https://python.useinstructor.com/",
+          "description": "Structured outputs from LLMs using Pydantic.",
+          "tags": ["structured output", "pydantic", "extraction"]
+        },
+        {
+          "id": "outlines-docs",
+          "title": "Outlines",
+          "provider": "Outlines",
+          "url": "https://outlines-dev.github.io/outlines/",
+          "description": "Structured generation with LLMs using grammars.",
+          "tags": ["structured output", "grammar", "generation"]
+        },
+        {
+          "id": "guidance-docs",
+          "title": "Guidance",
+          "provider": "Microsoft",
+          "url": "https://github.com/guidance-ai/guidance",
+          "description": "Language for controlling LLM generation.",
+          "tags": ["control", "generation", "microsoft"]
+        },
+        {
+          "id": "unsloth-docs",
+          "title": "Unsloth",
+          "provider": "Unsloth",
+          "url": "https://docs.unsloth.ai/",
+          "description": "2x faster LLM fine-tuning with 60% less memory.",
+          "tags": ["fine-tuning", "efficiency", "optimization"],
+          "featured": true
+        },
+        {
+          "id": "axolotl-docs",
+          "title": "Axolotl",
+          "provider": "OpenAccess-AI-Collective",
+          "url": "https://github.com/OpenAccess-AI-Collective/axolotl",
+          "description": "Tool for fine-tuning LLMs with various methods.",
+          "tags": ["fine-tuning", "lora", "training"]
+        },
+        {
+          "id": "transformers-docs",
+          "title": "Transformers",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/docs/transformers",
+          "description": "State-of-the-art pretrained models for NLP, vision, audio.",
+          "tags": ["models", "pretrained", "huggingface"]
+        },
+        {
+          "id": "datasets-docs",
+          "title": "Datasets",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/docs/datasets",
+          "description": "Efficient data loading and processing library.",
+          "tags": ["data", "loading", "huggingface"]
+        },
+        {
+          "id": "peft-docs",
+          "title": "PEFT",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/docs/peft",
+          "description": "Parameter-efficient fine-tuning methods (LoRA, etc.).",
+          "tags": ["fine-tuning", "lora", "efficiency"]
+        },
+        {
+          "id": "trl-docs",
+          "title": "TRL",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/docs/trl",
+          "description": "Transformer Reinforcement Learning for RLHF.",
+          "tags": ["rlhf", "reinforcement learning", "huggingface"]
+        },
+        {
+          "id": "accelerate-docs",
+          "title": "Accelerate",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/docs/accelerate",
+          "description": "Easy distributed training and mixed precision.",
+          "tags": ["distributed", "training", "multi-gpu"]
+        },
+        {
+          "id": "bitsandbytes-docs",
+          "title": "bitsandbytes",
+          "provider": "bitsandbytes",
+          "url": "https://huggingface.co/docs/bitsandbytes",
+          "description": "Accessible quantization (8-bit, 4-bit) for LLMs.",
+          "tags": ["quantization", "inference", "efficiency"]
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "title": "Practice Platforms",
+      "icon": "🏋️",
+      "description": "Hands-on practice and competitions",
+      "items": [
+        {
+          "id": "kaggle",
+          "title": "Kaggle",
+          "provider": "Google",
+          "url": "https://www.kaggle.com/",
+          "description": "ML competitions, datasets, and free notebooks with GPUs.",
+          "tags": ["competitions", "datasets", "notebooks"],
+          "featured": true
+        },
+        {
+          "id": "kaggle-learn",
+          "title": "Kaggle Learn",
+          "provider": "Google",
+          "url": "https://www.kaggle.com/learn",
+          "description": "Free micro-courses on Python, ML, deep learning, SQL.",
+          "tags": ["courses", "interactive", "free"],
+          "featured": true
+        },
+        {
+          "id": "leetcode-ml",
+          "title": "LeetCode ML",
+          "provider": "LeetCode",
+          "url": "https://leetcode.com/problemset/machine-learning/",
+          "description": "ML interview problems and system design.",
+          "tags": ["interviews", "problems", "practice"]
+        },
+        {
+          "id": "paperswithcode",
+          "title": "Papers With Code",
+          "provider": "Meta AI",
+          "url": "https://paperswithcode.com/",
+          "description": "Research papers with official/community implementations.",
+          "tags": ["papers", "code", "benchmarks"],
+          "featured": true
+        },
+        {
+          "id": "huggingface-spaces",
+          "title": "Hugging Face Spaces",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/spaces",
+          "description": "Host ML demos. Explore community-built apps.",
+          "tags": ["demos", "apps", "community"]
+        },
+        {
+          "id": "colab",
+          "title": "Google Colab",
+          "provider": "Google",
+          "url": "https://colab.research.google.com/",
+          "description": "Free Jupyter notebooks with GPU/TPU access.",
+          "tags": ["notebooks", "free gpu", "google"]
+        },
+        {
+          "id": "lightning-ai",
+          "title": "Lightning AI Studios",
+          "provider": "Lightning AI",
+          "url": "https://lightning.ai/",
+          "description": "Cloud IDE with GPUs. Great for training models.",
+          "tags": ["cloud", "gpu", "training"]
+        },
+        {
+          "id": "hf-cookbook",
+          "title": "Hugging Face Cookbook",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/learn/cookbook",
+          "description": "Collection of open-source AI notebooks by builders.",
+          "tags": ["notebooks", "recipes", "practical"],
+          "featured": true
+        },
+        {
+          "id": "arxiv-sanity",
+          "title": "arxiv-sanity",
+          "provider": "Andrej Karpathy",
+          "url": "https://arxiv-sanity-lite.com/",
+          "description": "Browse and search ML papers intelligently.",
+          "tags": ["papers", "search", "research"]
+        },
+        {
+          "id": "connected-papers",
+          "title": "Connected Papers",
+          "provider": "Connected Papers",
+          "url": "https://www.connectedpapers.com/",
+          "description": "Visual tool to find and explore related papers.",
+          "tags": ["papers", "visualization", "research"]
+        },
+        {
+          "id": "semantic-scholar",
+          "title": "Semantic Scholar",
+          "provider": "Allen AI",
+          "url": "https://www.semanticscholar.org/",
+          "description": "AI-powered research tool for academic papers.",
+          "tags": ["papers", "search", "academic"]
+        },
+        {
+          "id": "openreview",
+          "title": "OpenReview",
+          "provider": "OpenReview",
+          "url": "https://openreview.net/",
+          "description": "Open peer review platform for ML conferences.",
+          "tags": ["papers", "reviews", "conferences"]
+        },
+        {
+          "id": "gradio",
+          "title": "Gradio",
+          "provider": "Hugging Face",
+          "url": "https://www.gradio.app/",
+          "description": "Build ML demos and share with simple Python interface.",
+          "tags": ["demos", "ui", "sharing"],
+          "featured": true
+        },
+        {
+          "id": "streamlit",
+          "title": "Streamlit",
+          "provider": "Snowflake",
+          "url": "https://streamlit.io/",
+          "description": "Turn Python scripts into web apps in minutes.",
+          "tags": ["apps", "ui", "prototyping"]
+        },
+        {
+          "id": "chatgpt-playground",
+          "title": "OpenAI Playground",
+          "provider": "OpenAI",
+          "url": "https://platform.openai.com/playground",
+          "description": "Experiment with GPT models interactively.",
+          "tags": ["playground", "gpt", "interactive"]
+        },
+        {
+          "id": "anthropic-workbench",
+          "title": "Anthropic Workbench",
+          "provider": "Anthropic",
+          "url": "https://console.anthropic.com/workbench",
+          "description": "Test and iterate on Claude prompts.",
+          "tags": ["playground", "claude", "prompting"]
+        },
+        {
+          "id": "open-webui",
+          "title": "Open WebUI",
+          "provider": "Open WebUI",
+          "url": "https://github.com/open-webui/open-webui",
+          "description": "Self-hosted ChatGPT-like interface for local LLMs.",
+          "tags": ["local", "interface", "self-hosted"]
+        },
+        {
+          "id": "lmsys-arena",
+          "title": "Chatbot Arena",
+          "provider": "LMSYS",
+          "url": "https://chat.lmsys.org/",
+          "description": "Compare LLMs side-by-side with blind evaluation.",
+          "tags": ["evaluation", "comparison", "benchmarks"]
+        },
+        {
+          "id": "huggingface-evaluate",
+          "title": "Hugging Face Evaluate",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/docs/evaluate",
+          "description": "Library for evaluating ML models with 100+ metrics.",
+          "tags": ["evaluation", "metrics", "benchmarks"]
+        },
+        {
+          "id": "openllm-leaderboard",
+          "title": "Open LLM Leaderboard",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard",
+          "description": "Track and compare open-source LLM performance.",
+          "tags": ["benchmarks", "leaderboard", "comparison"]
+        },
+        {
+          "id": "nn-visualizations",
+          "title": "NN SVG",
+          "provider": "Alex Lenail",
+          "url": "https://alexlenail.me/NN-SVG/",
+          "description": "Create publication-ready neural network diagrams.",
+          "tags": ["visualization", "diagrams", "tools"]
+        },
+        {
+          "id": "netron",
+          "title": "Netron",
+          "provider": "Lutz Roeder",
+          "url": "https://netron.app/",
+          "description": "Visualize neural network models (ONNX, TensorFlow, etc.).",
+          "tags": ["visualization", "models", "tools"]
+        },
+        {
+          "id": "drivendata",
+          "title": "DrivenData",
+          "provider": "DrivenData",
+          "url": "https://www.drivendata.org/",
+          "description": "Data science competitions for social good.",
+          "tags": ["competitions", "social good", "datasets"]
+        },
+        {
+          "id": "zindi",
+          "title": "Zindi",
+          "provider": "Zindi",
+          "url": "https://zindi.africa/",
+          "description": "African data science competition platform.",
+          "tags": ["competitions", "africa", "datasets"]
+        },
+        {
+          "id": "aicrowd",
+          "title": "AIcrowd",
+          "provider": "AIcrowd",
+          "url": "https://www.aicrowd.com/",
+          "description": "AI challenges with industry and research focus.",
+          "tags": ["competitions", "challenges", "research"]
+        }
+      ]
+    },
+    {
+      "id": "books",
+      "title": "Books & Guides",
+      "icon": "📚",
+      "description": "In-depth books and comprehensive guides",
+      "items": [
+        {
+          "id": "deep-learning-book",
+          "title": "Deep Learning",
+          "author": "Ian Goodfellow, Yoshua Bengio, Aaron Courville",
+          "url": "https://www.deeplearningbook.org/",
+          "description": "The deep learning bible. Free online. Comprehensive theory.",
+          "tags": ["deep learning", "theory", "comprehensive"],
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "dive-into-dl",
+          "title": "Dive into Deep Learning",
+          "author": "Aston Zhang et al.",
+          "url": "https://d2l.ai/",
+          "description": "Interactive deep learning book with runnable code.",
+          "tags": ["deep learning", "interactive", "code"],
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "hands-on-ml",
+          "title": "Hands-On Machine Learning",
+          "author": "Aurélien Géron",
+          "url": "https://github.com/ageron/handson-ml3",
+          "description": "Best practical ML book. Jupyter notebooks available free.",
+          "tags": ["practical", "scikit-learn", "tensorflow"],
+          "free": false,
+          "freeResource": "Notebooks on GitHub"
+        },
+        {
+          "id": "speech-and-language",
+          "title": "Speech and Language Processing",
+          "author": "Dan Jurafsky, James Martin",
+          "url": "https://web.stanford.edu/~jurafsky/slp3/",
+          "description": "Comprehensive NLP textbook. Free draft online.",
+          "tags": ["nlp", "linguistics", "comprehensive"],
+          "free": true
+        },
+        {
+          "id": "rl-book",
+          "title": "Reinforcement Learning: An Introduction",
+          "author": "Richard Sutton, Andrew Barto",
+          "url": "http://incompleteideas.net/book/the-book.html",
+          "description": "The RL bible. Free PDF available.",
+          "tags": ["reinforcement learning", "theory"],
+          "free": true
+        },
+        {
+          "id": "nn-and-dl",
+          "title": "Neural Networks and Deep Learning",
+          "author": "Michael Nielsen",
+          "url": "http://neuralnetworksanddeeplearning.com/",
+          "description": "Gentle introduction with beautiful explanations.",
+          "tags": ["neural networks", "beginner", "theory"],
+          "free": true
+        },
+        {
+          "id": "llm-book",
+          "title": "Build a Large Language Model (From Scratch)",
+          "author": "Sebastian Raschka",
+          "url": "https://github.com/rasbt/LLMs-from-scratch",
+          "description": "Step-by-step LLM implementation. Code on GitHub.",
+          "tags": ["llm", "from scratch", "practical"],
+          "free": true
+        },
+        {
+          "id": "prob-ml",
+          "title": "Probabilistic Machine Learning",
+          "author": "Kevin Murphy",
+          "url": "https://probml.github.io/pml-book/",
+          "description": "Comprehensive probabilistic ML textbook (2 volumes).",
+          "tags": ["probabilistic", "theory", "comprehensive"],
+          "free": true
+        },
+        {
+          "id": "understanding-dl",
+          "title": "Understanding Deep Learning",
+          "author": "Simon Prince",
+          "url": "https://udlbook.github.io/udlbook/",
+          "description": "Modern deep learning textbook with beautiful illustrations.",
+          "tags": ["deep learning", "theory", "illustrations"],
+          "free": true,
+          "featured": true
+        },
+        {
+          "id": "math-for-ml",
+          "title": "Mathematics for Machine Learning",
+          "author": "Deisenroth, Faisal, Ong",
+          "url": "https://mml-book.github.io/",
+          "description": "Mathematical foundations for ML. Free PDF.",
+          "tags": ["math", "foundations", "theory"],
+          "free": true
+        },
+        {
+          "id": "pattern-recognition",
+          "title": "Pattern Recognition and Machine Learning",
+          "author": "Christopher Bishop",
+          "url": "https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/",
+          "description": "Classic ML textbook with Bayesian perspective.",
+          "tags": ["machine learning", "theory", "bayesian"],
+          "free": true
+        },
+        {
+          "id": "elements-stat-learning",
+          "title": "The Elements of Statistical Learning",
+          "author": "Hastie, Tibshirani, Friedman",
+          "url": "https://hastie.su.domains/ElemStatLearn/",
+          "description": "Comprehensive statistical learning reference.",
+          "tags": ["statistics", "theory", "comprehensive"],
+          "free": true
+        },
+        {
+          "id": "intro-stat-learning",
+          "title": "An Introduction to Statistical Learning",
+          "author": "James, Witten, Hastie, Tibshirani",
+          "url": "https://www.statlearning.com/",
+          "description": "Accessible intro to statistical learning with R/Python.",
+          "tags": ["statistics", "beginner", "practical"],
+          "free": true
+        },
+        {
+          "id": "info-theory-ml",
+          "title": "Information Theory, Inference, and Learning Algorithms",
+          "author": "David MacKay",
+          "url": "https://www.inference.org.uk/mackay/itila/book.html",
+          "description": "Information theory perspective on ML.",
+          "tags": ["information theory", "theory", "classic"],
+          "free": true
+        },
+        {
+          "id": "algo-fairness",
+          "title": "Fairness and Machine Learning",
+          "author": "Barocas, Hardt, Narayanan",
+          "url": "https://fairmlbook.org/",
+          "description": "Limitations and opportunities for fairness in ML.",
+          "tags": ["fairness", "ethics", "responsible ai"],
+          "free": true
+        },
+        {
+          "id": "causal-inference",
+          "title": "Causal Inference in Statistics: A Primer",
+          "author": "Judea Pearl",
+          "url": "https://www.wiley.com/en-us/Causal+Inference+in+Statistics%3A+A+Primer-p-9781119186847",
+          "description": "Introduction to causal inference from the pioneer.",
+          "tags": ["causal inference", "statistics", "theory"],
+          "free": false
+        },
+        {
+          "id": "grokking-deep-learning",
+          "title": "Grokking Deep Learning",
+          "author": "Andrew Trask",
+          "url": "https://www.manning.com/books/grokking-deep-learning",
+          "description": "Learn deep learning from first principles with NumPy.",
+          "tags": ["deep learning", "from scratch", "numpy"],
+          "free": false
+        },
+        {
+          "id": "nlp-with-transformers",
+          "title": "Natural Language Processing with Transformers",
+          "author": "Tunstall, von Werra, Wolf",
+          "url": "https://www.oreilly.com/library/view/natural-language-processing/9781098136789/",
+          "description": "Practical NLP with Hugging Face ecosystem.",
+          "tags": ["nlp", "transformers", "huggingface"],
+          "free": false
+        },
+        {
+          "id": "designing-ml-systems",
+          "title": "Designing Machine Learning Systems",
+          "author": "Chip Huyen",
+          "url": "https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/",
+          "description": "End-to-end ML system design for production.",
+          "tags": ["mlops", "production", "systems"],
+          "free": false,
+          "featured": true
+        },
+        {
+          "id": "ml-engineering",
+          "title": "Machine Learning Engineering",
+          "author": "Andriy Burkov",
+          "url": "http://www.mlebook.com/",
+          "description": "Practical aspects of shipping ML products.",
+          "tags": ["mlops", "engineering", "production"],
+          "free": true
+        }
+      ]
+    },
+    {
+      "id": "newsletters",
+      "title": "Newsletters & Blogs",
+      "icon": "📬",
+      "description": "Stay updated with AI news and insights",
+      "items": [
+        {
+          "id": "the-batch",
+          "title": "The Batch",
+          "author": "Andrew Ng / DeepLearning.AI",
+          "url": "https://www.deeplearning.ai/the-batch/",
+          "description": "Weekly AI news curated by Andrew Ng.",
+          "tags": ["news", "weekly", "curated"],
+          "featured": true
+        },
+        {
+          "id": "ahead-of-ai",
+          "title": "Ahead of AI",
+          "author": "Sebastian Raschka",
+          "url": "https://magazine.sebastianraschka.com/",
+          "description": "Deep dives into LLM research and techniques.",
+          "tags": ["research", "llm", "deep dives"]
+        },
+        {
+          "id": "the-algorithm",
+          "title": "The Algorithm",
+          "author": "MIT Technology Review",
+          "url": "https://www.technologyreview.com/topic/artificial-intelligence/",
+          "description": "AI coverage from MIT Technology Review.",
+          "tags": ["news", "research", "industry"]
+        },
+        {
+          "id": "import-ai",
+          "title": "Import AI",
+          "author": "Jack Clark",
+          "url": "https://importai.substack.com/",
+          "description": "Weekly newsletter on AI research and policy.",
+          "tags": ["research", "policy", "weekly"]
+        },
+        {
+          "id": "lilian-weng",
+          "title": "Lil'Log",
+          "author": "Lilian Weng (OpenAI)",
+          "url": "https://lilianweng.github.io/",
+          "description": "In-depth technical blog posts on AI topics.",
+          "tags": ["technical", "deep dives", "research"],
+          "featured": true
+        },
+        {
+          "id": "colah-blog",
+          "title": "colah's blog",
+          "author": "Chris Olah",
+          "url": "https://colah.github.io/",
+          "description": "Beautiful visual explanations of neural network concepts.",
+          "tags": ["visualization", "concepts", "neural networks"]
+        },
+        {
+          "id": "jay-alammar",
+          "title": "Jay Alammar's Blog",
+          "author": "Jay Alammar",
+          "url": "https://jalammar.github.io/",
+          "description": "Visual guides to transformers, BERT, GPT, and more.",
+          "tags": ["visualization", "transformers", "explanations"],
+          "featured": true
+        },
+        {
+          "id": "distill-pub",
+          "title": "Distill.pub",
+          "author": "Distill Collective",
+          "url": "https://distill.pub/",
+          "description": "Interactive, beautifully designed ML explanations.",
+          "tags": ["interactive", "visualization", "research"]
+        },
+        {
+          "id": "karpathy-blog",
+          "title": "Andrej Karpathy's Blog",
+          "author": "Andrej Karpathy",
+          "url": "https://karpathy.github.io/",
+          "description": "Classic deep learning blog posts and recipes.",
+          "tags": ["deep learning", "tutorials", "classic"]
+        },
+        {
+          "id": "openai-blog",
+          "title": "OpenAI Blog",
+          "author": "OpenAI",
+          "url": "https://openai.com/blog/",
+          "description": "Official research and product announcements.",
+          "tags": ["research", "news", "official"]
+        },
+        {
+          "id": "anthropic-blog",
+          "title": "Anthropic Research",
+          "author": "Anthropic",
+          "url": "https://www.anthropic.com/research",
+          "description": "AI safety research and interpretability insights.",
+          "tags": ["safety", "research", "interpretability"]
+        },
+        {
+          "id": "google-ai-blog",
+          "title": "Google AI Blog",
+          "author": "Google",
+          "url": "https://ai.googleblog.com/",
+          "description": "Research updates from Google AI.",
+          "tags": ["research", "google", "updates"]
+        },
+        {
+          "id": "meta-ai-blog",
+          "title": "Meta AI Blog",
+          "author": "Meta",
+          "url": "https://ai.meta.com/blog/",
+          "description": "Research from FAIR and Meta AI.",
+          "tags": ["research", "meta", "updates"]
+        },
+        {
+          "id": "chip-huyen-blog",
+          "title": "Chip Huyen's Blog",
+          "author": "Chip Huyen",
+          "url": "https://huyenchip.com/blog/",
+          "description": "ML engineering, MLOps, and LLM insights.",
+          "tags": ["mlops", "engineering", "llm"]
+        },
+        {
+          "id": "simon-willison",
+          "title": "Simon Willison's Weblog",
+          "author": "Simon Willison",
+          "url": "https://simonwillison.net/",
+          "description": "Prolific LLM experimentation and tool building.",
+          "tags": ["llm", "tools", "experimentation"],
+          "featured": true
+        },
+        {
+          "id": "eugeneyan",
+          "title": "Eugene Yan's Blog",
+          "author": "Eugene Yan",
+          "url": "https://eugeneyan.com/",
+          "description": "ML systems, RecSys, and practical engineering.",
+          "tags": ["systems", "engineering", "recsys"]
+        },
+        {
+          "id": "latent-space",
+          "title": "Latent Space",
+          "author": "Swyx & Alessio",
+          "url": "https://www.latent.space/",
+          "description": "AI engineering newsletter and podcast.",
+          "tags": ["engineering", "podcast", "newsletter"]
+        },
+        {
+          "id": "ai-supremacy",
+          "title": "AI Supremacy",
+          "author": "Michael Spencer",
+          "url": "https://aisupremacy.substack.com/",
+          "description": "Analysis of AI industry trends and future.",
+          "tags": ["analysis", "industry", "trends"]
+        },
+        {
+          "id": "interconnects",
+          "title": "Interconnects",
+          "author": "Nathan Lambert",
+          "url": "https://www.interconnects.ai/",
+          "description": "Deep dives on RLHF, alignment, and LLM training.",
+          "tags": ["rlhf", "alignment", "training"]
+        },
+        {
+          "id": "last-week-in-ai",
+          "title": "Last Week in AI",
+          "author": "Skynet Today",
+          "url": "https://lastweekin.ai/",
+          "description": "Weekly AI news digest with analysis.",
+          "tags": ["news", "weekly", "digest"]
+        },
+        {
+          "id": "ben-ai-newsletter",
+          "title": "Ben's Bites",
+          "author": "Ben Tossell",
+          "url": "https://bensbites.beehiiv.com/",
+          "description": "Daily AI news and tools digest.",
+          "tags": ["news", "daily", "tools"]
+        },
+        {
+          "id": "gradient-flow",
+          "title": "Gradient Flow",
+          "author": "Ben Lorica",
+          "url": "https://gradientflow.substack.com/",
+          "description": "Enterprise AI and ML infrastructure insights.",
+          "tags": ["enterprise", "infrastructure", "analysis"]
+        }
+      ]
+    },
+    {
+      "id": "podcasts",
+      "title": "Podcasts",
+      "icon": "🎙️",
+      "description": "AI podcasts for your commute and learning",
+      "items": [
+        {
+          "id": "lex-podcast",
+          "title": "Lex Fridman Podcast",
+          "author": "Lex Fridman",
+          "url": "https://lexfridman.com/podcast/",
+          "description": "Deep conversations with AI leaders and researchers.",
+          "tags": ["interviews", "research", "philosophy"],
+          "featured": true
+        },
+        {
+          "id": "latent-space-podcast",
+          "title": "Latent Space Podcast",
+          "author": "Swyx & Alessio",
+          "url": "https://www.latent.space/podcast",
+          "description": "Technical AI engineering discussions.",
+          "tags": ["engineering", "technical", "interviews"]
+        },
+        {
+          "id": "practical-ai",
+          "title": "Practical AI",
+          "author": "Changelog",
+          "url": "https://changelog.com/practicalai",
+          "description": "Making AI practical and accessible.",
+          "tags": ["practical", "applications", "interviews"]
+        },
+        {
+          "id": "gradient-descent-pod",
+          "title": "Gradient Descent",
+          "author": "Weights & Biases",
+          "url": "https://wandb.ai/fully-connected/gradient-descent",
+          "description": "ML practitioner interviews and insights.",
+          "tags": ["practitioners", "mlops", "interviews"]
+        },
+        {
+          "id": "twiml",
+          "title": "TWIML AI Podcast",
+          "author": "Sam Charrington",
+          "url": "https://twimlai.com/",
+          "description": "This Week in Machine Learning & AI.",
+          "tags": ["weekly", "research", "industry"]
+        },
+        {
+          "id": "machine-learning-guide",
+          "title": "Machine Learning Guide",
+          "author": "Tyler Renelle",
+          "url": "https://ocdevel.com/mlg",
+          "description": "Fundamentals explained for beginners.",
+          "tags": ["beginner", "fundamentals", "educational"]
+        },
+        {
+          "id": "data-skeptic",
+          "title": "Data Skeptic",
+          "author": "Kyle Polich",
+          "url": "https://dataskeptic.com/",
+          "description": "Exploring data science and ML concepts.",
+          "tags": ["data science", "concepts", "interviews"]
+        },
+        {
+          "id": "talking-machines",
+          "title": "Talking Machines",
+          "author": "Tote Bag Productions",
+          "url": "https://www.thetalkingmachines.com/",
+          "description": "Human conversations about machine learning.",
+          "tags": ["research", "interviews", "discussions"]
+        },
+        {
+          "id": "eye-on-ai",
+          "title": "Eye on AI",
+          "author": "Craig S. Smith",
+          "url": "https://www.eye-on.ai/",
+          "description": "Conversations with AI pioneers and researchers.",
+          "tags": ["pioneers", "research", "interviews"]
+        },
+        {
+          "id": "cogrev-podcast",
+          "title": "The Cognitive Revolution",
+          "author": "Nathan Labenz",
+          "url": "https://www.cognitiverevolution.ai/",
+          "description": "AI's impact on business and society.",
+          "tags": ["business", "society", "interviews"]
+        }
+      ]
+    },
+    {
+      "id": "github-repos",
+      "title": "GitHub Repositories",
+      "icon": "💻",
+      "description": "Essential open-source projects and learning resources",
+      "items": [
+        {
+          "id": "awesome-llm",
+          "title": "Awesome LLM",
+          "author": "Various",
+          "url": "https://github.com/Hannibal046/Awesome-LLM",
+          "description": "Curated list of LLM resources and papers.",
+          "stars": "15K+",
+          "tags": ["curated", "llm", "resources"],
+          "featured": true
+        },
+        {
+          "id": "ml-papers-explained",
+          "title": "ML Papers Explained",
+          "author": "dair-ai",
+          "url": "https://github.com/dair-ai/ML-Papers-Explained",
+          "description": "Explanations of important ML papers.",
+          "stars": "8K+",
+          "tags": ["papers", "explanations", "learning"]
+        },
+        {
+          "id": "ml-for-beginners",
+          "title": "ML for Beginners",
+          "author": "Microsoft",
+          "url": "https://github.com/microsoft/ML-For-Beginners",
+          "description": "12-week ML curriculum from Microsoft.",
+          "stars": "60K+",
+          "tags": ["curriculum", "beginner", "microsoft"]
+        },
+        {
+          "id": "gen-ai-for-beginners",
+          "title": "Generative AI for Beginners",
+          "author": "Microsoft",
+          "url": "https://github.com/microsoft/generative-ai-for-beginners",
+          "description": "18-lesson generative AI curriculum.",
+          "stars": "40K+",
+          "tags": ["curriculum", "generative ai", "microsoft"]
+        },
+        {
+          "id": "llm-course-github",
+          "title": "LLM Course",
+          "author": "mlabonne",
+          "url": "https://github.com/mlabonne/llm-course",
+          "description": "Complete course on LLMs with notebooks.",
+          "stars": "30K+",
+          "tags": ["course", "llm", "notebooks"],
+          "featured": true
+        },
+        {
+          "id": "open-llm-leaderboard-repo",
+          "title": "Open-LLM-Leaderboard",
+          "author": "Hugging Face",
+          "url": "https://github.com/huggingface/open-llm-leaderboard",
+          "description": "Open LLM benchmarking and evaluation.",
+          "stars": "3K+",
+          "tags": ["benchmarks", "evaluation", "huggingface"]
+        },
+        {
+          "id": "llama-cpp",
+          "title": "llama.cpp",
+          "author": "ggerganov",
+          "url": "https://github.com/ggerganov/llama.cpp",
+          "description": "Efficient LLM inference in C/C++.",
+          "stars": "60K+",
+          "tags": ["inference", "local", "efficient"],
+          "featured": true
+        },
+        {
+          "id": "open-interpreter",
+          "title": "Open Interpreter",
+          "author": "Open Interpreter",
+          "url": "https://github.com/OpenInterpreter/open-interpreter",
+          "description": "Natural language interface for computers.",
+          "stars": "50K+",
+          "tags": ["agents", "coding", "interface"]
+        },
+        {
+          "id": "mem0-repo",
+          "title": "Mem0",
+          "author": "Mem0",
+          "url": "https://github.com/mem0ai/mem0",
+          "description": "Memory layer for AI assistants and agents.",
+          "stars": "20K+",
+          "tags": ["memory", "agents", "personalization"]
+        },
+        {
+          "id": "dify-repo",
+          "title": "Dify",
+          "author": "Dify",
+          "url": "https://github.com/langgenius/dify",
+          "description": "LLM application development platform.",
+          "stars": "30K+",
+          "tags": ["platform", "applications", "low-code"]
+        },
+        {
+          "id": "localai-repo",
+          "title": "LocalAI",
+          "author": "mudler",
+          "url": "https://github.com/mudler/LocalAI",
+          "description": "Local OpenAI-compatible API server.",
+          "stars": "20K+",
+          "tags": ["local", "api", "self-hosted"]
+        },
+        {
+          "id": "gpt-engineer",
+          "title": "GPT Engineer",
+          "author": "gpt-engineer-org",
+          "url": "https://github.com/gpt-engineer-org/gpt-engineer",
+          "description": "Specify what you want, AI builds it.",
+          "stars": "50K+",
+          "tags": ["coding", "agents", "generation"]
+        },
+        {
+          "id": "private-gpt",
+          "title": "PrivateGPT",
+          "author": "imartinez",
+          "url": "https://github.com/imartinez/privateGPT",
+          "description": "Chat with your documents privately and offline.",
+          "stars": "50K+",
+          "tags": ["rag", "local", "privacy"]
+        },
+        {
+          "id": "mindsdb-repo",
+          "title": "MindsDB",
+          "author": "MindsDB",
+          "url": "https://github.com/mindsdb/mindsdb",
+          "description": "AI tables in databases. ML in SQL.",
+          "stars": "25K+",
+          "tags": ["database", "sql", "automl"]
+        },
+        {
+          "id": "langchain-repo",
+          "title": "LangChain",
+          "author": "langchain-ai",
+          "url": "https://github.com/langchain-ai/langchain",
+          "description": "Building applications with LLMs through composability.",
+          "stars": "85K+",
+          "tags": ["llm", "applications", "framework"]
+        },
+        {
+          "id": "llamaindex-repo",
+          "title": "LlamaIndex",
+          "author": "run-llama",
+          "url": "https://github.com/run-llama/llama_index",
+          "description": "Data framework for LLM applications.",
+          "stars": "30K+",
+          "tags": ["data", "rag", "framework"]
+        },
+        {
+          "id": "haystack-repo",
+          "title": "Haystack",
+          "author": "deepset-ai",
+          "url": "https://github.com/deepset-ai/haystack",
+          "description": "LLM orchestration framework for RAG and agents.",
+          "stars": "15K+",
+          "tags": ["rag", "agents", "framework"]
+        },
+        {
+          "id": "semantic-router",
+          "title": "Semantic Router",
+          "author": "aurelio-labs",
+          "url": "https://github.com/aurelio-labs/semantic-router",
+          "description": "Fast semantic routing for AI applications.",
+          "stars": "2K+",
+          "tags": ["routing", "classification", "efficiency"]
+        },
+        {
+          "id": "annotated-transformer",
+          "title": "The Annotated Transformer",
+          "author": "harvardnlp",
+          "url": "https://github.com/harvardnlp/annotated-transformer",
+          "description": "Line-by-line implementation of 'Attention Is All You Need'.",
+          "stars": "5K+",
+          "tags": ["transformers", "implementation", "learning"]
+        },
+        {
+          "id": "nanoGPT",
+          "title": "nanoGPT",
+          "author": "Andrej Karpathy",
+          "url": "https://github.com/karpathy/nanoGPT",
+          "description": "Simplest, fastest repository for training GPT-2.",
+          "stars": "30K+",
+          "tags": ["gpt", "training", "educational"],
+          "featured": true
+        },
+        {
+          "id": "minGPT",
+          "title": "minGPT",
+          "author": "Andrej Karpathy",
+          "url": "https://github.com/karpathy/minGPT",
+          "description": "Minimal PyTorch GPT implementation for education.",
+          "stars": "18K+",
+          "tags": ["gpt", "minimal", "educational"]
+        },
+        {
+          "id": "crewai-repo",
+          "title": "CrewAI",
+          "author": "crewAIInc",
+          "url": "https://github.com/crewAIInc/crewAI",
+          "description": "Framework for orchestrating role-playing AI agents.",
+          "stars": "20K+",
+          "tags": ["agents", "multi-agent", "orchestration"],
+          "featured": true
+        },
+        {
+          "id": "autogen-repo",
+          "title": "AutoGen",
+          "author": "Microsoft",
+          "url": "https://github.com/microsoft/autogen",
+          "description": "Multi-agent conversation framework from Microsoft.",
+          "stars": "30K+",
+          "tags": ["agents", "multi-agent", "microsoft"],
+          "featured": true
+        },
+        {
+          "id": "dspy-repo",
+          "title": "DSPy",
+          "author": "Stanford NLP",
+          "url": "https://github.com/stanfordnlp/dspy",
+          "description": "Programming—not prompting—foundation models.",
+          "stars": "15K+",
+          "tags": ["prompting", "optimization", "framework"],
+          "featured": true
+        },
+        {
+          "id": "instructor-repo",
+          "title": "Instructor",
+          "author": "jxnl",
+          "url": "https://github.com/jxnl/instructor",
+          "description": "Structured outputs from LLMs with Pydantic.",
+          "stars": "7K+",
+          "tags": ["structured output", "pydantic", "validation"]
+        },
+        {
+          "id": "vllm-repo",
+          "title": "vLLM",
+          "author": "vllm-project",
+          "url": "https://github.com/vllm-project/vllm",
+          "description": "High-throughput LLM serving with PagedAttention.",
+          "stars": "25K+",
+          "tags": ["inference", "serving", "performance"],
+          "featured": true
+        },
+        {
+          "id": "ollama-repo",
+          "title": "Ollama",
+          "author": "ollama",
+          "url": "https://github.com/ollama/ollama",
+          "description": "Get up and running with large language models locally.",
+          "stars": "90K+",
+          "tags": ["local", "inference", "easy"],
+          "featured": true
+        },
+        {
+          "id": "aider-repo",
+          "title": "Aider",
+          "author": "paul-gauthier",
+          "url": "https://github.com/paul-gauthier/aider",
+          "description": "AI pair programming in your terminal.",
+          "stars": "20K+",
+          "tags": ["coding", "terminal", "pair programming"],
+          "featured": true
+        },
+        {
+          "id": "opendevin-repo",
+          "title": "OpenDevin",
+          "author": "OpenDevin",
+          "url": "https://github.com/OpenDevin/OpenDevin",
+          "description": "Open-source Devin - autonomous AI software engineer.",
+          "stars": "30K+",
+          "tags": ["agents", "coding", "autonomous"]
+        },
+        {
+          "id": "metagpt-repo",
+          "title": "MetaGPT",
+          "author": "geekan",
+          "url": "https://github.com/geekan/MetaGPT",
+          "description": "Multi-agent framework assigning different roles to GPTs.",
+          "stars": "40K+",
+          "tags": ["agents", "multi-agent", "software development"]
+        },
+        {
+          "id": "smolagents-repo",
+          "title": "smolagents",
+          "author": "Hugging Face",
+          "url": "https://github.com/huggingface/smolagents",
+          "description": "Lightweight library for building AI agents.",
+          "stars": "5K+",
+          "tags": ["agents", "lightweight", "huggingface"]
+        },
+        {
+          "id": "pydantic-ai-repo",
+          "title": "PydanticAI",
+          "author": "pydantic",
+          "url": "https://github.com/pydantic/pydantic-ai",
+          "description": "Agent framework using Pydantic for type-safe AI apps.",
+          "stars": "3K+",
+          "tags": ["agents", "pydantic", "type-safe"]
+        },
+        {
+          "id": "langgraph-repo",
+          "title": "LangGraph",
+          "author": "langchain-ai",
+          "url": "https://github.com/langchain-ai/langgraph",
+          "description": "Build stateful, multi-actor LLM applications.",
+          "stars": "5K+",
+          "tags": ["agents", "graphs", "stateful"]
+        }
+      ]
+    },
+    {
+      "id": "ai-agents",
+      "title": "AI Agents & Frameworks",
+      "icon": "🤖",
+      "description": "Autonomous AI agents and multi-agent orchestration frameworks",
+      "items": [
+        {
+          "id": "autogpt",
+          "title": "AutoGPT",
+          "provider": "Significant Gravitas",
+          "url": "https://github.com/Significant-Gravitas/AutoGPT",
+          "description": "The original autonomous AI agent. Self-prompting, task decomposition.",
+          "stars": "160K+",
+          "tags": ["autonomous", "pioneer", "tasks"],
+          "featured": true
+        },
+        {
+          "id": "crewai",
+          "title": "CrewAI",
+          "provider": "CrewAI",
+          "url": "https://www.crewai.com/",
+          "description": "Role-playing multi-agent orchestration. Define agents with roles, goals, backstories.",
+          "tags": ["multi-agent", "roles", "orchestration"],
+          "featured": true
+        },
+        {
+          "id": "autogen",
+          "title": "AutoGen",
+          "provider": "Microsoft",
+          "url": "https://microsoft.github.io/autogen/",
+          "description": "Microsoft's multi-agent conversation framework. Great for complex workflows.",
+          "tags": ["multi-agent", "microsoft", "conversations"],
+          "featured": true
+        },
+        {
+          "id": "langgraph",
+          "title": "LangGraph",
+          "provider": "LangChain",
+          "url": "https://langchain-ai.github.io/langgraph/",
+          "description": "Build stateful, multi-actor LLM applications as graphs.",
+          "tags": ["graphs", "stateful", "langchain"],
+          "featured": true
+        },
+        {
+          "id": "opendevin",
+          "title": "OpenDevin",
+          "provider": "OpenDevin",
+          "url": "https://github.com/OpenDevin/OpenDevin",
+          "description": "Open-source autonomous software engineer inspired by Devin.",
+          "stars": "30K+",
+          "tags": ["coding", "autonomous", "open-source"]
+        },
+        {
+          "id": "metagpt",
+          "title": "MetaGPT",
+          "provider": "DeepWisdom",
+          "url": "https://github.com/geekan/MetaGPT",
+          "description": "Multi-agent meta programming. Simulates a software company.",
+          "stars": "40K+",
+          "tags": ["software company", "multi-agent", "roles"]
+        },
+        {
+          "id": "gpt-pilot",
+          "title": "GPT Pilot",
+          "provider": "Pythagora",
+          "url": "https://github.com/Pythagora-io/gpt-pilot",
+          "description": "AI developer that writes scalable apps from scratch.",
+          "stars": "25K+",
+          "tags": ["coding", "full-stack", "autonomous"]
+        },
+        {
+          "id": "babyagi",
+          "title": "BabyAGI",
+          "provider": "Yohei Nakajima",
+          "url": "https://github.com/yoheinakajima/babyagi",
+          "description": "AI-powered task management with autonomous task creation.",
+          "stars": "20K+",
+          "tags": ["task management", "pioneer", "simple"]
+        },
+        {
+          "id": "superagi",
+          "title": "SuperAGI",
+          "provider": "SuperAGI",
+          "url": "https://github.com/TransformerOptimus/SuperAGI",
+          "description": "Open-source autonomous AI framework with tools and memory.",
+          "stars": "15K+",
+          "tags": ["autonomous", "tools", "memory"]
+        },
+        {
+          "id": "smolagents",
+          "title": "smolagents",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/docs/smolagents",
+          "description": "Lightweight, simple agent library from Hugging Face.",
+          "tags": ["lightweight", "simple", "huggingface"]
+        },
+        {
+          "id": "pydantic-ai",
+          "title": "PydanticAI",
+          "provider": "Pydantic",
+          "url": "https://ai.pydantic.dev/",
+          "description": "Type-safe agent framework using Pydantic validation.",
+          "tags": ["type-safe", "pydantic", "validation"]
+        },
+        {
+          "id": "agentops",
+          "title": "AgentOps",
+          "provider": "AgentOps",
+          "url": "https://www.agentops.ai/",
+          "description": "Observability and DevOps platform for AI agents.",
+          "tags": ["observability", "monitoring", "devops"]
+        },
+        {
+          "id": "e2b",
+          "title": "E2B",
+          "provider": "E2B",
+          "url": "https://e2b.dev/",
+          "description": "Secure cloud sandboxes for AI agents to run code.",
+          "tags": ["sandboxes", "code execution", "security"]
+        },
+        {
+          "id": "composio",
+          "title": "Composio",
+          "provider": "Composio",
+          "url": "https://composio.dev/",
+          "description": "Integration platform for AI agents. 150+ app connectors.",
+          "tags": ["integrations", "tools", "connectors"]
+        },
+        {
+          "id": "browser-use",
+          "title": "Browser Use",
+          "provider": "browser-use",
+          "url": "https://github.com/browser-use/browser-use",
+          "description": "Make websites accessible for AI agents via browser automation.",
+          "stars": "15K+",
+          "tags": ["browser", "automation", "web"]
+        },
+        {
+          "id": "taskweaver",
+          "title": "TaskWeaver",
+          "provider": "Microsoft",
+          "url": "https://github.com/microsoft/TaskWeaver",
+          "description": "Code-first agent framework for data analytics tasks.",
+          "stars": "5K+",
+          "tags": ["data", "analytics", "code-first"]
+        }
+      ]
+    },
+    {
+      "id": "ai-coding",
+      "title": "AI Coding Assistants",
+      "icon": "💻",
+      "description": "AI-powered tools that help you write, edit, and debug code",
+      "items": [
+        {
+          "id": "cursor",
+          "title": "Cursor",
+          "provider": "Cursor",
+          "url": "https://cursor.com/",
+          "description": "AI-first code editor. Fork of VS Code with deep AI integration.",
+          "tags": ["editor", "copilot", "chat"],
+          "featured": true
+        },
+        {
+          "id": "github-copilot",
+          "title": "GitHub Copilot",
+          "provider": "GitHub",
+          "url": "https://github.com/features/copilot",
+          "description": "AI pair programmer. Code completions and chat in your IDE.",
+          "tags": ["completions", "chat", "github"],
+          "featured": true
+        },
+        {
+          "id": "aider",
+          "title": "Aider",
+          "provider": "Paul Gauthier",
+          "url": "https://aider.chat/",
+          "description": "AI pair programming in your terminal. Works with any LLM.",
+          "tags": ["terminal", "pair programming", "open-source"],
+          "featured": true
+        },
+        {
+          "id": "continue-dev",
+          "title": "Continue",
+          "provider": "Continue",
+          "url": "https://continue.dev/",
+          "description": "Open-source AI code assistant for VS Code and JetBrains.",
+          "tags": ["open-source", "vscode", "jetbrains"],
+          "featured": true
+        },
+        {
+          "id": "cline",
+          "title": "Cline",
+          "provider": "Cline",
+          "url": "https://github.com/cline/cline",
+          "description": "Autonomous coding agent in VS Code. Can use tools and terminal.",
+          "stars": "15K+",
+          "tags": ["autonomous", "vscode", "agent"]
+        },
+        {
+          "id": "cody",
+          "title": "Cody",
+          "provider": "Sourcegraph",
+          "url": "https://sourcegraph.com/cody",
+          "description": "AI code assistant that knows your entire codebase.",
+          "tags": ["codebase-aware", "search", "sourcegraph"]
+        },
+        {
+          "id": "tabnine",
+          "title": "Tabnine",
+          "provider": "Tabnine",
+          "url": "https://www.tabnine.com/",
+          "description": "AI assistant trained on your code. Privacy-focused.",
+          "tags": ["privacy", "enterprise", "completions"]
+        },
+        {
+          "id": "codeium",
+          "title": "Codeium",
+          "provider": "Codeium",
+          "url": "https://codeium.com/",
+          "description": "Free AI coding assistant with completions and chat.",
+          "tags": ["free", "completions", "chat"]
+        },
+        {
+          "id": "amazon-q",
+          "title": "Amazon Q Developer",
+          "provider": "AWS",
+          "url": "https://aws.amazon.com/q/developer/",
+          "description": "AI assistant for software development on AWS.",
+          "tags": ["aws", "enterprise", "cloud"]
+        },
+        {
+          "id": "sweep-ai",
+          "title": "Sweep",
+          "provider": "Sweep AI",
+          "url": "https://sweep.dev/",
+          "description": "AI junior developer that handles GitHub issues.",
+          "stars": "7K+",
+          "tags": ["github", "issues", "autonomous"]
+        },
+        {
+          "id": "codegen",
+          "title": "Codegen",
+          "provider": "Codegen",
+          "url": "https://codegen.com/",
+          "description": "AI agents for large-scale code migrations and refactoring.",
+          "tags": ["migrations", "refactoring", "enterprise"]
+        },
+        {
+          "id": "gpt-engineer",
+          "title": "GPT Engineer",
+          "provider": "GPT Engineer",
+          "url": "https://gptengineer.app/",
+          "description": "Build and deploy web apps from natural language.",
+          "tags": ["web apps", "generation", "full-stack"]
+        },
+        {
+          "id": "bolt-new",
+          "title": "Bolt.new",
+          "provider": "StackBlitz",
+          "url": "https://bolt.new/",
+          "description": "AI-powered full-stack web development in browser.",
+          "tags": ["web", "browser", "full-stack"],
+          "featured": true
+        },
+        {
+          "id": "v0-dev",
+          "title": "v0.dev",
+          "provider": "Vercel",
+          "url": "https://v0.dev/",
+          "description": "Generate React UI components from text descriptions.",
+          "tags": ["ui", "react", "components"],
+          "featured": true
+        },
+        {
+          "id": "replit-agent",
+          "title": "Replit Agent",
+          "provider": "Replit",
+          "url": "https://replit.com/",
+          "description": "Build software with AI in Replit's cloud IDE.",
+          "tags": ["cloud", "ide", "full-stack"]
+        },
+        {
+          "id": "devin",
+          "title": "Devin",
+          "provider": "Cognition",
+          "url": "https://www.cognition.ai/",
+          "description": "The first AI software engineer. Autonomous coding agent.",
+          "tags": ["autonomous", "enterprise", "pioneer"]
+        },
+        {
+          "id": "codestral",
+          "title": "Codestral",
+          "provider": "Mistral AI",
+          "url": "https://mistral.ai/news/codestral/",
+          "description": "State-of-the-art code model from Mistral AI.",
+          "tags": ["model", "code generation", "mistral"]
+        },
+        {
+          "id": "qwen-coder",
+          "title": "Qwen2.5-Coder",
+          "provider": "Alibaba",
+          "url": "https://github.com/QwenLM/Qwen2.5-Coder",
+          "description": "Open-source code LLM rivaling GPT-4 for coding.",
+          "tags": ["open-source", "model", "alibaba"]
+        }
+      ]
+    },
+    {
+      "id": "local-llm",
+      "title": "Local LLM Tools",
+      "icon": "🏠",
+      "description": "Run large language models locally on your own hardware",
+      "items": [
+        {
+          "id": "ollama-tool",
+          "title": "Ollama",
+          "provider": "Ollama",
+          "url": "https://ollama.com/",
+          "description": "Get up and running with LLMs locally. Simple CLI interface.",
+          "tags": ["easy", "cli", "local"],
+          "featured": true
+        },
+        {
+          "id": "lm-studio",
+          "title": "LM Studio",
+          "provider": "LM Studio",
+          "url": "https://lmstudio.ai/",
+          "description": "Desktop app to run local LLMs. Great UI, easy model downloads.",
+          "tags": ["desktop", "ui", "beginner-friendly"],
+          "featured": true
+        },
+        {
+          "id": "llamacpp",
+          "title": "llama.cpp",
+          "provider": "ggerganov",
+          "url": "https://github.com/ggerganov/llama.cpp",
+          "description": "Efficient LLM inference in C/C++. Foundation for many tools.",
+          "stars": "65K+",
+          "tags": ["efficient", "c++", "foundation"],
+          "featured": true
+        },
+        {
+          "id": "gpt4all",
+          "title": "GPT4All",
+          "provider": "Nomic AI",
+          "url": "https://gpt4all.io/",
+          "description": "Run open-source LLMs anywhere. Desktop app for all platforms.",
+          "tags": ["desktop", "cross-platform", "easy"]
+        },
+        {
+          "id": "jan-app",
+          "title": "Jan",
+          "provider": "Jan AI",
+          "url": "https://jan.ai/",
+          "description": "Open-source ChatGPT alternative that runs offline.",
+          "tags": ["offline", "chat", "open-source"]
+        },
+        {
+          "id": "open-webui-tool",
+          "title": "Open WebUI",
+          "provider": "Open WebUI",
+          "url": "https://openwebui.com/",
+          "description": "Feature-rich, self-hosted WebUI for local LLMs.",
+          "tags": ["webui", "self-hosted", "feature-rich"],
+          "featured": true
+        },
+        {
+          "id": "text-generation-webui",
+          "title": "text-generation-webui",
+          "provider": "oobabooga",
+          "url": "https://github.com/oobabooga/text-generation-webui",
+          "description": "Gradio web UI for running LLMs. Many backends supported.",
+          "stars": "35K+",
+          "tags": ["webui", "gradio", "flexible"]
+        },
+        {
+          "id": "vllm",
+          "title": "vLLM",
+          "provider": "vLLM Project",
+          "url": "https://docs.vllm.ai/",
+          "description": "High-throughput LLM serving with PagedAttention.",
+          "tags": ["serving", "performance", "production"],
+          "featured": true
+        },
+        {
+          "id": "mlxlm",
+          "title": "MLX LM",
+          "provider": "Apple",
+          "url": "https://github.com/ml-explore/mlx-examples",
+          "description": "Run LLMs on Apple Silicon with MLX framework.",
+          "tags": ["apple", "mlx", "metal"]
+        },
+        {
+          "id": "llamafile",
+          "title": "llamafile",
+          "provider": "Mozilla",
+          "url": "https://github.com/Mozilla-Ocho/llamafile",
+          "description": "Single-file LLM executables. Run anywhere, no install.",
+          "stars": "15K+",
+          "tags": ["portable", "single-file", "mozilla"]
+        },
+        {
+          "id": "exllamav2",
+          "title": "ExLlamaV2",
+          "provider": "turboderp",
+          "url": "https://github.com/turboderp/exllamav2",
+          "description": "Fast inference library for running LLMs locally.",
+          "stars": "3K+",
+          "tags": ["fast", "inference", "quantization"]
+        },
+        {
+          "id": "koboldcpp",
+          "title": "KoboldCpp",
+          "provider": "LostRuins",
+          "url": "https://github.com/LostRuins/koboldcpp",
+          "description": "Easy local AI with API server and chat UI.",
+          "stars": "5K+",
+          "tags": ["easy", "api", "roleplay"]
+        },
+        {
+          "id": "localai-tool",
+          "title": "LocalAI",
+          "provider": "LocalAI",
+          "url": "https://localai.io/",
+          "description": "Drop-in OpenAI API replacement running locally.",
+          "tags": ["api-compatible", "self-hosted", "openai"],
+          "featured": true
+        },
+        {
+          "id": "tabbyml",
+          "title": "Tabby",
+          "provider": "TabbyML",
+          "url": "https://tabby.tabbyml.com/",
+          "description": "Self-hosted AI coding assistant.",
+          "tags": ["coding", "self-hosted", "enterprise"]
+        },
+        {
+          "id": "privateGPT-tool",
+          "title": "PrivateGPT",
+          "provider": "PrivateGPT",
+          "url": "https://privategpt.dev/",
+          "description": "Interact with documents using local LLMs privately.",
+          "tags": ["rag", "documents", "privacy"]
+        },
+        {
+          "id": "anythingllm",
+          "title": "AnythingLLM",
+          "provider": "Mintplex Labs",
+          "url": "https://anythingllm.com/",
+          "description": "All-in-one AI desktop app with RAG and agents.",
+          "tags": ["desktop", "rag", "all-in-one"]
+        }
+      ]
+    },
+    {
+      "id": "llm-devtools",
+      "title": "LLM Developer Tools",
+      "icon": "🧰",
+      "description": "Tools and frameworks for building production LLM applications",
+      "items": [
+        {
+          "id": "dspy",
+          "title": "DSPy",
+          "provider": "Stanford NLP",
+          "url": "https://dspy-docs.vercel.app/",
+          "description": "Programming—not prompting—foundation models. Optimize prompts automatically.",
+          "tags": ["optimization", "programming", "stanford"],
+          "featured": true
+        },
+        {
+          "id": "instructor",
+          "title": "Instructor",
+          "provider": "Jason Liu",
+          "url": "https://python.useinstructor.com/",
+          "description": "Structured outputs from LLMs using Pydantic. Simple and powerful.",
+          "tags": ["structured output", "pydantic", "validation"],
+          "featured": true
+        },
+        {
+          "id": "outlines",
+          "title": "Outlines",
+          "provider": "Outlines",
+          "url": "https://outlines-dev.github.io/outlines/",
+          "description": "Structured text generation with regex and JSON schemas.",
+          "tags": ["structured", "regex", "json"]
+        },
+        {
+          "id": "guidance",
+          "title": "Guidance",
+          "provider": "Microsoft",
+          "url": "https://github.com/guidance-ai/guidance",
+          "description": "Control language models with grammars and constraints.",
+          "stars": "18K+",
+          "tags": ["control", "grammars", "microsoft"]
+        },
+        {
+          "id": "guardrails-ai",
+          "title": "Guardrails AI",
+          "provider": "Guardrails AI",
+          "url": "https://www.guardrailsai.com/",
+          "description": "Add structure, type, and quality guarantees to LLM outputs.",
+          "tags": ["validation", "safety", "quality"]
+        },
+        {
+          "id": "marvin",
+          "title": "Marvin",
+          "provider": "Prefect",
+          "url": "https://www.askmarvin.ai/",
+          "description": "Lightweight AI toolkit for building natural language interfaces.",
+          "tags": ["lightweight", "interfaces", "prefect"]
+        },
+        {
+          "id": "promptfoo",
+          "title": "Promptfoo",
+          "provider": "Promptfoo",
+          "url": "https://www.promptfoo.dev/",
+          "description": "Test and evaluate LLM outputs. CI/CD for prompts.",
+          "tags": ["testing", "evaluation", "ci-cd"],
+          "featured": true
+        },
+        {
+          "id": "ragas",
+          "title": "RAGAS",
+          "provider": "Exploding Gradients",
+          "url": "https://docs.ragas.io/",
+          "description": "Evaluation framework for RAG pipelines.",
+          "tags": ["evaluation", "rag", "metrics"]
+        },
+        {
+          "id": "litellm",
+          "title": "LiteLLM",
+          "provider": "BerriAI",
+          "url": "https://litellm.ai/",
+          "description": "Call 100+ LLM APIs with one interface. Unified API gateway.",
+          "tags": ["api", "gateway", "unified"],
+          "featured": true
+        },
+        {
+          "id": "openrouter",
+          "title": "OpenRouter",
+          "provider": "OpenRouter",
+          "url": "https://openrouter.ai/",
+          "description": "Unified API for all LLMs. One API key, many models.",
+          "tags": ["api", "unified", "marketplace"]
+        },
+        {
+          "id": "portkey",
+          "title": "Portkey",
+          "provider": "Portkey",
+          "url": "https://portkey.ai/",
+          "description": "AI gateway with caching, fallbacks, and observability.",
+          "tags": ["gateway", "caching", "reliability"]
+        },
+        {
+          "id": "gptcache",
+          "title": "GPTCache",
+          "provider": "Zilliz",
+          "url": "https://github.com/zilliztech/GPTCache",
+          "description": "Semantic cache for LLM queries. Save costs.",
+          "stars": "7K+",
+          "tags": ["caching", "cost", "semantic"]
+        },
+        {
+          "id": "chainlit",
+          "title": "Chainlit",
+          "provider": "Chainlit",
+          "url": "https://chainlit.io/",
+          "description": "Build production-ready conversational AI UIs in minutes.",
+          "tags": ["ui", "chat", "production"],
+          "featured": true
+        },
+        {
+          "id": "phoenix",
+          "title": "Phoenix",
+          "provider": "Arize AI",
+          "url": "https://phoenix.arize.com/",
+          "description": "Open-source observability for LLM applications.",
+          "tags": ["observability", "tracing", "open-source"]
+        },
+        {
+          "id": "langfuse",
+          "title": "Langfuse",
+          "provider": "Langfuse",
+          "url": "https://langfuse.com/",
+          "description": "Open-source LLM engineering platform. Traces, evals, prompts.",
+          "tags": ["observability", "open-source", "traces"],
+          "featured": true
+        },
+        {
+          "id": "langsmith",
+          "title": "LangSmith",
+          "provider": "LangChain",
+          "url": "https://smith.langchain.com/",
+          "description": "Debug, test, evaluate, and monitor LLM applications.",
+          "tags": ["observability", "debugging", "langchain"]
+        },
+        {
+          "id": "weights-biases-prompts",
+          "title": "W&B Prompts",
+          "provider": "Weights & Biases",
+          "url": "https://wandb.ai/site/prompts",
+          "description": "Track and visualize LLM prompts and responses.",
+          "tags": ["tracking", "visualization", "wandb"]
+        },
+        {
+          "id": "helicone",
+          "title": "Helicone",
+          "provider": "Helicone",
+          "url": "https://www.helicone.ai/",
+          "description": "Open-source LLM observability with one line of code.",
+          "tags": ["observability", "simple", "open-source"]
+        }
+      ]
+    },
+    {
+      "id": "gen-ai-apps",
+      "title": "Generative AI Apps",
+      "icon": "🎨",
+      "description": "AI tools for generating images, video, audio, and more",
+      "items": [
+        {
+          "id": "midjourney",
+          "title": "Midjourney",
+          "provider": "Midjourney",
+          "url": "https://www.midjourney.com/",
+          "description": "Leading AI image generation. Beautiful, artistic outputs.",
+          "tags": ["image", "art", "quality"],
+          "featured": true
+        },
+        {
+          "id": "dalle3",
+          "title": "DALL-E 3",
+          "provider": "OpenAI",
+          "url": "https://openai.com/dall-e-3",
+          "description": "OpenAI's image generation model. Great text understanding.",
+          "tags": ["image", "openai", "text-to-image"]
+        },
+        {
+          "id": "stable-diffusion",
+          "title": "Stable Diffusion",
+          "provider": "Stability AI",
+          "url": "https://stability.ai/",
+          "description": "Open-source image generation. Run locally or via API.",
+          "tags": ["image", "open-source", "local"],
+          "featured": true
+        },
+        {
+          "id": "flux-ai",
+          "title": "FLUX",
+          "provider": "Black Forest Labs",
+          "url": "https://blackforestlabs.ai/",
+          "description": "State-of-the-art open image generation models.",
+          "tags": ["image", "open-source", "quality"]
+        },
+        {
+          "id": "ideogram",
+          "title": "Ideogram",
+          "provider": "Ideogram",
+          "url": "https://ideogram.ai/",
+          "description": "AI image generation with excellent text rendering.",
+          "tags": ["image", "text", "typography"]
+        },
+        {
+          "id": "leonardo-ai",
+          "title": "Leonardo.AI",
+          "provider": "Leonardo AI",
+          "url": "https://leonardo.ai/",
+          "description": "AI-powered creative suite for game assets and art.",
+          "tags": ["image", "gaming", "creative"]
+        },
+        {
+          "id": "runway-ml",
+          "title": "Runway",
+          "provider": "Runway",
+          "url": "https://runwayml.com/",
+          "description": "AI video generation and editing. Gen-3 Alpha model.",
+          "tags": ["video", "editing", "generation"],
+          "featured": true
+        },
+        {
+          "id": "pika-labs",
+          "title": "Pika",
+          "provider": "Pika Labs",
+          "url": "https://pika.art/",
+          "description": "AI video generation from text and images.",
+          "tags": ["video", "text-to-video", "creative"]
+        },
+        {
+          "id": "kling-ai",
+          "title": "Kling AI",
+          "provider": "Kuaishou",
+          "url": "https://klingai.com/",
+          "description": "Advanced AI video generation with realistic motion.",
+          "tags": ["video", "realistic", "motion"]
+        },
+        {
+          "id": "luma-dream-machine",
+          "title": "Luma Dream Machine",
+          "provider": "Luma AI",
+          "url": "https://lumalabs.ai/dream-machine",
+          "description": "High-quality text-to-video generation.",
+          "tags": ["video", "quality", "text-to-video"]
+        },
+        {
+          "id": "suno-ai",
+          "title": "Suno",
+          "provider": "Suno",
+          "url": "https://suno.com/",
+          "description": "AI music generation. Create songs from text.",
+          "tags": ["audio", "music", "generation"],
+          "featured": true
+        },
+        {
+          "id": "udio",
+          "title": "Udio",
+          "provider": "Udio",
+          "url": "https://www.udio.com/",
+          "description": "AI music creation with impressive quality.",
+          "tags": ["audio", "music", "quality"]
+        },
+        {
+          "id": "elevenlabs",
+          "title": "ElevenLabs",
+          "provider": "ElevenLabs",
+          "url": "https://elevenlabs.io/",
+          "description": "AI voice synthesis and cloning. Natural speech.",
+          "tags": ["audio", "voice", "tts"],
+          "featured": true
+        },
+        {
+          "id": "heygen",
+          "title": "HeyGen",
+          "provider": "HeyGen",
+          "url": "https://www.heygen.com/",
+          "description": "AI video creation with digital avatars.",
+          "tags": ["video", "avatars", "business"]
+        },
+        {
+          "id": "d-id",
+          "title": "D-ID",
+          "provider": "D-ID",
+          "url": "https://www.d-id.com/",
+          "description": "AI-powered video creation with talking avatars.",
+          "tags": ["video", "avatars", "presentations"]
+        },
+        {
+          "id": "synthesia",
+          "title": "Synthesia",
+          "provider": "Synthesia",
+          "url": "https://www.synthesia.io/",
+          "description": "AI video generation platform for business.",
+          "tags": ["video", "business", "training"]
+        },
+        {
+          "id": "gamma-app",
+          "title": "Gamma",
+          "provider": "Gamma",
+          "url": "https://gamma.app/",
+          "description": "AI-powered presentations, docs, and websites.",
+          "tags": ["presentations", "documents", "ai"],
+          "featured": true
+        },
+        {
+          "id": "canva-ai",
+          "title": "Canva AI",
+          "provider": "Canva",
+          "url": "https://www.canva.com/ai-image-generator/",
+          "description": "AI image generation and design tools in Canva.",
+          "tags": ["design", "image", "integrated"]
+        },
+        {
+          "id": "adobe-firefly",
+          "title": "Adobe Firefly",
+          "provider": "Adobe",
+          "url": "https://www.adobe.com/products/firefly.html",
+          "description": "Adobe's generative AI for creative workflows.",
+          "tags": ["image", "design", "adobe"]
+        },
+        {
+          "id": "remove-bg",
+          "title": "remove.bg",
+          "provider": "Kaleido AI",
+          "url": "https://www.remove.bg/",
+          "description": "AI-powered background removal from images.",
+          "tags": ["image", "background", "tool"]
+        }
+      ]
+    },
+    {
+      "id": "api-providers",
+      "title": "LLM API Providers",
+      "icon": "🔌",
+      "description": "API access to leading language models and AI services",
+      "items": [
+        {
+          "id": "openai-api",
+          "title": "OpenAI API",
+          "provider": "OpenAI",
+          "url": "https://platform.openai.com/",
+          "description": "GPT-4, GPT-4o, o1, and DALL-E APIs.",
+          "tags": ["gpt", "flagship", "enterprise"],
+          "featured": true
+        },
+        {
+          "id": "anthropic-api",
+          "title": "Anthropic API",
+          "provider": "Anthropic",
+          "url": "https://console.anthropic.com/",
+          "description": "Claude 3.5 Sonnet, Claude 3 Opus APIs.",
+          "tags": ["claude", "safety", "enterprise"],
+          "featured": true
+        },
+        {
+          "id": "google-gemini-api",
+          "title": "Google Gemini API",
+          "provider": "Google",
+          "url": "https://ai.google.dev/",
+          "description": "Gemini Pro and Gemini Ultra models.",
+          "tags": ["gemini", "google", "multimodal"],
+          "featured": true
+        },
+        {
+          "id": "groq-api",
+          "title": "Groq",
+          "provider": "Groq",
+          "url": "https://groq.com/",
+          "description": "Ultra-fast LLM inference. LPU technology.",
+          "tags": ["fast", "inference", "hardware"],
+          "featured": true
+        },
+        {
+          "id": "together-ai",
+          "title": "Together AI",
+          "provider": "Together AI",
+          "url": "https://www.together.ai/",
+          "description": "Fast inference for open-source models. Fine-tuning.",
+          "tags": ["open-source", "fast", "fine-tuning"]
+        },
+        {
+          "id": "fireworks-ai",
+          "title": "Fireworks AI",
+          "provider": "Fireworks AI",
+          "url": "https://fireworks.ai/",
+          "description": "Fast, production-ready generative AI platform.",
+          "tags": ["fast", "production", "fine-tuning"]
+        },
+        {
+          "id": "mistral-api",
+          "title": "Mistral AI API",
+          "provider": "Mistral AI",
+          "url": "https://console.mistral.ai/",
+          "description": "Mistral Large, Mixtral, and Codestral APIs.",
+          "tags": ["mistral", "european", "efficient"],
+          "featured": true
+        },
+        {
+          "id": "cohere-api",
+          "title": "Cohere",
+          "provider": "Cohere",
+          "url": "https://cohere.com/",
+          "description": "Enterprise LLMs with RAG and embeddings.",
+          "tags": ["enterprise", "rag", "embeddings"]
+        },
+        {
+          "id": "perplexity-api",
+          "title": "Perplexity API",
+          "provider": "Perplexity AI",
+          "url": "https://docs.perplexity.ai/",
+          "description": "Search-augmented LLM API. Real-time knowledge.",
+          "tags": ["search", "real-time", "knowledge"]
+        },
+        {
+          "id": "replicate",
+          "title": "Replicate",
+          "provider": "Replicate",
+          "url": "https://replicate.com/",
+          "description": "Run open-source models via API. Image, video, audio.",
+          "tags": ["open-source", "diverse", "easy"]
+        },
+        {
+          "id": "huggingface-inference",
+          "title": "Hugging Face Inference",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/inference-api",
+          "description": "Run 200K+ models via serverless API.",
+          "tags": ["open-source", "variety", "serverless"]
+        },
+        {
+          "id": "deepinfra",
+          "title": "DeepInfra",
+          "provider": "DeepInfra",
+          "url": "https://deepinfra.com/",
+          "description": "Serverless inference for popular open models.",
+          "tags": ["serverless", "open-source", "fast"]
+        },
+        {
+          "id": "anyscale",
+          "title": "Anyscale",
+          "provider": "Anyscale",
+          "url": "https://www.anyscale.com/",
+          "description": "Scalable LLM deployment. Built on Ray.",
+          "tags": ["scalable", "ray", "enterprise"]
+        },
+        {
+          "id": "azure-openai",
+          "title": "Azure OpenAI",
+          "provider": "Microsoft",
+          "url": "https://azure.microsoft.com/products/ai-services/openai-service",
+          "description": "OpenAI models on Azure with enterprise features.",
+          "tags": ["enterprise", "azure", "compliance"]
+        },
+        {
+          "id": "aws-bedrock",
+          "title": "Amazon Bedrock",
+          "provider": "AWS",
+          "url": "https://aws.amazon.com/bedrock/",
+          "description": "Multiple foundation models via single API.",
+          "tags": ["aws", "enterprise", "multi-model"]
+        },
+        {
+          "id": "vertex-ai",
+          "title": "Vertex AI",
+          "provider": "Google Cloud",
+          "url": "https://cloud.google.com/vertex-ai",
+          "description": "Google Cloud's ML platform with Gemini.",
+          "tags": ["google", "enterprise", "platform"]
+        }
+      ]
+    }
+  ],
+  "quickLinks": [
+    {"title": "fast.ai Course", "url": "https://course.fast.ai/", "icon": "🎓"},
+    {"title": "Karpathy's Zero to Hero", "url": "https://karpathy.ai/zero-to-hero.html", "icon": "🧠"},
+    {"title": "3Blue1Brown", "url": "https://www.youtube.com/c/3blue1brown", "icon": "📺"},
+    {"title": "Hugging Face", "url": "https://huggingface.co/", "icon": "🤗"},
+    {"title": "Papers with Code", "url": "https://paperswithcode.com/", "icon": "📄"},
+    {"title": "Kaggle", "url": "https://www.kaggle.com/", "icon": "🏆"},
+    {"title": "DeepLearning.AI", "url": "https://www.deeplearning.ai/courses/", "icon": "🎓"},
+    {"title": "LLMs from Scratch", "url": "https://github.com/rasbt/LLMs-from-scratch", "icon": "💻"},
+    {"title": "Jay Alammar's Blog", "url": "https://jalammar.github.io/", "icon": "📖"},
+    {"title": "Lil'Log", "url": "https://lilianweng.github.io/", "icon": "📬"}
+  ]
+}

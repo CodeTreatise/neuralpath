@@ -1,0 +1,59 @@
+{
+  "id": "mlops-pipeline",
+  "title": "MLOps Pipeline Architecture",
+  "description": "Complete view of the ML operations pipeline from data to deployment",
+  "sections": [
+    {"id": "data", "title": "Data Layer", "color": "#10b981"},
+    {"id": "experiment", "title": "Experimentation", "color": "#f59e0b"},
+    {"id": "training", "title": "Training", "color": "#3b82f6"},
+    {"id": "deployment", "title": "Deployment", "color": "#8b5cf6"},
+    {"id": "monitoring", "title": "Monitoring", "color": "#ec4899"}
+  ],
+  "nodes": [
+    {"id": "data-sources", "label": "Data Sources", "type": "root", "section": "data", "description": "Raw data from various sources", "difficulty": "Beginner"},
+    {"id": "data-lake", "label": "Data Lake", "type": "concept", "section": "data", "description": "Centralized raw data storage", "difficulty": "Intermediate", "url": "https://aws.amazon.com/what-is/data-lake/"},
+    {"id": "data-warehouse", "label": "Data Warehouse", "type": "concept", "section": "data", "description": "Structured analytical data", "difficulty": "Intermediate", "url": "https://cloud.google.com/learn/what-is-a-data-warehouse"},
+    {"id": "feature-store", "label": "Feature Store", "type": "tool", "section": "data", "description": "Feast, Tecton, Vertex AI Feature Store", "difficulty": "Advanced", "url": "https://feast.dev/"},
+    {"id": "data-versioning", "label": "Data Versioning", "type": "tool", "section": "data", "description": "DVC, LakeFS, Delta Lake", "difficulty": "Intermediate", "url": "https://dvc.org/"},
+    
+    {"id": "experiment-tracking", "label": "Experiment Tracking", "type": "tool", "section": "experiment", "description": "MLflow, Weights & Biases, Neptune", "difficulty": "Intermediate", "url": "https://mlflow.org/"},
+    {"id": "hyperparameter-tuning", "label": "Hyperparameter Tuning", "type": "tool", "section": "experiment", "description": "Optuna, Ray Tune, Keras Tuner", "difficulty": "Advanced", "url": "https://optuna.org/"},
+    
+    {"id": "training-pipeline", "label": "Training Pipeline", "type": "tool", "section": "training", "description": "Kubeflow, Airflow, Prefect", "difficulty": "Advanced", "url": "https://www.kubeflow.org/"},
+    {"id": "model-registry", "label": "Model Registry", "type": "tool", "section": "training", "description": "MLflow, Vertex AI, SageMaker", "difficulty": "Intermediate", "url": "https://mlflow.org/docs/latest/model-registry.html"},
+    {"id": "model-validation", "label": "Model Validation", "type": "concept", "section": "training", "description": "Testing, fairness, performance checks", "difficulty": "Advanced"},
+    
+    {"id": "ci-cd", "label": "CI/CD Pipeline", "type": "tool", "section": "deployment", "description": "GitHub Actions, Jenkins, GitLab CI", "difficulty": "Intermediate", "url": "https://docs.github.com/en/actions"},
+    {"id": "container-registry", "label": "Container Registry", "type": "tool", "section": "deployment", "description": "Docker Hub, ECR, GCR, ACR", "difficulty": "Intermediate", "url": "https://hub.docker.com/"},
+    {"id": "model-serving", "label": "Model Serving", "type": "tool", "section": "deployment", "description": "TorchServe, Triton, TF Serving", "difficulty": "Advanced", "url": "https://pytorch.org/serve/"},
+    {"id": "kubernetes", "label": "Kubernetes", "type": "tool", "section": "deployment", "description": "Container orchestration", "difficulty": "Advanced", "url": "https://kubernetes.io/"},
+    {"id": "api-gateway", "label": "API Gateway", "type": "tool", "section": "deployment", "description": "Kong, AWS API Gateway", "difficulty": "Advanced", "url": "https://aws.amazon.com/api-gateway/"},
+    
+    {"id": "monitoring", "label": "Model Monitoring", "type": "tool", "section": "monitoring", "description": "Evidently, WhyLabs, Prometheus", "difficulty": "Advanced", "url": "https://www.evidentlyai.com/"},
+    {"id": "logging", "label": "Logging & Alerts", "type": "tool", "section": "monitoring", "description": "ELK Stack, Datadog, Grafana", "difficulty": "Intermediate", "url": "https://grafana.com/"},
+    {"id": "feedback-loop", "label": "Feedback Loop", "type": "concept", "section": "monitoring", "description": "Retraining triggers", "difficulty": "Advanced"}
+  ],
+  "links": [
+    {"source": "data-sources", "target": "data-lake", "type": "ingest"},
+    {"source": "data-sources", "target": "data-warehouse", "type": "ETL"},
+    {"source": "data-lake", "target": "feature-store", "type": "transform"},
+    {"source": "data-warehouse", "target": "feature-store", "type": "extract"},
+    {"source": "data-lake", "target": "data-versioning", "type": "version"},
+    {"source": "feature-store", "target": "training-pipeline", "type": "features"},
+    {"source": "data-versioning", "target": "experiment-tracking", "type": "data refs"},
+    {"source": "training-pipeline", "target": "experiment-tracking", "type": "log metrics"},
+    {"source": "training-pipeline", "target": "hyperparameter-tuning", "type": "optimize"},
+    {"source": "hyperparameter-tuning", "target": "model-registry", "type": "best model"},
+    {"source": "training-pipeline", "target": "model-registry", "type": "register"},
+    {"source": "model-registry", "target": "model-validation", "type": "validate"},
+    {"source": "model-validation", "target": "ci-cd", "type": "approved"},
+    {"source": "ci-cd", "target": "container-registry", "type": "build"},
+    {"source": "container-registry", "target": "kubernetes", "type": "deploy"},
+    {"source": "kubernetes", "target": "model-serving", "type": "run"},
+    {"source": "kubernetes", "target": "api-gateway", "type": "expose"},
+    {"source": "model-serving", "target": "monitoring", "type": "metrics"},
+    {"source": "api-gateway", "target": "logging", "type": "logs"},
+    {"source": "monitoring", "target": "feedback-loop", "type": "drift detected"},
+    {"source": "feedback-loop", "target": "training-pipeline", "type": "retrain"}
+  ]
+}

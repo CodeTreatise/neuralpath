@@ -1,0 +1,2704 @@
+{
+  "meta": {
+    "title": "AI Tools Directory",
+    "description": "Comprehensive directory of 180+ AI tools across 20 categories",
+    "lastUpdated": "2025-12-29",
+    "totalTools": 197,
+    "totalCategories": 20
+  },
+  "categories": [
+    {
+      "id": "chatbots",
+      "title": "AI Assistants",
+      "icon": "\ud83e\udd16",
+      "color": "#6366f1"
+    },
+    {
+      "id": "image-gen",
+      "title": "Image Generation",
+      "icon": "\ud83c\udfa8",
+      "color": "#ec4899"
+    },
+    {
+      "id": "video-gen",
+      "title": "Video Generation",
+      "icon": "\ud83c\udfac",
+      "color": "#f59e0b"
+    },
+    {
+      "id": "audio-music",
+      "title": "Audio & Music",
+      "icon": "\ud83c\udfb5",
+      "color": "#10b981"
+    },
+    {
+      "id": "code-dev",
+      "title": "Code & Development",
+      "icon": "\ud83d\udcbb",
+      "color": "#3b82f6"
+    },
+    {
+      "id": "writing",
+      "title": "Writing & Content",
+      "icon": "\u270d\ufe0f",
+      "color": "#8b5cf6"
+    },
+    {
+      "id": "productivity",
+      "title": "Productivity",
+      "icon": "\ud83d\udcca",
+      "color": "#06b6d4"
+    },
+    {
+      "id": "research",
+      "title": "Research & Learning",
+      "icon": "\ud83d\udd2c",
+      "color": "#14b8a6"
+    },
+    {
+      "id": "dev-platforms",
+      "title": "Developer APIs",
+      "icon": "\ud83d\udee0\ufe0f",
+      "color": "#f43f5e"
+    },
+    {
+      "id": "local-opensource",
+      "title": "Local & Open Source",
+      "icon": "\ud83c\udfe0",
+      "color": "#84cc16"
+    },
+    {
+      "id": "search",
+      "title": "AI Search",
+      "icon": "\ud83d\udd0d",
+      "color": "#0ea5e9"
+    },
+    {
+      "id": "agents",
+      "title": "AI Agents",
+      "icon": "\ud83e\udd16",
+      "color": "#a855f7"
+    },
+    {
+      "id": "marketing",
+      "title": "Marketing & Sales",
+      "icon": "\ud83d\udcc8",
+      "color": "#f97316"
+    },
+    {
+      "id": "data",
+      "title": "Data & Analytics",
+      "icon": "\ud83d\udcca",
+      "color": "#64748b"
+    },
+    {
+      "id": "design",
+      "title": "Design & Creative",
+      "icon": "\ud83c\udfad",
+      "color": "#ec4899"
+    },
+    {
+      "id": "3d-spatial",
+      "title": "3D & Spatial",
+      "icon": "\ud83c\udfae",
+      "color": "#22c55e"
+    },
+    {
+      "id": "transcription",
+      "title": "Transcription",
+      "icon": "\ud83d\udcdd",
+      "color": "#0891b2"
+    },
+    {
+      "id": "enterprise",
+      "title": "Enterprise",
+      "icon": "\ud83d\udcbc",
+      "color": "#475569"
+    },
+    {
+      "id": "education",
+      "title": "Education",
+      "icon": "\ud83c\udf93",
+      "color": "#7c3aed"
+    },
+    {
+      "id": "healthcare",
+      "title": "Healthcare",
+      "icon": "\ud83c\udfe5",
+      "color": "#dc2626"
+    }
+  ],
+  "tools": [
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "icon": "\ud83e\udd16",
+      "description": "OpenAI's flagship conversational AI powered by GPT-4",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://chat.openai.com",
+      "tags": [
+        "chatbot",
+        "gpt-4",
+        "openai"
+      ]
+    },
+    {
+      "id": "claude",
+      "name": "Claude",
+      "icon": "\ud83e\udde0",
+      "description": "Anthropic's helpful, harmless, honest AI assistant",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://claude.ai",
+      "tags": [
+        "chatbot",
+        "anthropic",
+        "coding"
+      ]
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini",
+      "icon": "\ud83d\udc8e",
+      "description": "Google's multimodal AI assistant",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://gemini.google.com",
+      "tags": [
+        "google",
+        "multimodal"
+      ]
+    },
+    {
+      "id": "poe",
+      "name": "Poe",
+      "icon": "\ud83d\udcac",
+      "description": "Multi-model AI aggregator by Quora",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://poe.com",
+      "tags": [
+        "multi-model",
+        "quora"
+      ]
+    },
+    {
+      "id": "grok",
+      "name": "Grok",
+      "icon": "\ud83d\ude80",
+      "description": "X's AI with real-time data access",
+      "category": "chatbots",
+      "pricing": "paid",
+      "url": "https://grok.x.ai",
+      "tags": [
+        "x",
+        "real-time"
+      ]
+    },
+    {
+      "id": "pi",
+      "name": "Pi",
+      "icon": "\ud83e\udd67",
+      "description": "Inflection's personal AI assistant",
+      "category": "chatbots",
+      "pricing": "free",
+      "url": "https://pi.ai",
+      "tags": [
+        "personal",
+        "friendly"
+      ]
+    },
+    {
+      "id": "character-ai",
+      "name": "Character.AI",
+      "icon": "\ud83c\udfad",
+      "description": "Chat with AI characters",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://character.ai",
+      "tags": [
+        "roleplay",
+        "characters"
+      ]
+    },
+    {
+      "id": "huggingchat",
+      "name": "HuggingChat",
+      "icon": "\ud83e\udd17",
+      "description": "Open-source chat models",
+      "category": "chatbots",
+      "pricing": "free",
+      "url": "https://huggingface.co/chat",
+      "tags": [
+        "open-source",
+        "huggingface"
+      ]
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "icon": "\ud83d\udd2d",
+      "description": "High-performance Chinese AI model",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://deepseek.com",
+      "tags": [
+        "coding",
+        "reasoning"
+      ]
+    },
+    {
+      "id": "midjourney",
+      "name": "Midjourney",
+      "icon": "\ud83c\udfa8",
+      "description": "Artistic, high-quality image generation",
+      "category": "image-gen",
+      "pricing": "paid",
+      "url": "https://midjourney.com",
+      "tags": [
+        "art",
+        "creative"
+      ]
+    },
+    {
+      "id": "dalle",
+      "name": "DALL-E 3",
+      "icon": "\ud83d\uddbc\ufe0f",
+      "description": "OpenAI's text-to-image model",
+      "category": "image-gen",
+      "pricing": "paid",
+      "url": "https://openai.com/dall-e-3",
+      "tags": [
+        "openai",
+        "art"
+      ]
+    },
+    {
+      "id": "stable-diffusion",
+      "name": "Stable Diffusion",
+      "icon": "\ud83c\udfaf",
+      "description": "Open-source image generation",
+      "category": "image-gen",
+      "pricing": "free",
+      "url": "https://stability.ai",
+      "tags": [
+        "open-source",
+        "local"
+      ]
+    },
+    {
+      "id": "leonardo",
+      "name": "Leonardo.ai",
+      "icon": "\ud83e\udd81",
+      "description": "Game assets & creative images",
+      "category": "image-gen",
+      "pricing": "freemium",
+      "url": "https://leonardo.ai",
+      "tags": [
+        "game-art",
+        "assets"
+      ]
+    },
+    {
+      "id": "ideogram",
+      "name": "Ideogram",
+      "icon": "\ud83d\udca1",
+      "description": "Best at text in images",
+      "category": "image-gen",
+      "pricing": "freemium",
+      "url": "https://ideogram.ai",
+      "tags": [
+        "text",
+        "typography"
+      ]
+    },
+    {
+      "id": "flux",
+      "name": "Flux",
+      "icon": "\u26a1",
+      "description": "Latest high-quality open model",
+      "category": "image-gen",
+      "pricing": "freemium",
+      "url": "https://blackforestlabs.ai",
+      "tags": [
+        "open-source",
+        "latest"
+      ]
+    },
+    {
+      "id": "firefly",
+      "name": "Adobe Firefly",
+      "icon": "\ud83d\udd25",
+      "description": "Adobe's creative AI",
+      "category": "image-gen",
+      "pricing": "freemium",
+      "url": "https://firefly.adobe.com",
+      "tags": [
+        "adobe",
+        "creative"
+      ]
+    },
+    {
+      "id": "playground",
+      "name": "Playground",
+      "icon": "\ud83c\udfaa",
+      "description": "Free image generation platform",
+      "category": "image-gen",
+      "pricing": "freemium",
+      "url": "https://playground.com",
+      "tags": [
+        "free",
+        "editing"
+      ]
+    },
+    {
+      "id": "krea",
+      "name": "Krea AI",
+      "icon": "\ud83c\udf00",
+      "description": "Real-time image generation",
+      "category": "image-gen",
+      "pricing": "freemium",
+      "url": "https://krea.ai",
+      "tags": [
+        "real-time",
+        "creative"
+      ]
+    },
+    {
+      "id": "recraft",
+      "name": "Recraft",
+      "icon": "\u270f\ufe0f",
+      "description": "Vector & raster image AI",
+      "category": "image-gen",
+      "pricing": "freemium",
+      "url": "https://recraft.ai",
+      "tags": [
+        "vector",
+        "design"
+      ]
+    },
+    {
+      "id": "runway",
+      "name": "Runway",
+      "icon": "\ud83c\udfac",
+      "description": "Gen-3 Alpha video generation",
+      "category": "video-gen",
+      "pricing": "freemium",
+      "url": "https://runwayml.com",
+      "tags": [
+        "video",
+        "creative"
+      ]
+    },
+    {
+      "id": "pika",
+      "name": "Pika",
+      "icon": "\u26a1",
+      "description": "Image-to-video AI",
+      "category": "video-gen",
+      "pricing": "freemium",
+      "url": "https://pika.art",
+      "tags": [
+        "animation"
+      ]
+    },
+    {
+      "id": "kling",
+      "name": "Kling",
+      "icon": "\ud83c\udfa5",
+      "description": "High-quality video generation",
+      "category": "video-gen",
+      "pricing": "freemium",
+      "url": "https://klingai.com",
+      "tags": [
+        "high-quality"
+      ]
+    },
+    {
+      "id": "sora",
+      "name": "Sora",
+      "icon": "\ud83c\udf05",
+      "description": "OpenAI's video model",
+      "category": "video-gen",
+      "pricing": "paid",
+      "url": "https://openai.com/sora",
+      "tags": [
+        "openai",
+        "cinematic"
+      ]
+    },
+    {
+      "id": "heygen",
+      "name": "HeyGen",
+      "icon": "\ud83d\udc64",
+      "description": "AI avatar video creation",
+      "category": "video-gen",
+      "pricing": "freemium",
+      "url": "https://heygen.com",
+      "tags": [
+        "avatar",
+        "presenter"
+      ]
+    },
+    {
+      "id": "synthesia",
+      "name": "Synthesia",
+      "icon": "\ud83c\udf99\ufe0f",
+      "description": "AI presenter videos",
+      "category": "video-gen",
+      "pricing": "paid",
+      "url": "https://synthesia.io",
+      "tags": [
+        "enterprise",
+        "training"
+      ]
+    },
+    {
+      "id": "descript",
+      "name": "Descript",
+      "icon": "\ud83d\udcf9",
+      "description": "AI-powered video editor",
+      "category": "video-gen",
+      "pricing": "freemium",
+      "url": "https://descript.com",
+      "tags": [
+        "editing",
+        "podcast"
+      ]
+    },
+    {
+      "id": "capcut",
+      "name": "CapCut",
+      "icon": "\u2702\ufe0f",
+      "description": "Free AI video editing",
+      "category": "video-gen",
+      "pricing": "freemium",
+      "url": "https://capcut.com",
+      "tags": [
+        "free",
+        "social"
+      ]
+    },
+    {
+      "id": "luma",
+      "name": "Luma AI",
+      "icon": "\ud83c\udf19",
+      "description": "Dream Machine video gen",
+      "category": "video-gen",
+      "pricing": "freemium",
+      "url": "https://lumalabs.ai",
+      "tags": [
+        "3d-capture"
+      ]
+    },
+    {
+      "id": "vidu",
+      "name": "Vidu",
+      "icon": "\ud83c\udfa6",
+      "description": "Chinese video generation AI",
+      "category": "video-gen",
+      "pricing": "freemium",
+      "url": "https://vidu.io",
+      "tags": [
+        "video",
+        "animation"
+      ]
+    },
+    {
+      "id": "minimax",
+      "name": "Hailuo AI",
+      "icon": "\ud83c\udf0a",
+      "description": "MiniMax video generation",
+      "category": "video-gen",
+      "pricing": "freemium",
+      "url": "https://hailuoai.video",
+      "tags": [
+        "video",
+        "high-quality"
+      ]
+    },
+    {
+      "id": "suno",
+      "name": "Suno",
+      "icon": "\ud83c\udfb5",
+      "description": "Full song generation from text",
+      "category": "audio-music",
+      "pricing": "freemium",
+      "url": "https://suno.ai",
+      "tags": [
+        "music",
+        "song"
+      ]
+    },
+    {
+      "id": "udio",
+      "name": "Udio",
+      "icon": "\ud83c\udfb6",
+      "description": "High-quality music creation",
+      "category": "audio-music",
+      "pricing": "freemium",
+      "url": "https://udio.com",
+      "tags": [
+        "music",
+        "quality"
+      ]
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "icon": "\ud83d\udd0a",
+      "description": "Voice cloning & text-to-speech",
+      "category": "audio-music",
+      "pricing": "freemium",
+      "url": "https://elevenlabs.io",
+      "tags": [
+        "voice",
+        "tts",
+        "cloning"
+      ]
+    },
+    {
+      "id": "murf",
+      "name": "Murf",
+      "icon": "\ud83c\udfa4",
+      "description": "AI voiceover studio",
+      "category": "audio-music",
+      "pricing": "freemium",
+      "url": "https://murf.ai",
+      "tags": [
+        "voiceover",
+        "tts"
+      ]
+    },
+    {
+      "id": "aiva",
+      "name": "AIVA",
+      "icon": "\ud83c\udfbc",
+      "description": "AI music composer",
+      "category": "audio-music",
+      "pricing": "freemium",
+      "url": "https://aiva.ai",
+      "tags": [
+        "music",
+        "soundtrack"
+      ]
+    },
+    {
+      "id": "krisp",
+      "name": "Krisp",
+      "icon": "\ud83d\udd07",
+      "description": "Noise cancellation AI",
+      "category": "audio-music",
+      "pricing": "freemium",
+      "url": "https://krisp.ai",
+      "tags": [
+        "noise",
+        "calls"
+      ]
+    },
+    {
+      "id": "soundraw",
+      "name": "Soundraw",
+      "icon": "\ud83c\udfb9",
+      "description": "AI music for creators",
+      "category": "audio-music",
+      "pricing": "paid",
+      "url": "https://soundraw.io",
+      "tags": [
+        "music",
+        "royalty-free"
+      ]
+    },
+    {
+      "id": "voicemod",
+      "name": "Voicemod",
+      "icon": "\ud83c\udfad",
+      "description": "Real-time voice changer",
+      "category": "audio-music",
+      "pricing": "freemium",
+      "url": "https://voicemod.net",
+      "tags": [
+        "voice",
+        "gaming"
+      ]
+    },
+    {
+      "id": "lalal",
+      "name": "LALAL.AI",
+      "icon": "\ud83c\udfa7",
+      "description": "Vocal & instrument separation",
+      "category": "audio-music",
+      "pricing": "freemium",
+      "url": "https://lalal.ai",
+      "tags": [
+        "separation",
+        "stems"
+      ]
+    },
+    {
+      "id": "resemble",
+      "name": "Resemble AI",
+      "icon": "\ud83d\udde3\ufe0f",
+      "description": "Voice cloning platform",
+      "category": "audio-music",
+      "pricing": "paid",
+      "url": "https://resemble.ai",
+      "tags": [
+        "voice",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot",
+      "icon": "\ud83e\udd16",
+      "description": "AI pair programmer",
+      "category": "code-dev",
+      "pricing": "paid",
+      "url": "https://github.com/features/copilot",
+      "tags": [
+        "coding",
+        "github"
+      ]
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "icon": "\u2328\ufe0f",
+      "description": "AI-first code editor",
+      "category": "code-dev",
+      "pricing": "freemium",
+      "url": "https://cursor.com",
+      "tags": [
+        "coding",
+        "editor"
+      ]
+    },
+    {
+      "id": "codeium",
+      "name": "Codeium",
+      "icon": "\ud83d\udc8e",
+      "description": "Free AI code assistant",
+      "category": "code-dev",
+      "pricing": "free",
+      "url": "https://codeium.com",
+      "tags": [
+        "coding",
+        "free"
+      ]
+    },
+    {
+      "id": "replit",
+      "name": "Replit",
+      "icon": "\ud83d\udcbb",
+      "description": "AI-powered online IDE",
+      "category": "code-dev",
+      "pricing": "freemium",
+      "url": "https://replit.com",
+      "tags": [
+        "online",
+        "deployment"
+      ]
+    },
+    {
+      "id": "v0",
+      "name": "v0",
+      "icon": "\u25b2",
+      "description": "UI component generator",
+      "category": "code-dev",
+      "pricing": "freemium",
+      "url": "https://v0.dev",
+      "tags": [
+        "ui",
+        "react"
+      ]
+    },
+    {
+      "id": "bolt",
+      "name": "Bolt",
+      "icon": "\u26a1",
+      "description": "Full-stack app builder",
+      "category": "code-dev",
+      "pricing": "freemium",
+      "url": "https://bolt.new",
+      "tags": [
+        "full-stack",
+        "app-builder"
+      ]
+    },
+    {
+      "id": "lovable",
+      "name": "Lovable",
+      "icon": "\ud83d\udc9c",
+      "description": "AI app builder",
+      "category": "code-dev",
+      "pricing": "freemium",
+      "url": "https://lovable.dev",
+      "tags": [
+        "app-builder",
+        "full-stack"
+      ]
+    },
+    {
+      "id": "windsurf",
+      "name": "Windsurf",
+      "icon": "\ud83c\udfc4",
+      "description": "Agentic IDE by Codeium",
+      "category": "code-dev",
+      "pricing": "freemium",
+      "url": "https://codeium.com/windsurf",
+      "tags": [
+        "agentic",
+        "ide"
+      ]
+    },
+    {
+      "id": "aider",
+      "name": "Aider",
+      "icon": "\ud83d\udd27",
+      "description": "AI pair programming CLI",
+      "category": "code-dev",
+      "pricing": "free",
+      "url": "https://aider.chat",
+      "tags": [
+        "cli",
+        "open-source"
+      ]
+    },
+    {
+      "id": "continue",
+      "name": "Continue",
+      "icon": "\u27a1\ufe0f",
+      "description": "Open-source copilot",
+      "category": "code-dev",
+      "pricing": "free",
+      "url": "https://continue.dev",
+      "tags": [
+        "open-source",
+        "copilot"
+      ]
+    },
+    {
+      "id": "tabnine",
+      "name": "Tabnine",
+      "icon": "\ud83d\udcd1",
+      "description": "AI code completions",
+      "category": "code-dev",
+      "pricing": "freemium",
+      "url": "https://tabnine.com",
+      "tags": [
+        "autocomplete",
+        "private"
+      ]
+    },
+    {
+      "id": "sourcegraph",
+      "name": "Sourcegraph Cody",
+      "icon": "\ud83d\udd0d",
+      "description": "AI with codebase context",
+      "category": "code-dev",
+      "pricing": "freemium",
+      "url": "https://sourcegraph.com/cody",
+      "tags": [
+        "search",
+        "context"
+      ]
+    },
+    {
+      "id": "jupyter",
+      "name": "Jupyter Notebooks",
+      "icon": "\ud83d\udcd3",
+      "description": "Interactive computing environment for data science",
+      "category": "code-dev",
+      "pricing": "free",
+      "url": "https://jupyter.org",
+      "tags": [
+        "notebooks",
+        "data-science",
+        "python"
+      ]
+    },
+    {
+      "id": "pytorch",
+      "name": "PyTorch",
+      "icon": "\ud83d\udd25",
+      "description": "Deep learning framework by Meta",
+      "category": "code-dev",
+      "pricing": "free",
+      "url": "https://pytorch.org",
+      "tags": [
+        "deep-learning",
+        "framework",
+        "research"
+      ]
+    },
+    {
+      "id": "sklearn",
+      "name": "scikit-learn",
+      "icon": "\ud83d\udd2c",
+      "description": "Machine learning library for Python",
+      "category": "code-dev",
+      "pricing": "free",
+      "url": "https://scikit-learn.org",
+      "tags": [
+        "ml",
+        "classical",
+        "python"
+      ]
+    },
+    {
+      "id": "langchain",
+      "name": "LangChain",
+      "icon": "\ud83e\udd9c",
+      "description": "Framework for LLM applications",
+      "category": "code-dev",
+      "pricing": "free",
+      "url": "https://langchain.com",
+      "tags": [
+        "llm",
+        "framework",
+        "agents"
+      ]
+    },
+    {
+      "id": "mlflow",
+      "name": "MLflow",
+      "icon": "\ud83d\udcca",
+      "description": "ML lifecycle management platform",
+      "category": "code-dev",
+      "pricing": "free",
+      "url": "https://mlflow.org",
+      "tags": [
+        "mlops",
+        "tracking",
+        "deployment"
+      ]
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "icon": "\ud83d\udc33",
+      "description": "Container platform for reproducible deployments",
+      "category": "code-dev",
+      "pricing": "freemium",
+      "url": "https://docker.com",
+      "tags": [
+        "containers",
+        "deployment",
+        "devops"
+      ]
+    },
+    {
+      "id": "jasper",
+      "name": "Jasper",
+      "icon": "\u270d\ufe0f",
+      "description": "Marketing copywriting AI",
+      "category": "writing",
+      "pricing": "paid",
+      "url": "https://jasper.ai",
+      "tags": [
+        "marketing",
+        "copy"
+      ]
+    },
+    {
+      "id": "copyai",
+      "name": "Copy.ai",
+      "icon": "\ud83d\udcdd",
+      "description": "AI content generator",
+      "category": "writing",
+      "pricing": "freemium",
+      "url": "https://copy.ai",
+      "tags": [
+        "content",
+        "marketing"
+      ]
+    },
+    {
+      "id": "grammarly",
+      "name": "Grammarly",
+      "icon": "\u2714\ufe0f",
+      "description": "Writing enhancement",
+      "category": "writing",
+      "pricing": "freemium",
+      "url": "https://grammarly.com",
+      "tags": [
+        "grammar",
+        "editing"
+      ]
+    },
+    {
+      "id": "quillbot",
+      "name": "QuillBot",
+      "icon": "\ud83e\udeb6",
+      "description": "Paraphrasing tool",
+      "category": "writing",
+      "pricing": "freemium",
+      "url": "https://quillbot.com",
+      "tags": [
+        "paraphrase",
+        "rewrite"
+      ]
+    },
+    {
+      "id": "writesonic",
+      "name": "Writesonic",
+      "icon": "\ud83d\udcc4",
+      "description": "AI writing assistant",
+      "category": "writing",
+      "pricing": "freemium",
+      "url": "https://writesonic.com",
+      "tags": [
+        "writing",
+        "seo"
+      ]
+    },
+    {
+      "id": "rytr",
+      "name": "Rytr",
+      "icon": "\u270f\ufe0f",
+      "description": "AI writing assistant",
+      "category": "writing",
+      "pricing": "freemium",
+      "url": "https://rytr.me",
+      "tags": [
+        "writing",
+        "templates"
+      ]
+    },
+    {
+      "id": "wordtune",
+      "name": "Wordtune",
+      "icon": "\ud83d\udd24",
+      "description": "Rewrite & refine text",
+      "category": "writing",
+      "pricing": "freemium",
+      "url": "https://wordtune.com",
+      "tags": [
+        "rewriting",
+        "clarity"
+      ]
+    },
+    {
+      "id": "sudowrite",
+      "name": "Sudowrite",
+      "icon": "\ud83d\udcd6",
+      "description": "AI for fiction writers",
+      "category": "writing",
+      "pricing": "paid",
+      "url": "https://sudowrite.com",
+      "tags": [
+        "fiction",
+        "creative"
+      ]
+    },
+    {
+      "id": "hyperwrite",
+      "name": "HyperWrite",
+      "icon": "\u26a1",
+      "description": "AI writing companion",
+      "category": "writing",
+      "pricing": "freemium",
+      "url": "https://hyperwrite.ai",
+      "tags": [
+        "writing",
+        "assistant"
+      ]
+    },
+    {
+      "id": "lex",
+      "name": "Lex",
+      "icon": "\ud83d\udcc3",
+      "description": "AI-powered writing app",
+      "category": "writing",
+      "pricing": "freemium",
+      "url": "https://lex.page",
+      "tags": [
+        "writing",
+        "focus"
+      ]
+    },
+    {
+      "id": "notion-ai",
+      "name": "Notion AI",
+      "icon": "\ud83d\udcd3",
+      "description": "AI in your workspace",
+      "category": "productivity",
+      "pricing": "paid",
+      "url": "https://notion.so/product/ai",
+      "tags": [
+        "notes",
+        "workspace"
+      ]
+    },
+    {
+      "id": "gamma",
+      "name": "Gamma",
+      "icon": "\ud83d\udcca",
+      "description": "AI presentations",
+      "category": "productivity",
+      "pricing": "freemium",
+      "url": "https://gamma.app",
+      "tags": [
+        "presentations",
+        "slides"
+      ]
+    },
+    {
+      "id": "beautiful-ai",
+      "name": "Beautiful.ai",
+      "icon": "\u2728",
+      "description": "AI slide design",
+      "category": "productivity",
+      "pricing": "freemium",
+      "url": "https://beautiful.ai",
+      "tags": [
+        "presentations",
+        "design"
+      ]
+    },
+    {
+      "id": "taskade",
+      "name": "Taskade",
+      "icon": "\ud83d\udccb",
+      "description": "AI project management",
+      "category": "productivity",
+      "pricing": "freemium",
+      "url": "https://taskade.com",
+      "tags": [
+        "tasks",
+        "ai-agents"
+      ]
+    },
+    {
+      "id": "mem",
+      "name": "Mem",
+      "icon": "\ud83e\udde0",
+      "description": "AI note-taking",
+      "category": "productivity",
+      "pricing": "freemium",
+      "url": "https://mem.ai",
+      "tags": [
+        "notes",
+        "search"
+      ]
+    },
+    {
+      "id": "reclaim",
+      "name": "Reclaim.ai",
+      "icon": "\ud83d\udcc5",
+      "description": "AI calendar assistant",
+      "category": "productivity",
+      "pricing": "freemium",
+      "url": "https://reclaim.ai",
+      "tags": [
+        "calendar",
+        "scheduling"
+      ]
+    },
+    {
+      "id": "motion",
+      "name": "Motion",
+      "icon": "\ud83c\udfc3",
+      "description": "AI calendar & tasks",
+      "category": "productivity",
+      "pricing": "paid",
+      "url": "https://usemotion.com",
+      "tags": [
+        "calendar",
+        "planning"
+      ]
+    },
+    {
+      "id": "otter",
+      "name": "Otter.ai",
+      "icon": "\ud83e\udda6",
+      "description": "Meeting transcription",
+      "category": "productivity",
+      "pricing": "freemium",
+      "url": "https://otter.ai",
+      "tags": [
+        "meetings",
+        "notes"
+      ]
+    },
+    {
+      "id": "fireflies",
+      "name": "Fireflies.ai",
+      "icon": "\ud83d\udd25",
+      "description": "AI meeting assistant",
+      "category": "productivity",
+      "pricing": "freemium",
+      "url": "https://fireflies.ai",
+      "tags": [
+        "meetings",
+        "transcription"
+      ]
+    },
+    {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "icon": "\ud83e\udd17",
+      "description": "ML models & datasets hub",
+      "category": "research",
+      "pricing": "freemium",
+      "url": "https://huggingface.co",
+      "tags": [
+        "ml",
+        "models",
+        "datasets"
+      ]
+    },
+    {
+      "id": "papers-with-code",
+      "name": "Papers With Code",
+      "icon": "\ud83d\udcc4",
+      "description": "ML research papers with code",
+      "category": "research",
+      "pricing": "free",
+      "url": "https://paperswithcode.com",
+      "tags": [
+        "research",
+        "papers"
+      ]
+    },
+    {
+      "id": "kaggle",
+      "name": "Kaggle",
+      "icon": "\ud83d\udcca",
+      "description": "Data science platform",
+      "category": "research",
+      "pricing": "free",
+      "url": "https://kaggle.com",
+      "tags": [
+        "competitions",
+        "notebooks"
+      ]
+    },
+    {
+      "id": "arxiv",
+      "name": "arXiv",
+      "icon": "\ud83d\udcda",
+      "description": "Research paper archive",
+      "category": "research",
+      "pricing": "free",
+      "url": "https://arxiv.org",
+      "tags": [
+        "papers",
+        "preprints"
+      ]
+    },
+    {
+      "id": "semantic-scholar",
+      "name": "Semantic Scholar",
+      "icon": "\ud83d\udd0d",
+      "description": "AI research search",
+      "category": "research",
+      "pricing": "free",
+      "url": "https://semanticscholar.org",
+      "tags": [
+        "search",
+        "papers"
+      ]
+    },
+    {
+      "id": "elicit",
+      "name": "Elicit",
+      "icon": "\ud83d\udd2c",
+      "description": "AI research assistant",
+      "category": "research",
+      "pricing": "freemium",
+      "url": "https://elicit.org",
+      "tags": [
+        "research",
+        "analysis"
+      ]
+    },
+    {
+      "id": "consensus",
+      "name": "Consensus",
+      "icon": "\u2705",
+      "description": "Evidence-based answers",
+      "category": "research",
+      "pricing": "freemium",
+      "url": "https://consensus.app",
+      "tags": [
+        "evidence",
+        "science"
+      ]
+    },
+    {
+      "id": "connected-papers",
+      "name": "Connected Papers",
+      "icon": "\ud83d\udd78\ufe0f",
+      "description": "Paper exploration",
+      "category": "research",
+      "pricing": "freemium",
+      "url": "https://connectedpapers.com",
+      "tags": [
+        "visualization",
+        "papers"
+      ]
+    },
+    {
+      "id": "scite",
+      "name": "Scite",
+      "icon": "\ud83d\udcce",
+      "description": "Smart citations",
+      "category": "research",
+      "pricing": "freemium",
+      "url": "https://scite.ai",
+      "tags": [
+        "citations",
+        "research"
+      ]
+    },
+    {
+      "id": "typeset",
+      "name": "SciSpace",
+      "icon": "\ud83d\udcd1",
+      "description": "AI research copilot",
+      "category": "research",
+      "pricing": "freemium",
+      "url": "https://typeset.io",
+      "tags": [
+        "papers",
+        "explanation"
+      ]
+    },
+    {
+      "id": "openai-api",
+      "name": "OpenAI API",
+      "icon": "\ud83d\udd11",
+      "description": "GPT models API",
+      "category": "dev-platforms",
+      "pricing": "paid",
+      "url": "https://platform.openai.com",
+      "tags": [
+        "api",
+        "gpt"
+      ]
+    },
+    {
+      "id": "anthropic-api",
+      "name": "Anthropic API",
+      "icon": "\ud83d\udd10",
+      "description": "Claude API access",
+      "category": "dev-platforms",
+      "pricing": "paid",
+      "url": "https://console.anthropic.com",
+      "tags": [
+        "api",
+        "claude"
+      ]
+    },
+    {
+      "id": "google-ai-studio",
+      "name": "Google AI Studio",
+      "icon": "\ud83d\udd27",
+      "description": "Gemini API playground",
+      "category": "dev-platforms",
+      "pricing": "freemium",
+      "url": "https://aistudio.google.com",
+      "tags": [
+        "api",
+        "gemini"
+      ]
+    },
+    {
+      "id": "replicate",
+      "name": "Replicate",
+      "icon": "\u267b\ufe0f",
+      "description": "Run ML models via API",
+      "category": "dev-platforms",
+      "pricing": "paid",
+      "url": "https://replicate.com",
+      "tags": [
+        "api",
+        "models"
+      ]
+    },
+    {
+      "id": "together-ai",
+      "name": "Together AI",
+      "icon": "\ud83e\udd1d",
+      "description": "Open model inference",
+      "category": "dev-platforms",
+      "pricing": "paid",
+      "url": "https://together.ai",
+      "tags": [
+        "open-source",
+        "inference"
+      ]
+    },
+    {
+      "id": "groq",
+      "name": "Groq",
+      "icon": "\u26a1",
+      "description": "Ultra-fast inference",
+      "category": "dev-platforms",
+      "pricing": "freemium",
+      "url": "https://groq.com",
+      "tags": [
+        "fast",
+        "hardware"
+      ]
+    },
+    {
+      "id": "fireworks",
+      "name": "Fireworks",
+      "icon": "\ud83c\udf86",
+      "description": "Fast model serving",
+      "category": "dev-platforms",
+      "pricing": "paid",
+      "url": "https://fireworks.ai",
+      "tags": [
+        "serving",
+        "fast"
+      ]
+    },
+    {
+      "id": "modal",
+      "name": "Modal",
+      "icon": "\ud83d\udce6",
+      "description": "Serverless AI infra",
+      "category": "dev-platforms",
+      "pricing": "freemium",
+      "url": "https://modal.com",
+      "tags": [
+        "serverless",
+        "gpu"
+      ]
+    },
+    {
+      "id": "aws-bedrock",
+      "name": "AWS Bedrock",
+      "icon": "\ud83c\udfd4\ufe0f",
+      "description": "Amazon's AI service",
+      "category": "dev-platforms",
+      "pricing": "paid",
+      "url": "https://aws.amazon.com/bedrock",
+      "tags": [
+        "aws",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "azure-openai",
+      "name": "Azure OpenAI",
+      "icon": "\u2601\ufe0f",
+      "description": "OpenAI on Azure",
+      "category": "dev-platforms",
+      "pricing": "paid",
+      "url": "https://azure.microsoft.com/en-us/products/ai-services/openai-service",
+      "tags": [
+        "azure",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama",
+      "icon": "\ud83e\udd99",
+      "description": "Run LLMs locally",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://ollama.com",
+      "tags": [
+        "local",
+        "llm"
+      ]
+    },
+    {
+      "id": "lm-studio",
+      "name": "LM Studio",
+      "icon": "\ud83d\udda5\ufe0f",
+      "description": "Local model GUI",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://lmstudio.ai",
+      "tags": [
+        "local",
+        "gui"
+      ]
+    },
+    {
+      "id": "jan",
+      "name": "Jan",
+      "icon": "\ud83e\udd16",
+      "description": "Open-source local AI",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://jan.ai",
+      "tags": [
+        "local",
+        "offline"
+      ]
+    },
+    {
+      "id": "open-webui",
+      "name": "Open WebUI",
+      "icon": "\ud83c\udf10",
+      "description": "ChatGPT-style local UI",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://openwebui.com",
+      "tags": [
+        "local",
+        "ui"
+      ]
+    },
+    {
+      "id": "gpt4all",
+      "name": "GPT4All",
+      "icon": "\ud83c\udf0d",
+      "description": "Local LLM ecosystem",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://gpt4all.io",
+      "tags": [
+        "local",
+        "desktop"
+      ]
+    },
+    {
+      "id": "anything-llm",
+      "name": "Anything LLM",
+      "icon": "\ud83d\udcc2",
+      "description": "Private document chat",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://anythingllm.com",
+      "tags": [
+        "local",
+        "rag"
+      ]
+    },
+    {
+      "id": "vllm",
+      "name": "vLLM",
+      "icon": "\ud83d\ude80",
+      "description": "Fast LLM serving",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://vllm.ai",
+      "tags": [
+        "serving",
+        "fast"
+      ]
+    },
+    {
+      "id": "llama-cpp",
+      "name": "llama.cpp",
+      "icon": "\ud83e\udd99",
+      "description": "CPU inference engine",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://github.com/ggerganov/llama.cpp",
+      "tags": [
+        "local",
+        "cpu"
+      ]
+    },
+    {
+      "id": "privateGPT",
+      "name": "PrivateGPT",
+      "icon": "\ud83d\udd12",
+      "description": "Private document AI",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://privategpt.io",
+      "tags": [
+        "private",
+        "documents"
+      ]
+    },
+    {
+      "id": "localai",
+      "name": "LocalAI",
+      "icon": "\ud83c\udfe0",
+      "description": "OpenAI-compatible local API",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://localai.io",
+      "tags": [
+        "local",
+        "api"
+      ]
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity",
+      "icon": "\ud83d\udd0d",
+      "description": "AI answer engine",
+      "category": "search",
+      "pricing": "freemium",
+      "url": "https://perplexity.ai",
+      "tags": [
+        "search",
+        "citations"
+      ]
+    },
+    {
+      "id": "you-com",
+      "name": "You.com",
+      "icon": "\ud83d\udd0e",
+      "description": "AI-powered search",
+      "category": "search",
+      "pricing": "freemium",
+      "url": "https://you.com",
+      "tags": [
+        "search",
+        "privacy"
+      ]
+    },
+    {
+      "id": "phind",
+      "name": "Phind",
+      "icon": "\ud83d\udcbb",
+      "description": "Developer-focused search",
+      "category": "search",
+      "pricing": "freemium",
+      "url": "https://phind.com",
+      "tags": [
+        "developer",
+        "coding"
+      ]
+    },
+    {
+      "id": "exa",
+      "name": "Exa",
+      "icon": "\ud83e\udded",
+      "description": "Neural search API",
+      "category": "search",
+      "pricing": "paid",
+      "url": "https://exa.ai",
+      "tags": [
+        "api",
+        "semantic"
+      ]
+    },
+    {
+      "id": "tavily",
+      "name": "Tavily",
+      "icon": "\ud83d\udd0d",
+      "description": "AI search for agents",
+      "category": "search",
+      "pricing": "freemium",
+      "url": "https://tavily.com",
+      "tags": [
+        "agents",
+        "api"
+      ]
+    },
+    {
+      "id": "brave-search",
+      "name": "Brave Search",
+      "icon": "\ud83e\udd81",
+      "description": "Privacy-first AI search",
+      "category": "search",
+      "pricing": "free",
+      "url": "https://search.brave.com",
+      "tags": [
+        "privacy",
+        "ai"
+      ]
+    },
+    {
+      "id": "andi",
+      "name": "Andi",
+      "icon": "\ud83e\udd16",
+      "description": "Conversational search",
+      "category": "search",
+      "pricing": "free",
+      "url": "https://andisearch.com",
+      "tags": [
+        "conversational",
+        "clean"
+      ]
+    },
+    {
+      "id": "kagi",
+      "name": "Kagi",
+      "icon": "\ud83d\udd2e",
+      "description": "Premium AI search",
+      "category": "search",
+      "pricing": "paid",
+      "url": "https://kagi.com",
+      "tags": [
+        "premium",
+        "ad-free"
+      ]
+    },
+    {
+      "id": "autogpt",
+      "name": "AutoGPT",
+      "icon": "\ud83e\udd16",
+      "description": "Autonomous AI agents",
+      "category": "agents",
+      "pricing": "free",
+      "url": "https://autogpt.net",
+      "tags": [
+        "autonomous",
+        "open-source"
+      ]
+    },
+    {
+      "id": "devin",
+      "name": "Devin",
+      "icon": "\ud83d\udc68\u200d\ud83d\udcbb",
+      "description": "AI software engineer by Cognition",
+      "category": "agents",
+      "pricing": "paid",
+      "url": "https://devin.ai",
+      "tags": [
+        "coding",
+        "autonomous",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "crewai",
+      "name": "CrewAI",
+      "icon": "\ud83d\udc65",
+      "description": "Multi-agent orchestration",
+      "category": "agents",
+      "pricing": "freemium",
+      "url": "https://crewai.com",
+      "tags": [
+        "multi-agent",
+        "framework"
+      ]
+    },
+    {
+      "id": "langgraph",
+      "name": "LangGraph",
+      "icon": "\ud83d\udd78\ufe0f",
+      "description": "Stateful multi-actor agent framework",
+      "category": "agents",
+      "pricing": "free",
+      "url": "https://langchain-ai.github.io/langgraph/",
+      "tags": [
+        "langchain",
+        "stateful",
+        "framework"
+      ]
+    },
+    {
+      "id": "zapier-ai",
+      "name": "Zapier AI",
+      "icon": "\u26a1",
+      "description": "AI workflow automation",
+      "category": "agents",
+      "pricing": "freemium",
+      "url": "https://zapier.com/ai",
+      "tags": [
+        "automation",
+        "workflows"
+      ]
+    },
+    {
+      "id": "make",
+      "name": "Make",
+      "icon": "\ud83d\udd27",
+      "description": "Visual automation builder",
+      "category": "agents",
+      "pricing": "freemium",
+      "url": "https://make.com",
+      "tags": [
+        "automation",
+        "visual"
+      ]
+    },
+    {
+      "id": "n8n",
+      "name": "n8n",
+      "icon": "\ud83d\udd04",
+      "description": "Self-hosted automation",
+      "category": "agents",
+      "pricing": "freemium",
+      "url": "https://n8n.io",
+      "tags": [
+        "self-hosted",
+        "open-source"
+      ]
+    },
+    {
+      "id": "flowise",
+      "name": "Flowise",
+      "icon": "\ud83c\udf0a",
+      "description": "LLM flow builder",
+      "category": "agents",
+      "pricing": "free",
+      "url": "https://flowiseai.com",
+      "tags": [
+        "llm",
+        "no-code"
+      ]
+    },
+    {
+      "id": "langflow",
+      "name": "Langflow",
+      "icon": "\ud83d\udd17",
+      "description": "Visual LangChain builder",
+      "category": "agents",
+      "pricing": "free",
+      "url": "https://langflow.org",
+      "tags": [
+        "langchain",
+        "visual"
+      ]
+    },
+    {
+      "id": "dify",
+      "name": "Dify",
+      "icon": "\ud83c\udfaf",
+      "description": "LLM app development",
+      "category": "agents",
+      "pricing": "freemium",
+      "url": "https://dify.ai",
+      "tags": [
+        "llm-ops",
+        "platform"
+      ]
+    },
+    {
+      "id": "agentgpt",
+      "name": "AgentGPT",
+      "icon": "\ud83d\udd75\ufe0f",
+      "description": "Web-based AI agents",
+      "category": "agents",
+      "pricing": "freemium",
+      "url": "https://agentgpt.reworkd.ai",
+      "tags": [
+        "web",
+        "autonomous"
+      ]
+    },
+    {
+      "id": "superagi",
+      "name": "SuperAGI",
+      "icon": "\ud83e\uddb8",
+      "description": "Open-source agent framework",
+      "category": "agents",
+      "pricing": "free",
+      "url": "https://superagi.com",
+      "tags": [
+        "open-source",
+        "framework"
+      ]
+    },
+    {
+      "id": "replit-agent",
+      "name": "Replit Agent",
+      "icon": "\ud83d\ude80",
+      "description": "Build apps from natural language",
+      "category": "agents",
+      "pricing": "freemium",
+      "url": "https://replit.com/ai",
+      "tags": [
+        "app-builder",
+        "autonomous"
+      ]
+    },
+    {
+      "id": "openai-assistants",
+      "name": "OpenAI Assistants API",
+      "icon": "\ud83e\udd16",
+      "description": "Build custom AI assistants",
+      "category": "agents",
+      "pricing": "paid",
+      "url": "https://platform.openai.com/docs/assistants",
+      "tags": [
+        "api",
+        "openai",
+        "tools"
+      ]
+    },
+    {
+      "id": "hubspot-ai",
+      "name": "HubSpot AI",
+      "icon": "\ud83e\udde1",
+      "description": "AI for marketing & sales",
+      "category": "marketing",
+      "pricing": "freemium",
+      "url": "https://hubspot.com/artificial-intelligence",
+      "tags": [
+        "crm",
+        "marketing"
+      ]
+    },
+    {
+      "id": "persado",
+      "name": "Persado",
+      "icon": "\ud83d\udcac",
+      "description": "AI marketing language",
+      "category": "marketing",
+      "pricing": "paid",
+      "url": "https://persado.com",
+      "tags": [
+        "copy",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "phrasee",
+      "name": "Phrasee",
+      "icon": "\ud83d\udce7",
+      "description": "AI email marketing",
+      "category": "marketing",
+      "pricing": "paid",
+      "url": "https://phrasee.co",
+      "tags": [
+        "email",
+        "optimization"
+      ]
+    },
+    {
+      "id": "albert",
+      "name": "Albert.ai",
+      "icon": "\ud83e\udd16",
+      "description": "AI marketing platform",
+      "category": "marketing",
+      "pricing": "paid",
+      "url": "https://albert.ai",
+      "tags": [
+        "advertising",
+        "automation"
+      ]
+    },
+    {
+      "id": "adcreative",
+      "name": "AdCreative.ai",
+      "icon": "\ud83c\udfaf",
+      "description": "AI ad creative",
+      "category": "marketing",
+      "pricing": "freemium",
+      "url": "https://adcreative.ai",
+      "tags": [
+        "ads",
+        "creative"
+      ]
+    },
+    {
+      "id": "pencil",
+      "name": "Pencil",
+      "icon": "\u270f\ufe0f",
+      "description": "AI video ads",
+      "category": "marketing",
+      "pricing": "paid",
+      "url": "https://pencil.ai",
+      "tags": [
+        "video-ads",
+        "creative"
+      ]
+    },
+    {
+      "id": "anyword",
+      "name": "Anyword",
+      "icon": "\ud83d\udcca",
+      "description": "AI copywriting with analytics",
+      "category": "marketing",
+      "pricing": "freemium",
+      "url": "https://anyword.com",
+      "tags": [
+        "copy",
+        "analytics"
+      ]
+    },
+    {
+      "id": "mutiny",
+      "name": "Mutiny",
+      "icon": "\ud83c\udff4",
+      "description": "AI website personalization",
+      "category": "marketing",
+      "pricing": "paid",
+      "url": "https://mutinyhq.com",
+      "tags": [
+        "personalization",
+        "b2b"
+      ]
+    },
+    {
+      "id": "smartwriter",
+      "name": "Smartwriter",
+      "icon": "\u270d\ufe0f",
+      "description": "AI email outreach",
+      "category": "marketing",
+      "pricing": "freemium",
+      "url": "https://smartwriter.ai",
+      "tags": [
+        "outreach",
+        "personalization"
+      ]
+    },
+    {
+      "id": "julius",
+      "name": "Julius",
+      "icon": "\ud83d\udcca",
+      "description": "Data analysis AI",
+      "category": "data",
+      "pricing": "freemium",
+      "url": "https://julius.ai",
+      "tags": [
+        "analysis",
+        "visualization"
+      ]
+    },
+    {
+      "id": "obviously-ai",
+      "name": "Obviously AI",
+      "icon": "\ud83c\udfaf",
+      "description": "No-code ML platform",
+      "category": "data",
+      "pricing": "freemium",
+      "url": "https://obviously.ai",
+      "tags": [
+        "ml",
+        "no-code"
+      ]
+    },
+    {
+      "id": "datarobot",
+      "name": "DataRobot",
+      "icon": "\ud83e\udd16",
+      "description": "Enterprise AutoML",
+      "category": "data",
+      "pricing": "paid",
+      "url": "https://datarobot.com",
+      "tags": [
+        "ml",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "h2o",
+      "name": "H2O.ai",
+      "icon": "\ud83d\udca7",
+      "description": "Open-source AutoML",
+      "category": "data",
+      "pricing": "freemium",
+      "url": "https://h2o.ai",
+      "tags": [
+        "ml",
+        "open-source"
+      ]
+    },
+    {
+      "id": "hex",
+      "name": "Hex",
+      "icon": "\u2b21",
+      "description": "Collaborative data notebooks",
+      "category": "data",
+      "pricing": "freemium",
+      "url": "https://hex.tech",
+      "tags": [
+        "notebooks",
+        "sql"
+      ]
+    },
+    {
+      "id": "akkio",
+      "name": "Akkio",
+      "icon": "\ud83c\udfaf",
+      "description": "No-code AI analytics",
+      "category": "data",
+      "pricing": "freemium",
+      "url": "https://akkio.com",
+      "tags": [
+        "analytics",
+        "no-code"
+      ]
+    },
+    {
+      "id": "rows",
+      "name": "Rows",
+      "icon": "\ud83d\udcd1",
+      "description": "Spreadsheet with AI",
+      "category": "data",
+      "pricing": "freemium",
+      "url": "https://rows.com",
+      "tags": [
+        "spreadsheet",
+        "ai"
+      ]
+    },
+    {
+      "id": "polymer",
+      "name": "Polymer",
+      "icon": "\ud83d\udd37",
+      "description": "AI data exploration",
+      "category": "data",
+      "pricing": "freemium",
+      "url": "https://polymersearch.com",
+      "tags": [
+        "visualization",
+        "insights"
+      ]
+    },
+    {
+      "id": "bardeen",
+      "name": "Bardeen",
+      "icon": "\ud83e\udd16",
+      "description": "AI data automation",
+      "category": "data",
+      "pricing": "freemium",
+      "url": "https://bardeen.ai",
+      "tags": [
+        "automation",
+        "scraping"
+      ]
+    },
+    {
+      "id": "canva-ai",
+      "name": "Canva AI",
+      "icon": "\ud83c\udfa8",
+      "description": "Design with Magic Studio",
+      "category": "design",
+      "pricing": "freemium",
+      "url": "https://canva.com/ai-image-generator",
+      "tags": [
+        "graphics",
+        "templates"
+      ]
+    },
+    {
+      "id": "figma-ai",
+      "name": "Figma AI",
+      "icon": "\ud83c\udfaf",
+      "description": "AI design features",
+      "category": "design",
+      "pricing": "freemium",
+      "url": "https://figma.com",
+      "tags": [
+        "ui",
+        "collaboration"
+      ]
+    },
+    {
+      "id": "remove-bg",
+      "name": "Remove.bg",
+      "icon": "\u2702\ufe0f",
+      "description": "Background removal",
+      "category": "design",
+      "pricing": "freemium",
+      "url": "https://remove.bg",
+      "tags": [
+        "background",
+        "editing"
+      ]
+    },
+    {
+      "id": "photoroom",
+      "name": "Photoroom",
+      "icon": "\ud83d\udcf7",
+      "description": "Product photo AI",
+      "category": "design",
+      "pricing": "freemium",
+      "url": "https://photoroom.com",
+      "tags": [
+        "photos",
+        "products"
+      ]
+    },
+    {
+      "id": "uizard",
+      "name": "Uizard",
+      "icon": "\ud83d\udd8c\ufe0f",
+      "description": "AI UI design",
+      "category": "design",
+      "pricing": "freemium",
+      "url": "https://uizard.io",
+      "tags": [
+        "ui",
+        "prototyping"
+      ]
+    },
+    {
+      "id": "magician",
+      "name": "Magician",
+      "icon": "\ud83e\ude84",
+      "description": "Figma AI plugin",
+      "category": "design",
+      "pricing": "paid",
+      "url": "https://magician.design",
+      "tags": [
+        "figma",
+        "plugin"
+      ]
+    },
+    {
+      "id": "clipdrop",
+      "name": "Clipdrop",
+      "icon": "\ud83d\udcce",
+      "description": "AI image tools",
+      "category": "design",
+      "pricing": "freemium",
+      "url": "https://clipdrop.co",
+      "tags": [
+        "editing",
+        "tools"
+      ]
+    },
+    {
+      "id": "hotpot",
+      "name": "Hotpot.ai",
+      "icon": "\ud83c\udf72",
+      "description": "AI graphic tools",
+      "category": "design",
+      "pricing": "freemium",
+      "url": "https://hotpot.ai",
+      "tags": [
+        "graphics",
+        "tools"
+      ]
+    },
+    {
+      "id": "designify",
+      "name": "Designify",
+      "icon": "\u2728",
+      "description": "Auto-design photos",
+      "category": "design",
+      "pricing": "freemium",
+      "url": "https://designify.com",
+      "tags": [
+        "photos",
+        "auto"
+      ]
+    },
+    {
+      "id": "meshy",
+      "name": "Meshy",
+      "icon": "\ud83c\udfae",
+      "description": "Text/image to 3D",
+      "category": "3d-spatial",
+      "pricing": "freemium",
+      "url": "https://meshy.ai",
+      "tags": [
+        "3d",
+        "generation"
+      ]
+    },
+    {
+      "id": "spline-ai",
+      "name": "Spline AI",
+      "icon": "\ud83c\udf00",
+      "description": "3D design with AI",
+      "category": "3d-spatial",
+      "pricing": "freemium",
+      "url": "https://spline.design",
+      "tags": [
+        "3d",
+        "web"
+      ]
+    },
+    {
+      "id": "luma-genie",
+      "name": "Luma Genie",
+      "icon": "\u2728",
+      "description": "Text to 3D models",
+      "category": "3d-spatial",
+      "pricing": "freemium",
+      "url": "https://lumalabs.ai/genie",
+      "tags": [
+        "3d",
+        "text-to-3d"
+      ]
+    },
+    {
+      "id": "blockade-labs",
+      "name": "Blockade Labs",
+      "icon": "\ud83c\udf10",
+      "description": "360\u00b0 skybox generation",
+      "category": "3d-spatial",
+      "pricing": "freemium",
+      "url": "https://blockadelabs.com",
+      "tags": [
+        "skybox",
+        "environments"
+      ]
+    },
+    {
+      "id": "kaedim",
+      "name": "Kaedim",
+      "icon": "\ud83c\udfb2",
+      "description": "2D to 3D AI",
+      "category": "3d-spatial",
+      "pricing": "paid",
+      "url": "https://kaedim3d.com",
+      "tags": [
+        "3d",
+        "conversion"
+      ]
+    },
+    {
+      "id": "polycam",
+      "name": "Polycam",
+      "icon": "\ud83d\udcf1",
+      "description": "3D scanning app",
+      "category": "3d-spatial",
+      "pricing": "freemium",
+      "url": "https://poly.cam",
+      "tags": [
+        "scanning",
+        "capture"
+      ]
+    },
+    {
+      "id": "wonder-studio",
+      "name": "Wonder Studio",
+      "icon": "\ud83c\udfac",
+      "description": "VFX character AI",
+      "category": "3d-spatial",
+      "pricing": "freemium",
+      "url": "https://wonderstudio.ai",
+      "tags": [
+        "vfx",
+        "characters"
+      ]
+    },
+    {
+      "id": "rodin",
+      "name": "Rodin",
+      "icon": "\ud83d\uddff",
+      "description": "3D avatar generation",
+      "category": "3d-spatial",
+      "pricing": "paid",
+      "url": "https://hyperhuman.top",
+      "tags": [
+        "avatars",
+        "3d"
+      ]
+    },
+    {
+      "id": "whisper",
+      "name": "Whisper",
+      "icon": "\ud83c\udfa4",
+      "description": "OpenAI's speech recognition",
+      "category": "transcription",
+      "pricing": "free",
+      "url": "https://openai.com/research/whisper",
+      "tags": [
+        "speech",
+        "open-source"
+      ]
+    },
+    {
+      "id": "deepl",
+      "name": "DeepL",
+      "icon": "\ud83c\udf0d",
+      "description": "AI translation",
+      "category": "transcription",
+      "pricing": "freemium",
+      "url": "https://deepl.com",
+      "tags": [
+        "translation",
+        "quality"
+      ]
+    },
+    {
+      "id": "assembly-ai",
+      "name": "Assembly AI",
+      "icon": "\ud83d\udd0a",
+      "description": "Speech-to-text API",
+      "category": "transcription",
+      "pricing": "freemium",
+      "url": "https://assemblyai.com",
+      "tags": [
+        "speech",
+        "api"
+      ]
+    },
+    {
+      "id": "deepgram",
+      "name": "Deepgram",
+      "icon": "\ud83d\udce2",
+      "description": "Voice AI platform",
+      "category": "transcription",
+      "pricing": "freemium",
+      "url": "https://deepgram.com",
+      "tags": [
+        "speech",
+        "real-time"
+      ]
+    },
+    {
+      "id": "rev",
+      "name": "Rev",
+      "icon": "\ud83d\udcdd",
+      "description": "Transcription services",
+      "category": "transcription",
+      "pricing": "paid",
+      "url": "https://rev.com",
+      "tags": [
+        "transcription",
+        "captions"
+      ]
+    },
+    {
+      "id": "trint",
+      "name": "Trint",
+      "icon": "\ud83d\udcc4",
+      "description": "AI transcription platform",
+      "category": "transcription",
+      "pricing": "paid",
+      "url": "https://trint.com",
+      "tags": [
+        "transcription",
+        "editing"
+      ]
+    },
+    {
+      "id": "sonix",
+      "name": "Sonix",
+      "icon": "\ud83c\udfb5",
+      "description": "Automated transcription",
+      "category": "transcription",
+      "pricing": "paid",
+      "url": "https://sonix.ai",
+      "tags": [
+        "transcription",
+        "translation"
+      ]
+    },
+    {
+      "id": "speechtext",
+      "name": "Speechtext.ai",
+      "icon": "\ud83d\udde3\ufe0f",
+      "description": "Speech-to-text AI",
+      "category": "transcription",
+      "pricing": "freemium",
+      "url": "https://speechtext.ai",
+      "tags": [
+        "speech",
+        "transcription"
+      ]
+    },
+    {
+      "id": "ms-copilot",
+      "name": "Microsoft Copilot",
+      "icon": "\ud83e\ude9f",
+      "description": "AI in Microsoft 365",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://copilot.microsoft.com",
+      "tags": [
+        "microsoft",
+        "productivity"
+      ]
+    },
+    {
+      "id": "google-workspace-ai",
+      "name": "Google Workspace AI",
+      "icon": "\ud83d\udd37",
+      "description": "Gemini in Workspace",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://workspace.google.com/solutions/ai",
+      "tags": [
+        "google",
+        "productivity"
+      ]
+    },
+    {
+      "id": "salesforce-einstein",
+      "name": "Salesforce Einstein",
+      "icon": "\u2601\ufe0f",
+      "description": "AI for CRM",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://salesforce.com/einstein",
+      "tags": [
+        "crm",
+        "sales"
+      ]
+    },
+    {
+      "id": "glean",
+      "name": "Glean",
+      "icon": "\ud83d\udd0e",
+      "description": "Enterprise search AI",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://glean.com",
+      "tags": [
+        "search",
+        "knowledge"
+      ]
+    },
+    {
+      "id": "writer",
+      "name": "Writer",
+      "icon": "\u270d\ufe0f",
+      "description": "Enterprise AI platform",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://writer.com",
+      "tags": [
+        "writing",
+        "brand"
+      ]
+    },
+    {
+      "id": "cohere",
+      "name": "Cohere",
+      "icon": "\ud83e\uddec",
+      "description": "Enterprise LLMs",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://cohere.com",
+      "tags": [
+        "llm",
+        "api"
+      ]
+    },
+    {
+      "id": "moveworks",
+      "name": "Moveworks",
+      "icon": "\ud83c\udfe2",
+      "description": "Enterprise AI copilot",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://moveworks.com",
+      "tags": [
+        "it",
+        "support"
+      ]
+    },
+    {
+      "id": "aisera",
+      "name": "Aisera",
+      "icon": "\ud83c\udfaf",
+      "description": "AI service management",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://aisera.com",
+      "tags": [
+        "service-desk",
+        "automation"
+      ]
+    },
+    {
+      "id": "khanmigo",
+      "name": "Khanmigo",
+      "icon": "\ud83c\udf93",
+      "description": "AI tutor by Khan Academy",
+      "category": "education",
+      "pricing": "freemium",
+      "url": "https://khanacademy.org/khan-labs",
+      "tags": [
+        "tutor",
+        "learning"
+      ]
+    },
+    {
+      "id": "duolingo-max",
+      "name": "Duolingo Max",
+      "icon": "\ud83e\udd89",
+      "description": "AI language learning",
+      "category": "education",
+      "pricing": "paid",
+      "url": "https://duolingo.com",
+      "tags": [
+        "language",
+        "gamified"
+      ]
+    },
+    {
+      "id": "quizlet-ai",
+      "name": "Quizlet AI",
+      "icon": "\ud83d\udcda",
+      "description": "AI study tools",
+      "category": "education",
+      "pricing": "freemium",
+      "url": "https://quizlet.com",
+      "tags": [
+        "study",
+        "flashcards"
+      ]
+    },
+    {
+      "id": "socratic",
+      "name": "Socratic",
+      "icon": "\ud83e\udd14",
+      "description": "Google's homework AI",
+      "category": "education",
+      "pricing": "free",
+      "url": "https://socratic.org",
+      "tags": [
+        "homework",
+        "free"
+      ]
+    },
+    {
+      "id": "photomath",
+      "name": "Photomath",
+      "icon": "\ud83d\udcd0",
+      "description": "Math problem solver",
+      "category": "education",
+      "pricing": "freemium",
+      "url": "https://photomath.com",
+      "tags": [
+        "math",
+        "solver"
+      ]
+    },
+    {
+      "id": "gradescope",
+      "name": "Gradescope",
+      "icon": "\ud83d\udcdd",
+      "description": "AI grading",
+      "category": "education",
+      "pricing": "freemium",
+      "url": "https://gradescope.com",
+      "tags": [
+        "grading",
+        "teachers"
+      ]
+    },
+    {
+      "id": "century",
+      "name": "Century Tech",
+      "icon": "\ud83c\udfeb",
+      "description": "AI learning platform",
+      "category": "education",
+      "pricing": "paid",
+      "url": "https://century.tech",
+      "tags": [
+        "adaptive",
+        "schools"
+      ]
+    },
+    {
+      "id": "synthesis",
+      "name": "Synthesis",
+      "icon": "\ud83e\udde0",
+      "description": "AI learning for kids",
+      "category": "education",
+      "pricing": "paid",
+      "url": "https://synthesis.com",
+      "tags": [
+        "kids",
+        "problem-solving"
+      ]
+    },
+    {
+      "id": "coursera-ai",
+      "name": "Coursera Coach",
+      "icon": "\ud83d\udcd6",
+      "description": "AI learning assistant",
+      "category": "education",
+      "pricing": "freemium",
+      "url": "https://coursera.org",
+      "tags": [
+        "courses",
+        "coaching"
+      ]
+    },
+    {
+      "id": "ada-health",
+      "name": "Ada Health",
+      "icon": "\ud83c\udfe5",
+      "description": "AI symptom checker",
+      "category": "healthcare",
+      "pricing": "free",
+      "url": "https://ada.com",
+      "tags": [
+        "symptoms",
+        "diagnosis"
+      ]
+    },
+    {
+      "id": "wysa",
+      "name": "Wysa",
+      "icon": "\ud83d\udc9a",
+      "description": "Mental health chatbot",
+      "category": "healthcare",
+      "pricing": "freemium",
+      "url": "https://wysa.io",
+      "tags": [
+        "mental-health",
+        "therapy"
+      ]
+    },
+    {
+      "id": "woebot",
+      "name": "Woebot",
+      "icon": "\ud83e\udd16",
+      "description": "CBT-based AI therapy",
+      "category": "healthcare",
+      "pricing": "free",
+      "url": "https://woebothealth.com",
+      "tags": [
+        "mental-health",
+        "cbt"
+      ]
+    },
+    {
+      "id": "replika",
+      "name": "Replika",
+      "icon": "\ud83d\udc64",
+      "description": "AI companion",
+      "category": "healthcare",
+      "pricing": "freemium",
+      "url": "https://replika.com",
+      "tags": [
+        "companion",
+        "wellbeing"
+      ]
+    },
+    {
+      "id": "buoy",
+      "name": "Buoy Health",
+      "icon": "\ud83c\udfe5",
+      "description": "AI symptom checker",
+      "category": "healthcare",
+      "pricing": "free",
+      "url": "https://buoyhealth.com",
+      "tags": [
+        "symptoms",
+        "triage"
+      ]
+    },
+    {
+      "id": "k-health",
+      "name": "K Health",
+      "icon": "\ud83d\udc8a",
+      "description": "AI primary care",
+      "category": "healthcare",
+      "pricing": "freemium",
+      "url": "https://khealth.com",
+      "tags": [
+        "telemedicine",
+        "diagnosis"
+      ]
+    },
+    {
+      "id": "babylon",
+      "name": "Babylon Health",
+      "icon": "\ud83e\ude7a",
+      "description": "AI health services",
+      "category": "healthcare",
+      "pricing": "freemium",
+      "url": "https://babylonhealth.com",
+      "tags": [
+        "telemedicine",
+        "ai"
+      ]
+    },
+    {
+      "id": "youper",
+      "name": "Youper",
+      "icon": "\ud83d\udc99",
+      "description": "Emotional health AI",
+      "category": "healthcare",
+      "pricing": "freemium",
+      "url": "https://youper.ai",
+      "tags": [
+        "mental-health",
+        "mood"
+      ]
+    }
+  ]
+}

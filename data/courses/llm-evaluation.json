@@ -1,0 +1,327 @@
+{
+  "id": "llm-evaluation",
+  "title": "LLM Evaluation & Testing",
+  "description": "Master techniques for evaluating and testing LLM-powered applications",
+  "icon": "\ud83d\udccf",
+  "level": "intermediate",
+  "duration": "3 weeks",
+  "prerequisites": [
+    "LLM fundamentals",
+    "RAG basics",
+    "Python programming"
+  ],
+  "learningOutcomes": [
+    "Understand why LLM evaluation is challenging and essential",
+    "Implement automated evaluation metrics for RAG and generation",
+    "Build evaluation pipelines with RAGAS and LangSmith",
+    "Design effective human evaluation workflows"
+  ],
+  "modules": [
+    {
+      "id": "eval-fundamentals",
+      "title": "Evaluation Fundamentals",
+      "lessons": [
+        {
+          "id": "why-eval-matters",
+          "title": "Why LLM Evaluation Matters",
+          "duration": "35 min",
+          "content": {
+            "overview": "Unlike traditional software, LLM outputs are non-deterministic and subjective. Evaluation is critical for building reliable AI applications but requires new approaches.",
+            "sections": [
+              {
+                "title": "The Evaluation Challenge",
+                "content": "LLM evaluation is hard because:\n\n**1. Non-determinism**: Same input can produce different outputs\n**2. Subjectivity**: 'Good' depends on context and use case\n**3. Multi-dimensional**: Accuracy, fluency, helpfulness, safety all matter\n**4. Scale**: Manual evaluation doesn't scale\n**5. Distribution shift**: Models behave differently on new data\n\n**What can go wrong without evaluation**:\n- Hallucinations reach production\n- Regression after prompt changes\n- Poor user experience\n- Safety issues\n- Wasted costs on bad responses",
+                "code": "# Example: Same prompt, different outputs\nimport openai\n\nprompt = \"Explain quantum computing in one sentence.\"\n\nresponses = []\nfor _ in range(3):\n    response = openai.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\"role\": \"user\", \"content\": prompt}],\n        temperature=0.7\n    )\n    responses.append(response.choices[0].message.content)\n\n# All valid, but different:\n# 1. \"Quantum computing uses quantum mechanics to process information...\"\n# 2. \"It's computing that leverages superposition and entanglement...\"\n# 3. \"Quantum computers use qubits instead of classical bits...\"\n\n# How do we know which is 'best'?"
+              },
+              {
+                "title": "Evaluation Dimensions",
+                "content": "Different dimensions matter for different use cases:\n\n**Factual Accuracy**: Is the information correct?\n- Critical for: search, Q&A, medical, legal\n- Measured by: fact verification, comparison to ground truth\n\n**Relevance**: Does it answer the question?\n- Critical for: RAG, customer support\n- Measured by: semantic similarity, answer extraction\n\n**Faithfulness**: Is it grounded in provided context?\n- Critical for: RAG, summarization\n- Measured by: claim verification, citation accuracy\n\n**Fluency**: Is it well-written?\n- Critical for: content generation, translation\n- Measured by: perplexity, grammar checks\n\n**Helpfulness**: Does it solve the user's problem?\n- Critical for: assistants, chatbots\n- Measured by: user ratings, task completion\n\n**Safety**: Is it harmful or inappropriate?\n- Critical for: all public-facing applications\n- Measured by: toxicity classifiers, red-teaming",
+                "code": "# Define evaluation dimensions for your use case\nclass EvaluationConfig:\n    def __init__(self, use_case):\n        self.dimensions = self._get_dimensions(use_case)\n    \n    def _get_dimensions(self, use_case):\n        configs = {\n            'rag_qa': {\n                'faithfulness': {'weight': 0.3, 'required': True},\n                'relevance': {'weight': 0.3, 'required': True},\n                'accuracy': {'weight': 0.3, 'required': True},\n                'fluency': {'weight': 0.1, 'required': False}\n            },\n            'chatbot': {\n                'helpfulness': {'weight': 0.4, 'required': True},\n                'safety': {'weight': 0.3, 'required': True},\n                'fluency': {'weight': 0.2, 'required': True},\n                'engagement': {'weight': 0.1, 'required': False}\n            },\n            'summarization': {\n                'faithfulness': {'weight': 0.4, 'required': True},\n                'conciseness': {'weight': 0.3, 'required': True},\n                'coverage': {'weight': 0.2, 'required': True},\n                'fluency': {'weight': 0.1, 'required': False}\n            }\n        }\n        return configs.get(use_case, configs['rag_qa'])"
+              },
+              {
+                "title": "Evaluation Pipeline Design",
+                "content": "A robust evaluation pipeline includes:\n\n**1. Test Set Creation**\n- Representative samples\n- Edge cases\n- Expected outputs (where possible)\n\n**2. Automated Metrics**\n- Fast, repeatable\n- Run on every change\n\n**3. LLM-as-Judge**\n- More nuanced than metrics\n- Cheaper than humans\n\n**4. Human Evaluation**\n- Ground truth for important decisions\n- Periodic calibration\n\n**5. Production Monitoring**\n- Real user feedback\n- Drift detection",
+                "diagram": {
+                  "title": "LLM Evaluation Pipeline",
+                  "code": "flowchart LR\n    subgraph Input\n        TS[Test Set]\n        PR[Production Queries]\n    end\n    \n    subgraph Automated[\"Automated Eval\"]\n        AM[Metrics]\n        LJ[LLM Judge]\n    end\n    \n    subgraph Human[\"Human Eval\"]\n        HE[Expert Review]\n        UF[User Feedback]\n    end\n    \n    TS --> AM\n    AM --> LJ\n    LJ --> |\"Sample\"| HE\n    PR --> UF\n    \n    AM --> D{Pass?}\n    LJ --> D\n    D -->|Yes| DEPLOY[Deploy]\n    D -->|No| FIX[Fix & Retry]"
+                },
+                "code": "class EvaluationPipeline:\n    def __init__(self, config):\n        self.config = config\n        self.test_set = self._load_test_set()\n        \n    def run_evaluation(self, model_fn, run_name):\n        results = {\n            'automated_metrics': self._run_automated(model_fn),\n            'llm_judge': self._run_llm_judge(model_fn),\n            'aggregate_score': None\n        }\n        \n        # Calculate aggregate\n        results['aggregate_score'] = self._aggregate(results)\n        \n        # Save results\n        self._save_results(run_name, results)\n        \n        # Check thresholds\n        if not self._passes_thresholds(results):\n            raise EvaluationFailed(results)\n        \n        return results\n    \n    def _run_automated(self, model_fn):\n        metrics = {}\n        for sample in self.test_set:\n            output = model_fn(sample['input'])\n            metrics[sample['id']] = {\n                'similarity': self._semantic_similarity(output, sample['expected']),\n                'length_ok': self._check_length(output),\n                'format_ok': self._check_format(output)\n            }\n        return metrics\n    \n    def _run_llm_judge(self, model_fn):\n        # Sample subset for LLM evaluation (cost control)\n        sample = random.sample(self.test_set, min(50, len(self.test_set)))\n        \n        scores = []\n        for s in sample:\n            output = model_fn(s['input'])\n            score = self._judge_with_llm(s['input'], output, s.get('context'))\n            scores.append(score)\n        \n        return {'mean': np.mean(scores), 'std': np.std(scores)}"
+              }
+            ],
+            "keyTakeaways": [
+              "LLM evaluation is challenging due to non-determinism and subjectivity",
+              "Different use cases prioritize different evaluation dimensions",
+              "Robust evaluation combines automated metrics, LLM judges, and human review"
+            ],
+            "exercises": [
+              {
+                "title": "Define Your Evaluation Dimensions",
+                "description": "For a RAG-based customer support bot, identify the 3 most important evaluation dimensions and explain why"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Evaluating LLM Applications - Hamel Husain",
+                "url": "https://hamel.dev/blog/posts/evals/"
+              },
+              {
+                "title": "LLM Evaluation Metrics - Weights & Biases",
+                "url": "https://wandb.ai/site/articles/llm-evaluation-metrics"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "automated-eval",
+      "title": "Automated Evaluation",
+      "lessons": [
+        {
+          "id": "ragas-eval",
+          "title": "Evaluating RAG with RAGAS",
+          "duration": "50 min",
+          "content": {
+            "overview": "RAGAS (Retrieval Augmented Generation Assessment) provides specialized metrics for evaluating RAG pipelines, measuring both retrieval quality and generation faithfulness.",
+            "sections": [
+              {
+                "title": "RAGAS Metrics Overview",
+                "content": "RAGAS provides 4 core metrics:\n\n**1. Faithfulness** (0-1)\nMeasures if the answer is grounded in the retrieved context. Prevents hallucination.\n\n**2. Answer Relevancy** (0-1)\nMeasures if the answer addresses the question. Prevents off-topic responses.\n\n**3. Context Precision** (0-1)\nMeasures if retrieved chunks are relevant to the question. Evaluates retrieval quality.\n\n**4. Context Recall** (0-1)\nMeasures if all relevant information was retrieved. Requires ground truth answer.",
+                "diagram": {
+                  "title": "RAGAS Metrics Flow",
+                  "code": "flowchart TB\n    Q[Question] --> R[Retriever]\n    R --> C[Contexts]\n    C --> G[Generator]\n    Q --> G\n    G --> A[Answer]\n    \n    subgraph Metrics\n        C --> CP[Context Precision]\n        C --> CR[Context Recall]\n        C --> F[Faithfulness]\n        A --> F\n        A --> AR[Answer Relevancy]\n        Q --> AR\n        Q --> CP\n        GT[Ground Truth] --> CR\n    end"
+                },
+                "code": "from ragas import evaluate\nfrom ragas.metrics import (\n    faithfulness,\n    answer_relevancy,\n    context_precision,\n    context_recall\n)\nfrom datasets import Dataset\n\n# Prepare your evaluation data\neval_data = {\n    'question': [\n        'What is the capital of France?',\n        'How does photosynthesis work?'\n    ],\n    'answer': [\n        'The capital of France is Paris.',\n        'Photosynthesis converts sunlight into chemical energy.'\n    ],\n    'contexts': [\n        ['Paris is the capital and largest city of France.'],\n        ['Photosynthesis is a process used by plants to convert light energy.']\n    ],\n    'ground_truth': [\n        'Paris is the capital of France.',\n        'Photosynthesis converts light energy into chemical energy in plants.'\n    ]\n}\n\ndataset = Dataset.from_dict(eval_data)\n\n# Run evaluation\nresults = evaluate(\n    dataset,\n    metrics=[\n        faithfulness,\n        answer_relevancy,\n        context_precision,\n        context_recall\n    ]\n)\n\nprint(results)\n# {'faithfulness': 0.95, 'answer_relevancy': 0.88, \n#  'context_precision': 0.92, 'context_recall': 0.85}"
+              },
+              {
+                "title": "Understanding Each Metric",
+                "content": "**Faithfulness** breaks down the answer into claims and verifies each against context:\n\n**Context Precision** uses LLM to judge if each chunk is relevant:\n\n**Answer Relevancy** generates questions from the answer and compares to original:",
+                "code": "# Deep dive: How Faithfulness works internally\ndef faithfulness_score(answer, contexts):\n    # Step 1: Extract claims from the answer\n    claims = extract_claims(answer)\n    # e.g., ['Paris is the capital', 'Paris is in France']\n    \n    # Step 2: Verify each claim against context\n    verified = []\n    for claim in claims:\n        is_supported = llm_verify(\n            f\"Is this claim supported by the context?\\n\"\n            f\"Claim: {claim}\\n\"\n            f\"Context: {contexts}\"\n        )\n        verified.append(is_supported)\n    \n    # Step 3: Score = verified claims / total claims\n    return sum(verified) / len(claims)\n\n# Deep dive: How Context Precision works\ndef context_precision_score(question, contexts):\n    # For each chunk, judge relevance\n    relevance_scores = []\n    for i, chunk in enumerate(contexts):\n        is_relevant = llm_judge(\n            f\"Is this context relevant to answer the question?\\n\"\n            f\"Question: {question}\\n\"\n            f\"Context: {chunk}\"\n        )\n        relevance_scores.append(is_relevant)\n    \n    # Precision@k with position weighting\n    # Earlier relevant chunks are better\n    weighted_score = 0\n    for i, rel in enumerate(relevance_scores):\n        if rel:\n            precision_at_i = sum(relevance_scores[:i+1]) / (i+1)\n            weighted_score += precision_at_i\n    \n    return weighted_score / sum(relevance_scores) if sum(relevance_scores) > 0 else 0"
+              },
+              {
+                "title": "Building an Evaluation Test Set",
+                "content": "Good evaluation requires good test data:\n\n**Approaches to create test sets**:\n1. **Manual curation**: High quality, expensive\n2. **LLM generation**: Fast, needs validation\n3. **Production sampling**: Real queries, may lack ground truth\n4. **Synthetic variations**: Test robustness",
+                "code": "from ragas.testset.generator import TestsetGenerator\nfrom ragas.testset.evolutions import simple, reasoning, multi_context\nfrom langchain_openai import ChatOpenAI, OpenAIEmbeddings\nfrom langchain_community.document_loaders import DirectoryLoader\n\n# Load your documents\nloader = DirectoryLoader('./docs', glob='**/*.md')\ndocuments = loader.load()\n\n# Initialize generator\ngenerator_llm = ChatOpenAI(model='gpt-4o')\ncritic_llm = ChatOpenAI(model='gpt-4o')\nembeddings = OpenAIEmbeddings()\n\ngenerator = TestsetGenerator.from_langchain(\n    generator_llm, critic_llm, embeddings\n)\n\n# Generate test set with different question types\ntestset = generator.generate_with_langchain_docs(\n    documents,\n    test_size=50,\n    distributions={\n        simple: 0.4,        # Simple factual questions\n        reasoning: 0.3,     # Require reasoning\n        multi_context: 0.3  # Need multiple chunks\n    }\n)\n\n# Convert to pandas for review\ndf = testset.to_pandas()\nprint(df[['question', 'ground_truth', 'evolution_type']].head())\n\n# Manual review and curation\ndf.to_csv('test_set_for_review.csv')"
+              },
+              {
+                "title": "Continuous Evaluation Pipeline",
+                "content": "Run evaluations automatically on every change:",
+                "code": "import json\nfrom datetime import datetime\nfrom pathlib import Path\n\nclass RAGEvaluator:\n    def __init__(self, test_set_path, results_dir='./eval_results'):\n        self.test_set = self._load_test_set(test_set_path)\n        self.results_dir = Path(results_dir)\n        self.results_dir.mkdir(exist_ok=True)\n        \n        # Thresholds for passing\n        self.thresholds = {\n            'faithfulness': 0.8,\n            'answer_relevancy': 0.75,\n            'context_precision': 0.7\n        }\n    \n    def evaluate_rag_pipeline(self, rag_fn, run_name):\n        \"\"\"Evaluate a RAG pipeline function\"\"\"\n        \n        # Generate answers\n        answers = []\n        contexts = []\n        for q in self.test_set['questions']:\n            result = rag_fn(q)\n            answers.append(result['answer'])\n            contexts.append(result['contexts'])\n        \n        # Prepare dataset\n        eval_dataset = Dataset.from_dict({\n            'question': self.test_set['questions'],\n            'answer': answers,\n            'contexts': contexts,\n            'ground_truth': self.test_set['ground_truths']\n        })\n        \n        # Run RAGAS\n        results = evaluate(\n            eval_dataset,\n            metrics=[faithfulness, answer_relevancy, context_precision]\n        )\n        \n        # Save results\n        result_file = self.results_dir / f\"{run_name}_{datetime.now().isoformat()}.json\"\n        with open(result_file, 'w') as f:\n            json.dump({\n                'run_name': run_name,\n                'timestamp': datetime.now().isoformat(),\n                'scores': dict(results),\n                'passed': self._check_thresholds(results)\n            }, f, indent=2)\n        \n        return results\n    \n    def _check_thresholds(self, results):\n        for metric, threshold in self.thresholds.items():\n            if results.get(metric, 0) < threshold:\n                return False\n        return True\n\n# Usage in CI/CD\nevaluator = RAGEvaluator('test_set.json')\nresults = evaluator.evaluate_rag_pipeline(my_rag_function, 'v1.2.0')\n\nif not results['passed']:\n    raise Exception(f\"Evaluation failed: {results}\")"
+              }
+            ],
+            "keyTakeaways": [
+              "RAGAS provides specialized metrics for RAG: faithfulness, relevancy, precision, recall",
+              "Generate synthetic test sets from your documents for evaluation",
+              "Run evaluations automatically in CI/CD with pass/fail thresholds"
+            ],
+            "exercises": [
+              {
+                "title": "Evaluate Your RAG",
+                "description": "Set up RAGAS evaluation for an existing RAG pipeline with at least 20 test questions"
+              },
+              {
+                "title": "Metric Analysis",
+                "description": "Run evaluation and identify which metric is lowest. Propose improvements to address it."
+              }
+            ],
+            "sources": [
+              {
+                "title": "RAGAS Documentation",
+                "url": "https://docs.ragas.io/"
+              },
+              {
+                "title": "RAGAS Paper",
+                "url": "https://arxiv.org/abs/2309.15217"
+              }
+            ]
+          }
+        },
+        {
+          "id": "langsmith-eval",
+          "title": "Evaluation with LangSmith",
+          "duration": "45 min",
+          "content": {
+            "overview": "LangSmith provides a platform for tracing, evaluating, and monitoring LLM applications. It integrates tightly with LangChain but works with any LLM framework.",
+            "sections": [
+              {
+                "title": "LangSmith Setup",
+                "content": "LangSmith provides:\n- **Tracing**: See every LLM call, its inputs, outputs, and latency\n- **Datasets**: Manage evaluation test sets\n- **Evaluators**: Built-in and custom evaluation functions\n- **Monitoring**: Track production performance",
+                "code": "# Setup\nimport os\nos.environ['LANGCHAIN_TRACING_V2'] = 'true'\nos.environ['LANGCHAIN_API_KEY'] = 'your-api-key'\nos.environ['LANGCHAIN_PROJECT'] = 'my-rag-app'\n\nfrom langsmith import Client\n\nclient = Client()\n\n# Create a dataset\ndataset = client.create_dataset(\n    'rag-eval-set',\n    description='Evaluation dataset for RAG Q&A'\n)\n\n# Add examples\nexamples = [\n    {\n        'input': {'question': 'What is the return policy?'},\n        'output': {'answer': 'You can return items within 30 days.'}\n    },\n    {\n        'input': {'question': 'How do I track my order?'},\n        'output': {'answer': 'Use the tracking link in your confirmation email.'}\n    }\n]\n\nfor ex in examples:\n    client.create_example(\n        dataset_id=dataset.id,\n        inputs=ex['input'],\n        outputs=ex['output']\n    )"
+              },
+              {
+                "title": "Custom Evaluators",
+                "content": "Build evaluators tailored to your use case:",
+                "code": "from langsmith.evaluation import evaluate, LangChainStringEvaluator\nfrom langsmith.schemas import Run, Example\n\n# Built-in evaluator: exact match\nexact_match = LangChainStringEvaluator('exact_match')\n\n# Built-in evaluator: LLM-based\ncorrectness = LangChainStringEvaluator(\n    'labeled_score_string',\n    config={\n        'criteria': {\n            'correctness': 'Is the answer factually correct based on the reference?'\n        },\n        'normalize_by': 10  # Score 0-10\n    }\n)\n\n# Custom evaluator function\ndef answer_length_evaluator(run: Run, example: Example) -> dict:\n    \"\"\"Check if answer is appropriate length\"\"\"\n    answer = run.outputs.get('answer', '')\n    length = len(answer.split())\n    \n    return {\n        'key': 'answer_length',\n        'score': 1 if 10 <= length <= 200 else 0,\n        'comment': f'Answer has {length} words'\n    }\n\ndef mentions_source_evaluator(run: Run, example: Example) -> dict:\n    \"\"\"Check if answer cites sources\"\"\"\n    answer = run.outputs.get('answer', '')\n    has_citation = '[' in answer or 'source' in answer.lower()\n    \n    return {\n        'key': 'has_citation',\n        'score': 1 if has_citation else 0\n    }\n\n# Combine evaluators\nevaluators = [\n    correctness,\n    answer_length_evaluator,\n    mentions_source_evaluator\n]"
+              },
+              {
+                "title": "Running Evaluations",
+                "content": "Evaluate your application against a dataset:",
+                "code": "from langsmith.evaluation import evaluate\n\n# Your RAG function to evaluate\ndef my_rag_app(inputs: dict) -> dict:\n    question = inputs['question']\n    \n    # Your RAG logic here\n    contexts = retrieve(question)\n    answer = generate(question, contexts)\n    \n    return {\n        'answer': answer,\n        'contexts': contexts\n    }\n\n# Run evaluation\nresults = evaluate(\n    my_rag_app,\n    data='rag-eval-set',  # Dataset name\n    evaluators=[\n        correctness,\n        answer_length_evaluator,\n        mentions_source_evaluator\n    ],\n    experiment_prefix='rag-v1.0',\n    max_concurrency=4\n)\n\n# Results are automatically logged to LangSmith UI\nprint(f\"Experiment URL: {results.experiment_url}\")\n\n# Access scores programmatically\nfor result in results:\n    print(f\"Input: {result.example.inputs}\")\n    print(f\"Output: {result.run.outputs}\")\n    for eval_result in result.evaluation_results:\n        print(f\"  {eval_result.key}: {eval_result.score}\")"
+              },
+              {
+                "title": "Comparing Experiments",
+                "content": "Track improvements across versions:",
+                "code": "# Run evaluation for different versions\nversions = [\n    ('baseline', baseline_rag),\n    ('improved-retrieval', improved_rag),\n    ('with-reranking', reranked_rag)\n]\n\nfor version_name, rag_fn in versions:\n    evaluate(\n        rag_fn,\n        data='rag-eval-set',\n        evaluators=evaluators,\n        experiment_prefix=f'rag-{version_name}'\n    )\n\n# In LangSmith UI, compare experiments side-by-side\n# See which version performs best on each metric\n\n# Programmatic comparison\nfrom langsmith import Client\n\nclient = Client()\n\n# Get all experiments\nexperiments = client.list_projects(name_contains='rag-')\n\nfor exp in experiments:\n    runs = list(client.list_runs(project_name=exp.name))\n    \n    # Calculate average scores\n    scores = defaultdict(list)\n    for run in runs:\n        for feedback in run.feedback:\n            scores[feedback.key].append(feedback.score)\n    \n    print(f\"\\n{exp.name}:\")\n    for metric, values in scores.items():\n        print(f\"  {metric}: {np.mean(values):.3f}\")"
+              }
+            ],
+            "keyTakeaways": [
+              "LangSmith provides end-to-end tracing and evaluation for LLM apps",
+              "Create datasets and custom evaluators for your specific use case",
+              "Compare experiments to track improvements across versions"
+            ],
+            "exercises": [
+              {
+                "title": "Set Up LangSmith",
+                "description": "Create a LangSmith dataset with 10 examples and run an evaluation"
+              },
+              {
+                "title": "Custom Evaluator",
+                "description": "Build a custom evaluator that checks for specific domain requirements"
+              }
+            ],
+            "sources": [
+              {
+                "title": "LangSmith Documentation",
+                "url": "https://docs.smith.langchain.com/"
+              },
+              {
+                "title": "LangSmith Evaluation Guide",
+                "url": "https://docs.smith.langchain.com/evaluation"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "human-eval",
+      "title": "Human Evaluation",
+      "lessons": [
+        {
+          "id": "human-eval-design",
+          "title": "Designing Human Evaluation",
+          "duration": "40 min",
+          "content": {
+            "overview": "Automated metrics can't capture everything. Human evaluation provides ground truth for subjective qualities and helps calibrate automated systems.",
+            "sections": [
+              {
+                "title": "When Human Evaluation is Essential",
+                "content": "Use human evaluation for:\n\n**1. Subjective qualities**\n- Tone and style\n- Helpfulness\n- Creativity\n- User satisfaction\n\n**2. Edge cases**\n- Novel queries\n- Ambiguous situations\n- Safety concerns\n\n**3. Ground truth calibration**\n- Validating automated metrics\n- Training LLM judges\n- Benchmark creation\n\n**4. Pre-launch validation**\n- Final quality check\n- Stakeholder approval\n- User acceptance testing",
+                "code": "# Decision framework for evaluation type\ndef choose_evaluation_method(task_type, volume, urgency):\n    if task_type in ['safety', 'legal', 'medical']:\n        return 'human_required'  # Always human review\n    \n    if volume < 100 and not urgency:\n        return 'human_preferred'  # Human is feasible\n    \n    if volume > 1000:\n        return 'automated_with_sampling'  # Auto + human sample\n    \n    return 'llm_judge_with_calibration'  # LLM judge, human calibrate"
+              },
+              {
+                "title": "Designing Evaluation Rubrics",
+                "content": "Clear rubrics ensure consistent ratings across evaluators:\n\n**Principles**:\n1. Define each score level with examples\n2. Use observable criteria, not interpretations\n3. Limit scale to 3-5 points\n4. Include 'N/A' option when applicable\n5. Pilot test with multiple evaluators",
+                "code": "# Example: Helpfulness rubric for customer support\nHELPFULNESS_RUBRIC = {\n    'metric': 'helpfulness',\n    'question': 'How helpful is this response for resolving the user\\'s issue?',\n    'scale': {\n        1: {\n            'label': 'Not Helpful',\n            'description': 'Response does not address the issue or provides wrong information',\n            'examples': [\n                'User asks about refund, response discusses unrelated product features',\n                'Response says \"I don\\'t know\" without offering alternatives'\n            ]\n        },\n        2: {\n            'label': 'Partially Helpful',\n            'description': 'Response addresses the issue but is incomplete or unclear',\n            'examples': [\n                'Provides refund policy but doesn\\'t explain how to initiate',\n                'Gives correct info but in confusing language'\n            ]\n        },\n        3: {\n            'label': 'Helpful',\n            'description': 'Response fully addresses the issue with clear next steps',\n            'examples': [\n                'Explains refund policy AND provides link to start return',\n                'Solves the problem and offers to help with related questions'\n            ]\n        }\n    }\n}\n\n# Example: Faithfulness rubric for RAG\nFAITHFULNESS_RUBRIC = {\n    'metric': 'faithfulness',\n    'question': 'Is the response fully supported by the provided context?',\n    'scale': {\n        1: {'label': 'Hallucinated', 'description': 'Contains claims not in context'},\n        2: {'label': 'Partially Faithful', 'description': 'Some claims not supported'},\n        3: {'label': 'Fully Faithful', 'description': 'All claims supported by context'}\n    }\n}"
+              },
+              {
+                "title": "Inter-Rater Reliability",
+                "content": "Measure agreement between evaluators to ensure quality:\n\n**Cohen's Kappa**: Agreement between 2 raters\n**Fleiss' Kappa**: Agreement among 3+ raters\n**ICC**: For continuous scales",
+                "code": "from sklearn.metrics import cohen_kappa_score\nimport numpy as np\n\ndef calculate_inter_rater_reliability(ratings_df):\n    \"\"\"\n    ratings_df: DataFrame with columns [item_id, rater_id, score]\n    \"\"\"\n    # Pivot to get rater x item matrix\n    pivot = ratings_df.pivot(index='item_id', columns='rater_id', values='score')\n    \n    # Calculate pairwise kappa\n    raters = pivot.columns.tolist()\n    kappas = []\n    \n    for i, r1 in enumerate(raters):\n        for r2 in raters[i+1:]:\n            # Get items rated by both\n            mask = pivot[[r1, r2]].notna().all(axis=1)\n            if mask.sum() > 10:  # Need enough samples\n                k = cohen_kappa_score(\n                    pivot.loc[mask, r1],\n                    pivot.loc[mask, r2]\n                )\n                kappas.append({'rater1': r1, 'rater2': r2, 'kappa': k})\n    \n    avg_kappa = np.mean([k['kappa'] for k in kappas])\n    \n    # Interpretation\n    if avg_kappa > 0.8:\n        interpretation = 'Excellent agreement'\n    elif avg_kappa > 0.6:\n        interpretation = 'Good agreement'\n    elif avg_kappa > 0.4:\n        interpretation = 'Moderate agreement - review rubric'\n    else:\n        interpretation = 'Poor agreement - retrain raters'\n    \n    return {\n        'average_kappa': avg_kappa,\n        'interpretation': interpretation,\n        'pairwise_kappas': kappas\n    }"
+              },
+              {
+                "title": "Efficient Human Evaluation Workflows",
+                "content": "Balance quality with cost and time:",
+                "code": "class HumanEvaluationWorkflow:\n    def __init__(self, rubrics, target_reliability=0.7):\n        self.rubrics = rubrics\n        self.target_reliability = target_reliability\n        \n    def setup_evaluation(self, samples, num_raters=3):\n        \"\"\"Set up efficient evaluation with overlap for reliability\"\"\"\n        \n        # Strategy: Each item rated by 2 raters minimum\n        # 20% overlap for reliability calculation\n        \n        n_samples = len(samples)\n        n_overlap = int(n_samples * 0.2)\n        n_unique = n_samples - n_overlap\n        \n        assignments = []\n        \n        # Overlap items: all raters\n        overlap_samples = samples[:n_overlap]\n        for sample in overlap_samples:\n            for rater_id in range(num_raters):\n                assignments.append({\n                    'sample_id': sample['id'],\n                    'rater_id': rater_id,\n                    'is_overlap': True\n                })\n        \n        # Unique items: 2 raters each\n        unique_samples = samples[n_overlap:]\n        for i, sample in enumerate(unique_samples):\n            raters = [(i * 2) % num_raters, (i * 2 + 1) % num_raters]\n            for rater_id in raters:\n                assignments.append({\n                    'sample_id': sample['id'],\n                    'rater_id': rater_id,\n                    'is_overlap': False\n                })\n        \n        return assignments\n    \n    def resolve_disagreements(self, ratings):\n        \"\"\"Resolve cases where raters disagree\"\"\"\n        \n        disagreements = []\n        for item_id, item_ratings in ratings.groupby('item_id'):\n            scores = item_ratings['score'].tolist()\n            \n            if max(scores) - min(scores) > 1:  # Disagreement threshold\n                disagreements.append({\n                    'item_id': item_id,\n                    'scores': scores,\n                    'needs_review': True\n                })\n        \n        # Options:\n        # 1. Take majority vote\n        # 2. Send to expert reviewer\n        # 3. Discuss and reach consensus\n        \n        return disagreements"
+              }
+            ],
+            "keyTakeaways": [
+              "Human evaluation is essential for subjective qualities and edge cases",
+              "Clear rubrics with examples ensure consistent ratings",
+              "Measure inter-rater reliability to validate evaluation quality",
+              "Use sampling and overlap strategies for efficiency"
+            ],
+            "exercises": [
+              {
+                "title": "Design a Rubric",
+                "description": "Create a 5-point rubric for evaluating chatbot response quality in your domain"
+              },
+              {
+                "title": "Calculate Agreement",
+                "description": "Have 3 people rate 20 responses and calculate inter-rater reliability"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Human Evaluation of NLG - ACL",
+                "url": "https://aclanthology.org/2020.inlg-1.23/"
+              },
+              {
+                "title": "Rating Scale Design",
+                "url": "https://www.sciencedirect.com/science/article/pii/S1364661318302456"
+              }
+            ]
+          }
+        },
+        {
+          "id": "llm-evaluation-quiz",
+          "title": "LLM Evaluation Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "id": "eval-challenges",
+              "question": "Why is evaluating LLM outputs significantly harder than traditional software testing?",
+              "options": [
+                "LLMs are too slow to test",
+                "LLM outputs are non-deterministic and subjective",
+                "There are no tools available for LLM testing",
+                "LLMs cannot output text"
+              ],
+              "correctAnswer": 1,
+              "explanation": "LLMs can produce different outputs for the same input (non-determinism), and 'quality' often depends on context and human preference (subjectivity), making exact-match testing insufficient."
+            },
+            {
+              "id": "ragas-faithfulness",
+              "question": "In the RAGAS framework, what does the 'Faithfulness' metric measure?",
+              "options": [
+                "How polite the model is",
+                "Whether the answer is grounded in the retrieved context",
+                "Whether the answer is grammatically correct",
+                "How fast the model responds"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Faithfulness measures if the claims in the generated answer can be inferred from the retrieved context, helping to detect hallucinations."
+            },
+            {
+              "id": "llm-as-judge",
+              "question": "What is the 'LLM-as-Judge' approach?",
+              "options": [
+                "Using a lawyer to review AI outputs",
+                "Using a strong LLM (like GPT-4) to evaluate the outputs of another model",
+                "Asking the model to judge its own training data",
+                "A legal framework for AI regulation"
+              ],
+              "correctAnswer": 1,
+              "explanation": "LLM-as-Judge involves using a capable LLM to score or critique the outputs of another system based on defined criteria, offering a scalable alternative to human review."
+            },
+            {
+              "id": "inter-rater-reliability",
+              "question": "Why is 'Inter-Rater Reliability' important in human evaluation?",
+              "options": [
+                "It measures how fast humans can read",
+                "It ensures that different evaluators consistently agree on ratings",
+                "It calculates the cost of evaluation",
+                "It checks if the model likes the humans"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Inter-rater reliability metrics (like Cohen's Kappa) quantify the level of agreement between different human evaluators, ensuring that the evaluation criteria are clear and the scores are trustworthy."
+            },
+            {
+              "id": "eval-dimensions",
+              "question": "Which evaluation dimension is most critical for a medical Q&A system?",
+              "options": [
+                "Fluency (how well it writes)",
+                "Factual Accuracy (is the information correct)",
+                "Creativity (how novel the answer is)",
+                "Latency (how fast it answers)"
+              ],
+              "correctAnswer": 1,
+              "explanation": "In high-stakes domains like medicine, factual accuracy is paramount. A fluent but incorrect answer could be dangerous."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

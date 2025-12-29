@@ -1,0 +1,508 @@
+{
+  "meta": {
+    "title": "AI Career Paths - India Focus",
+    "description": "Comprehensive guide to AI/ML career opportunities, skills, and salaries for the Indian market",
+    "lastUpdated": "2025-12-29",
+    "region": "India",
+    "currency": "INR"
+  },
+  "marketInsights": {
+    "overview": {
+      "totalAIJobs": "150K+",
+      "yoyGrowth": "+45%",
+      "avgSalaryGrowth": "+25%",
+      "remoteJobsPercent": "35%"
+    },
+    "hotspots": [
+      {"city": "Bangalore", "icon": "🏙️", "jobShare": "42%", "avgSalary": "₹28L", "nickname": "AI Capital"},
+      {"city": "Hyderabad", "icon": "🌆", "jobShare": "18%", "avgSalary": "₹24L", "nickname": "Emerging Hub"},
+      {"city": "Gurgaon/NCR", "icon": "🏢", "jobShare": "15%", "avgSalary": "₹26L", "nickname": "Startup Valley"},
+      {"city": "Pune", "icon": "🌇", "jobShare": "12%", "avgSalary": "₹22L", "nickname": "Tech Hub"},
+      {"city": "Mumbai", "icon": "🌃", "jobShare": "8%", "avgSalary": "₹30L", "nickname": "FinTech AI"},
+      {"city": "Chennai", "icon": "🏛️", "jobShare": "5%", "avgSalary": "₹20L", "nickname": "Deep Tech"}
+    ],
+    "demandTrends": [
+      {"skill": "GenAI/LLM", "growth": "+180%", "icon": "🧠"},
+      {"skill": "MLOps", "growth": "+95%", "icon": "⚙️"},
+      {"skill": "Computer Vision", "growth": "+60%", "icon": "👁️"},
+      {"skill": "NLP", "growth": "+55%", "icon": "💬"},
+      {"skill": "Data Engineering", "growth": "+45%", "icon": "🔧"}
+    ],
+    "salaryBenchmark": {
+      "entry": "₹6-15 LPA",
+      "mid": "₹15-35 LPA", 
+      "senior": "₹35-60 LPA",
+      "lead": "₹60-1.2 Cr"
+    }
+  },
+  "levels": [
+    {"id": "entry", "title": "Entry Level", "experience": "0-2 years", "color": "#22c55e"},
+    {"id": "mid", "title": "Mid Level", "experience": "2-5 years", "color": "#3b82f6"},
+    {"id": "senior", "title": "Senior Level", "experience": "5-8 years", "color": "#8b5cf6"},
+    {"id": "lead", "title": "Lead/Principal", "experience": "8+ years", "color": "#f59e0b"},
+    {"id": "executive", "title": "Executive", "experience": "10+ years", "color": "#ef4444"}
+  ],
+  "tracks": [
+    {"id": "research", "title": "Research Track", "icon": "🔬", "color": "#6366f1"},
+    {"id": "engineering", "title": "Engineering Track", "icon": "⚙️", "color": "#3b82f6"},
+    {"id": "product", "title": "Product Track", "icon": "📦", "color": "#10b981"},
+    {"id": "applied", "title": "Applied AI Track", "icon": "🎯", "color": "#f59e0b"},
+    {"id": "remote", "title": "Remote-First", "icon": "🌍", "color": "#ec4899"}
+  ],
+  "roles": [
+    {
+      "id": "ml-engineer",
+      "title": "Machine Learning Engineer",
+      "icon": "🤖",
+      "track": "engineering",
+      "description": "Build and deploy ML models at scale",
+      "salaryRange": {"entry": "₹8-15L", "mid": "₹15-30L", "senior": "₹30-55L", "lead": "₹55-90L"},
+      "salaryUSD": {"entry": "$95K-$130K", "mid": "$130K-$180K", "senior": "$180K-$250K", "lead": "$250K-$350K"},
+      "demand": "Very High",
+      "growthRate": "+40%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Hyderabad", "Gurgaon"],
+      "skills": {
+        "required": ["Python", "TensorFlow/PyTorch", "SQL", "Docker", "Git"],
+        "important": ["Kubernetes", "MLOps", "AWS/GCP", "Spark", "Feature Engineering"],
+        "nice": ["Rust", "C++", "Ray", "Kubeflow", "Model Optimization"]
+      },
+      "responsibilities": [
+        "Design and implement ML pipelines",
+        "Train and optimize production models",
+        "Deploy models with CI/CD",
+        "Monitor model performance",
+        "Collaborate with data scientists"
+      ],
+      "pathway": ["Data Analyst", "ML Engineer", "Senior ML Engineer", "Staff ML Engineer", "Principal ML Engineer"],
+      "topHiring": ["Google India", "Amazon", "Flipkart", "Swiggy", "PhonePe"]
+    },
+    {
+      "id": "data-scientist",
+      "title": "Data Scientist",
+      "icon": "📊",
+      "track": "applied",
+      "description": "Extract insights and build predictive models",
+      "salaryRange": {"entry": "₹6-12L", "mid": "₹12-25L", "senior": "₹25-45L", "lead": "₹45-75L"},
+      "salaryUSD": {"entry": "$85K-$120K", "mid": "$120K-$165K", "senior": "$165K-$220K", "lead": "$220K-$300K"},
+      "demand": "High",
+      "growthRate": "+35%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Mumbai", "Pune"],
+      "skills": {
+        "required": ["Python/R", "Statistics", "SQL", "Machine Learning", "Data Visualization"],
+        "important": ["Deep Learning", "A/B Testing", "Spark", "Tableau/PowerBI", "NLP"],
+        "nice": ["Causal Inference", "Bayesian Methods", "Time Series", "Experiment Design"]
+      },
+      "responsibilities": [
+        "Analyze complex datasets",
+        "Build predictive models",
+        "Design experiments",
+        "Communicate insights to stakeholders",
+        "Collaborate with engineers"
+      ],
+      "pathway": ["Data Analyst", "Data Scientist", "Senior Data Scientist", "Staff Data Scientist", "Head of Data Science"],
+      "topHiring": ["Walmart Labs", "Microsoft", "Amazon", "Paytm", "Razorpay"]
+    },
+    {
+      "id": "ai-research-scientist",
+      "title": "AI Research Scientist",
+      "icon": "🔬",
+      "track": "research",
+      "description": "Advance the state of AI through novel research",
+      "salaryRange": {"entry": "₹15-25L", "mid": "₹25-45L", "senior": "₹45-80L", "lead": "₹80L-1.5Cr"},
+      "salaryUSD": {"entry": "$120K-$160K", "mid": "$160K-$220K", "senior": "$220K-$350K", "lead": "$350K-$500K+"},
+      "demand": "High",
+      "growthRate": "+25%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Hyderabad"],
+      "skills": {
+        "required": ["PhD or equivalent", "Deep Learning", "Python/C++", "Research Papers", "Math"],
+        "important": ["PyTorch", "Large-scale Training", "Transformers", "Optimization", "Publications"],
+        "nice": ["RL", "Neuroscience", "Multimodal AI", "AI Safety", "Theoretical ML"]
+      },
+      "responsibilities": [
+        "Conduct original research",
+        "Publish papers",
+        "Prototype new architectures",
+        "Mentor junior researchers",
+        "Present at conferences"
+      ],
+      "pathway": ["Research Intern", "Research Scientist", "Senior Research Scientist", "Staff Research Scientist", "Research Director"],
+      "topHiring": ["Google DeepMind", "Microsoft Research", "IBM Research", "Samsung R&D", "Adobe Research"]
+    },
+    {
+      "id": "llm-engineer",
+      "title": "LLM/GenAI Engineer",
+      "icon": "🧠",
+      "track": "engineering",
+      "description": "Build applications using large language models",
+      "salaryRange": {"entry": "₹12-20L", "mid": "₹20-40L", "senior": "₹40-70L", "lead": "₹70L-1.2Cr"},
+      "salaryUSD": {"entry": "$110K-$150K", "mid": "$150K-$200K", "senior": "$200K-$280K", "lead": "$280K-$400K"},
+      "demand": "Very High",
+      "growthRate": "+180%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Gurgaon", "Remote"],
+      "skills": {
+        "required": ["Python", "LLM APIs (OpenAI, Anthropic)", "Prompt Engineering", "RAG", "Vector DBs"],
+        "important": ["LangChain/LlamaIndex", "Fine-tuning", "Embeddings", "Agents", "Evaluation"],
+        "nice": ["vLLM", "RLHF", "Multimodal", "Model Quantization", "AI Safety"]
+      },
+      "responsibilities": [
+        "Build LLM-powered applications",
+        "Implement RAG systems",
+        "Fine-tune models",
+        "Design prompt strategies",
+        "Evaluate model outputs"
+      ],
+      "pathway": ["Software Engineer", "LLM Engineer", "Senior LLM Engineer", "Staff AI Engineer", "Head of AI"],
+      "topHiring": ["Atlassian", "Freshworks", "Ola", "Postman", "Zoho"]
+    },
+    {
+      "id": "mlops-engineer",
+      "title": "MLOps Engineer",
+      "icon": "⚙️",
+      "track": "engineering",
+      "description": "Build infrastructure for ML systems",
+      "salaryRange": {"entry": "₹10-18L", "mid": "₹18-35L", "senior": "₹35-55L", "lead": "₹55-85L"},
+      "salaryUSD": {"entry": "$100K-$140K", "mid": "$140K-$190K", "senior": "$190K-$250K", "lead": "$250K-$320K"},
+      "demand": "Very High",
+      "growthRate": "+95%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Hyderabad", "Pune"],
+      "skills": {
+        "required": ["Python", "Docker", "Kubernetes", "CI/CD", "Cloud (AWS/GCP/Azure)"],
+        "important": ["MLflow", "Airflow", "Terraform", "Monitoring", "Feature Stores"],
+        "nice": ["Kubeflow", "Ray", "Seldon", "Model Serving", "Data Versioning"]
+      },
+      "responsibilities": [
+        "Build ML pipelines",
+        "Automate model deployment",
+        "Monitor production models",
+        "Manage feature stores",
+        "Ensure reproducibility"
+      ],
+      "pathway": ["DevOps Engineer", "MLOps Engineer", "Senior MLOps Engineer", "Staff MLOps Engineer", "Head of ML Platform"],
+      "topHiring": ["Flipkart", "Myntra", "Swiggy", "Zomato", "CRED"]
+    },
+    {
+      "id": "ai-product-manager",
+      "title": "AI Product Manager",
+      "icon": "📦",
+      "track": "product",
+      "description": "Lead AI product strategy and development",
+      "salaryRange": {"entry": "₹12-20L", "mid": "₹20-40L", "senior": "₹40-65L", "lead": "₹65-1Cr"},
+      "salaryUSD": {"entry": "$100K-$140K", "mid": "$140K-$190K", "senior": "$190K-$260K", "lead": "$260K-$350K"},
+      "demand": "High",
+      "growthRate": "+45%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Mumbai", "Gurgaon"],
+      "skills": {
+        "required": ["Product Management", "AI/ML Understanding", "Data Analysis", "User Research", "Roadmapping"],
+        "important": ["SQL", "A/B Testing", "Metrics", "Stakeholder Management", "Technical Writing"],
+        "nice": ["Python", "Prompt Engineering", "AI Ethics", "Competitive Analysis"]
+      },
+      "responsibilities": [
+        "Define AI product vision",
+        "Prioritize features",
+        "Work with ML teams",
+        "Measure success metrics",
+        "Communicate to stakeholders"
+      ],
+      "pathway": ["Product Manager", "AI Product Manager", "Senior AI PM", "Director of AI Product", "VP of AI Product"],
+      "topHiring": ["Google", "Microsoft", "Flipkart", "Meesho", "ShareChat"]
+    },
+    {
+      "id": "prompt-engineer",
+      "title": "Prompt Engineer",
+      "icon": "✍️",
+      "track": "applied",
+      "description": "Design effective prompts for AI models",
+      "salaryRange": {"entry": "₹6-12L", "mid": "₹12-25L", "senior": "₹25-40L", "lead": "₹40-60L"},
+      "salaryUSD": {"entry": "$80K-$120K", "mid": "$120K-$170K", "senior": "$170K-$230K", "lead": "$230K-$300K"},
+      "demand": "High",
+      "growthRate": "+200%",
+      "remoteAvailable": true,
+      "hotCities": ["Remote", "Bangalore", "Gurgaon"],
+      "skills": {
+        "required": ["LLM Understanding", "Writing Skills", "Critical Thinking", "Testing/Evaluation"],
+        "important": ["Python", "Few-shot Learning", "Chain-of-Thought", "Prompt Optimization"],
+        "nice": ["Fine-tuning", "RAG", "AI Safety", "Multiple LLM Platforms"]
+      },
+      "responsibilities": [
+        "Design prompt strategies",
+        "Optimize model outputs",
+        "Build prompt libraries",
+        "Test and evaluate prompts",
+        "Document best practices"
+      ],
+      "pathway": ["Content Writer", "Prompt Engineer", "Senior Prompt Engineer", "Prompt Architect", "Head of AI Experience"],
+      "topHiring": ["Startups", "Consulting Firms", "AI-First Companies"]
+    },
+    {
+      "id": "cv-engineer",
+      "title": "Computer Vision Engineer",
+      "icon": "👁️",
+      "track": "engineering",
+      "description": "Build visual AI systems",
+      "salaryRange": {"entry": "₹8-15L", "mid": "₹15-30L", "senior": "₹30-50L", "lead": "₹50-80L"},
+      "salaryUSD": {"entry": "$95K-$130K", "mid": "$130K-$180K", "senior": "$180K-$250K", "lead": "$250K-$340K"},
+      "demand": "High",
+      "growthRate": "+60%",
+      "remoteAvailable": false,
+      "hotCities": ["Bangalore", "Hyderabad", "Chennai"],
+      "skills": {
+        "required": ["Python", "OpenCV", "Deep Learning", "CNNs", "Image Processing"],
+        "important": ["PyTorch", "Object Detection", "Segmentation", "Video Analysis", "3D Vision"],
+        "nice": ["NeRF", "Diffusion Models", "Edge Deployment", "Medical Imaging"]
+      },
+      "responsibilities": [
+        "Build vision models",
+        "Process image/video data",
+        "Optimize for deployment",
+        "Evaluate model accuracy",
+        "Research new techniques"
+      ],
+      "pathway": ["Software Engineer", "CV Engineer", "Senior CV Engineer", "Staff CV Engineer", "Head of Vision AI"],
+      "topHiring": ["Samsung R&D", "Intel", "NVIDIA", "Qualcomm", "PathSense"]
+    },
+    {
+      "id": "nlp-engineer",
+      "title": "NLP Engineer",
+      "icon": "💬",
+      "track": "engineering",
+      "description": "Build language understanding systems",
+      "salaryRange": {"entry": "₹8-15L", "mid": "₹15-30L", "senior": "₹30-50L", "lead": "₹50-80L"},
+      "salaryUSD": {"entry": "$95K-$130K", "mid": "$130K-$180K", "senior": "$180K-$250K", "lead": "$250K-$340K"},
+      "demand": "Very High",
+      "growthRate": "+55%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Hyderabad", "Pune"],
+      "skills": {
+        "required": ["Python", "Transformers", "NLP Fundamentals", "Deep Learning", "Text Processing"],
+        "important": ["Hugging Face", "BERT/GPT", "Sentiment Analysis", "NER", "Text Generation"],
+        "nice": ["Multilingual NLP", "Speech Processing", "Semantic Search", "LLMs"]
+      },
+      "responsibilities": [
+        "Build NLP pipelines",
+        "Train language models",
+        "Develop chatbots",
+        "Implement search systems",
+        "Process text at scale"
+      ],
+      "pathway": ["Software Engineer", "NLP Engineer", "Senior NLP Engineer", "Staff NLP Engineer", "Head of NLP"],
+      "topHiring": ["Haptik", "Yellow.ai", "Vernacular.ai", "Sprinklr", "Freshworks"]
+    },
+    {
+      "id": "ai-ethics",
+      "title": "AI Ethics Specialist",
+      "icon": "⚖️",
+      "track": "applied",
+      "description": "Ensure responsible AI development",
+      "salaryRange": {"entry": "₹8-14L", "mid": "₹14-28L", "senior": "₹28-45L", "lead": "₹45-70L"},
+      "salaryUSD": {"entry": "$85K-$120K", "mid": "$120K-$165K", "senior": "$165K-$220K", "lead": "$220K-$300K"},
+      "demand": "Growing",
+      "growthRate": "+75%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Mumbai", "Remote"],
+      "skills": {
+        "required": ["AI/ML Understanding", "Ethics Philosophy", "Policy Writing", "Bias Detection"],
+        "important": ["Fairness Metrics", "Explainability", "Regulation Knowledge", "Stakeholder Communication"],
+        "nice": ["Technical Implementation", "AI Safety Research", "Legal Background"]
+      },
+      "responsibilities": [
+        "Develop AI policies",
+        "Audit models for bias",
+        "Advise on responsible AI",
+        "Train teams on ethics",
+        "Engage with regulators"
+      ],
+      "pathway": ["Policy Analyst", "AI Ethics Specialist", "Senior AI Ethics", "Director of Responsible AI", "Chief Ethics Officer"],
+      "topHiring": ["Google", "Microsoft", "TCS", "Infosys", "Wipro"]
+    },
+    {
+      "id": "data-engineer",
+      "title": "Data Engineer (AI Focus)",
+      "icon": "🔧",
+      "track": "engineering",
+      "description": "Build data infrastructure for AI systems",
+      "salaryRange": {"entry": "₹7-14L", "mid": "₹14-28L", "senior": "₹28-45L", "lead": "₹45-70L"},
+      "salaryUSD": {"entry": "$90K-$125K", "mid": "$125K-$170K", "senior": "$170K-$230K", "lead": "$230K-$300K"},
+      "demand": "Very High",
+      "growthRate": "+45%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Hyderabad", "Pune", "Chennai"],
+      "skills": {
+        "required": ["Python", "SQL", "Spark", "ETL/ELT", "Cloud Platforms"],
+        "important": ["Airflow", "Kafka", "Data Warehousing", "Data Quality", "dbt"],
+        "nice": ["Feature Stores", "Real-time Processing", "Data Mesh", "Vector DBs"]
+      },
+      "responsibilities": [
+        "Build data pipelines",
+        "Design data architecture",
+        "Ensure data quality",
+        "Optimize performance",
+        "Support ML teams"
+      ],
+      "pathway": ["Data Analyst", "Data Engineer", "Senior Data Engineer", "Staff Data Engineer", "Head of Data Engineering"],
+      "topHiring": ["Walmart Labs", "Target", "Jio", "Razorpay", "Zerodha"]
+    },
+    {
+      "id": "robotics-ai",
+      "title": "Robotics AI Engineer",
+      "icon": "🦾",
+      "track": "engineering",
+      "description": "Build AI for physical robots",
+      "salaryRange": {"entry": "₹10-18L", "mid": "₹18-35L", "senior": "₹35-55L", "lead": "₹55-85L"},
+      "salaryUSD": {"entry": "$100K-$140K", "mid": "$140K-$190K", "senior": "$190K-$260K", "lead": "$260K-$350K"},
+      "demand": "High",
+      "growthRate": "+40%",
+      "remoteAvailable": false,
+      "hotCities": ["Bangalore", "Hyderabad", "Chennai"],
+      "skills": {
+        "required": ["Python/C++", "ROS", "Computer Vision", "Control Systems", "Deep Learning"],
+        "important": ["Reinforcement Learning", "SLAM", "Sensor Fusion", "Simulation", "Motion Planning"],
+        "nice": ["Hardware Integration", "Edge AI", "Manipulation", "Autonomous Systems"]
+      },
+      "responsibilities": [
+        "Develop robot perception",
+        "Implement control algorithms",
+        "Train in simulation",
+        "Deploy to hardware",
+        "Optimize real-world performance"
+      ],
+      "pathway": ["Software Engineer", "Robotics AI Engineer", "Senior Robotics AI", "Staff Robotics AI", "Head of Robotics"],
+      "topHiring": ["Boeing India", "ABB", "Addverb", "GreyOrange", "Systemantics"]
+    },
+    {
+      "id": "ai-engineer",
+      "title": "AI Engineer",
+      "icon": "🛠️",
+      "track": "engineering",
+      "description": "Build production AI systems by composing LLMs, agents, and tools",
+      "salaryRange": {"entry": "₹10-18L", "mid": "₹18-38L", "senior": "₹38-65L", "lead": "₹65L-1.1Cr"},
+      "salaryUSD": {"entry": "$100K-$145K", "mid": "$145K-$200K", "senior": "$200K-$280K", "lead": "$280K-$380K"},
+      "demand": "Very High",
+      "growthRate": "+150%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Gurgaon", "Remote", "Hyderabad"],
+      "skills": {
+        "required": ["Python", "LLM APIs", "System Design", "RAG", "Prompt Engineering"],
+        "important": ["LangChain/LangGraph", "Vector Databases", "Agents", "API Design", "Evaluation"],
+        "nice": ["CrewAI", "Fine-tuning", "Multimodal AI", "Streaming", "MCP"]
+      },
+      "responsibilities": [
+        "Architect end-to-end AI systems",
+        "Integrate LLMs with existing infrastructure",
+        "Build and orchestrate AI agents",
+        "Implement RAG and retrieval systems",
+        "Evaluate and optimize AI pipelines",
+        "Bridge research and production"
+      ],
+      "pathway": ["Software Engineer", "AI Engineer", "Senior AI Engineer", "Staff AI Engineer", "Head of AI Engineering"],
+      "topHiring": ["Notion", "Canva", "Atlassian", "Freshworks", "Postman", "Zoho"],
+      "distinction": "Unlike ML Engineers who focus on training models, AI Engineers compose existing AI capabilities (LLMs, embeddings, tools) into production systems. Think systems integration vs model development."
+    },
+    {
+      "id": "ai-ethicist",
+      "title": "AI Ethicist / Policy Researcher",
+      "icon": "⚖️",
+      "track": "product",
+      "description": "Ensure AI systems are fair, safe, and compliant with regulations",
+      "salaryRange": {"entry": "₹10-18L", "mid": "₹18-35L", "senior": "₹35-60L", "lead": "₹60-90L"},
+      "salaryUSD": {"entry": "$90K-$130K", "mid": "$130K-$170K", "senior": "$170K-$240K", "lead": "$240K-$320K"},
+      "demand": "Growing",
+      "growthRate": "+65%",
+      "remoteAvailable": true,
+      "hotCities": ["Bangalore", "Delhi NCR", "Mumbai"],
+      "skills": {
+        "required": ["AI Ethics Frameworks", "Policy Analysis", "Risk Assessment", "Technical Auditing", "Communication"],
+        "important": ["Python", "Bias Mitigation", "Data Privacy (GDPR/DPDP)", "Sociology", "Legal Compliance"],
+        "nice": ["Philosophy", "International Relations", "Causal Inference", "Red Teaming"]
+      },
+      "responsibilities": [
+        "Conduct algorithmic impact assessments",
+        "Design fairness and safety guidelines",
+        "Audit models for bias and toxicity",
+        "Liaise with legal and product teams",
+        "Monitor regulatory landscape"
+      ],
+      "pathway": ["Policy Analyst", "AI Ethicist", "Senior AI Safety Researcher", "Head of AI Ethics", "Chief Trust Officer"],
+      "topHiring": ["Google", "Microsoft", "OpenAI", "Anthropic", "Accenture", "Deloitte"],
+      "distinction": "Focuses on the 'should we build this' and 'how to build this safely' rather than just the technical implementation."
+    }
+  ],
+  "skills": {
+    "programming": [
+      {"name": "Python", "importance": "Essential", "description": "Primary language for AI/ML"},
+      {"name": "SQL", "importance": "Essential", "description": "Data querying and manipulation"},
+      {"name": "R", "importance": "Important", "description": "Statistical analysis"},
+      {"name": "C++", "importance": "Important", "description": "Performance-critical code"},
+      {"name": "JavaScript", "importance": "Useful", "description": "Web deployment"},
+      {"name": "Rust", "importance": "Emerging", "description": "High-performance ML"}
+    ],
+    "frameworks": [
+      {"name": "PyTorch", "importance": "Essential", "description": "Leading research framework"},
+      {"name": "TensorFlow", "importance": "Essential", "description": "Production ML framework"},
+      {"name": "Hugging Face", "importance": "Essential", "description": "Transformers & NLP"},
+      {"name": "scikit-learn", "importance": "Essential", "description": "Classical ML"},
+      {"name": "LangChain", "importance": "Important", "description": "LLM applications"},
+      {"name": "JAX", "importance": "Emerging", "description": "High-performance computing"}
+    ],
+    "concepts": [
+      {"name": "Deep Learning", "importance": "Essential", "description": "Neural networks"},
+      {"name": "Statistics", "importance": "Essential", "description": "Foundation of ML"},
+      {"name": "Linear Algebra", "importance": "Essential", "description": "Math for ML"},
+      {"name": "NLP", "importance": "Important", "description": "Language processing"},
+      {"name": "Computer Vision", "importance": "Important", "description": "Image/video AI"},
+      {"name": "Reinforcement Learning", "importance": "Specialized", "description": "Decision making"}
+    ],
+    "tools": [
+      {"name": "Git", "importance": "Essential", "description": "Version control"},
+      {"name": "Docker", "importance": "Essential", "description": "Containerization"},
+      {"name": "Kubernetes", "importance": "Important", "description": "Container orchestration"},
+      {"name": "AWS/GCP/Azure", "importance": "Essential", "description": "Cloud platforms"},
+      {"name": "MLflow", "importance": "Important", "description": "ML lifecycle management"},
+      {"name": "Jupyter", "importance": "Essential", "description": "Interactive development"}
+    ]
+  },
+  "certifications": [
+    {"name": "AWS ML Specialty", "provider": "Amazon", "level": "Professional", "value": "High", "indiaCost": "₹33,000"},
+    {"name": "Google ML Engineer", "provider": "Google", "level": "Professional", "value": "High", "indiaCost": "₹16,000"},
+    {"name": "Azure AI Engineer", "provider": "Microsoft", "level": "Associate", "value": "High", "indiaCost": "₹12,500"},
+    {"name": "TensorFlow Developer", "provider": "Google", "level": "Foundational", "value": "Medium", "indiaCost": "₹8,000"},
+    {"name": "Deep Learning Specialization", "provider": "DeepLearning.AI", "level": "Foundational", "value": "High", "indiaCost": "₹3,500/mo"},
+    {"name": "Machine Learning Specialization", "provider": "Stanford/Coursera", "level": "Foundational", "value": "High", "indiaCost": "₹3,500/mo"}
+  ],
+  "companies": {
+    "bigTech": ["Google India", "Microsoft India", "Amazon India", "Meta", "Apple", "NVIDIA"],
+    "aiFirst": ["OpenAI", "Anthropic", "Hugging Face", "Cohere", "Scale AI", "Databricks"],
+    "indianUnicorns": ["Flipkart", "Swiggy", "Zomato", "PhonePe", "CRED", "Razorpay", "Meesho", "Zerodha"],
+    "indianAIStartups": ["Haptik", "Yellow.ai", "Vernacular.ai", "Sprinklr", "Freshworks", "Postman", "Observe.AI"],
+    "itServices": ["TCS AI Labs", "Infosys Applied AI", "Wipro Holmes", "Tech Mahindra", "HCL"],
+    "research": ["Microsoft Research India", "Google Research India", "IBM Research", "Samsung R&D", "Adobe Research"],
+    "remoteFirst": ["GitLab", "Automattic", "Zapier", "Notion", "Figma", "Stripe", "Shopify"]
+  },
+  "jobBoards": {
+    "india": [
+      {"name": "Naukri.com", "url": "https://www.naukri.com/machine-learning-jobs", "icon": "🇮🇳", "desc": "India's largest job portal"},
+      {"name": "LinkedIn India", "url": "https://www.linkedin.com/jobs/search/?geoId=102713980&keywords=machine%20learning", "icon": "💼", "desc": "Professional network jobs"},
+      {"name": "Instahyre", "url": "https://www.instahyre.com/search-jobs/?q=machine+learning", "icon": "🚀", "desc": "AI-matched job platform"},
+      {"name": "Cutshort", "url": "https://cutshort.io/jobs/machine-learning", "icon": "✂️", "desc": "Startup-focused platform"},
+      {"name": "AngelList India", "url": "https://angel.co/location/india/machine-learning", "icon": "👼", "desc": "Startup jobs"}
+    ],
+    "remote": [
+      {"name": "RemoteOK", "url": "https://remoteok.com/remote-machine-learning-jobs", "icon": "🌍", "desc": "Remote-first job board"},
+      {"name": "We Work Remotely", "url": "https://weworkremotely.com/categories/remote-data-jobs", "icon": "🏠", "desc": "Remote work community"},
+      {"name": "Turing", "url": "https://www.turing.com/jobs/remote-machine-learning-engineer-jobs", "icon": "🔮", "desc": "US remote jobs for Indians"},
+      {"name": "Toptal", "url": "https://www.toptal.com/machine-learning/jobs", "icon": "💎", "desc": "Top 3% freelancers"},
+      {"name": "Arc.dev", "url": "https://arc.dev/remote-jobs/machine-learning", "icon": "⚡", "desc": "Remote developer jobs"}
+    ],
+    "global": [
+      {"name": "AI Jobs", "url": "https://ai-jobs.net/", "icon": "🤖", "desc": "Dedicated AI job board"},
+      {"name": "Kaggle Jobs", "url": "https://www.kaggle.com/jobs", "icon": "📊", "desc": "Data science community"},
+      {"name": "Levels.fyi", "url": "https://www.levels.fyi/t/machine-learning-engineer", "icon": "📈", "desc": "Salary benchmarks"},
+      {"name": "Glassdoor", "url": "https://www.glassdoor.co.in/Job/india-machine-learning-jobs-SRCH_IL.0,5_IN115_KO6,22.htm", "icon": "🏢", "desc": "Reviews & salaries"}
+    ]
+  }
+}

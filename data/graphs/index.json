@@ -1,0 +1,178 @@
+{
+  "graphs": [
+    {
+      "id": "generative-ai",
+      "title": "Generative AI Landscape",
+      "icon": "🌐",
+      "description": "Explore the complete ecosystem of generative AI technologies, from foundation models to applications.",
+      "nodeCount": 45,
+      "category": "overview",
+      "tags": ["llm", "image", "audio", "video", "agents"],
+      "featured": true
+    },
+    {
+      "id": "llm-architecture",
+      "title": "LLM Architecture Deep Dive",
+      "icon": "🧠",
+      "description": "Understand the internal architecture of large language models, from transformers to attention mechanisms.",
+      "nodeCount": 32,
+      "category": "technical",
+      "tags": ["transformers", "attention", "architecture", "training"],
+      "featured": true
+    },
+    {
+      "id": "ml-algorithms",
+      "title": "ML Algorithms Family Tree",
+      "icon": "🌳",
+      "description": "Hierarchical view of machine learning algorithms from classical to deep learning.",
+      "nodeCount": 50,
+      "category": "learning",
+      "tags": ["supervised", "unsupervised", "reinforcement", "deep-learning"],
+      "featured": false
+    },
+    {
+      "id": "python-ecosystem",
+      "title": "Python for AI",
+      "icon": "🐍",
+      "description": "The Python ecosystem for AI development: libraries, frameworks, and tools.",
+      "nodeCount": 35,
+      "category": "tools",
+      "tags": ["numpy", "pandas", "pytorch", "tensorflow", "scikit-learn"],
+      "featured": false
+    },
+    {
+      "id": "rag-architecture",
+      "title": "RAG Systems Architecture",
+      "icon": "🔗",
+      "description": "Components and patterns for building Retrieval-Augmented Generation systems.",
+      "nodeCount": 28,
+      "category": "technical",
+      "tags": ["rag", "vector-db", "embeddings", "retrieval"],
+      "featured": true
+    },
+    {
+      "id": "ai-agents",
+      "title": "AI Agents & Automation",
+      "icon": "🤖",
+      "description": "Explore autonomous AI agents, from simple chains to complex multi-agent systems.",
+      "nodeCount": 30,
+      "category": "applications",
+      "tags": ["agents", "automation", "langchain", "autogpt"],
+      "featured": false
+    },
+    {
+      "id": "computer-vision",
+      "title": "Computer Vision Models",
+      "icon": "👁️",
+      "description": "Evolution of computer vision from CNNs to vision transformers and multimodal models.",
+      "nodeCount": 40,
+      "category": "technical",
+      "tags": ["cnn", "vit", "object-detection", "segmentation"],
+      "featured": false
+    },
+    {
+      "id": "nlp-evolution",
+      "title": "NLP Evolution Timeline",
+      "icon": "📜",
+      "description": "The history and evolution of Natural Language Processing from rules to transformers.",
+      "nodeCount": 38,
+      "category": "learning",
+      "tags": ["nlp", "transformers", "bert", "gpt", "history"],
+      "featured": false
+    },
+    {
+      "id": "mlops-pipeline",
+      "title": "MLOps Pipeline Architecture",
+      "icon": "🔧",
+      "description": "End-to-end MLOps pipeline from data ingestion to model monitoring and feedback loops.",
+      "nodeCount": 18,
+      "category": "technical",
+      "tags": ["mlops", "deployment", "monitoring", "ci/cd", "kubernetes"],
+      "featured": true
+    },
+    {
+      "id": "ai-ethics-framework",
+      "title": "AI Ethics & Safety Framework",
+      "icon": "⚖️",
+      "description": "Comprehensive view of AI ethics principles, safety considerations, and governance frameworks.",
+      "nodeCount": 25,
+      "category": "learning",
+      "tags": ["ethics", "fairness", "bias", "safety", "governance"],
+      "featured": false
+    },
+    {
+      "id": "multimodal-ai",
+      "title": "Multimodal AI Landscape",
+      "icon": "🎭",
+      "description": "Explore how AI systems process and generate text, images, audio, and video together.",
+      "nodeCount": 30,
+      "category": "technical",
+      "tags": ["multimodal", "vision", "audio", "video", "gpt-4v"],
+      "featured": true
+    },
+    {
+      "id": "data-science-workflow",
+      "title": "Data Science Workflow",
+      "icon": "📊",
+      "description": "Complete data science project lifecycle from problem definition to deployment.",
+      "nodeCount": 23,
+      "category": "learning",
+      "tags": ["data-science", "eda", "feature-engineering", "modeling"],
+      "featured": false
+    },
+    {
+      "id": "transformers-deep-dive",
+      "title": "Transformers Architecture Deep Dive",
+      "icon": "🔬",
+      "description": "Detailed breakdown of transformer architecture components and modern innovations.",
+      "nodeCount": 28,
+      "category": "technical",
+      "tags": ["transformers", "attention", "llm", "architecture"],
+      "featured": false
+    },
+    {
+      "id": "ai-tools-landscape",
+      "title": "AI Tools Landscape",
+      "icon": "🗺️",
+      "description": "Comprehensive map of 180+ AI tools across all categories from chatbots to developer platforms.",
+      "nodeCount": 45,
+      "category": "tools",
+      "tags": ["tools", "ecosystem", "chatbots", "image-gen", "productivity"],
+      "featured": true,
+      "type": "tool-map"
+    },
+    {
+      "id": "developer-tools-map",
+      "title": "AI Developer Tools Ecosystem",
+      "icon": "👨‍💻",
+      "description": "Tools and frameworks for building AI applications: APIs, frameworks, vector DBs, and more.",
+      "nodeCount": 35,
+      "category": "tools",
+      "tags": ["development", "apis", "frameworks", "langchain", "vector-db"],
+      "featured": true,
+      "type": "tool-map"
+    },
+    {
+      "id": "local-ai-stack",
+      "title": "Local AI Stack",
+      "icon": "💻",
+      "description": "Run AI locally: inference engines, model hubs, and tools for private AI deployment.",
+      "nodeCount": 28,
+      "category": "tools",
+      "tags": ["local-ai", "ollama", "llama-cpp", "privacy", "open-source"],
+      "featured": false,
+      "type": "tool-map"
+    },
+    {
+      "id": "angular-node-ai-roadmap",
+      "title": "Angular & Node.js AI Roadmap",
+      "icon": "🅰️",
+      "description": "A specialized path for MEAN stack developers to become AI Engineers without switching to Python.",
+      "nodeCount": 20,
+      "category": "learning",
+      "tags": ["angular", "node", "langchain", "rag", "mean-stack"],
+      "featured": true,
+      "type": "roadmap"
+    }
+  ]
+}
