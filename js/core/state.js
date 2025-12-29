@@ -98,7 +98,7 @@ const State = {
         if (this.loaded.jobs) return this.data.jobs;
         
         try {
-            const response = await fetch('data/jobs.json');
+            const response = await fetch('data/careers.json');
             if (response.ok) {
                 this.data.jobs = await response.json();
                 this.loaded.jobs = true;

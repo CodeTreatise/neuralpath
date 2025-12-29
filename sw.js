@@ -3,51 +3,51 @@
    Offline-first PWA support
    ======================================== */
 
-const CACHE_NAME = 'neuralpath-v1.0.1';
-const RUNTIME_CACHE = 'neuralpath-runtime-v1.0.1';
+const CACHE_NAME = 'neuralpath-v1.0.2';
+const RUNTIME_CACHE = 'neuralpath-runtime-v1.0.2';
 
-// Assets to cache immediately on install
+// Assets to cache immediately on install (relative paths for GitHub Pages compatibility)
 const PRECACHE_ASSETS = [
-    '/',
-    '/index.html',
-    '/offline.html',
-    '/manifest.json',
-    '/favicon.svg',
+    './',
+    './index.html',
+    './offline.html',
+    './manifest.json',
+    './favicon.svg',
     
     // Icons
-    '/icons/icon-72.svg',
-    '/icons/icon-192.svg',
-    '/icons/icon-512.svg',
+    './icons/icon-72.svg',
+    './icons/icon-192.svg',
+    './icons/icon-512.svg',
     
     // CSS
-    '/css/variables.css',
-    '/css/base.css',
-    '/css/components.css',
-    '/css/layout.css',
-    '/css/pages.css',
+    './css/variables.css',
+    './css/base.css',
+    './css/components.css',
+    './css/layout.css',
+    './css/pages.css',
     
     // Core JS
-    '/js/utils/storage.js',
-    '/js/utils/helpers.js',
-    '/js/core/router.js',
-    '/js/core/state.js',
-    '/js/core/search.js',
-    '/js/components/components.js',
-    '/js/pages/home.js',
-    '/js/pages/explore.js',
-    '/js/pages/courses.js',
-    '/js/pages/tools.js',
-    '/js/pages/jobs.js',
-    '/js/pages/resources.js',
-    '/js/app.js',
+    './js/utils/storage.js',
+    './js/utils/helpers.js',
+    './js/core/router.js',
+    './js/core/state.js',
+    './js/core/search.js',
+    './js/components/components.js',
+    './js/pages/home.js',
+    './js/pages/explore.js',
+    './js/pages/courses.js',
+    './js/pages/tools.js',
+    './js/pages/jobs.js',
+    './js/pages/resources.js',
+    './js/app.js',
     
     // Data
-    '/data/tools.json',
-    '/data/careers.json',
-    '/data/learning-path.json',
-    '/data/resources.json',
-    '/data/courses/index.json',
-    '/data/graphs/index.json'
+    './data/tools.json',
+    './data/careers.json',
+    './data/learning-path.json',
+    './data/resources.json',
+    './data/courses/index.json',
+    './data/graphs/index.json'
 ];
 
 // Install event - precache static assets
