@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "AI Tools Directory",
-    "description": "Comprehensive directory of 180+ AI tools across 20 categories",
-    "lastUpdated": "2025-12-29",
-    "totalTools": 197,
+    "description": "Comprehensive directory of 230+ AI tools across 20 categories - global coverage",
+    "lastUpdated": "2025-06-23",
+    "totalTools": 230,
     "totalCategories": 20
   },
   "categories": [
@@ -238,15 +238,18 @@
     {
       "id": "deepseek",
       "name": "DeepSeek",
-      "icon": "\ud83d\udd2d",
-      "description": "High-performance Chinese AI model",
+      "icon": "🔭",
+      "description": "China's DeepSeek-V3.2 - 671B MoE model, top coding & reasoning benchmarks",
       "category": "chatbots",
       "pricing": "freemium",
-      "url": "https://deepseek.com",
+      "url": "https://chat.deepseek.com",
       "tags": [
+        "china",
         "coding",
-        "reasoning"
-      ]
+        "reasoning",
+        "opensource"
+      ],
+      "region": "China"
     },
     {
       "id": "midjourney",
@@ -2699,6 +2702,505 @@
         "mental-health",
         "mood"
       ]
+    },
+    {
+      "id": "kimi",
+      "name": "Kimi",
+      "icon": "🌙",
+      "description": "Moonshot AI's flagship assistant - Kimi K2 with 1T parameters, 128K context",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://kimi.moonshot.cn",
+      "tags": [
+        "china",
+        "long-context",
+        "moonshot"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "chatglm",
+      "name": "ChatGLM",
+      "icon": "🧠",
+      "description": "Zhipu AI's GLM-4.7 bilingual AI assistant for Chinese & English",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://chatglm.cn",
+      "tags": [
+        "china",
+        "bilingual",
+        "zhipu"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "qwen",
+      "name": "Qwen",
+      "icon": "☁️",
+      "description": "Alibaba's Qwen3 - open-source multilingual AI supporting 119 languages",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://qwen.ai",
+      "tags": [
+        "china",
+        "opensource",
+        "multilingual",
+        "alibaba"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "tongyi-qianwen",
+      "name": "Tongyi Qianwen",
+      "icon": "🌐",
+      "description": "Alibaba Cloud's enterprise AI assistant with Qwen-Plus and multimodal models",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://tongyi.aliyun.com",
+      "tags": [
+        "china",
+        "enterprise",
+        "alibaba"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "ernie-bot",
+      "name": "ERNIE Bot",
+      "icon": "🐼",
+      "description": "Baidu's flagship AI - ERNIE 4.5 with native multimodal understanding",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://yiyan.baidu.com",
+      "tags": [
+        "china",
+        "baidu",
+        "multimodal"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "doubao",
+      "name": "Doubao",
+      "icon": "🎭",
+      "description": "ByteDance's AI assistant powered by Doubao model, Douyin's AI brain",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://www.doubao.com",
+      "tags": [
+        "china",
+        "bytedance",
+        "social"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "codegeex",
+      "name": "CodeGeeX",
+      "icon": "⚡",
+      "description": "Zhipu AI's free AI coding assistant - multilingual code generation",
+      "category": "code-dev",
+      "pricing": "free",
+      "url": "https://codegeex.cn",
+      "tags": [
+        "china",
+        "coding",
+        "free",
+        "zhipu"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral AI",
+      "icon": "🇫🇷",
+      "description": "French AI - Mistral Large 3 with 128K context, European AI leader",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://mistral.ai",
+      "tags": [
+        "europe",
+        "france",
+        "opensource"
+      ],
+      "region": "France"
+    },
+    {
+      "id": "le-chat",
+      "name": "Le Chat",
+      "icon": "💬",
+      "description": "Mistral's consumer AI chat with image/document understanding and Canvas",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://chat.mistral.ai",
+      "tags": [
+        "europe",
+        "france",
+        "mistral"
+      ],
+      "region": "France"
+    },
+    {
+      "id": "falcon-llm",
+      "name": "Falcon LLM",
+      "icon": "🦅",
+      "description": "UAE's TII open-source Falcon-H1 with hybrid transformer-mamba architecture",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://falconllm.tii.ae",
+      "tags": [
+        "uae",
+        "opensource",
+        "arabic",
+        "tii"
+      ],
+      "region": "UAE"
+    },
+    {
+      "id": "hyperclova-x",
+      "name": "HyperCLOVA X",
+      "icon": "🇰🇷",
+      "description": "Naver's Korean language specialist AI - powers CLOVA Studio & apps",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://clova.ai",
+      "tags": [
+        "korea",
+        "korean",
+        "naver"
+      ],
+      "region": "South Korea"
+    },
+    {
+      "id": "clova-studio",
+      "name": "CLOVA Studio",
+      "icon": "🎯",
+      "description": "Naver's AI development platform for building Korean-optimized AI apps",
+      "category": "dev-platforms",
+      "pricing": "paid",
+      "url": "https://clovastudio.naver.com",
+      "tags": [
+        "korea",
+        "api",
+        "enterprise"
+      ],
+      "region": "South Korea"
+    },
+    {
+      "id": "sarvam-ai",
+      "name": "Sarvam AI",
+      "icon": "🇮🇳",
+      "description": "India's sovereign AI - supports 11 Indian languages, selected by government",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://sarvam.ai",
+      "tags": [
+        "india",
+        "multilingual",
+        "indian-languages"
+      ],
+      "region": "India"
+    },
+    {
+      "id": "yellow-ai",
+      "name": "Yellow.ai",
+      "icon": "🟡",
+      "description": "Indian enterprise agentic AI - conversational automation for global brands",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://yellow.ai",
+      "tags": [
+        "india",
+        "enterprise",
+        "conversational"
+      ],
+      "region": "India"
+    },
+    {
+      "id": "krutrim",
+      "name": "Krutrim",
+      "icon": "🕉️",
+      "description": "Ola's Indian AI - supports 22 Indian languages, India's first AI unicorn",
+      "category": "chatbots",
+      "pricing": "freemium",
+      "url": "https://krutrim.com",
+      "tags": [
+        "india",
+        "multilingual",
+        "ola"
+      ],
+      "region": "India"
+    },
+    {
+      "id": "ai21-labs",
+      "name": "AI21 Labs",
+      "icon": "🇮🇱",
+      "description": "Israeli AI - Jamba 2.1 hybrid transformer-mamba architecture, enterprise focus",
+      "category": "dev-platforms",
+      "pricing": "freemium",
+      "url": "https://ai21.com",
+      "tags": [
+        "israel",
+        "enterprise",
+        "api"
+      ],
+      "region": "Israel"
+    },
+    {
+      "id": "cohere-command",
+      "name": "Cohere Command",
+      "icon": "🇨🇦",
+      "description": "Canadian AI for enterprise - Command R+ with RAG and multilingual support",
+      "category": "dev-platforms",
+      "pricing": "freemium",
+      "url": "https://cohere.com",
+      "tags": [
+        "canada",
+        "enterprise",
+        "rag"
+      ],
+      "region": "Canada"
+    },
+    {
+      "id": "stability-ai",
+      "name": "Stability AI",
+      "icon": "🇬🇧",
+      "description": "UK's open-source image AI - creators of Stable Diffusion, Stable Video",
+      "category": "image-gen",
+      "pricing": "freemium",
+      "url": "https://stability.ai",
+      "tags": [
+        "uk",
+        "opensource",
+        "image"
+      ],
+      "region": "UK"
+    },
+    {
+      "id": "aleph-alpha",
+      "name": "Aleph Alpha",
+      "icon": "🇩🇪",
+      "description": "German enterprise AI - Luminous models, EU data sovereignty focus",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://aleph-alpha.com",
+      "tags": [
+        "germany",
+        "enterprise",
+        "eu-sovereign"
+      ],
+      "region": "Germany"
+    },
+    {
+      "id": "sakana-ai",
+      "name": "Sakana AI",
+      "icon": "🐟",
+      "description": "Japanese AI lab - nature-inspired AI, AI Scientist for automated research",
+      "category": "research",
+      "pricing": "free",
+      "url": "https://sakana.ai",
+      "tags": [
+        "japan",
+        "research",
+        "innovative"
+      ],
+      "region": "Japan"
+    },
+    {
+      "id": "preferred-networks",
+      "name": "Preferred Networks",
+      "icon": "🇯🇵",
+      "description": "Japanese deep learning company - PLaMo LLM, industrial AI applications",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://preferred.jp",
+      "tags": [
+        "japan",
+        "enterprise",
+        "industrial"
+      ],
+      "region": "Japan"
+    },
+    {
+      "id": "naver-papago",
+      "name": "Naver Papago",
+      "icon": "🦜",
+      "description": "Korean AI translation - 15+ languages with Korean specialization",
+      "category": "writing",
+      "pricing": "freemium",
+      "url": "https://papago.naver.com",
+      "tags": [
+        "korea",
+        "translation",
+        "korean"
+      ],
+      "region": "South Korea"
+    },
+    {
+      "id": "kakao-brain",
+      "name": "Kakao Brain",
+      "icon": "🗨️",
+      "description": "Korean AI research - KoGPT, Karlo image AI, Korean language focus",
+      "category": "research",
+      "pricing": "freemium",
+      "url": "https://kakaobrain.com",
+      "tags": [
+        "korea",
+        "research",
+        "korean"
+      ],
+      "region": "South Korea"
+    },
+    {
+      "id": "huawei-pangu",
+      "name": "Huawei Pangu",
+      "icon": "🔷",
+      "description": "Huawei's enterprise AI - industry-specific models for science & business",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://www.huaweicloud.com/product/pangu.html",
+      "tags": [
+        "china",
+        "enterprise",
+        "huawei"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "devstral",
+      "name": "Devstral",
+      "icon": "👨‍💻",
+      "description": "Mistral's coding model - Devstral 2 optimized for software development",
+      "category": "code-dev",
+      "pricing": "freemium",
+      "url": "https://mistral.ai/news/devstral",
+      "tags": [
+        "europe",
+        "coding",
+        "mistral"
+      ],
+      "region": "France"
+    },
+    {
+      "id": "modelscope",
+      "name": "ModelScope",
+      "icon": "🔬",
+      "description": "Alibaba's open-source model hub - 10K+ models, Chinese Hugging Face",
+      "category": "dev-platforms",
+      "pricing": "free",
+      "url": "https://modelscope.cn",
+      "tags": [
+        "china",
+        "opensource",
+        "models",
+        "alibaba"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "baidu-ernie-api",
+      "name": "ERNIE API",
+      "icon": "🐝",
+      "description": "Baidu's AI Cloud APIs - ERNIE models for enterprise applications",
+      "category": "dev-platforms",
+      "pricing": "paid",
+      "url": "https://cloud.baidu.com/product/wenxinworkshop",
+      "tags": [
+        "china",
+        "api",
+        "enterprise"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "zhipu-api",
+      "name": "Zhipu AI API",
+      "icon": "🧩",
+      "description": "Zhipu's z.ai platform - GLM-4 API for developers, multimodal capabilities",
+      "category": "dev-platforms",
+      "pricing": "freemium",
+      "url": "https://z.ai",
+      "tags": [
+        "china",
+        "api",
+        "glm"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "minimax",
+      "name": "MiniMax",
+      "icon": "🎵",
+      "description": "Chinese AI startup - text, voice, and video generation capabilities",
+      "category": "audio-music",
+      "pricing": "freemium",
+      "url": "https://minimax.chat",
+      "tags": [
+        "china",
+        "multimodal",
+        "voice"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "sensenova",
+      "name": "SenseNova",
+      "icon": "👁️",
+      "description": "SenseTime's multimodal AI - computer vision leader, enterprise solutions",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://sensenova.sensetime.com",
+      "tags": [
+        "china",
+        "vision",
+        "enterprise"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "baichuan",
+      "name": "Baichuan AI",
+      "icon": "🌊",
+      "description": "Chinese LLM startup - Baichuan 4 with strong reasoning and Chinese culture",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://baichuan-ai.com",
+      "tags": [
+        "china",
+        "opensource",
+        "llm"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "yi",
+      "name": "01.AI Yi",
+      "icon": "🌟",
+      "description": "Kai-Fu Lee's AI venture - Yi series open-source bilingual models",
+      "category": "local-opensource",
+      "pricing": "free",
+      "url": "https://01.ai",
+      "tags": [
+        "china",
+        "opensource",
+        "bilingual"
+      ],
+      "region": "China"
+    },
+    {
+      "id": "lighton",
+      "name": "LightOn",
+      "icon": "💡",
+      "description": "French enterprise AI - Paradigm platform, EU-sovereign AI solutions",
+      "category": "enterprise",
+      "pricing": "paid",
+      "url": "https://lighton.ai",
+      "tags": [
+        "france",
+        "enterprise",
+        "eu-sovereign"
+      ],
+      "region": "France"
     }
   ]
 }

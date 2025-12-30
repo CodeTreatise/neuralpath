@@ -1,9 +1,9 @@
 {
   "meta": {
-    "title": "AI Career Paths - India Focus",
-    "description": "Comprehensive guide to AI/ML career opportunities, skills, and salaries for the Indian market",
-    "lastUpdated": "2025-12-29",
-    "region": "India",
+    "title": "AI Career Paths - Global Coverage",
+    "description": "Comprehensive guide to AI/ML career opportunities, skills, and salaries with global salary benchmarks",
+    "lastUpdated": "2025-06-23",
+    "primaryRegion": "India",
     "currency": "INR"
   },
   "marketInsights": {
@@ -489,20 +489,155 @@
       {"name": "LinkedIn India", "url": "https://www.linkedin.com/jobs/search/?geoId=102713980&keywords=machine%20learning", "icon": "💼", "desc": "Professional network jobs"},
       {"name": "Instahyre", "url": "https://www.instahyre.com/search-jobs/?q=machine+learning", "icon": "🚀", "desc": "AI-matched job platform"},
       {"name": "Cutshort", "url": "https://cutshort.io/jobs/machine-learning", "icon": "✂️", "desc": "Startup-focused platform"},
-      {"name": "AngelList India", "url": "https://angel.co/location/india/machine-learning", "icon": "👼", "desc": "Startup jobs"}
+      {"name": "Wellfound India", "url": "https://wellfound.com/location/india", "icon": "👼", "desc": "Startup jobs (ex-AngelList)"},
+      {"name": "Foundit", "url": "https://www.foundit.in/search/machine-learning-jobs", "icon": "🔍", "desc": "Monster India rebrand"}
     ],
     "remote": [
       {"name": "RemoteOK", "url": "https://remoteok.com/remote-machine-learning-jobs", "icon": "🌍", "desc": "Remote-first job board"},
       {"name": "We Work Remotely", "url": "https://weworkremotely.com/categories/remote-data-jobs", "icon": "🏠", "desc": "Remote work community"},
       {"name": "Turing", "url": "https://www.turing.com/jobs/remote-machine-learning-engineer-jobs", "icon": "🔮", "desc": "US remote jobs for Indians"},
       {"name": "Toptal", "url": "https://www.toptal.com/machine-learning/jobs", "icon": "💎", "desc": "Top 3% freelancers"},
-      {"name": "Arc.dev", "url": "https://arc.dev/remote-jobs/machine-learning", "icon": "⚡", "desc": "Remote developer jobs"}
+      {"name": "Arc.dev", "url": "https://arc.dev/remote-jobs/machine-learning", "icon": "⚡", "desc": "Remote developer jobs"},
+      {"name": "FlexJobs", "url": "https://www.flexjobs.com/search?search=machine+learning", "icon": "🔄", "desc": "Vetted remote positions"},
+      {"name": "Himalayas", "url": "https://himalayas.app/jobs/machine-learning", "icon": "🏔️", "desc": "Remote jobs + company data"}
     ],
     "global": [
-      {"name": "AI Jobs", "url": "https://ai-jobs.net/", "icon": "🤖", "desc": "Dedicated AI job board"},
-      {"name": "Kaggle Jobs", "url": "https://www.kaggle.com/jobs", "icon": "📊", "desc": "Data science community"},
-      {"name": "Levels.fyi", "url": "https://www.levels.fyi/t/machine-learning-engineer", "icon": "📈", "desc": "Salary benchmarks"},
-      {"name": "Glassdoor", "url": "https://www.glassdoor.co.in/Job/india-machine-learning-jobs-SRCH_IL.0,5_IN115_KO6,22.htm", "icon": "🏢", "desc": "Reviews & salaries"}
+      {"name": "LinkedIn Jobs", "url": "https://www.linkedin.com/jobs/machine-learning-jobs", "icon": "💼", "desc": "800M+ professionals"},
+      {"name": "Indeed", "url": "https://www.indeed.com/jobs?q=machine+learning", "icon": "🔵", "desc": "World's largest job site"},
+      {"name": "Glassdoor", "url": "https://www.glassdoor.com/Job/machine-learning-jobs-SRCH_KO0,16.htm", "icon": "🏢", "desc": "Jobs + salary reviews"},
+      {"name": "Levels.fyi", "url": "https://www.levels.fyi/t/machine-learning-engineer", "icon": "📈", "desc": "Tech salary benchmarks"},
+      {"name": "Wellfound", "url": "https://wellfound.com/jobs", "icon": "👼", "desc": "10M+ startup candidates"},
+      {"name": "Built In", "url": "https://builtin.com/jobs?search=machine+learning", "icon": "🏗️", "desc": "Tech & startup jobs"},
+      {"name": "Dice", "url": "https://www.dice.com/jobs?q=machine%20learning", "icon": "🎲", "desc": "Tech careers specialist"}
+    ],
+    "aiSpecific": [
+      {"name": "Hugging Face Jobs", "url": "https://apply.workable.com/huggingface/", "icon": "🤗", "desc": "Jobs at HF + partners"},
+      {"name": "AI/ML Jobs", "url": "https://www.aimlcareers.com/", "icon": "🤖", "desc": "AI-specific listings"},
+      {"name": "MLOps Jobs", "url": "https://mlops.jobs/", "icon": "⚙️", "desc": "MLOps focused roles"},
+      {"name": "DeepLearning.AI", "url": "https://jobs.deeplearning.ai/", "icon": "🧠", "desc": "Andrew Ng's job board"},
+      {"name": "DataScienceJobs", "url": "https://datasciencejobs.com/", "icon": "📊", "desc": "Data & ML positions"},
+      {"name": "OpenAI Careers", "url": "https://openai.com/careers", "icon": "🌟", "desc": "Work at OpenAI"},
+      {"name": "Anthropic Jobs", "url": "https://www.anthropic.com/careers", "icon": "🔷", "desc": "Claude AI team"}
+    ],
+    "researchAcademic": [
+      {"name": "Google AI Careers", "url": "https://ai.google/careers/", "icon": "🔬", "desc": "DeepMind & Google AI"},
+      {"name": "Microsoft Research", "url": "https://www.microsoft.com/en-us/research/careers/", "icon": "🔷", "desc": "MSR positions"},
+      {"name": "Meta AI", "url": "https://ai.meta.com/join-us/", "icon": "Ⓜ️", "desc": "FAIR research jobs"},
+      {"name": "Academic Jobs", "url": "https://academicjobsonline.org/ajo?action=joblist&id=*&keywords=machine+learning", "icon": "🎓", "desc": "University positions"},
+      {"name": "AI Alignment Forum", "url": "https://www.alignmentforum.org/jobs", "icon": "🎯", "desc": "AI safety roles"}
+    ]
+  },
+  "globalSalaries": {
+    "description": "AI/ML salary benchmarks by region (2025 data)",
+    "regions": [
+      {
+        "region": "United States",
+        "icon": "🇺🇸",
+        "currency": "USD",
+        "mlEngineer": {"entry": "$87K-$110K", "mid": "$110K-$150K", "senior": "$150K-$200K", "lead": "$200K-$350K+"},
+        "dataSci": {"entry": "$75K-$100K", "mid": "$100K-$140K", "senior": "$140K-$180K", "lead": "$180K-$280K"},
+        "hotCities": ["San Francisco", "New York", "Seattle", "Austin", "Boston"],
+        "notes": "Highest global salaries, strong VC ecosystem"
+      },
+      {
+        "region": "United Kingdom",
+        "icon": "🇬🇧",
+        "currency": "GBP",
+        "mlEngineer": {"entry": "£40K-£55K", "mid": "£55K-£80K", "senior": "£80K-£120K", "lead": "£120K-£180K"},
+        "dataSci": {"entry": "£35K-£50K", "mid": "£50K-£75K", "senior": "£75K-£110K", "lead": "£110K-£160K"},
+        "hotCities": ["London", "Cambridge", "Edinburgh", "Manchester"],
+        "notes": "Strong fintech AI, DeepMind hub"
+      },
+      {
+        "region": "Germany",
+        "icon": "🇩🇪",
+        "currency": "EUR",
+        "mlEngineer": {"entry": "€50K-€65K", "mid": "€65K-€90K", "senior": "€90K-€130K", "lead": "€130K-€180K"},
+        "dataSci": {"entry": "€45K-€60K", "mid": "€60K-€85K", "senior": "€85K-€120K", "lead": "€120K-€160K"},
+        "hotCities": ["Berlin", "Munich", "Hamburg", "Frankfurt"],
+        "notes": "Growing AI hub, automotive AI focus"
+      },
+      {
+        "region": "France",
+        "icon": "🇫🇷",
+        "currency": "EUR",
+        "mlEngineer": {"entry": "€40K-€55K", "mid": "€55K-€80K", "senior": "€80K-€120K", "lead": "€120K-€170K"},
+        "dataSci": {"entry": "€38K-€50K", "mid": "€50K-€75K", "senior": "€75K-£110K", "lead": "€110K-€150K"},
+        "hotCities": ["Paris", "Lyon", "Toulouse"],
+        "notes": "Mistral AI hub, strong research culture"
+      },
+      {
+        "region": "Canada",
+        "icon": "🇨🇦",
+        "currency": "CAD",
+        "mlEngineer": {"entry": "C$70K-$95K", "mid": "C$95K-$130K", "senior": "C$130K-$175K", "lead": "C$175K-$250K"},
+        "dataSci": {"entry": "C$60K-$85K", "mid": "C$85K-$120K", "senior": "C$120K-$160K", "lead": "C$160K-$220K"},
+        "hotCities": ["Toronto", "Montreal", "Vancouver"],
+        "notes": "Strong AI research, Cohere/Mila hub"
+      },
+      {
+        "region": "Singapore",
+        "icon": "🇸🇬",
+        "currency": "SGD",
+        "mlEngineer": {"entry": "S$60K-$85K", "mid": "S$85K-$130K", "senior": "S$130K-$180K", "lead": "S$180K-$280K"},
+        "dataSci": {"entry": "S$55K-$80K", "mid": "S$80K-$120K", "senior": "S$120K-$160K", "lead": "S$160K-$240K"},
+        "hotCities": ["Singapore"],
+        "notes": "SE Asia tech hub, fintech AI focus"
+      },
+      {
+        "region": "UAE",
+        "icon": "🇦🇪",
+        "currency": "AED",
+        "mlEngineer": {"entry": "180K-250K AED", "mid": "250K-400K AED", "senior": "400K-600K AED", "lead": "600K-900K AED"},
+        "dataSci": {"entry": "160K-220K AED", "mid": "220K-350K AED", "senior": "350K-520K AED", "lead": "520K-780K AED"},
+        "hotCities": ["Dubai", "Abu Dhabi"],
+        "notes": "Tax-free income, TII/Falcon LLM hub"
+      },
+      {
+        "region": "Israel",
+        "icon": "🇮🇱",
+        "currency": "ILS",
+        "mlEngineer": {"entry": "₪25K-35K/mo", "mid": "₪35K-50K/mo", "senior": "₪50K-70K/mo", "lead": "₪70K-100K/mo"},
+        "dataSci": {"entry": "₪22K-32K/mo", "mid": "₪32K-45K/mo", "senior": "₪45K-65K/mo", "lead": "₪65K-90K/mo"},
+        "hotCities": ["Tel Aviv", "Haifa", "Jerusalem"],
+        "notes": "Startup nation, strong AI21/AI research"
+      },
+      {
+        "region": "Japan",
+        "icon": "🇯🇵",
+        "currency": "JPY",
+        "mlEngineer": {"entry": "¥5M-7M", "mid": "¥7M-12M", "senior": "¥12M-18M", "lead": "¥18M-30M"},
+        "dataSci": {"entry": "¥4.5M-6.5M", "mid": "¥6.5M-10M", "senior": "¥10M-15M", "lead": "¥15M-25M"},
+        "hotCities": ["Tokyo", "Osaka", "Kyoto"],
+        "notes": "Robotics/industrial AI focus, Preferred Networks hub"
+      },
+      {
+        "region": "South Korea",
+        "icon": "🇰🇷",
+        "currency": "KRW",
+        "mlEngineer": {"entry": "₩45M-65M", "mid": "₩65M-100M", "senior": "₩100M-150M", "lead": "₩150M-250M"},
+        "dataSci": {"entry": "₩40M-60M", "mid": "₩60M-90M", "senior": "₩90M-130M", "lead": "₩130M-200M"},
+        "hotCities": ["Seoul", "Seongnam", "Daejeon"],
+        "notes": "Naver/Kakao hub, HyperCLOVA X ecosystem"
+      },
+      {
+        "region": "China",
+        "icon": "🇨🇳",
+        "currency": "CNY",
+        "mlEngineer": {"entry": "¥200K-400K", "mid": "¥400K-800K", "senior": "¥800K-1.5M", "lead": "¥1.5M-3M+"},
+        "dataSci": {"entry": "¥180K-350K", "mid": "¥350K-700K", "senior": "¥700K-1.2M", "lead": "¥1.2M-2.5M"},
+        "hotCities": ["Beijing", "Shanghai", "Hangzhou", "Shenzhen"],
+        "notes": "BAT giants, DeepSeek/Moonshot/Zhipu hubs"
+      },
+      {
+        "region": "Australia",
+        "icon": "🇦🇺",
+        "currency": "AUD",
+        "mlEngineer": {"entry": "A$80K-$110K", "mid": "A$110K-$150K", "senior": "A$150K-$200K", "lead": "A$200K-$300K"},
+        "dataSci": {"entry": "A$70K-$100K", "mid": "A$100K-$140K", "senior": "A$140K-$185K", "lead": "A$185K-$260K"},
+        "hotCities": ["Sydney", "Melbourne", "Brisbane"],
+        "notes": "Growing AI scene, Atlassian/Canva AI"
+      }
     ]
   }
 }

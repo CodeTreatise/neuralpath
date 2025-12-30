@@ -128,6 +128,9 @@ const JobsPage = {
                     <button class="quick-nav-pill ${this.activeSection === 'job-boards' ? 'active' : ''}" onclick="JobsPage.scrollToSection('job-boards')">
                         <span>🔗</span> Job Boards
                     </button>
+                    <button class="quick-nav-pill ${this.activeSection === 'global-salaries' ? 'active' : ''}" onclick="JobsPage.scrollToSection('global-salaries')">
+                        <span>🌍</span> Global Salaries
+                    </button>
                 </div>
             </div>
             
@@ -329,6 +332,18 @@ const JobsPage = {
                     </h2>
                 </div>
                 ${this.renderJobBoards()}
+            </section>
+            
+            <!-- Global Salaries Section -->
+            <section id="section-global-salaries" class="jobs-section">
+                <div class="section-header-row">
+                    <h2 class="jobs-section-title">
+                        <span class="section-icon">🌍</span>
+                        Global AI Salaries
+                    </h2>
+                    <span class="section-subtitle">ML Engineer & Data Scientist benchmarks worldwide</span>
+                </div>
+                ${this.renderGlobalSalaries()}
             </section>
             
             <!-- Role Detail Modal -->
@@ -1326,6 +1341,18 @@ const JobsPage = {
         return `
             <div class="job-boards-container">
                 <div class="job-board-section">
+                    <h4 class="board-section-title">🤖 AI-Specific Job Boards</h4>
+                    <div class="board-cards">
+                        ${boards.aiSpecific ? boards.aiSpecific.map(b => this.renderBoardCard(b)).join('') : ''}
+                    </div>
+                </div>
+                <div class="job-board-section">
+                    <h4 class="board-section-title">🌐 Global Platforms</h4>
+                    <div class="board-cards">
+                        ${boards.global.map(b => this.renderBoardCard(b)).join('')}
+                    </div>
+                </div>
+                <div class="job-board-section">
                     <h4 class="board-section-title">🇮🇳 India Job Portals</h4>
                     <div class="board-cards">
                         ${boards.india.map(b => this.renderBoardCard(b)).join('')}
@@ -1338,9 +1365,9 @@ const JobsPage = {
                     </div>
                 </div>
                 <div class="job-board-section">
-                    <h4 class="board-section-title">🌐 Global Platforms</h4>
+                    <h4 class="board-section-title">🔬 Research & Academic</h4>
                     <div class="board-cards">
-                        ${boards.global.map(b => this.renderBoardCard(b)).join('')}
+                        ${boards.researchAcademic ? boards.researchAcademic.map(b => this.renderBoardCard(b)).join('') : ''}
                     </div>
                 </div>
             </div>
@@ -1368,6 +1395,61 @@ const JobsPage = {
      */
     renderJobResources() {
         return this.renderJobBoards();
+    },
+    
+    /**
+     * Render global salaries section
+     */
+    renderGlobalSalaries() {
+        const globalData = this.careersData.globalSalaries;
+        if (!globalData || !globalData.regions) {
+            return '<p class="text-muted">Global salary data not available</p>';
+        }
+        
+        return `
+            <div class="global-salaries-container">
+                <p class="global-salaries-intro">${globalData.description}</p>
+                <div class="global-salaries-grid">
+                    ${globalData.regions.map(region => `
+                        <div class="global-salary-card">
+                            <div class="salary-region-header">
+                                <span class="salary-region-icon">${region.icon}</span>
+                                <div class="salary-region-info">
+                                    <h4 class="salary-region-name">${region.region}</h4>
+                                    <span class="salary-region-currency">${region.currency}</span>
+                                </div>
+                            </div>
+                            <div class="salary-roles">
+                                <div class="salary-role">
+                                    <div class="salary-role-title">🤖 ML Engineer</div>
+                                    <div class="salary-role-ranges">
+                                        <div class="salary-level"><span class="level-label">Entry</span><span class="level-value">${region.mlEngineer.entry}</span></div>
+                                        <div class="salary-level"><span class="level-label">Mid</span><span class="level-value">${region.mlEngineer.mid}</span></div>
+                                        <div class="salary-level"><span class="level-label">Senior</span><span class="level-value">${region.mlEngineer.senior}</span></div>
+                                        <div class="salary-level"><span class="level-label">Lead</span><span class="level-value">${region.mlEngineer.lead}</span></div>
+                                    </div>
+                                </div>
+                                <div class="salary-role">
+                                    <div class="salary-role-title">📊 Data Scientist</div>
+                                    <div class="salary-role-ranges">
+                                        <div class="salary-level"><span class="level-label">Entry</span><span class="level-value">${region.dataSci.entry}</span></div>
+                                        <div class="salary-level"><span class="level-label">Mid</span><span class="level-value">${region.dataSci.mid}</span></div>
+                                        <div class="salary-level"><span class="level-label">Senior</span><span class="level-value">${region.dataSci.senior}</span></div>
+                                        <div class="salary-level"><span class="level-label">Lead</span><span class="level-value">${region.dataSci.lead}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="salary-region-footer">
+                                <div class="salary-hot-cities">
+                                    ${region.hotCities.map(c => `<span class="hot-city-tag">${c}</span>`).join('')}
+                                </div>
+                                <p class="salary-notes">${region.notes}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
     },
     
     /**
@@ -2514,6 +2596,116 @@ const JobsPage = {
             }
             .board-arrow {
                 color: var(--color-text-muted);
+            }
+            
+            /* ===== Global Salaries ===== */
+            .global-salaries-container {
+                padding: var(--space-2) 0;
+            }
+            .global-salaries-intro {
+                color: var(--color-text-secondary);
+                margin-bottom: var(--space-4);
+                font-size: var(--text-base);
+            }
+            .global-salaries-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                gap: var(--space-4);
+            }
+            .global-salary-card {
+                background: var(--color-bg-tertiary);
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-xl);
+                padding: var(--space-4);
+                transition: all var(--transition-normal);
+            }
+            .global-salary-card:hover {
+                border-color: var(--color-primary);
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-md);
+            }
+            .salary-region-header {
+                display: flex;
+                align-items: center;
+                gap: var(--space-3);
+                margin-bottom: var(--space-4);
+                padding-bottom: var(--space-3);
+                border-bottom: 1px solid var(--color-border);
+            }
+            .salary-region-icon {
+                font-size: 2rem;
+            }
+            .salary-region-name {
+                margin: 0;
+                font-size: var(--text-lg);
+                font-weight: 600;
+            }
+            .salary-region-currency {
+                font-size: var(--text-xs);
+                color: var(--color-text-muted);
+                background: var(--color-bg-secondary);
+                padding: 2px 8px;
+                border-radius: var(--radius-sm);
+            }
+            .salary-roles {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+            .salary-role {
+                background: var(--color-bg-secondary);
+                padding: var(--space-3);
+                border-radius: var(--radius-lg);
+            }
+            .salary-role-title {
+                font-weight: 600;
+                font-size: var(--text-sm);
+                margin-bottom: var(--space-2);
+            }
+            .salary-role-ranges {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-2);
+            }
+            .salary-level {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: var(--space-1) var(--space-2);
+                background: var(--color-bg-tertiary);
+                border-radius: var(--radius-sm);
+                font-size: var(--text-xs);
+            }
+            .level-label {
+                color: var(--color-text-muted);
+            }
+            .level-value {
+                font-weight: 600;
+                color: var(--color-success);
+            }
+            .salary-region-footer {
+                margin-top: var(--space-3);
+                padding-top: var(--space-3);
+                border-top: 1px solid var(--color-border);
+            }
+            .salary-hot-cities {
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--space-1);
+                margin-bottom: var(--space-2);
+            }
+            .hot-city-tag {
+                font-size: var(--text-xs);
+                background: var(--color-bg-secondary);
+                padding: 2px 8px;
+                border-radius: var(--radius-sm);
+                color: var(--color-text-secondary);
+            }
+            .salary-notes {
+                font-size: var(--text-xs);
+                color: var(--color-text-muted);
+                margin: 0;
+                font-style: italic;
             }
             
             /* ===== Modal ===== */
