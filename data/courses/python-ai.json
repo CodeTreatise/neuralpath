@@ -5,7 +5,17 @@
   "icon": "\ud83d\udc0d",
   "level": "beginner",
   "duration": "8 weeks",
-  "prerequisites": [],
+  "prerequisites": [
+    "No programming experience required!",
+    "A computer with internet access",
+    "Curiosity to learn"
+  ],
+  "whatYouNeed": [
+    "A computer (Windows, Mac, or Linux)",
+    "Internet connection to install Python",
+    "No prior coding experience needed!",
+    "30-60 minutes per day to practice"
+  ],
   "learningOutcomes": [
     "Write efficient Python code for data manipulation",
     "Use NumPy and Pandas for numerical computing",
@@ -13,6 +23,81 @@
     "Build end-to-end AI projects"
   ],
   "modules": [
+    {
+      "id": "getting-started",
+      "title": "Getting Started with Python",
+      "lessons": [
+        {
+          "id": "py-first-steps",
+          "title": "Your First Steps with Python",
+          "duration": "20 min",
+          "content": {
+            "overview": "Welcome! This lesson will get you from zero to running Python code. No prior experience needed.",
+            "sections": [
+              {
+                "title": "What is Python?",
+                "content": "Python is a **programming language** - a way to give instructions to computers.\n\nThink of it like:\n- English is for talking to humans\n- Python is for talking to computers\n\n**Why Python for AI?**\n- It's easy to read (looks almost like English)\n- It's free and works on all computers\n- All AI tools are built for Python\n- You can see results instantly"
+              },
+              {
+                "title": "Installing Python",
+                "content": "**Option 1: Google Colab (Easiest - No Install!)**\n1. Go to [colab.research.google.com](https://colab.research.google.com)\n2. Click 'New Notebook'\n3. Start typing code!\n\n**Option 2: Install on Your Computer**\n1. Go to [python.org/downloads](https://www.python.org/downloads/)\n2. Download Python 3.11 or later\n3. Run the installer\n4. ✅ Check 'Add Python to PATH'\n5. Click Install\n\n**Option 3: Anaconda (Best for AI)**\n1. Go to [anaconda.com/download](https://www.anaconda.com/download)\n2. Download and install\n3. Open 'Anaconda Navigator'\n4. Launch 'Jupyter Notebook'"
+              },
+              {
+                "title": "Your First Python Code",
+                "content": "Let's write our first code! Type this and press Enter (or Shift+Enter in Jupyter):",
+                "code": "# This is a comment - Python ignores it\n# Comments explain what code does\n\nprint(\"Hello, AI World!\")\n\n# Congratulations! You just:\n# 1. Used the print() function\n# 2. Created a text string with quotes\n# 3. Ran Python code!\n\n# Try changing the message:\nprint(\"I'm learning Python for AI!\")"
+              },
+              {
+                "title": "Common Beginner Questions",
+                "content": "**Q: What if I get an error?**\nA: That's normal! Read the error message - it tells you what's wrong. Usually it's a typo.\n\n**Q: Do I need to understand everything?**\nA: No! Start by copying and modifying code. Understanding comes with practice.\n\n**Q: How long to learn Python?**\nA: You can write useful AI code in weeks. Mastery takes years (for everyone!).\n\n**Q: Do I need math?**\nA: Basic arithmetic helps. Libraries handle complex math for you."
+              }
+            ],
+            "keyTakeaways": [
+              "Python is a beginner-friendly language used for AI",
+              "You can start coding in 5 minutes with Google Colab",
+              "print() shows output - your first function!",
+              "Errors are normal and help you learn"
+            ]
+          }
+        },
+        {
+          "id": "py-basics",
+          "title": "Python Basics: Variables, Types, and Operations",
+          "duration": "30 min",
+          "content": {
+            "overview": "Learn the building blocks of Python: storing data, doing math, and working with text.",
+            "sections": [
+              {
+                "title": "Variables: Storing Information",
+                "content": "A **variable** is a name for a piece of data. Like a labeled box:",
+                "code": "# Create variables with = (assignment)\nname = \"Alice\"          # Text (string)\nage = 25                 # Whole number (integer)\nheight = 5.6             # Decimal number (float)\nis_student = True        # Yes/No (boolean)\n\n# Use variables\nprint(name)              # Alice\nprint(age + 5)           # 30\nprint(f\"{name} is {age} years old\")  # Alice is 25 years old"
+              },
+              {
+                "title": "Math Operations",
+                "content": "Python works like a calculator:",
+                "code": "# Basic math\nadd = 5 + 3        # 8\nsubtract = 10 - 4  # 6\nmultiply = 6 * 7   # 42\ndivide = 15 / 3    # 5.0 (always gives decimal)\n\n# More operations\npower = 2 ** 10    # 1024 (2 to the power of 10)\nfloor_div = 17 // 5  # 3 (divide and round down)\nremainder = 17 % 5   # 2 (what's left over)\n\nprint(f\"2^10 = {power}\")"
+              },
+              {
+                "title": "Working with Text (Strings)",
+                "content": "Text in Python is called a **string**:",
+                "code": "# Create strings with quotes\ngreeting = \"Hello\"\nname = 'World'  # Single or double quotes work\n\n# Combine strings\nmessage = greeting + \", \" + name + \"!\"  # Hello, World!\n\n# f-strings (modern way - use these!)\nage = 25\nbio = f\"I am {age} years old\"  # I am 25 years old\n\n# Useful string operations\ntext = \"  hello world  \"\nprint(text.strip())      # Remove spaces: \"hello world\"\nprint(text.upper())      # HELLO WORLD\nprint(text.split())      # ['hello', 'world']\nprint(len(text))         # 15 (length)"
+              },
+              {
+                "title": "Lists: Collections of Data",
+                "content": "A **list** stores multiple items in order. Very important for AI!",
+                "code": "# Create a list with square brackets\nscores = [85, 92, 78, 95, 88]\nnames = [\"Alice\", \"Bob\", \"Charlie\"]\nmixed = [1, \"hello\", 3.14, True]  # Can mix types\n\n# Access items (counting starts at 0!)\nprint(scores[0])     # 85 (first item)\nprint(scores[-1])    # 88 (last item)\nprint(scores[1:3])   # [92, 78] (slice)\n\n# Modify lists\nscores.append(100)   # Add to end\nscores[0] = 90       # Change first item\n\n# List info\nprint(len(scores))   # 6 (how many items)\nprint(sum(scores))   # Total\nprint(max(scores))   # Highest"
+              }
+            ],
+            "keyTakeaways": [
+              "Variables store data with meaningful names",
+              "Python has numbers (int, float), text (str), and yes/no (bool)",
+              "Lists hold multiple items - essential for datasets",
+              "Indexing starts at 0, not 1!"
+            ]
+          }
+        }
+      ]
+    },
     {
       "id": "py-fundamentals",
       "title": "Python Fundamentals",
@@ -232,9 +317,59 @@
                 "url": "https://numpy.org/doc/stable/user/"
               },
               {
+                "title": "NumPy Absolute Beginners Guide",
+                "url": "https://numpy.org/doc/stable/user/absolute_beginners.html"
+              },
+              {
                 "title": "From Python to NumPy",
                 "author": "Nicolas Rougier",
                 "url": "https://www.labri.fr/perso/nrougier/from-python-to-numpy/"
+              }
+            ]
+          }
+        },
+        {
+          "id": "numpy-advanced",
+          "title": "NumPy: Views, Copies, and Performance Tips",
+          "duration": "30 min",
+          "content": {
+            "overview": "Understanding views vs copies is crucial for writing bug-free, memory-efficient code. This lesson covers these concepts plus reshape, flatten, and performance optimization.",
+            "sections": [
+              {
+                "title": "Views vs Copies: A Critical Concept",
+                "content": "When you slice a NumPy array, you get a **view**, not a copy. A view shares data with the original array - modifying the view changes the original!\n\n**Analogy:** Think of views like looking at the same photo through different windows. If you draw on the photo, everyone sees the change.",
+                "code": "import numpy as np\n\n# Create original array\na = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])\n\n# Slicing creates a VIEW (shares memory)\nb = a[0, :]        # First row\nprint(b)           # [1 2 3 4]\n\nb[0] = 99          # Modify the view\nprint(b)           # [99 2 3 4]\nprint(a)           # [[99, 2, 3, 4], ...] - Original changed too!\n\n# To avoid this, use .copy()\nc = a[1, :].copy()  # Deep copy - new memory\nc[0] = 999\nprint(a)            # Original unchanged"
+              },
+              {
+                "title": "When Views Are Created",
+                "content": "**Operations that create VIEWS (share memory):**\n- Slicing: `a[1:3]`, `a[:, 2]`\n- Transposing: `a.T`\n- Reshaping (usually): `a.reshape(3, 4)`\n- `np.ravel(a)` (when possible)\n\n**Operations that create COPIES (new memory):**\n- Fancy indexing: `a[[0, 2, 3]]`\n- Boolean indexing: `a[a > 5]`\n- `a.flatten()` (always)\n- `a.copy()`\n- Mathematical operations: `a + 1`, `a * 2`",
+                "code": "# Check if it's a view or copy\na = np.arange(12).reshape(3, 4)\n\nview = a[1:3, :]\nprint(view.base is a)       # True - it's a view\n\nfancy = a[[0, 2], :]\nprint(fancy.base is None)   # True - it's a copy\n\n# Flatten vs Ravel\nflat = a.flatten()          # Always a copy\nrav = a.ravel()             # View if possible\n\nprint(flat.base is None)    # True - copy\nprint(rav.base is a)        # True - view"
+              },
+              {
+                "title": "Reshape, Resize, and newaxis",
+                "content": "Reshaping is essential for preparing data for ML models. The key rule: **total elements must stay the same**.",
+                "code": "import numpy as np\n\na = np.arange(12)  # [0, 1, 2, ..., 11]\n\n# Reshape to 2D\nmatrix = a.reshape(3, 4)     # 3 rows, 4 columns\nmatrix = a.reshape(4, -1)    # -1 means 'calculate automatically'\n\n# Add new dimension (common for batching)\nvector = np.array([1, 2, 3, 4, 5, 6])\nprint(vector.shape)           # (6,)\n\n# Add batch dimension\nrow_vector = vector[np.newaxis, :]    # (1, 6)\ncol_vector = vector[:, np.newaxis]    # (6, 1)\n\n# Or use expand_dims\nbatched = np.expand_dims(vector, axis=0)  # (1, 6)\n\n# Common ML pattern: reshape for model input\nX = np.random.randn(100, 28, 28)  # 100 images, 28x28\nX_flat = X.reshape(100, -1)       # Flatten to (100, 784)"
+              },
+              {
+                "title": "Performance Tips",
+                "content": "Write NumPy code that's 10-100x faster with these tips:",
+                "code": "import numpy as np\nimport time\n\n# ❌ SLOW: Python loops\ndef slow_normalize(arr):\n    result = []\n    for x in arr:\n        result.append((x - arr.min()) / (arr.max() - arr.min()))\n    return result\n\n# ✅ FAST: Vectorized\ndef fast_normalize(arr):\n    return (arr - arr.min()) / (arr.max() - arr.min())\n\n# Benchmark\ndata = np.random.randn(100000)\n\nstart = time.time()\nslow_normalize(data)\nprint(f\"Slow: {time.time() - start:.3f}s\")\n\nstart = time.time()\nfast_normalize(data)\nprint(f\"Fast: {time.time() - start:.3f}s\")  # ~100x faster!\n\n# Other tips:\n# 1. Pre-allocate arrays instead of appending\nresult = np.zeros(1000)\nfor i in range(1000):\n    result[i] = compute(i)  # Better than append\n\n# 2. Use appropriate dtype\narr_float32 = np.array([1.0, 2.0], dtype=np.float32)  # Half memory of float64"
+              }
+            ],
+            "keyTakeaways": [
+              "Slicing creates views that share memory with the original",
+              "Use .copy() when you need independent data",
+              "Reshape requires the total number of elements to stay the same",
+              "Vectorize operations - avoid Python loops for big speedups"
+            ],
+            "sources": [
+              {
+                "title": "NumPy: Copies and Views",
+                "url": "https://numpy.org/doc/stable/user/basics.copies.html"
+              },
+              {
+                "title": "NumPy Absolute Beginners Guide",
+                "url": "https://numpy.org/doc/stable/user/absolute_beginners.html"
               }
             ]
           }
@@ -288,8 +423,68 @@
                 "url": "https://pandas.pydata.org/docs/user_guide/"
               },
               {
+                "title": "Pandas Getting Started Tutorials",
+                "url": "https://pandas.pydata.org/docs/getting_started/intro_tutorials/"
+              },
+              {
                 "title": "Python for Data Analysis",
                 "author": "Wes McKinney",
+                "year": 2022
+              }
+            ]
+          }
+        },
+        {
+          "id": "sklearn-basics",
+          "title": "Scikit-learn: Machine Learning Made Easy",
+          "duration": "60 min",
+          "content": {
+            "overview": "Scikit-learn is the most popular machine learning library for Python. It provides simple, consistent APIs for training models, preprocessing data, and evaluating performance. This lesson covers the core patterns you'll use in every ML project.",
+            "sections": [
+              {
+                "title": "The Estimator Pattern: fit() and predict()",
+                "content": "Every scikit-learn model follows the same pattern:\n1. Create the estimator (model)\n2. Call `fit(X, y)` to train it\n3. Call `predict(X)` to make predictions\n\n**Analogy:** Think of it like teaching a student. First you show examples (fit), then they can answer new questions (predict).",
+                "code": "from sklearn.ensemble import RandomForestClassifier\nfrom sklearn.linear_model import LogisticRegression\n\n# All models follow the same API!\n\n# Example 1: Random Forest\nclf = RandomForestClassifier(random_state=42)\nX_train = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]  # Features\ny_train = [0, 1, 0]                           # Labels\n\nclf.fit(X_train, y_train)           # Train\npredictions = clf.predict([[2, 3, 4]])  # Predict: [0]\n\n# Example 2: Logistic Regression - same API!\nlr = LogisticRegression()\nlr.fit(X_train, y_train)\nlr.predict([[2, 3, 4]])             # Same interface!"
+              },
+              {
+                "title": "Preprocessing: Transformers and StandardScaler",
+                "content": "Real data needs preprocessing. Scikit-learn transformers also follow a consistent pattern:\n- `fit()`: Learn parameters from training data\n- `transform()`: Apply the transformation\n- `fit_transform()`: Do both in one step",
+                "code": "from sklearn.preprocessing import StandardScaler, MinMaxScaler\nfrom sklearn.preprocessing import LabelEncoder, OneHotEncoder\n\n# StandardScaler: zero mean, unit variance\nscaler = StandardScaler()\nX = [[1, 2], [3, 4], [5, 6]]\n\nscaler.fit(X)                    # Learn mean and std\nX_scaled = scaler.transform(X)   # Apply scaling\n# Or in one step:\nX_scaled = scaler.fit_transform(X)\n\nprint(f\"Mean: {X_scaled.mean(axis=0)}\")  # [0, 0]\nprint(f\"Std: {X_scaled.std(axis=0)}\")    # [1, 1]\n\n# IMPORTANT: Only fit on training data!\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)  # Use same scaler!\n\n# Encode categorical variables\nencoder = LabelEncoder()\ncategories = ['cat', 'dog', 'cat', 'bird']\nencoded = encoder.fit_transform(categories)  # [0, 1, 0, 2]"
+              },
+              {
+                "title": "Train-Test Split and Model Evaluation",
+                "content": "Never evaluate on training data! Split your data and use proper metrics.",
+                "code": "from sklearn.model_selection import train_test_split, cross_val_score\nfrom sklearn.metrics import accuracy_score, classification_report\nfrom sklearn.datasets import load_iris\n\n# Load sample dataset\niris = load_iris()\nX, y = iris.data, iris.target\n\n# Split: 80% train, 20% test\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, \n    test_size=0.2, \n    random_state=42,\n    stratify=y  # Keep class proportions\n)\n\n# Train and evaluate\nclf = RandomForestClassifier(random_state=42)\nclf.fit(X_train, y_train)\ny_pred = clf.predict(X_test)\n\nprint(f\"Accuracy: {accuracy_score(y_test, y_pred):.2f}\")\nprint(classification_report(y_test, y_pred))\n\n# Cross-validation (more robust)\nscores = cross_val_score(clf, X, y, cv=5)  # 5-fold CV\nprint(f\"CV Accuracy: {scores.mean():.2f} (+/- {scores.std():.2f})\")"
+              },
+              {
+                "title": "Pipelines: Avoid Data Leakage",
+                "content": "**Data leakage** happens when information from the test set leaks into training. Pipelines prevent this by chaining preprocessing and model training.\n\n**Common mistake:** Scaling the entire dataset before splitting leaks test info into training!",
+                "code": "from sklearn.pipeline import Pipeline, make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\n\n# ❌ WRONG: Data leakage!\nscaler = StandardScaler()\nX_scaled = scaler.fit_transform(X)  # Uses ALL data including test!\nX_train, X_test = train_test_split(X_scaled, ...)\n\n# ✅ RIGHT: Use a Pipeline\npipe = make_pipeline(\n    StandardScaler(),\n    LogisticRegression()\n)\n\n# Pipeline handles everything correctly\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\npipe.fit(X_train, y_train)          # Scaler fits only on X_train\npipe.predict(X_test)                 # Scaler transforms X_test\n\n# Cross-validation with pipeline\nfrom sklearn.model_selection import cross_val_score\nscores = cross_val_score(pipe, X, y, cv=5)  # Proper CV!"
+              },
+              {
+                "title": "Hyperparameter Tuning",
+                "content": "Find the best model settings automatically with grid search or random search.",
+                "code": "from sklearn.model_selection import GridSearchCV, RandomizedSearchCV\nfrom sklearn.ensemble import RandomForestClassifier\n\n# Define parameter grid\nparam_grid = {\n    'n_estimators': [50, 100, 200],\n    'max_depth': [3, 5, 10, None],\n    'min_samples_split': [2, 5, 10]\n}\n\n# Grid Search (tries all combinations)\ngrid_search = GridSearchCV(\n    RandomForestClassifier(random_state=42),\n    param_grid,\n    cv=5,\n    scoring='accuracy'\n)\ngrid_search.fit(X_train, y_train)\n\nprint(f\"Best params: {grid_search.best_params_}\")\nprint(f\"Best score: {grid_search.best_score_:.3f}\")\n\n# Use best model\nbest_model = grid_search.best_estimator_\ny_pred = best_model.predict(X_test)\n\n# RandomizedSearchCV is faster for large param spaces\nfrom scipy.stats import randint\nparam_dist = {\n    'n_estimators': randint(50, 200),\n    'max_depth': randint(3, 20)\n}\nrandom_search = RandomizedSearchCV(\n    RandomForestClassifier(), param_dist, \n    n_iter=20, cv=5, random_state=42\n)"
+              }
+            ],
+            "keyTakeaways": [
+              "All sklearn models use fit(X, y) and predict(X) - learn once, use everywhere",
+              "Always split data before preprocessing to avoid data leakage",
+              "Use Pipelines to chain preprocessing and models safely",
+              "Cross-validation gives more reliable performance estimates than a single split"
+            ],
+            "sources": [
+              {
+                "title": "Scikit-learn Getting Started",
+                "url": "https://scikit-learn.org/stable/getting_started.html"
+              },
+              {
+                "title": "Scikit-learn User Guide",
+                "url": "https://scikit-learn.org/stable/user_guide.html"
+              },
+              {
+                "title": "Hands-On Machine Learning with Scikit-Learn",
+                "author": "Aurélien Géron",
                 "year": 2022
               }
             ]

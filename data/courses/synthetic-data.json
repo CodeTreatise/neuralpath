@@ -1,0 +1,247 @@
+{
+  "id": "synthetic-data",
+  "title": "Synthetic Data Generation",
+  "description": "Create high-quality training data using AI - from distillation to augmentation to simulation",
+  "icon": "🧬",
+  "level": "intermediate",
+  "duration": "3 weeks",
+  "prerequisites": ["Understanding of what LLMs are (ChatGPT, Claude)", "Python basics (can read and modify code)", "OpenAI API access (for generating data)"],
+  "prerequisitesClarification": "You should know how to prompt an LLM. No ML math required. Get an OpenAI API key at platform.openai.com.",
+  "whatYouNeed": [
+    "OpenAI API key with ~$10-20 credit",
+    "Python 3.8+ installed",
+    "Basic Python knowledge (functions, loops, dictionaries)",
+    "No GPU required - we use cloud APIs"
+  ],
+  "learningOutcomes": [
+    "Understand what synthetic data is and when to use it",
+    "Generate instruction datasets to train AI models",
+    "Apply distillation to transfer knowledge from big to small models",
+    "Augment existing datasets for better coverage",
+    "Avoid common pitfalls like model collapse"
+  ],
+  "modules": [
+    {
+      "id": "synth-fundamentals",
+      "title": "Synthetic Data Fundamentals",
+      "lessons": [
+        {
+          "id": "what-is-synthetic-data",
+          "title": "What is Synthetic Data?",
+          "duration": "20 min",
+          "content": {
+            "overview": "Before diving in, let's understand what synthetic data is and why it's revolutionizing AI development.",
+            "sections": [
+              {
+                "title": "Synthetic Data Explained Simply",
+                "content": "**What is Synthetic Data?**\nSynthetic data is data created by AI to train other AI. Instead of collecting real examples from humans, we use one AI model to generate training examples for another.\n\n**Real-world analogy:**\nImagine you're teaching a new employee. Instead of having them shadow 1000 customer calls (expensive, slow), you write practice scenarios for them. That's synthetic data!\n\n**Key Terms You'll Need:**\n\n| Term | Simple Meaning | Example |\n|------|----------------|--------|\n| **Teacher model** | Big AI that generates data | GPT-4, Claude |\n| **Student model** | Smaller AI being trained | Llama 3 8B, Phi-3 |\n| **Distillation** | Teaching student by copying teacher | Student learns GPT-4's answers |\n| **Augmentation** | Making more data from existing data | Paraphrasing questions |\n| **Fine-tuning** | Training a model on specific data | Teaching model to be a customer service bot |",
+                "diagram": {
+                  "title": "The Synthetic Data Cycle",
+                  "code": "flowchart LR\n    T[\"🧠 Teacher Model\\n(GPT-4, Claude)\"] -->|\"Generates\"| D[\"📝 Synthetic Data\"]\n    D -->|\"Trains\"| S[\"🎓 Student Model\\n(Your fine-tuned model)\"]\n    \n    style T fill:#8b5cf6\n    style D fill:#fbbf24\n    style S fill:#10b981"
+                }
+              },
+              {
+                "title": "Why Not Just Use Real Data?",
+                "content": "**Challenges with real data:**\n\n❌ **Expensive**: Human annotation costs $10-50 per example\n❌ **Slow**: Collecting 10,000 examples takes months\n❌ **Privacy**: Can't use real customer data for training\n❌ **Rare cases**: Hard to find examples of unusual situations\n❌ **Copyright**: Much text data has legal restrictions\n\n**Synthetic data solves these:**\n\n✅ **Cheap**: Generate 10,000 examples for ~$10-50\n✅ **Fast**: Generate in hours, not months\n✅ **Private**: No real PII involved\n✅ **Edge cases**: Generate whatever scenarios you need\n✅ **Controllable**: Exact format and quality you want"
+              },
+              {
+                "title": "Setup: Getting Started",
+                "content": "**What you need for this course:**\n\n**1. OpenAI API Key**\n- Go to: https://platform.openai.com/api-keys\n- Create an account and add billing\n- Generate a new API key\n\n**2. Install Python packages:**\n```bash\npip install openai\n```\n\n**3. Set your API key:**\n```python\nimport os\nos.environ['OPENAI_API_KEY'] = 'your-key-here'\n\n# Or in terminal:\n# export OPENAI_API_KEY='your-key-here'\n```\n\n**Cost estimate:** This course's examples cost ~$5-20 in API calls total.",
+                "references": [
+                  {"title": "OpenAI API Documentation", "url": "https://platform.openai.com/docs"},
+                  {"title": "OpenAI Pricing", "url": "https://openai.com/pricing"}
+                ]
+              }
+            ],
+            "keyTakeaways": [
+              "Synthetic data = AI-generated data to train other AI",
+              "It's faster, cheaper, and more controllable than human data",
+              "You need an OpenAI API key (~$10-20 for this course)"
+            ],
+            "beginnerQuestions": [
+              {"q": "Is synthetic data as good as real data?", "a": "For many tasks, yes! Phi-3 was trained mostly on synthetic data and performs great. The key is quality filtering."},
+              {"q": "Is this legal/ethical?", "a": "Generally yes - you're using AI outputs to train AI. Check model terms of service. OpenAI allows this for most uses."},
+              {"q": "Why can't I just use ChatGPT directly?", "a": "API calls cost money and are slow. Training your own model is cheaper at scale and works offline."}
+            ]
+          }
+        },
+        {
+          "id": "why-synthetic-data",
+          "title": "When to Use Synthetic Data",
+          "duration": "30 min",
+          "content": {
+            "overview": "Synthetic data is powerful but not always the right choice. Learn when to use it and when to avoid it.",
+            "sections": [
+              {
+                "title": "The Synthetic Data Revolution",
+                "content": "Modern LLMs are increasingly trained on synthetic data:\n\n**Phi-3**: Trained largely on synthetic textbook-quality data\n**Llama 3**: Used synthetic data for instruction tuning\n**Alpaca**: Stanford's synthetic dataset changed the game\n\n**Why use synthetic data?**\n\n✅ **Scale**: Generate millions of examples cheaply\n✅ **Control**: Ensure quality, format, diversity\n✅ **Privacy**: Create realistic data without real PII\n✅ **Edge cases**: Generate rare scenarios\n✅ **Cost**: Cheaper than human annotation\n\n**Risks:**\n\n⚠️ **Model collapse**: Training on AI output degrades quality\n⚠️ **Bias amplification**: Inherits generator biases\n⚠️ **Hallucinations**: Fake facts get baked in\n⚠️ **Homogeneity**: Less diverse than real data",
+                "diagram": {
+                  "title": "Synthetic Data Pipeline",
+                  "code": "flowchart LR\n    subgraph Generation\n        T[Teacher LLM] --> S[Synthetic Data]\n    end\n    \n    subgraph Filtering\n        S --> F[Quality Filter]\n        F --> C[Curated Dataset]\n    end\n    \n    subgraph Training\n        C --> M[Student Model]\n    end\n    \n    style T fill:#8b5cf6\n    style M fill:#10b981"
+                }
+              },
+              {
+                "title": "Types of Synthetic Data",
+                "content": "**1. Instruction Data**\nQuestion-answer pairs for instruction tuning\n- Alpaca-style: instruction, input, output\n- Chat format: multi-turn conversations\n\n**2. Distillation Data**\nCapture a large model's behavior\n- Response distillation: Copy outputs\n- Reasoning distillation: Copy thought process\n\n**3. Augmentation Data**\nExpand existing datasets\n- Paraphrasing\n- Translation\n- Style transfer\n\n**4. Simulation Data**\nCreate realistic scenarios\n- Customer service conversations\n- Code with bugs\n- Edge cases",
+                "code": "# Types of synthetic data examples\nSYNTHETIC_DATA_TYPES = {\n    \"instruction\": {\n        \"format\": {\"instruction\": \"...\", \"input\": \"...\", \"output\": \"...\"},\n        \"example\": {\n            \"instruction\": \"Summarize the following text\",\n            \"input\": \"Long article about climate...\",\n            \"output\": \"Climate change impacts...\"\n        },\n        \"use_case\": \"Instruction-following fine-tuning\"\n    },\n    \"distillation\": {\n        \"format\": {\"prompt\": \"...\", \"teacher_response\": \"...\"},\n        \"example\": {\n            \"prompt\": \"Explain quantum computing\",\n            \"teacher_response\": \"GPT-4's detailed explanation...\"\n        },\n        \"use_case\": \"Transfer knowledge to smaller models\"\n    },\n    \"preference\": {\n        \"format\": {\"prompt\": \"...\", \"chosen\": \"...\", \"rejected\": \"...\"},\n        \"example\": {\n            \"prompt\": \"Write a poem about AI\",\n            \"chosen\": \"High-quality poem...\",\n            \"rejected\": \"Lower-quality poem...\"\n        },\n        \"use_case\": \"RLHF/DPO alignment training\"\n    },\n    \"conversation\": {\n        \"format\": {\"messages\": [{\"role\": \"...\", \"content\": \"...\"}]},\n        \"example\": {\n            \"messages\": [\n                {\"role\": \"user\", \"content\": \"Help me debug this code\"},\n                {\"role\": \"assistant\", \"content\": \"I see the issue...\"}\n            ]\n        },\n        \"use_case\": \"Chat fine-tuning\"\n    }\n}"
+              },
+              {
+                "title": "Quality Matters More Than Quantity",
+                "content": "The Phi-3 lesson: A small, high-quality dataset beats a large, noisy one.\n\n**Quality criteria:**\n- Factually correct\n- Clear and well-formatted\n- Diverse (topics, styles, difficulty)\n- Consistent with task requirements\n\n**Filtering strategies:**\n1. LLM-as-judge: Use another LLM to rate quality\n2. Rule-based: Length, format, keyword checks\n3. Deduplication: Remove near-duplicates\n4. Difficulty balancing: Mix easy and hard examples",
+                "code": "import openai\n\ndef quality_score(example, criteria):\n    \"\"\"Use LLM-as-judge to score synthetic data quality\"\"\"\n    response = openai.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Rate this example on a scale of 1-10 for each criterion.\n\nExample:\nInstruction: {example['instruction']}\nOutput: {example['output']}\n\nCriteria:\n1. Correctness: Is the output factually accurate?\n2. Helpfulness: Does it fully address the instruction?\n3. Clarity: Is it well-written and clear?\n4. Safety: Is it appropriate and harmless?\n\nRespond with JSON: {{\"correctness\": N, \"helpfulness\": N, \"clarity\": N, \"safety\": N}}\"\"\"\n        }],\n        response_format={\"type\": \"json_object\"}\n    )\n    \n    return json.loads(response.choices[0].message.content)\n\ndef filter_dataset(dataset, min_score=7):\n    \"\"\"Filter dataset keeping only high-quality examples\"\"\"\n    filtered = []\n    for example in dataset:\n        scores = quality_score(example, [\"correctness\", \"helpfulness\"])\n        avg_score = sum(scores.values()) / len(scores)\n        if avg_score >= min_score:\n            filtered.append(example)\n    return filtered"
+              }
+            ],
+            "keyTakeaways": [
+              "Synthetic data enables scaling instruction datasets cheaply",
+              "Quality beats quantity - filter aggressively",
+              "Watch for model collapse and bias amplification",
+              "LLM-as-judge is essential for quality filtering"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "generation-techniques",
+      "title": "Generation Techniques",
+      "lessons": [
+        {
+          "id": "instruction-generation",
+          "title": "Generating Instruction Data",
+          "duration": "45 min",
+          "content": {
+            "overview": "Learn the techniques behind Alpaca, WizardLM, and other synthetic instruction datasets.",
+            "sections": [
+              {
+                "title": "Self-Instruct: The Foundation",
+                "content": "Self-Instruct (Stanford Alpaca) pioneered synthetic instruction generation:\n\n1. Start with seed tasks (175 human-written)\n2. Generate new instructions using the LLM\n3. Generate inputs for instructions that need them\n4. Generate outputs for each instruction\n5. Filter low-quality examples\n6. Add to pool, repeat",
+                "code": "import openai\nimport random\n\ndef generate_instructions(seed_tasks, n_generate=1000):\n    \"\"\"\n    Self-Instruct style instruction generation\n    \"\"\"\n    generated = []\n    task_pool = seed_tasks.copy()\n    \n    for i in range(n_generate):\n        # Sample diverse examples from pool\n        examples = random.sample(task_pool, min(3, len(task_pool)))\n        examples_text = \"\\n\".join([\n            f\"{i+1}. {ex['instruction']}\" for i, ex in enumerate(examples)\n        ])\n        \n        # Generate new instruction\n        response = openai.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"\"\"Here are some example tasks:\n\n{examples_text}\n\nGenerate a new, different task instruction. Be creative and diverse.\nThe task should be something an AI assistant could help with.\nJust output the instruction, nothing else.\"\"\"\n            }],\n            temperature=0.9\n        )\n        \n        new_instruction = response.choices[0].message.content.strip()\n        \n        # Generate output for this instruction\n        output_response = openai.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": new_instruction\n            }]\n        )\n        \n        new_example = {\n            \"instruction\": new_instruction,\n            \"input\": \"\",\n            \"output\": output_response.choices[0].message.content\n        }\n        \n        generated.append(new_example)\n        task_pool.append(new_example)\n        \n        if i % 100 == 0:\n            print(f\"Generated {i} instructions\")\n    \n    return generated\n\n# Seed tasks\nSEED_TASKS = [\n    {\"instruction\": \"Write a poem about artificial intelligence\"},\n    {\"instruction\": \"Explain quantum computing to a 10-year-old\"},\n    {\"instruction\": \"Create a meal plan for a vegetarian athlete\"},\n]"
+              },
+              {
+                "title": "Evol-Instruct: Evolving Complexity",
+                "content": "WizardLM's Evol-Instruct creates progressively harder instructions:\n\n**Evolution strategies:**\n- **Deepening**: Add more constraints or steps\n- **Widening**: Increase scope or breadth\n- **Concretizing**: Add specific details\n- **Reasoning**: Require multi-step logic",
+                "code": "def evolve_instruction(instruction, evolution_type=\"deepen\"):\n    \"\"\"Evol-Instruct: Evolve instruction to be more complex\"\"\"\n    \n    evolution_prompts = {\n        \"deepen\": \"\"\"Rewrite this instruction to be more complex by:\n- Adding more constraints or requirements\n- Requiring multiple steps to complete\n- Adding edge cases to consider\n\nOriginal: {instruction}\n\nEvolved instruction (just the instruction, nothing else):\"\"\",\n        \n        \"widen\": \"\"\"Rewrite this instruction to be broader by:\n- Expanding the scope of the task\n- Including related sub-tasks\n- Covering more scenarios\n\nOriginal: {instruction}\n\nEvolved instruction:\"\"\",\n        \n        \"reasoning\": \"\"\"Rewrite this instruction to require more reasoning:\n- Add \"explain your reasoning\" or \"think step by step\"\n- Require comparison or analysis\n- Ask for justification\n\nOriginal: {instruction}\n\nEvolved instruction:\"\"\"\n    }\n    \n    prompt = evolution_prompts.get(evolution_type, evolution_prompts[\"deepen\"])\n    \n    response = openai.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": prompt.format(instruction=instruction)\n        }]\n    )\n    \n    return response.choices[0].message.content.strip()\n\n# Example evolution\nbase = \"Write a function to sort a list\"\nprint(evolve_instruction(base, \"deepen\"))\n# \"Write a function to sort a list of dictionaries by multiple keys,\n#  handling None values, with options for ascending/descending order,\n#  and include comprehensive error handling and type hints.\""
+              },
+              {
+                "title": "Domain-Specific Generation",
+                "content": "Generate task-specific training data:",
+                "code": "def generate_domain_data(domain, task_types, n_per_type=100):\n    \"\"\"\n    Generate domain-specific instruction data\n    \"\"\"\n    dataset = []\n    \n    domain_context = {\n        \"medical\": \"You are generating training data for a medical AI assistant.\",\n        \"legal\": \"You are generating training data for a legal AI assistant.\",\n        \"coding\": \"You are generating training data for a coding AI assistant.\",\n        \"customer_service\": \"You are generating training data for a customer service bot.\"\n    }\n    \n    for task_type in task_types:\n        print(f\"Generating {task_type} examples...\")\n        \n        for _ in range(n_per_type):\n            response = openai.chat.completions.create(\n                model=\"gpt-4o\",\n                messages=[\n                    {\n                        \"role\": \"system\",\n                        \"content\": domain_context.get(domain, \"\")\n                    },\n                    {\n                        \"role\": \"user\",\n                        \"content\": f\"\"\"Generate a realistic {task_type} example.\n\nFormat your response as JSON:\n{{\n    \"instruction\": \"the user's request or question\",\n    \"input\": \"any additional context (or empty string)\",\n    \"output\": \"the ideal assistant response\"\n}}\n\nMake it realistic and diverse. Include domain-specific terminology.\"\"\"\n                    }\n                ],\n                response_format={\"type\": \"json_object\"}\n            )\n            \n            example = json.loads(response.choices[0].message.content)\n            example[\"domain\"] = domain\n            example[\"task_type\"] = task_type\n            dataset.append(example)\n    \n    return dataset\n\n# Generate customer service data\ncs_data = generate_domain_data(\n    domain=\"customer_service\",\n    task_types=[\"refund_request\", \"product_inquiry\", \"complaint_handling\"],\n    n_per_type=50\n)"
+              }
+            ],
+            "keyTakeaways": [
+              "Self-Instruct bootstraps from a small seed set",
+              "Evol-Instruct creates progressively harder examples",
+              "Domain-specific generation requires careful prompting",
+              "Always filter for quality after generation"
+            ]
+          }
+        },
+        {
+          "id": "distillation",
+          "title": "Knowledge Distillation",
+          "duration": "40 min",
+          "content": {
+            "overview": "Transfer knowledge from large teacher models to smaller student models through synthetic data.",
+            "sections": [
+              {
+                "title": "Response Distillation",
+                "content": "The simplest form: Have the teacher generate responses, train the student on them.\n\n**Process:**\n1. Collect diverse prompts\n2. Generate teacher responses\n3. Fine-tune student on (prompt, teacher_response) pairs\n\n**Key insight**: The student learns the teacher's behavior, not just the answers.",
+                "code": "def distill_responses(prompts, teacher_model=\"gpt-4o\", n_responses=1):\n    \"\"\"\n    Generate teacher responses for distillation\n    \"\"\"\n    distillation_data = []\n    \n    for prompt in prompts:\n        for _ in range(n_responses):\n            response = openai.chat.completions.create(\n                model=teacher_model,\n                messages=[{\"role\": \"user\", \"content\": prompt}],\n                temperature=0.7\n            )\n            \n            distillation_data.append({\n                \"messages\": [\n                    {\"role\": \"user\", \"content\": prompt},\n                    {\"role\": \"assistant\", \"content\": response.choices[0].message.content}\n                ]\n            })\n    \n    return distillation_data\n\n# Distill from GPT-4 to train a smaller model\nprompts = [\n    \"Explain machine learning\",\n    \"Write a Python function to reverse a string\",\n    \"What are the benefits of exercise?\"\n]\n\ntraining_data = distill_responses(prompts)"
+              },
+              {
+                "title": "Reasoning Distillation",
+                "content": "Capture the teacher's reasoning process, not just final answers:\n\n**Chain-of-Thought distillation:**\n- Have teacher show reasoning steps\n- Student learns the thinking process\n- Improves student's reasoning ability",
+                "code": "def distill_reasoning(problems, teacher_model=\"gpt-4o\"):\n    \"\"\"\n    Distill chain-of-thought reasoning from teacher\n    \"\"\"\n    reasoning_data = []\n    \n    system_prompt = \"\"\"You are a helpful assistant that explains your reasoning step by step.\nWhen solving problems, show your complete thought process.\nFormat: Think through the problem, then provide the answer.\"\"\"\n    \n    for problem in problems:\n        response = openai.chat.completions.create(\n            model=teacher_model,\n            messages=[\n                {\"role\": \"system\", \"content\": system_prompt},\n                {\"role\": \"user\", \"content\": problem}\n            ]\n        )\n        \n        reasoning_data.append({\n            \"messages\": [\n                {\"role\": \"system\", \"content\": \"You are a helpful assistant that thinks step by step.\"},\n                {\"role\": \"user\", \"content\": problem},\n                {\"role\": \"assistant\", \"content\": response.choices[0].message.content}\n            ]\n        })\n    \n    return reasoning_data\n\n# Math reasoning distillation\nmath_problems = [\n    \"A train travels 120 miles in 2 hours. How long will it take to travel 300 miles?\",\n    \"If a shirt costs $25 and is on sale for 20% off, what is the sale price?\"\n]\n\nreasoning_data = distill_reasoning(math_problems)"
+              },
+              {
+                "title": "Selective Distillation",
+                "content": "Don't distill everything - focus on where the student struggles:",
+                "code": "def selective_distillation(student_model, teacher_model, test_prompts):\n    \"\"\"\n    Only distill examples where student fails\n    \"\"\"\n    distill_examples = []\n    \n    for prompt in test_prompts:\n        # Get student response\n        student_response = generate(student_model, prompt)\n        \n        # Get teacher response\n        teacher_response = generate(teacher_model, prompt)\n        \n        # Evaluate if student needs help\n        # (Could use LLM-as-judge or task-specific metrics)\n        student_score = evaluate_response(prompt, student_response)\n        teacher_score = evaluate_response(prompt, teacher_response)\n        \n        if teacher_score > student_score + 0.2:  # Teacher significantly better\n            distill_examples.append({\n                \"prompt\": prompt,\n                \"response\": teacher_response,  # Use teacher's response\n                \"student_gap\": teacher_score - student_score\n            })\n    \n    # Sort by gap - focus on biggest improvements\n    distill_examples.sort(key=lambda x: x[\"student_gap\"], reverse=True)\n    \n    return distill_examples"
+              }
+            ],
+            "keyTakeaways": [
+              "Response distillation transfers teacher behavior to student",
+              "Reasoning distillation captures the thinking process",
+              "Selective distillation focuses on student weaknesses",
+              "Quality and diversity of prompts matter more than quantity"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "augmentation",
+      "title": "Data Augmentation",
+      "lessons": [
+        {
+          "id": "augmentation-techniques",
+          "title": "Augmentation Strategies",
+          "duration": "35 min",
+          "content": {
+            "overview": "Expand existing datasets through paraphrasing, back-translation, and semantic augmentation.",
+            "sections": [
+              {
+                "title": "Paraphrasing",
+                "content": "Generate multiple versions of the same example:",
+                "code": "def paraphrase_examples(examples, n_paraphrases=3):\n    \"\"\"\n    Generate paraphrased versions of instructions\n    \"\"\"\n    augmented = []\n    \n    for example in examples:\n        # Keep original\n        augmented.append(example)\n        \n        # Generate paraphrases\n        response = openai.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"\"\"Generate {n_paraphrases} different ways to phrase this instruction.\nKeep the same meaning but vary the wording.\n\nOriginal: {example['instruction']}\n\nProvide {n_paraphrases} paraphrases as a JSON array of strings.\"\"\"\n            }],\n            response_format={\"type\": \"json_object\"}\n        )\n        \n        paraphrases = json.loads(response.choices[0].message.content)\n        \n        for para in paraphrases.get(\"paraphrases\", []):\n            augmented.append({\n                \"instruction\": para,\n                \"input\": example.get(\"input\", \"\"),\n                \"output\": example[\"output\"],\n                \"augmented_from\": example[\"instruction\"]\n            })\n    \n    return augmented\n\n# Example\noriginal = [{\"instruction\": \"Summarize this article\", \"output\": \"...\"}]\naugmented = paraphrase_examples(original)\n# Produces: \"Provide a summary\", \"Give me the main points\", etc."
+              },
+              {
+                "title": "Difficulty Augmentation",
+                "content": "Create easier and harder versions of examples:",
+                "code": "def adjust_difficulty(example, target_level):\n    \"\"\"\n    Adjust instruction difficulty up or down\n    \"\"\"\n    prompts = {\n        \"easier\": f\"\"\"Simplify this instruction to make it easier.\nRemove constraints, simplify the task, make it more basic.\n\nOriginal: {example['instruction']}\n\nSimplified version:\"\"\",\n        \n        \"harder\": f\"\"\"Make this instruction more challenging.\nAdd constraints, require more steps, increase complexity.\n\nOriginal: {example['instruction']}\n\nMore challenging version:\"\"\"\n    }\n    \n    response = openai.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\"role\": \"user\", \"content\": prompts[target_level]}]\n    )\n    \n    new_instruction = response.choices[0].message.content.strip()\n    \n    # Generate new output for modified instruction\n    output_response = openai.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\"role\": \"user\", \"content\": new_instruction}]\n    )\n    \n    return {\n        \"instruction\": new_instruction,\n        \"output\": output_response.choices[0].message.content,\n        \"difficulty\": target_level,\n        \"original\": example[\"instruction\"]\n    }"
+              },
+              {
+                "title": "Negative Examples",
+                "content": "Generate examples of what NOT to do for preference learning:",
+                "code": "def generate_preference_pair(instruction):\n    \"\"\"\n    Generate chosen/rejected pairs for DPO training\n    \"\"\"\n    # Generate good response\n    good_response = openai.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[\n            {\"role\": \"system\", \"content\": \"You are a helpful, harmless, and honest assistant.\"},\n            {\"role\": \"user\", \"content\": instruction}\n        ]\n    ).choices[0].message.content\n    \n    # Generate intentionally worse response\n    bad_response = openai.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Given this instruction: {instruction}\n\nGenerate a response that is:\n- Less helpful (misses key points)\n- More verbose than needed\n- Slightly off-topic\n- But still somewhat relevant (not completely wrong)\n\nThis is for training a preference model.\"\"\"\n        }]\n    ).choices[0].message.content\n    \n    return {\n        \"prompt\": instruction,\n        \"chosen\": good_response,\n        \"rejected\": bad_response\n    }\n\n# Generate preference dataset\npreference_data = [generate_preference_pair(inst) for inst in instructions]"
+              }
+            ],
+            "keyTakeaways": [
+              "Paraphrasing expands dataset with semantic diversity",
+              "Difficulty adjustment creates curriculum for training",
+              "Negative examples enable preference-based training",
+              "Combine augmentation techniques for best results"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "best-practices",
+      "title": "Best Practices",
+      "lessons": [
+        {
+          "id": "avoiding-pitfalls",
+          "title": "Avoiding Synthetic Data Pitfalls",
+          "duration": "35 min",
+          "content": {
+            "overview": "Synthetic data has risks. Learn to detect and mitigate model collapse, bias, and quality degradation.",
+            "sections": [
+              {
+                "title": "Preventing Model Collapse",
+                "content": "Training on AI-generated data can cause models to degrade:\n\n**Symptoms:**\n- Repetitive outputs\n- Loss of diversity\n- Degraded quality over generations\n\n**Prevention:**\n1. **Mix with real data**: Keep 30-50% human-written data\n2. **Fresh generators**: Don't train generator on its own output\n3. **Quality filtering**: Aggressively remove low-quality samples\n4. **Diversity metrics**: Monitor output diversity during training",
+                "code": "from collections import Counter\nimport numpy as np\n\ndef measure_diversity(texts):\n    \"\"\"Measure lexical diversity of generated texts\"\"\"\n    all_words = []\n    for text in texts:\n        all_words.extend(text.lower().split())\n    \n    word_counts = Counter(all_words)\n    total_words = len(all_words)\n    unique_words = len(word_counts)\n    \n    # Type-Token Ratio\n    ttr = unique_words / total_words if total_words > 0 else 0\n    \n    # Entropy\n    probs = np.array(list(word_counts.values())) / total_words\n    entropy = -np.sum(probs * np.log2(probs + 1e-10))\n    \n    return {\n        \"type_token_ratio\": ttr,\n        \"entropy\": entropy,\n        \"unique_words\": unique_words,\n        \"total_words\": total_words\n    }\n\ndef detect_collapse(new_diversity, baseline_diversity, threshold=0.8):\n    \"\"\"Detect if model is collapsing based on diversity drop\"\"\"\n    ratio = new_diversity[\"entropy\"] / baseline_diversity[\"entropy\"]\n    if ratio < threshold:\n        print(f\"WARNING: Diversity dropped to {ratio:.2%} of baseline\")\n        return True\n    return False"
+              },
+              {
+                "title": "Decontamination",
+                "content": "Ensure synthetic data doesn't leak benchmark answers:",
+                "code": "from datasketch import MinHash, MinHashLSH\n\ndef decontaminate_dataset(synthetic_data, benchmark_data, threshold=0.8):\n    \"\"\"\n    Remove synthetic examples too similar to benchmark data\n    \"\"\"\n    # Create LSH index of benchmark data\n    lsh = MinHashLSH(threshold=threshold, num_perm=128)\n    \n    benchmark_hashes = {}\n    for i, text in enumerate(benchmark_data):\n        mh = MinHash(num_perm=128)\n        for word in text.lower().split():\n            mh.update(word.encode())\n        lsh.insert(f\"benchmark_{i}\", mh)\n        benchmark_hashes[f\"benchmark_{i}\"] = text\n    \n    # Filter synthetic data\n    clean_data = []\n    contaminated = []\n    \n    for example in synthetic_data:\n        text = example.get(\"output\", \"\") + example.get(\"instruction\", \"\")\n        mh = MinHash(num_perm=128)\n        for word in text.lower().split():\n            mh.update(word.encode())\n        \n        # Check for similar benchmark examples\n        matches = lsh.query(mh)\n        if matches:\n            contaminated.append((example, matches))\n        else:\n            clean_data.append(example)\n    \n    print(f\"Removed {len(contaminated)} contaminated examples\")\n    return clean_data, contaminated"
+              },
+              {
+                "title": "Quality Assurance Pipeline",
+                "content": "A complete pipeline for synthetic data QA:",
+                "code": "class SyntheticDataPipeline:\n    def __init__(self, generator_model=\"gpt-4o\"):\n        self.generator = generator_model\n        self.quality_threshold = 7.0\n        \n    def generate(self, prompts, n_per_prompt=1):\n        \"\"\"Generate synthetic examples\"\"\"\n        examples = []\n        for prompt in prompts:\n            for _ in range(n_per_prompt):\n                example = self._generate_one(prompt)\n                examples.append(example)\n        return examples\n    \n    def filter_quality(self, examples):\n        \"\"\"Filter by quality score\"\"\"\n        filtered = []\n        for ex in examples:\n            score = self._score_quality(ex)\n            if score >= self.quality_threshold:\n                ex[\"quality_score\"] = score\n                filtered.append(ex)\n        print(f\"Quality filter: {len(filtered)}/{len(examples)} passed\")\n        return filtered\n    \n    def deduplicate(self, examples, threshold=0.9):\n        \"\"\"Remove near-duplicates\"\"\"\n        unique = []\n        seen_hashes = set()\n        for ex in examples:\n            h = self._hash_example(ex)\n            if h not in seen_hashes:\n                unique.append(ex)\n                seen_hashes.add(h)\n        print(f\"Dedup: {len(unique)}/{len(examples)} unique\")\n        return unique\n    \n    def balance(self, examples, key=\"task_type\"):\n        \"\"\"Balance dataset by category\"\"\"\n        from collections import defaultdict\n        by_category = defaultdict(list)\n        for ex in examples:\n            by_category[ex.get(key, \"unknown\")].append(ex)\n        \n        min_count = min(len(v) for v in by_category.values())\n        balanced = []\n        for category, exs in by_category.items():\n            balanced.extend(random.sample(exs, min_count))\n        \n        print(f\"Balanced to {min_count} per category\")\n        return balanced\n    \n    def run(self, prompts):\n        \"\"\"Full pipeline\"\"\"\n        examples = self.generate(prompts)\n        examples = self.filter_quality(examples)\n        examples = self.deduplicate(examples)\n        examples = self.balance(examples)\n        return examples"
+              }
+            ],
+            "keyTakeaways": [
+              "Mix synthetic with real data to prevent collapse",
+              "Monitor diversity metrics during training",
+              "Decontaminate against benchmark data",
+              "Build a complete QA pipeline for production use"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

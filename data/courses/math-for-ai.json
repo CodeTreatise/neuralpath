@@ -5,10 +5,17 @@
   "description": "Master the essential mathematical foundations needed for machine learning and deep learning.",
   "level": "beginner",
   "duration": "6 weeks",
-  "totalLessons": 18,
+  "totalLessons": 19,
   "prerequisites": [
-    "Basic algebra",
-    "High school math"
+    "Basic arithmetic (add, subtract, multiply, divide)",
+    "Understanding of variables (like x and y in equations)",
+    "No calculus required - we'll teach what you need!"
+  ],
+  "whatYouNeed": [
+    "Calculator or any spreadsheet app",
+    "Python 3.8+ (for code examples)",
+    "No advanced math background - we start from scratch!",
+    "Curiosity about how AI works under the hood"
   ],
   "outcomes": [
     "Understand vectors, matrices, and linear transformations",
@@ -17,6 +24,43 @@
     "Implement gradient descent from scratch"
   ],
   "modules": [
+    {
+      "id": "getting-started",
+      "title": "Why Math for AI?",
+      "description": "Understand what math you actually need and how it connects to AI",
+      "lessons": [
+        {
+          "id": "intro",
+          "title": "Math for AI: What You Actually Need",
+          "type": "lesson",
+          "duration": "15 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## Don't Panic! 🎯\n\nIf math scared you in school, here's the good news: **you don't need to be a mathematician to do AI.**\n\nYou need to understand:\n1. **What** the math is doing (conceptually)\n2. **Why** it's used in AI\n3. **How** to use it in code (computers do the hard calculations!)\n\nYou do NOT need to:\n- Prove theorems\n- Do calculations by hand\n- Remember every formula"
+            },
+            {
+              "type": "text",
+              "content": "## The 4 Math Topics for AI\n\n| Topic | What It Is | Why AI Uses It |\n|-------|-----------|---------------|\n| **Linear Algebra** | Working with lists of numbers | Data comes as lists! |\n| **Calculus** | How things change | Finding the best model settings |\n| **Probability** | Dealing with uncertainty | Predictions aren't 100% certain |\n| **Optimization** | Finding the best solution | Training = finding best weights |\n\nThat's it! This course covers all four in a practical, code-first way."
+            },
+            {
+              "type": "text",
+              "content": "## Key Terms We'll Use\n\nBefore we dive in, let's define terms you'll see everywhere:\n\n- **Scalar**: Just a single number (like 5, 3.14, or -2)\n- **Vector**: A list of numbers [1, 2, 3]\n- **Matrix**: A grid of numbers (like a spreadsheet)\n- **Function**: Takes input, gives output (like a recipe)\n- **Derivative**: How fast something changes\n- **Gradient**: Which direction is 'uphill'\n\nDon't memorize these - they'll become natural as we use them!"
+            },
+            {
+              "type": "text",
+              "content": "## Common Beginner Questions\n\n**Q: Do I need to be good at math?**\nA: No! If you can follow a recipe, you can learn this. Code handles the calculations.\n\n**Q: What if I don't understand something?**\nA: That's normal! Read the concept, look at the code, run it yourself. Understanding comes from doing.\n\n**Q: Will there be formulas?**\nA: Yes, but we always explain in plain English first. Formulas are just precise notation.\n\n**Q: Should I memorize formulas?**\nA: No. Understand what they do. You can always look them up."
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Your First AI Math - It's Just Lists!",
+              "code": "# AI math is mostly working with lists of numbers!\n\n# A person's data (age, income in thousands, credit score)\nperson = [25, 50, 720]\n\n# This list IS a vector in math terms!\n# AI models process millions of these\n\n# Multiple people = a grid (matrix)\npeople = [\n    [25, 50, 720],\n    [35, 80, 680],\n    [45, 120, 750]\n]\n\n# That's a 3x3 matrix - 3 people, 3 features each\n# See? Math isn't scary when it's just data!\n\nprint(f\"Person 1 age: {people[0][0]}\")\nprint(f\"Person 2 income: {people[1][1]}k\")\nprint(f\"Total people: {len(people)}\")"
+            }
+          ]
+        }
+      ]
+    },
     {
       "id": "linear-algebra",
       "title": "Linear Algebra Essentials",
@@ -30,7 +74,37 @@
           "content": [
             {
               "type": "text",
-              "content": "## What is a Vector?\n\nA **vector** is an ordered list of numbers that represents a point or direction in space. In ML, vectors represent data points, features, and model parameters.\n\n$$\\vec{v} = \\begin{bmatrix} v_1 \\\\ v_2 \\\\ \\vdots \\\\ v_n \\end{bmatrix}$$\n\n**Examples in ML:**\n- A data point with 3 features: $\\vec{x} = [age, income, credit\\_score]$\n- Word embeddings: 300-dimensional vectors representing words\n- Image pixels: Flattened into vectors of RGB values"
+              "content": "## What is a Vector? (Plain English First!)\n\n**A vector is just a list of numbers.** That's it!\n\n```\n[1, 2, 3] ← This is a vector\n[age, height, weight] ← So is this\n```\n\nIn math notation, we write it vertically:\n$$\\vec{v} = \\begin{bmatrix} v_1 \\\\ v_2 \\\\ \\vdots \\\\ v_n \\end{bmatrix}$$\n\nBut in code, it's just a list: `[v1, v2, v3, ...]`"
+            },
+            {
+              "type": "text",
+              "content": "## Why Vectors in AI?\n\nEverything in AI is converted to vectors:\n\n| Real World | As a Vector |\n|------------|-------------|\n| A photo | [pixel1, pixel2, ... pixel1000000] |\n| A word | [0.2, -0.5, 0.8, ... 300 numbers] |\n| A person | [age, income, credit_score] |\n| A song | [tempo, loudness, energy, ...] |\n\nAI models take vectors in, do math, output vectors."
+            },
+            {
+              "type": "text",
+              "content": "## Vector Operations\n\n### Addition (combine vectors)\nAdd matching positions:\n```\n[1, 2, 3] + [4, 5, 6] = [5, 7, 9]\n```\n\n### Scalar Multiplication (scale a vector)\nMultiply every number:\n```\n2 × [1, 2, 3] = [2, 4, 6]\n```\n\n### Dot Product (measure similarity) ⭐\nMultiply matching positions and add up:\n```\n[1, 2, 3] · [4, 5, 6] = 1×4 + 2×5 + 3×6 = 32\n```\n\n**This is HUGE in AI!** The dot product measures how similar two vectors are."
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Vector Operations in NumPy",
+              "code": "import numpy as np\n\n# Create vectors (just lists of numbers!)\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\n\n# Vector addition - add matching positions\nprint(f\"a + b = {a + b}\")  # [5, 7, 9]\n\n# Scalar multiplication - multiply every number\nprint(f\"2 * a = {2 * a}\")  # [2, 4, 6]\n\n# Dot product - measures similarity!\nprint(f\"a · b = {np.dot(a, b)}\")  # 32\n\n# Magnitude (length) - how 'big' is the vector?\nmagnitude = np.linalg.norm(a)\nprint(f\"|a| = {magnitude:.2f}\")  # 3.74\n\n# Unit vector - same direction, length = 1\nunit_a = a / np.linalg.norm(a)\nprint(f\"Unit vector: {unit_a}\")"
+            },
+            {
+              "type": "text",
+              "content": "## When Will You Use This?\n\n- **Dot product**: Attention in transformers, similarity search\n- **Vector addition**: Combining embeddings\n- **Normalization**: Making vectors comparable\n\n**Real example**: When ChatGPT finds relevant context, it uses dot products to compare your question vector with all stored text vectors!"
+            }
+          ]
+        },
+        {
+          "id": "matrices",
+          "title": "Matrices and Matrix Operations",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": [
+            {
+              "type": "text",
+              "content": "## What is a Matrix? (Plain English First!)\n\n**A matrix is a grid of numbers** - like a spreadsheet!\n\n```\n| 1  2  3 |\n| 4  5  6 |\n```\n\nThis is a 2×3 matrix (2 rows, 3 columns).\n\nIn math notation:\n$$A = \\begin{bmatrix} a_{11} & a_{12} & a_{13} \\\\ a_{21} & a_{22} & a_{23} \\end{bmatrix}$$\n\nIn code, it's just a list of lists!"
             },
             {
               "type": "text",

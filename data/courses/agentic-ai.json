@@ -5,7 +5,15 @@
   "icon": "🤖",
   "level": "advanced",
   "duration": "5 weeks",
-  "prerequisites": ["LLM fundamentals", "Prompt Engineering", "Python programming"],
+  "prerequisites": [
+    "Comfortable with Python functions and classes",
+    "Have used LLM APIs (OpenAI, Anthropic, or Ollama)",
+    "Basic understanding of prompts and responses"
+  ],
+  "whatYouNeed": {
+    "skills": "If you've built a chatbot or used the OpenAI API, you're ready!",
+    "time": "5 weeks, ~6 hours per week"
+  },
   "learningOutcomes": [
     "Understand the core architecture of AI agents",
     "Implement tool use and function calling patterns",
@@ -13,6 +21,43 @@
     "Design and orchestrate multi-agent systems"
   ],
   "modules": [
+    {
+      "id": "agent-intro",
+      "title": "Introduction to AI Agents",
+      "lessons": [
+        {
+          "id": "agents-explained",
+          "title": "What Are AI Agents? (Plain English)",
+          "duration": "15 min",
+          "content": {
+            "overview": "Before diving into code, let's understand what makes an 'agent' different from a regular chatbot.",
+            "sections": [
+              {
+                "title": "Chatbot vs Agent",
+                "content": "**Regular Chatbot (like ChatGPT):**\n- You ask → It answers\n- One response at a time\n- Can't take actions\n- You do the thinking\n\n**AI Agent:**\n- You give a goal → It figures out how\n- Multiple steps automatically\n- Can use tools (search, code, APIs)\n- IT does the thinking\n\n**Example Goal**: 'Book me a flight to Paris next Friday under $500'\n- Chatbot: Tells you how to search for flights\n- Agent: Actually searches, compares prices, books it"
+              },
+              {
+                "title": "The Agent Loop (Think → Act → Learn)",
+                "content": "Every agent follows the same pattern:\n\n**1. THINK**: What should I do next?\n- 'I need to search for flights'\n\n**2. ACT**: Use a tool to do something\n- Calls flight search API\n\n**3. OBSERVE**: What happened?\n- 'Found 5 flights, cheapest is $450'\n\n**4. REPEAT** until goal is achieved\n\nThis loop runs automatically until done!"
+              },
+              {
+                "title": "What Can Agents Do?",
+                "content": "| Agent Type | What It Does |\n|------------|-------------|\n| Research Agent | Searches web, reads papers, summarizes |\n| Coding Agent | Writes, tests, and fixes code |\n| Data Agent | Queries databases, makes charts |\n| Shopping Agent | Finds products, compares prices |\n| Customer Service | Answers questions, opens tickets |\n| Personal Assistant | Manages calendar, sends emails |"
+              },
+              {
+                "title": "Beginner Questions",
+                "content": "**Q: Are agents dangerous?**\nA: They can only do what you allow. You control which tools they have.\n\n**Q: How smart are they?**\nA: Only as smart as the LLM powering them. GPT-4 agents > GPT-3.5 agents.\n\n**Q: Can I build one?**\nA: Yes! With LangChain, a basic agent is ~30 lines of code.\n\n**Q: Do they always work?**\nA: No. They can get stuck, make mistakes, or loop forever. That's why we add guardrails."
+              }
+            ],
+            "keyTakeaways": [
+              "Agents = LLMs that can use tools and complete multi-step tasks",
+              "They follow: Think → Act → Observe → Repeat",
+              "You control what tools they have access to"
+            ]
+          }
+        }
+      ]
+    },
     {
       "id": "agent-fundamentals",
       "title": "Agent Fundamentals",
@@ -69,7 +114,7 @@
             ],
             "sources": [
               {"title": "ReAct: Synergizing Reasoning and Acting", "url": "https://arxiv.org/abs/2210.03629"},
-              {"title": "LangChain Agents Documentation", "url": "https://python.langchain.com/docs/modules/agents/"},
+              {"title": "LangChain Agents (Official Docs)", "url": "https://docs.langchain.com/oss/python/langchain/agents"},
               {"title": "LLM Powered Autonomous Agents - Lilian Weng", "url": "https://lilianweng.github.io/posts/2023-06-23-agent/"}
             ]
           }
@@ -181,6 +226,7 @@
             ],
             "sources": [
               {"title": "OpenAI Function Calling Guide", "url": "https://platform.openai.com/docs/guides/function-calling"},
+              {"title": "OpenAI Structured Outputs (100% Schema Match)", "url": "https://openai.com/index/introducing-structured-outputs-in-the-api/"},
               {"title": "Anthropic Tool Use", "url": "https://docs.anthropic.com/claude/docs/tool-use"}
             ]
           }

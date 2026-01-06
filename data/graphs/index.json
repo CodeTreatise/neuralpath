@@ -1,6 +1,16 @@
 {
   "graphs": [
     {
+      "id": "ai-periodic-table",
+      "title": "The AI Periodic Table",
+      "icon": "🧪",
+      "description": "A comprehensive periodic table of Generative AI elements: from infrastructure and models to agents and safety.",
+      "nodeCount": 18,
+      "category": "overview",
+      "tags": ["landscape", "infrastructure", "models", "rag", "agents", "safety"],
+      "featured": true
+    },
+    {
       "id": "generative-ai",
       "title": "Generative AI Landscape",
       "icon": "🌐",

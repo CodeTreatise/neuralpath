@@ -522,6 +522,258 @@
           ]
         }
       ]
+    },
+    {
+      "id": "small-language-models",
+      "title": "Small Language Models",
+      "icon": "📱",
+      "description": "Master efficient AI with Phi, Gemma, and Llama models. Learn quantization, local deployment with Ollama and llama.cpp, and edge computing.",
+      "level": "intermediate",
+      "duration": "3 weeks",
+      "totalLessons": 12,
+      "modules": [
+        {
+          "title": "SLM Fundamentals",
+          "description": "Understanding small language models and when to use them",
+          "lessons": [
+            { "id": "slm-landscape", "title": "The SLM Landscape", "type": "lesson", "duration": "30 min" },
+            { "id": "model-selection", "title": "Choosing the Right SLM", "type": "lesson", "duration": "25 min" }
+          ]
+        },
+        {
+          "title": "Running Local Models",
+          "description": "Deploy models locally with Ollama, llama.cpp, and HuggingFace",
+          "lessons": [
+            { "id": "ollama-basics", "title": "Getting Started with Ollama", "type": "lesson", "duration": "35 min" },
+            { "id": "llamacpp", "title": "llama.cpp for Maximum Control", "type": "lesson", "duration": "40 min" }
+          ]
+        },
+        {
+          "title": "Quantization",
+          "description": "Reduce model size with GGUF, bitsandbytes, and AWQ",
+          "lessons": [
+            { "id": "quantization-theory", "title": "Quantization Theory", "type": "lesson", "duration": "35 min" },
+            { "id": "practical-quantization", "title": "Practical Quantization", "type": "lesson", "duration": "40 min" }
+          ]
+        },
+        {
+          "title": "Edge Deployment",
+          "description": "Run models on mobile, Raspberry Pi, and in browsers",
+          "lessons": [
+            { "id": "edge-deployment", "title": "Edge Deployment Strategies", "type": "lesson", "duration": "45 min" },
+            { "id": "webgpu-inference", "title": "Browser Inference with WebGPU", "type": "lesson", "duration": "40 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "synthetic-data",
+      "title": "Synthetic Data Generation",
+      "icon": "🧬",
+      "description": "Create high-quality training data with Self-Instruct, Evol-Instruct, knowledge distillation, and data augmentation techniques.",
+      "level": "advanced",
+      "duration": "3 weeks",
+      "totalLessons": 10,
+      "modules": [
+        {
+          "title": "Synthetic Data Fundamentals",
+          "description": "Why synthetic data matters and how to ensure quality",
+          "lessons": [
+            { "id": "why-synthetic", "title": "The Case for Synthetic Data", "type": "lesson", "duration": "30 min" }
+          ]
+        },
+        {
+          "title": "Generation Techniques",
+          "description": "Self-Instruct, Evol-Instruct, and Alpaca-style generation",
+          "lessons": [
+            { "id": "self-instruct", "title": "Self-Instruct Method", "type": "lesson", "duration": "40 min" },
+            { "id": "evol-instruct", "title": "Evol-Instruct for Complexity", "type": "lesson", "duration": "35 min" }
+          ]
+        },
+        {
+          "title": "Knowledge Distillation",
+          "description": "Transfer capabilities from large to small models",
+          "lessons": [
+            { "id": "distillation-basics", "title": "Distillation Fundamentals", "type": "lesson", "duration": "35 min" },
+            { "id": "reasoning-distillation", "title": "Distilling Reasoning", "type": "lesson", "duration": "40 min" }
+          ]
+        },
+        {
+          "title": "Data Augmentation",
+          "description": "Expand datasets with paraphrasing, translation, and more",
+          "lessons": [
+            { "id": "augmentation-techniques", "title": "Augmentation Techniques", "type": "lesson", "duration": "35 min" },
+            { "id": "quality-filtering", "title": "Quality Filtering", "type": "lesson", "duration": "30 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reasoning-models",
+      "title": "Reasoning & Thinking Models",
+      "icon": "🧠",
+      "description": "Master advanced reasoning with o1, Chain-of-Thought, Tree-of-Thoughts, self-consistency, and test-time compute scaling.",
+      "level": "advanced",
+      "duration": "3 weeks",
+      "totalLessons": 8,
+      "modules": [
+        {
+          "title": "Reasoning Fundamentals",
+          "description": "Understanding thinking models and when to use them",
+          "lessons": [
+            { "id": "thinking-vs-answering", "title": "Thinking vs Answering", "type": "lesson", "duration": "35 min" }
+          ]
+        },
+        {
+          "title": "Chain-of-Thought Techniques",
+          "description": "Zero-shot CoT, few-shot CoT, and self-consistency",
+          "lessons": [
+            { "id": "cot-fundamentals", "title": "Chain-of-Thought Prompting", "type": "lesson", "duration": "40 min" }
+          ]
+        },
+        {
+          "title": "Test-Time Compute Scaling",
+          "description": "More thinking = better answers",
+          "lessons": [
+            { "id": "scaling-inference", "title": "Scaling Compute at Inference", "type": "lesson", "duration": "45 min" }
+          ]
+        },
+        {
+          "title": "Practical Applications",
+          "description": "Math, code, analysis, and building reasoning pipelines",
+          "lessons": [
+            { "id": "reasoning-patterns", "title": "Reasoning Patterns in Practice", "type": "lesson", "duration": "45 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ai-safety-guardrails",
+      "title": "AI Safety & Guardrails",
+      "icon": "🛡️",
+      "description": "Build robust, safe AI systems with NeMo Guardrails, prompt injection defense, and red teaming techniques.",
+      "level": "advanced",
+      "duration": "3 weeks",
+      "totalLessons": 10,
+      "modules": [
+        {
+          "title": "Guardrails Fundamentals",
+          "description": "Why guardrails matter and how to implement them",
+          "lessons": [
+            { "id": "why-guardrails", "title": "Why Guardrails Matter", "type": "lesson", "duration": "30 min" }
+          ]
+        },
+        {
+          "title": "NeMo Guardrails",
+          "description": "Build with NVIDIA's guardrails toolkit",
+          "lessons": [
+            { "id": "nemo-intro", "title": "Building with NeMo Guardrails", "type": "lesson", "duration": "45 min" }
+          ]
+        },
+        {
+          "title": "Defending Against Prompt Injection",
+          "description": "Detection, prevention, and defense in depth",
+          "lessons": [
+            { "id": "injection-attacks", "title": "Understanding Prompt Injection", "type": "lesson", "duration": "40 min" }
+          ]
+        },
+        {
+          "title": "Red Teaming LLM Applications",
+          "description": "Find vulnerabilities before attackers do",
+          "lessons": [
+            { "id": "red-team-basics", "title": "Red Teaming Fundamentals", "type": "lesson", "duration": "45 min" }
+          ]
+        },
+        {
+          "title": "Production Safety Systems",
+          "description": "Defense in depth, monitoring, and incident response",
+          "lessons": [
+            { "id": "building-safe-systems", "title": "Building Safe Production Systems", "type": "lesson", "duration": "40 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "multimodal-ai",
+      "title": "Multimodal AI Systems",
+      "icon": "🎨",
+      "description": "Build AI applications that understand and generate across text, images, audio, and video. CLIP, GPT-4V, Whisper, and more.",
+      "level": "intermediate",
+      "duration": "4 weeks",
+      "totalLessons": 12,
+      "modules": [
+        {
+          "title": "Vision-Language Models",
+          "description": "GPT-4V, Claude Vision, and Gemini for image understanding",
+          "lessons": [
+            { "id": "understanding-vlms", "title": "Understanding Vision-Language Models", "type": "lesson", "duration": "35 min" }
+          ]
+        },
+        {
+          "title": "CLIP and Image-Text Embeddings",
+          "description": "Zero-shot classification and image search",
+          "lessons": [
+            { "id": "understanding-clip", "title": "Understanding CLIP", "type": "lesson", "duration": "40 min" }
+          ]
+        },
+        {
+          "title": "Audio AI Models",
+          "description": "Whisper for transcription, TTS for speech generation",
+          "lessons": [
+            { "id": "speech-to-text", "title": "Speech-to-Text with Whisper", "type": "lesson", "duration": "35 min" },
+            { "id": "text-to-speech", "title": "Text-to-Speech Generation", "type": "lesson", "duration": "30 min" }
+          ]
+        },
+        {
+          "title": "Advanced Multimodal Applications",
+          "description": "Video understanding and multimodal RAG",
+          "lessons": [
+            { "id": "video-understanding", "title": "Video Understanding", "type": "lesson", "duration": "35 min" },
+            { "id": "multimodal-rag", "title": "Multimodal RAG", "type": "lesson", "duration": "40 min" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "interpretability",
+      "title": "AI Interpretability & Explainability",
+      "icon": "🔍",
+      "description": "Deep dive into understanding AI decisions - from SHAP/LIME to mechanistic interpretability and circuit analysis.",
+      "level": "advanced",
+      "duration": "3 weeks",
+      "totalLessons": 10,
+      "modules": [
+        {
+          "title": "Interpretability Foundations",
+          "description": "Why interpretability matters and the different approaches",
+          "lessons": [
+            { "id": "why-interpretability", "title": "Why Interpretability Matters", "type": "lesson", "duration": "30 min" }
+          ]
+        },
+        {
+          "title": "Feature Attribution Methods",
+          "description": "SHAP, LIME, and integrated gradients",
+          "lessons": [
+            { "id": "shap-deep", "title": "SHAP: Shapley Additive Explanations", "type": "lesson", "duration": "45 min" },
+            { "id": "lime-deep", "title": "LIME: Local Interpretable Explanations", "type": "lesson", "duration": "35 min" }
+          ]
+        },
+        {
+          "title": "Attention Analysis",
+          "description": "Visualizing and interpreting transformer attention",
+          "lessons": [
+            { "id": "visualizing-attention", "title": "Visualizing Attention Patterns", "type": "lesson", "duration": "40 min" }
+          ]
+        },
+        {
+          "title": "Mechanistic Interpretability",
+          "description": "Probing, activation patching, and circuit analysis",
+          "lessons": [
+            { "id": "intro-mechanistic", "title": "Introduction to Mechanistic Interpretability", "type": "lesson", "duration": "40 min" },
+            { "id": "circuits", "title": "Circuit Analysis", "type": "lesson", "duration": "35 min" }
+          ]
+        }
+      ]
     }
   ]
 }

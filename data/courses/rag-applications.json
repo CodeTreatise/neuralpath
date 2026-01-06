@@ -5,8 +5,17 @@
   "description": "Build Retrieval-Augmented Generation apps with LangChain and vector databases.",
   "level": "advanced",
   "duration": "4 weeks",
-  "totalLessons": 18,
-  "prerequisites": ["Python Fundamentals", "LLM Basics"],
+  "totalLessons": 19,
+  "prerequisites": [
+    "Python basics (variables, functions, packages)",
+    "Understanding of what LLMs are (ChatGPT, Claude)",
+    "Ability to get an OpenAI API key"
+  ],
+  "whatYouNeed": {
+    "skills": "If you can write Python functions and have used ChatGPT, you're ready!",
+    "tools": "Python 3.9+, pip, OpenAI API key (or Ollama for free local option)",
+    "time": "4 weeks, ~5 hours per week"
+  },
   "outcomes": [
     "Understand RAG architecture and components",
     "Build production-ready RAG applications",
@@ -14,6 +23,87 @@
     "Optimize RAG performance"
   ],
   "modules": [
+    {
+      "title": "Getting Started with RAG",
+      "description": "Understand what RAG is and set up your environment",
+      "lessons": [
+        {
+          "id": "rag-intro",
+          "title": "What is RAG? (Plain English)",
+          "type": "lesson",
+          "duration": "10 min",
+          "content": {
+            "overview": "Before diving into code, let's understand what RAG is and why it's one of the most important patterns in AI applications today.",
+            "sections": [
+              {
+                "title": "The Problem: LLMs Have Limitations",
+                "content": "You've probably noticed ChatGPT sometimes:\n\n❌ **Gets facts wrong** - 'hallucinations'\n❌ **Doesn't know recent events** - training cutoff\n❌ **Can't read your documents** - no access to your data\n❌ **Says 'I don't know'** - for company-specific questions\n\n**Example**: Ask ChatGPT about your company's vacation policy. It can't answer because it has never seen your employee handbook!"
+              },
+              {
+                "title": "The Solution: RAG",
+                "content": "**RAG = Retrieval-Augmented Generation**\n\nIn plain English: **Give the AI your documents before it answers.**\n\nThink of it like:\n- ❌ Without RAG: Student taking a test from memory\n- ✅ With RAG: Student with open book, finding relevant pages first\n\nRAG lets the AI:\n1. **Search** your documents for relevant info\n2. **Read** the relevant parts\n3. **Answer** based on what it found\n\nResult: Accurate answers grounded in YOUR data!"
+              },
+              {
+                "title": "Real-World RAG Examples",
+                "content": "| Use Case | What RAG Does |\n|----------|---------------|\n| Customer Support | Searches your FAQ/docs to answer questions |\n| Legal Research | Finds relevant case law and clauses |\n| Code Assistant | Searches your codebase for context |\n| Study Helper | Answers questions from your textbooks |\n| Enterprise Search | Finds info across company docs |"
+              },
+              {
+                "title": "The RAG Recipe (5 Key Stages)",
+                "content": "Every RAG system follows five key stages (based on LlamaIndex framework):\n\n**1. LOADING** - Get data from where it lives\n- PDFs, Word docs, websites, databases, APIs\n- LlamaHub has 100+ connectors\n\n**2. INDEXING** - Create searchable structure\n- Split into chunks (nodes)\n- Convert to embeddings (vectors)\n- Add metadata for filtering\n\n**3. STORING** - Persist for reuse\n- Save to vector database\n- Avoid re-embedding on every query\n\n**4. QUERYING** - Find relevant info\n- Embed user's question\n- Search for similar chunks\n- Get top-k matches\n\n**5. EVALUATION** - Measure quality\n- Is the answer correct?\n- Did we retrieve the right chunks?\n- How fast is it?",
+                "diagram": {
+                  "title": "RAG Pipeline (5 Stages)",
+                  "code": "flowchart LR\n    subgraph Load[\"1. Loading\"]\n        D[Documents] --> L[Loader]\n    end\n    \n    subgraph Index[\"2. Indexing\"]\n        L --> C[Chunk]\n        C --> E[Embed]\n    end\n    \n    subgraph Store[\"3. Storing\"]\n        E --> V[(Vector DB)]\n    end\n    \n    subgraph Query[\"4. Querying\"]\n        Q[Question] --> QE[Embed Query]\n        QE --> S{Search}\n        V --> S\n        S --> LLM[Generate]\n    end\n    \n    subgraph Eval[\"5. Evaluation\"]\n        LLM --> M[Metrics]\n    end"
+                }
+              },
+              {
+                "title": "Official Learning Resources",
+                "content": "**Recommended Documentation:**\n\n| Resource | Best For |\n|----------|----------|\n| [LlamaIndex RAG Guide](https://developers.llamaindex.ai/python/framework/understanding/rag/) | Understanding RAG concepts |\n| [LangChain RAG Tutorial](https://python.langchain.com/docs/tutorials/rag/) | Hands-on implementation |\n| [OpenAI Embeddings Guide](https://platform.openai.com/docs/guides/embeddings) | Understanding embeddings |\n| [Pinecone Learning](https://www.pinecone.io/learn/) | Vector database concepts |"
+              },
+              {
+                "title": "Beginner Questions",
+                "content": "**Q: Is this hard to build?**\nA: With LangChain, you can build a basic RAG in 50 lines of code!\n\n**Q: Do I need expensive GPUs?**\nA: No! We use cloud APIs or lightweight local models.\n\n**Q: What documents can I use?**\nA: PDFs, Word docs, text files, web pages, databases - almost anything!\n\n**Q: How much does it cost?**\nA: OpenAI: ~$0.01 per query. Ollama: Free (runs locally)."
+              }
+            ],
+            "keyTakeaways": [
+              "RAG = Give AI your documents so it can answer accurately",
+              "Three steps: Prepare docs → Find relevant parts → Generate answer",
+              "Solves hallucinations, knowledge cutoff, and private data access"
+            ]
+          }
+        },
+        {
+          "id": "rag-setup",
+          "title": "Setting Up Your RAG Environment",
+          "type": "lesson",
+          "duration": "15 min",
+          "content": {
+            "overview": "Let's install everything you need to build RAG applications.",
+            "sections": [
+              {
+                "title": "Install Required Packages",
+                "content": "Open your terminal and run:",
+                "code": "# Create a new project folder\nmkdir my-rag-project\ncd my-rag-project\n\n# Create virtual environment (keeps things clean)\npython -m venv venv\nsource venv/bin/activate  # Linux/Mac\n# venv\\Scripts\\activate   # Windows\n\n# Install packages\npip install langchain langchain-openai chromadb\npip install pypdf python-docx  # For PDF and Word docs"
+              },
+              {
+                "title": "Get Your API Key",
+                "content": "**Option 1: OpenAI (Paid but powerful)**\n1. Go to [platform.openai.com](https://platform.openai.com)\n2. Sign up / Log in\n3. Go to API Keys\n4. Create new key\n5. Save it somewhere safe!\n\n**Option 2: Ollama (Free, local)**\n1. Install from [ollama.ai](https://ollama.ai)\n2. Run: `ollama pull llama3`\n3. Run: `ollama pull nomic-embed-text`\n4. No API key needed!",
+                "code": "# Set your API key (Option 1: OpenAI)\nimport os\nos.environ[\"OPENAI_API_KEY\"] = \"sk-your-key-here\"\n\n# Or use a .env file (better)\n# Create file: .env\n# Add line: OPENAI_API_KEY=sk-your-key-here\n\n# Load it:\nfrom dotenv import load_dotenv\nload_dotenv()"
+              },
+              {
+                "title": "Test Your Setup",
+                "content": "Run this to verify everything works:",
+                "code": "# test_setup.py\nfrom langchain_openai import OpenAIEmbeddings, ChatOpenAI\n\n# Test embeddings\nembeddings = OpenAIEmbeddings(model=\"text-embedding-3-small\")\ntest_vector = embeddings.embed_query(\"Hello world\")\nprint(f\"✅ Embeddings work! Vector length: {len(test_vector)}\")\n\n# Test LLM\nllm = ChatOpenAI(model=\"gpt-3.5-turbo\")\nresponse = llm.invoke(\"Say 'Hello RAG!' in one sentence\")\nprint(f\"✅ LLM works! Response: {response.content}\")\n\nprint(\"\\n🎉 You're ready to build RAG apps!\")"
+              }
+            ],
+            "keyTakeaways": [
+              "Use virtual environments to keep dependencies clean",
+              "You need LangChain + vector database + LLM",
+              "OpenAI is easiest, Ollama is free"
+            ]
+          }
+        }
+      ]
+    },
     {
       "title": "RAG Fundamentals",
       "description": "Understanding RAG architecture",

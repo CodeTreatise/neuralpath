@@ -10,6 +10,11 @@
     "PyTorch experience",
     "Transformer understanding"
   ],
+  "whatYouNeed": [
+    "GPU access (free tier: Google Colab, Kaggle)",
+    "Python and PyTorch installed",
+    "Completed the 'Math for AI' and 'Python for AI' courses, OR equivalent experience"
+  ],
   "learningOutcomes": [
     "Understand when and why to fine-tune LLMs",
     "Implement LoRA and QLoRA for efficient fine-tuning",
@@ -17,6 +22,54 @@
     "Evaluate and deploy fine-tuned models"
   ],
   "modules": [
+    {
+      "id": "finetuning-intro",
+      "title": "What is Fine-tuning? (Start Here!)",
+      "lessons": [
+        {
+          "id": "finetuning-explained-simply",
+          "title": "Fine-tuning in Plain English",
+          "duration": "25 min",
+          "content": {
+            "overview": "Before we dive into code, let's understand what fine-tuning actually means and whether you even need it. Spoiler: most people don't need to fine-tune, but understanding it will make you a better AI practitioner.",
+            "sections": [
+              {
+                "title": "The Restaurant Chef Analogy",
+                "content": "Imagine you're a world-class chef (like GPT-4 or Claude). You can cook almost anything because you trained in the best culinary schools for years.\n\nBut now a company hires you to run their cafeteria. They want you to:\n- Always use their specific recipes\n- Follow their plating style exactly\n- Never suggest dishes they don't serve\n\n**You're still the same skilled chef, but now you've been 'fine-tuned' for their specific needs.**\n\nThat's fine-tuning:\n- **Pre-trained model** = The skilled chef (general knowledge)\n- **Fine-tuning** = Training on specific examples to behave differently\n- **Fine-tuned model** = Same chef, specialized for your use case"
+              },
+              {
+                "title": "What Fine-tuning Actually Changes",
+                "content": "An LLM is just billions of numbers (called 'weights' or 'parameters') that determine how it responds. When you fine-tune:\n\n**You adjust these numbers slightly** so the model:\n- Writes in a specific style\n- Uses domain-specific terminology correctly\n- Formats outputs consistently\n- Follows your specific instructions better\n\n**You are NOT:**\n- Teaching it new facts (use RAG for that)\n- Making it smarter (the knowledge is already there)\n- Creating a new model from scratch\n\n**Think of it as**: Fine-tuning changes the model's *habits*, not its *knowledge*."
+              },
+              {
+                "title": "When Do You Actually Need This?",
+                "content": "**Fine-tuning is probably OVERKILL if you:**\n- Just want better answers → Use prompt engineering first\n- Need current information → Use RAG (retrieval)\n- Have a small budget → Fine-tuning costs money\n- Only have a few examples → Not enough data\n\n**Fine-tuning makes sense when:**\n- You need consistent output format across thousands of calls\n- You want the model to 'sound' like your brand\n- You're doing high-volume production and want to save on token costs\n- You can't share data with OpenAI/Anthropic (privacy)\n\n**The 80/20 rule**: 80% of use cases are solved by good prompts + RAG. Only 20% truly need fine-tuning."
+              },
+              {
+                "title": "Key Terms You'll Need",
+                "content": "**Pre-trained model**: The base model (like Llama 3, Mistral) that has been trained on internet-scale data. It's the starting point.\n\n**Fine-tuning**: Continuing to train a pre-trained model on your specific data.\n\n**Full fine-tuning**: Updating ALL the model's parameters. Expensive, needs big GPUs.\n\n**LoRA (Low-Rank Adaptation)**: A clever trick that adds small trainable 'adapters' instead of changing all parameters. Much cheaper!\n\n**QLoRA**: LoRA + quantization. Runs on consumer GPUs (even free Colab!).\n\n**Instruction dataset**: Training examples in the format 'instruction → response' that teach the model your desired behavior.\n\n**Catastrophic forgetting**: When fine-tuning makes the model forget its original capabilities. We avoid this with LoRA."
+              },
+              {
+                "title": "Common Beginner Questions",
+                "content": "**Q: Can I fine-tune ChatGPT?**\nA: You can fine-tune OpenAI's models through their API, but you can't access the actual weights. For full control, use open models like Llama or Mistral.\n\n**Q: How much data do I need?**\nA: For basic fine-tuning: 100-1,000 high-quality examples. For significant behavior change: 1,000-10,000+.\n\n**Q: What hardware do I need?**\nA: With QLoRA, you can fine-tune a 7B model on a free Google Colab GPU! We'll show you how.\n\n**Q: How long does it take?**\nA: A few hours for small datasets on consumer hardware. The data preparation takes longer than the training.\n\n**Q: Can I make the model smarter?**\nA: No. Fine-tuning doesn't add intelligence. It changes behavior and style. For adding knowledge, use RAG.\n\n**Q: Is this the same as 'training' a model?**\nA: Training from scratch takes millions of dollars. Fine-tuning is adjusting an existing model - much cheaper."
+              }
+            ],
+            "keyTakeaways": [
+              "Fine-tuning adjusts model behavior, not knowledge",
+              "80% of use cases don't need fine-tuning - try prompting and RAG first",
+              "LoRA/QLoRA makes fine-tuning accessible on consumer hardware",
+              "You need 100+ high-quality examples to start"
+            ],
+            "exercises": [
+              {
+                "title": "Do You Need Fine-tuning?",
+                "description": "Think of a project you want to build. Write down what you need the AI to do. Then decide: Is this a prompt engineering problem, a RAG problem, or a fine-tuning problem?"
+              }
+            ]
+          }
+        }
+      ]
+    },
     {
       "id": "finetuning-fundamentals",
       "title": "Fine-tuning Fundamentals",
@@ -64,6 +117,61 @@
                 "title": "QLoRA Paper",
                 "author": "Dettmers et al.",
                 "url": "https://arxiv.org/abs/2305.14314"
+              },
+              {
+                "title": "OpenAI Model Optimization Guide",
+                "url": "https://platform.openai.com/docs/guides/model-optimization"
+              },
+              {
+                "title": "Hugging Face PEFT Documentation",
+                "url": "https://huggingface.co/docs/peft/index"
+              }
+            ]
+          }
+        },
+        {
+          "id": "openai-finetuning",
+          "title": "OpenAI API Fine-tuning",
+          "duration": "30 min",
+          "content": {
+            "overview": "If you're using OpenAI's API, you don't need GPUs or PyTorch - OpenAI handles the training infrastructure. This lesson covers the four fine-tuning methods available through their platform.",
+            "sections": [
+              {
+                "title": "The Four OpenAI Fine-tuning Methods",
+                "content": "OpenAI offers four distinct approaches, each optimized for different use cases:\n\n| Method | How it Works | Best For | Models |\n|--------|-------------|----------|--------|\n| **SFT** (Supervised) | Provide example prompts with ideal responses | Classification, formatting, style | gpt-4.1, gpt-4.1-mini |\n| **Vision** | Include images in training data | Image classification, visual instructions | gpt-4o |\n| **DPO** (Direct Preference) | Show correct AND incorrect responses | Summarization, tone adjustment | gpt-4.1, gpt-4.1-mini |\n| **RFT** (Reinforcement) | Grade model responses, reinforce good chains-of-thought | Complex domain reasoning, expert tasks | o4-mini |\n\n**The key insight:** OpenAI's fine-tuning doesn't require you to manage GPU memory, quantization, or LoRA - that's all handled on their servers."
+              },
+              {
+                "title": "SFT: Supervised Fine-tuning",
+                "content": "The most common approach. You provide examples of what you want the model to say:",
+                "code": "from openai import OpenAI\nimport json\n\nclient = OpenAI()\n\n# Step 1: Prepare training data (JSONL format)\ntraining_examples = [\n    {\n        \"messages\": [\n            {\"role\": \"system\", \"content\": \"You are a customer support assistant for Acme Inc.\"},\n            {\"role\": \"user\", \"content\": \"I can't log in to my account\"},\n            {\"role\": \"assistant\", \"content\": \"I'm sorry to hear you're having trouble logging in! Let me help you with that. First, could you tell me what error message you're seeing? This will help me identify the exact issue.\"}\n        ]\n    },\n    {\n        \"messages\": [\n            {\"role\": \"system\", \"content\": \"You are a customer support assistant for Acme Inc.\"},\n            {\"role\": \"user\", \"content\": \"How do I cancel my subscription?\"},\n            {\"role\": \"assistant\", \"content\": \"I'd be happy to help you with cancellation. Before we proceed, I want to make sure you're aware that your subscription includes several benefits. Would you like me to explain what you'd be giving up, or should I walk you through the cancellation steps right away?\"}\n        ]\n    }\n]\n\n# Save as JSONL\nwith open('training_data.jsonl', 'w') as f:\n    for example in training_examples:\n        f.write(json.dumps(example) + '\\n')\n\n# Step 2: Upload training file\nfile = client.files.create(\n    file=open('training_data.jsonl', 'rb'),\n    purpose='fine-tune'\n)\nprint(f\"File uploaded: {file.id}\")\n\n# Step 3: Create fine-tuning job\njob = client.fine_tuning.jobs.create(\n    training_file=file.id,\n    model=\"gpt-4.1-2025-04-14\"  # Base model\n)\nprint(f\"Fine-tuning job started: {job.id}\")\n\n# Step 4: Monitor progress\nimport time\nwhile True:\n    status = client.fine_tuning.jobs.retrieve(job.id)\n    print(f\"Status: {status.status}\")\n    if status.status in ['succeeded', 'failed']:\n        break\n    time.sleep(60)\n\n# Step 5: Use the fine-tuned model\nif status.status == 'succeeded':\n    fine_tuned_model = status.fine_tuned_model\n    \n    response = client.chat.completions.create(\n        model=fine_tuned_model,\n        messages=[\n            {\"role\": \"system\", \"content\": \"You are a customer support assistant for Acme Inc.\"},\n            {\"role\": \"user\", \"content\": \"My order hasn't arrived yet\"}\n        ]\n    )\n    print(response.choices[0].message.content)"
+              },
+              {
+                "title": "DPO: Teaching Preferences",
+                "content": "Direct Preference Optimization shows the model what you prefer AND what you don't:\n\n```json\n{\n  \"input\": {\n    \"messages\": [\n      {\"role\": \"user\", \"content\": \"Summarize this article about climate change...\"}\n    ]\n  },\n  \"preferred_output\": [\n    {\"role\": \"assistant\", \"content\": \"Key findings: 1) Global temperatures rose 1.2°C... [factual, concise]\"}\n  ],\n  \"non_preferred_output\": [\n    {\"role\": \"assistant\", \"content\": \"Climate change is a very important topic that everyone should care about... [vague, editorialized]\"}\n  ]\n}\n```\n\n**When to use DPO over SFT:**\n- You want to steer *away* from certain behaviors\n- Style/tone is more important than content\n- You have examples of both good AND bad outputs"
+              },
+              {
+                "title": "The OpenAI Optimization Workflow",
+                "content": "OpenAI recommends this order:\n\n1. **Write evals first** - Measure current performance\n2. **Try prompt engineering** - Often sufficient\n3. **If prompting fails → Fine-tune** - Use SFT for most cases\n4. **Evaluate again** - Measure improvement\n5. **Iterate** - Improve dataset based on failures\n\n**Key insight from OpenAI docs:** Fine-tuning is for changing *behavior*, not adding *knowledge*. For new facts, use RAG or function calling."
+              }
+            ],
+            "keyTakeaways": [
+              "OpenAI handles all the GPU/infrastructure complexity",
+              "SFT is best for consistent formatting and style",
+              "DPO shows the model what NOT to do",
+              "Always try prompting before fine-tuning"
+            ],
+            "sources": [
+              {
+                "title": "OpenAI Model Optimization Guide",
+                "url": "https://platform.openai.com/docs/guides/model-optimization"
+              },
+              {
+                "title": "OpenAI Supervised Fine-tuning",
+                "url": "https://platform.openai.com/docs/guides/supervised-fine-tuning"
+              },
+              {
+                "title": "OpenAI Direct Preference Optimization",
+                "url": "https://platform.openai.com/docs/guides/direct-preference-optimization"
               }
             ]
           }
@@ -122,8 +230,16 @@
                 "url": "https://arxiv.org/abs/2305.14314"
               },
               {
-                "title": "PEFT Library",
+                "title": "Hugging Face PEFT Library",
                 "url": "https://github.com/huggingface/peft"
+              },
+              {
+                "title": "PEFT Adapters Guide (LoRA, AdaLoRA, LoHa)",
+                "url": "https://huggingface.co/docs/peft/main/en/conceptual_guides/adapter"
+              },
+              {
+                "title": "PEFT + Transformers Integration",
+                "url": "https://huggingface.co/docs/transformers/main/en/peft"
               }
             ]
           }

@@ -1,0 +1,296 @@
+{
+  "id": "interpretability",
+  "title": "AI Interpretability & Explainability",
+  "description": "Deep dive into understanding how AI models make decisions - from SHAP/LIME to mechanistic interpretability",
+  "icon": "🔍",
+  "level": "advanced",
+  "duration": "3 weeks",
+  "prerequisites": ["Used or built ML models (any level)", "Basic Python", "Curiosity about how AI works inside"],
+  "prerequisitesClarification": "This course is for anyone who has used AI and wondered 'why did it say that?' No deep learning math required - we explain concepts intuitively.",
+  "whatYouNeed": [
+    "Python 3.8+ with pip",
+    "Access to a trained model (we provide examples)",
+    "Jupyter notebook (optional but helpful)",
+    "Curiosity about the 'black box' of AI"
+  ],
+  "learningOutcomes": [
+    "Understand why AI explanation matters for trust and safety",
+    "Use SHAP and LIME to explain any model's predictions",
+    "Visualize what language models pay attention to",
+    "Explore cutting-edge research on understanding AI internals"
+  ],
+  "modules": [
+    {
+      "id": "intro-interpretability",
+      "title": "Understanding AI Decisions",
+      "lessons": [
+        {
+          "id": "what-is-interpretability",
+          "title": "What is AI Interpretability?",
+          "duration": "20 min",
+          "content": {
+            "overview": "When AI makes a decision, can we understand WHY? This lesson introduces the field of AI interpretability and why it matters.",
+            "sections": [
+              {
+                "title": "The 'Why' Question",
+                "content": "**The problem:**\n\nImagine a bank uses AI to approve loans. It rejects your application. You ask \"Why?\"\n\nIf the AI is a black box, no one can explain. That's a problem for:\n- **You**: You deserve to know why\n- **The bank**: Regulators require explanations\n- **Society**: We need to check for bias\n\n**Interpretability** = Understanding why AI makes the decisions it makes.\n\n**Real examples:**\n- Why did the AI diagnose this X-ray as cancer?\n- Why did the self-driving car brake suddenly?\n- Why did the hiring AI reject this candidate?\n- Why did ChatGPT give that answer?",
+                "diagram": {
+                  "title": "Black Box vs Interpretable AI",
+                  "code": "flowchart LR\n    subgraph Black[\"❌ Black Box\"]\n        I1[Input] --> B[\"🤷 Magic?\\n(billions of parameters)\"] --> O1[Output]\n    end\n    \n    subgraph Clear[\"✅ Interpretable\"]\n        I2[Input] --> E[\"📊 Explained\\n(we see the reasons)\"] --> O2[Output]\n    end"
+                }
+              },
+              {
+                "title": "Key Concepts (No Math Required!)",
+                "content": "**Feature Importance**\nWhich inputs mattered most? \"The loan was rejected mainly because of high debt-to-income ratio.\"\n\n**Attention**\nWhat did the AI focus on? Like highlighting the words the AI \"looked at\" when making a decision.\n\n**Counterfactuals**\nWhat would change the outcome? \"If your income was $10K higher, you'd be approved.\"\n\n**Probing**\nAsking what the AI \"knows\" by testing it. Like giving an AI a quiz to see what's inside its \"brain.\"\n\n| Term | Simple Meaning | Example |\n|------|----------------|--------|\n| SHAP | Fairly assigns credit to each input | \"Income contributed +20% to approval\" |\n| LIME | Explains one prediction simply | \"This email is spam because of 'FREE MONEY'\" |\n| Attention | Where the AI looked | Highlights \"tumor\" in medical report |\n| Probing | Testing what AI learned | \"Does this model know grammar rules?\" |"
+              },
+              {
+                "title": "Why Should You Care?",
+                "content": "**If you build AI:**\n- Debug why model is making mistakes\n- Find biases before deployment\n- Explain decisions to users/regulators\n- Build trust with stakeholders\n\n**If you use AI:**\n- Verify AI isn't using shortcuts\n- Understand when to trust predictions\n- Catch errors before they matter\n\n**If you're curious:**\n- Peek inside the most complex systems ever built\n- Contribute to AI safety research\n- Understand what \"intelligence\" might mean",
+                "code": "# A taste of what's possible\nimport shap\n\n# Any model can be explained!\nmodel = train_loan_approval_model()\n\n# SHAP tells us which factors mattered\nexplainer = shap.Explainer(model)\nshap_values = explainer(applicant_data)\n\n# Now we can say:\n# \"Your application was rejected because:\n#  - High debt-to-income ratio (-0.3 impact)\n#  - Short credit history (-0.2 impact)  \n#  - Low savings (-0.1 impact)\n#  These outweighed your positive factors:\n#  - Stable employment (+0.15 impact)\n#  - No late payments (+0.1 impact)\""
+              }
+            ],
+            "keyTakeaways": [
+              "Interpretability = understanding WHY AI makes decisions",
+              "It's essential for trust, debugging, fairness, and regulation",
+              "SHAP and LIME are tools to explain any model's predictions",
+              "Attention shows what the AI 'looked at'"
+            ],
+            "beginnerQuestions": [
+              {"q": "Can we always explain AI decisions?", "a": "For simpler models, yes. For LLMs, it's an active research area. We have good tools but not complete understanding."},
+              {"q": "Does this make AI slower?", "a": "Explanation is usually done after prediction, so it doesn't slow down the main use. Some methods can be slow for large models."},
+              {"q": "Is this the same as asking ChatGPT to explain itself?", "a": "No! LLMs can make up plausible-sounding but wrong explanations. Real interpretability looks at the actual internals."}
+            ],
+            "references": [
+              {"title": "Interpretable ML Book (Free)", "url": "https://christophm.github.io/interpretable-ml-book/"},
+              {"title": "SHAP Documentation", "url": "https://shap.readthedocs.io/"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "foundations",
+      "title": "Interpretability Foundations",
+      "lessons": [
+        {
+          "id": "why-interpretability",
+          "title": "The Interpretability Landscape",
+          "duration": "30 min",
+          "content": {
+            "overview": "Now that we understand why interpretability matters, let's map out the different approaches and tools available.",
+            "sections": [
+              {
+                "title": "The Black Box Problem",
+                "content": "Modern neural networks are powerful but opaque:\n\n**Challenges:**\n- Billions of parameters\n- Non-linear interactions\n- Distributed representations\n- No explicit rules to inspect\n\n**Why it matters:**\n- **Trust**: Users need to verify decisions\n- **Debugging**: Find and fix errors\n- **Safety**: Understand failure modes\n- **Regulation**: Explain decisions (GDPR, EU AI Act)\n- **Science**: Advance our understanding of intelligence",
+                "diagram": {
+                  "title": "Interpretability Spectrum",
+                  "code": "flowchart LR\n    subgraph Interpretable[\"Inherently Interpretable\"]\n        LR[Linear Regression]\n        DT[Decision Trees]\n        RL[Rule Lists]\n    end\n    \n    subgraph PostHoc[\"Post-hoc Explainable\"]\n        RF[Random Forest]\n        GB[Gradient Boosting]\n        NN[Neural Networks]\n    end\n    \n    subgraph Black[\"Black Box\"]\n        DL[Deep Learning]\n        LLM[Large Language Models]\n    end\n    \n    Interpretable --> PostHoc\n    PostHoc --> Black\n    \n    Black -.-> |SHAP/LIME| Explain[Explanations]\n    Black -.-> |Mechanistic| Understand[Understanding]"
+                }
+              },
+              {
+                "title": "Types of Interpretability",
+                "content": "**Global Interpretability:**\n- How does the model work overall?\n- Which features matter most?\n- What patterns did it learn?\n\n**Local Interpretability:**\n- Why this specific prediction?\n- What influenced this decision?\n- What would change the outcome?\n\n**Mechanistic Interpretability:**\n- What are the internal representations?\n- What do specific neurons/circuits compute?\n- How does information flow?\n\n**Approaches:**\n1. **Feature Attribution**: SHAP, LIME, Integrated Gradients\n2. **Attention Analysis**: Visualize attention weights\n3. **Concept Probing**: Test for specific knowledge\n4. **Circuit Analysis**: Find interpretable components",
+                "code": "# Overview of interpretability methods\n\nINTERPRETABILITY_METHODS = {\n    \"feature_attribution\": {\n        \"SHAP\": \"Shapley values for feature importance\",\n        \"LIME\": \"Local linear approximations\",\n        \"Integrated Gradients\": \"Gradient-based attribution\",\n        \"Attention\": \"Attention weight visualization\"\n    },\n    \"concept_probing\": {\n        \"Linear Probes\": \"Train classifier on hidden states\",\n        \"Causal Tracing\": \"Track information flow\",\n        \"Activation Patching\": \"Swap activations to test causality\"\n    },\n    \"mechanistic\": {\n        \"Feature Visualization\": \"Optimize inputs to maximize neurons\",\n        \"Circuit Analysis\": \"Find interpretable subnetworks\",\n        \"Superposition\": \"Understand polysemantic neurons\"\n    }\n}"
+              }
+            ],
+            "keyTakeaways": [
+              "Interpretability is essential for trust and safety",
+              "Different methods answer different questions",
+              "Global vs local vs mechanistic understanding",
+              "No single method provides complete understanding"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "feature-attribution",
+      "title": "Feature Attribution Methods",
+      "lessons": [
+        {
+          "id": "shap-deep",
+          "title": "SHAP: Shapley Additive Explanations",
+          "duration": "45 min",
+          "content": {
+            "overview": "SHAP uses game theory (Shapley values) to fairly attribute a prediction to each feature. It's theoretically grounded and works for any model.",
+            "sections": [
+              {
+                "title": "Shapley Values Explained",
+                "content": "**The Idea:**\nImagine features as players in a cooperative game. The prediction is the \"payout\". Shapley values fairly distribute credit based on each player's contribution.\n\n**Formula:**\nFor each feature, compute its marginal contribution across all possible feature subsets, weighted by subset size.\n\n**Properties:**\n- **Efficiency**: Contributions sum to prediction\n- **Symmetry**: Equal features get equal credit\n- **Dummy**: Zero contribution → zero credit\n- **Additivity**: Can combine explanations",
+                "code": "import shap\nimport numpy as np\nfrom sklearn.ensemble import RandomForestClassifier\n\n# Train a model\nX_train, y_train = load_data()\nmodel = RandomForestClassifier(n_estimators=100)\nmodel.fit(X_train, y_train)\n\n# Create SHAP explainer (uses TreeExplainer for tree models)\nexplainer = shap.TreeExplainer(model)\n\n# Calculate SHAP values for test data\nshap_values = explainer.shap_values(X_test)\n\n# For binary classification, shap_values[1] is positive class\n# For regression, it's just shap_values\n\nprint(f\"SHAP values shape: {shap_values[1].shape}\")\nprint(f\"Base value (expected output): {explainer.expected_value[1]:.3f}\")"
+              },
+              {
+                "title": "SHAP Visualizations",
+                "content": "SHAP provides rich visualization options:",
+                "code": "import shap\nimport matplotlib.pyplot as plt\n\n# 1. Summary Plot: Global feature importance\nshap.summary_plot(\n    shap_values[1],  # For class 1\n    X_test,\n    feature_names=feature_names,\n    plot_type=\"bar\"  # or \"dot\" for detailed view\n)\nplt.title(\"Global Feature Importance\")\nplt.tight_layout()\nplt.savefig(\"shap_summary.png\")\n\n# 2. Beeswarm Plot: Feature values vs SHAP impact\nshap.summary_plot(\n    shap_values[1],\n    X_test,\n    feature_names=feature_names,\n    plot_type=\"dot\"\n)\n\n# 3. Waterfall Plot: Single prediction explanation\nidx = 0  # Explain first prediction\nshap.waterfall_plot(\n    shap.Explanation(\n        values=shap_values[1][idx],\n        base_values=explainer.expected_value[1],\n        data=X_test.iloc[idx],\n        feature_names=feature_names\n    )\n)\n\n# 4. Force Plot: Interactive single explanation\nshap.force_plot(\n    explainer.expected_value[1],\n    shap_values[1][idx],\n    X_test.iloc[idx],\n    feature_names=feature_names,\n    matplotlib=True\n)\n\n# 5. Dependence Plot: Feature interaction\nshap.dependence_plot(\n    \"feature_name\",\n    shap_values[1],\n    X_test,\n    feature_names=feature_names,\n    interaction_index=\"auto\"  # Shows strongest interaction\n)"
+              },
+              {
+                "title": "SHAP for Deep Learning",
+                "content": "DeepExplainer and GradientExplainer for neural networks:",
+                "code": "import shap\nimport tensorflow as tf\n\n# Load your neural network\nmodel = tf.keras.models.load_model(\"my_model.h5\")\n\n# Use GradientExplainer (faster, approximate)\nexplainer = shap.GradientExplainer(\n    model,\n    X_train[:100]  # Background data for reference\n)\n\n# Or DeepExplainer (more accurate, slower)\nexplainer = shap.DeepExplainer(\n    model,\n    X_train[:100]\n)\n\n# Calculate SHAP values\nshap_values = explainer.shap_values(X_test[:10])\n\n# For image data - use image plot\nshap.image_plot(\n    shap_values,\n    X_test[:10],\n    show=True\n)\n\n# For text with transformers\nfrom transformers import pipeline\n\nclassifier = pipeline(\"sentiment-analysis\")\nexplainer = shap.Explainer(classifier)\n\ntext = \"This movie was absolutely amazing!\"\nshap_values = explainer([text])\n\n# Text visualization\nshap.text_plot(shap_values)"
+              },
+              {
+                "title": "Practical SHAP Analysis",
+                "content": "Real-world SHAP usage patterns:",
+                "code": "import shap\nimport pandas as pd\nimport numpy as np\n\nclass SHAPAnalyzer:\n    def __init__(self, model, X_train, feature_names):\n        self.model = model\n        self.feature_names = feature_names\n        \n        # Create appropriate explainer\n        model_type = type(model).__name__\n        if \"Tree\" in model_type or \"Forest\" in model_type or \"Boost\" in model_type:\n            self.explainer = shap.TreeExplainer(model)\n        else:\n            self.explainer = shap.KernelExplainer(\n                model.predict_proba,\n                shap.sample(X_train, 100)\n            )\n    \n    def explain_prediction(self, sample):\n        \"\"\"Get human-readable explanation for a prediction\"\"\"\n        shap_values = self.explainer.shap_values(sample.reshape(1, -1))\n        \n        # For binary classification\n        if isinstance(shap_values, list):\n            values = shap_values[1][0]\n        else:\n            values = shap_values[0]\n        \n        # Create explanation dataframe\n        explanation = pd.DataFrame({\n            \"feature\": self.feature_names,\n            \"value\": sample,\n            \"shap_value\": values\n        }).sort_values(\"shap_value\", key=abs, ascending=False)\n        \n        return explanation\n    \n    def get_global_importance(self, X):\n        \"\"\"Get global feature importance\"\"\"\n        shap_values = self.explainer.shap_values(X)\n        \n        if isinstance(shap_values, list):\n            values = shap_values[1]\n        else:\n            values = shap_values\n        \n        importance = pd.DataFrame({\n            \"feature\": self.feature_names,\n            \"mean_abs_shap\": np.abs(values).mean(axis=0)\n        }).sort_values(\"mean_abs_shap\", ascending=False)\n        \n        return importance\n    \n    def detect_feature_interactions(self, X, top_k=5):\n        \"\"\"Find strongest feature interactions\"\"\"\n        shap_values = self.explainer.shap_values(X)\n        \n        if isinstance(shap_values, list):\n            values = shap_values[1]\n        else:\n            values = shap_values\n        \n        interactions = []\n        for i in range(len(self.feature_names)):\n            for j in range(i+1, len(self.feature_names)):\n                corr = np.corrcoef(values[:, i], values[:, j])[0, 1]\n                interactions.append({\n                    \"feature_1\": self.feature_names[i],\n                    \"feature_2\": self.feature_names[j],\n                    \"correlation\": abs(corr)\n                })\n        \n        return sorted(interactions, key=lambda x: x[\"correlation\"], reverse=True)[:top_k]\n\n# Usage\nanalyzer = SHAPAnalyzer(model, X_train, feature_names)\n\n# Explain a single prediction\nexplanation = analyzer.explain_prediction(X_test[0])\nprint(\"Top factors:\")\nprint(explanation.head(5))\n\n# Global importance\nimportance = analyzer.get_global_importance(X_test)\nprint(\"\\nMost important features:\")\nprint(importance.head(10))"
+              }
+            ],
+            "keyTakeaways": [
+              "SHAP provides theoretically grounded feature attribution",
+              "Use TreeExplainer for tree-based models (fast)",
+              "DeepExplainer/GradientExplainer for neural networks",
+              "Combine global and local explanations for full picture"
+            ]
+          }
+        },
+        {
+          "id": "lime-deep",
+          "title": "LIME: Local Interpretable Model-Agnostic Explanations",
+          "duration": "35 min",
+          "content": {
+            "overview": "LIME explains any model by approximating it locally with an interpretable model (usually linear). It's simple, fast, and works for any black-box model.",
+            "sections": [
+              {
+                "title": "How LIME Works",
+                "content": "**LIME Algorithm:**\n1. Generate perturbed samples around the instance\n2. Get predictions for perturbed samples\n3. Weight samples by distance to original\n4. Fit interpretable model (linear) to weighted samples\n5. Use linear coefficients as explanation\n\n**Advantages:**\n- Model-agnostic\n- Fast\n- Intuitive explanations\n\n**Limitations:**\n- Explanations can be unstable\n- Local approximation may miss complex patterns\n- Perturbation strategy matters",
+                "diagram": {
+                  "title": "LIME Process",
+                  "code": "flowchart TB\n    A[Original Instance] --> B[Generate Perturbations]\n    B --> C[Get Black Box Predictions]\n    C --> D[Weight by Distance]\n    D --> E[Fit Linear Model]\n    E --> F[Extract Coefficients]\n    F --> G[Explanation]"
+                }
+              },
+              {
+                "title": "LIME for Tabular Data",
+                "code": "from lime.lime_tabular import LimeTabularExplainer\nimport numpy as np\n\n# Create explainer\nexplainer = LimeTabularExplainer(\n    training_data=X_train.values,\n    feature_names=feature_names,\n    class_names=[\"Rejected\", \"Approved\"],\n    mode=\"classification\",\n    discretize_continuous=True  # Bins continuous features\n)\n\n# Explain a single prediction\nidx = 0\nexplanation = explainer.explain_instance(\n    X_test.iloc[idx].values,\n    model.predict_proba,\n    num_features=10,\n    num_samples=5000  # More samples = more stable\n)\n\n# Visualize\nexplanation.show_in_notebook()\n\n# Or get as list\nfor feature, weight in explanation.as_list():\n    direction = \"↑\" if weight > 0 else \"↓\"\n    print(f\"{feature}: {weight:.3f} {direction}\")\n\n# Get explanation as map\nexplanation_map = explanation.as_map()\nprint(explanation_map)"
+              },
+              {
+                "title": "LIME for Text",
+                "code": "from lime.lime_text import LimeTextExplainer\n\n# Create text explainer\nexplainer = LimeTextExplainer(\n    class_names=[\"Negative\", \"Positive\"],\n    bow=True  # Bag of words representation\n)\n\ndef predict_proba(texts):\n    \"\"\"Wrapper for model prediction\"\"\"\n    # Vectorize texts and predict\n    vectors = vectorizer.transform(texts)\n    return model.predict_proba(vectors)\n\n# Explain a text classification\ntext = \"This product is amazing! Best purchase I ever made.\"\n\nexplanation = explainer.explain_instance(\n    text,\n    predict_proba,\n    num_features=10,\n    num_samples=1000\n)\n\n# Show in notebook\nexplanation.show_in_notebook(text=True)\n\n# Get word importances\nprint(\"\\nWord contributions:\")\nfor word, weight in explanation.as_list():\n    print(f\"  {word}: {weight:.3f}\")"
+              },
+              {
+                "title": "LIME for Images",
+                "code": "from lime import lime_image\nfrom skimage.segmentation import mark_boundaries\nimport matplotlib.pyplot as plt\n\n# Create image explainer\nexplainer = lime_image.LimeImageExplainer()\n\ndef predict_fn(images):\n    \"\"\"Prediction function for image classifier\"\"\"\n    # Preprocess and predict\n    images = preprocess(images)\n    return model.predict(images)\n\n# Explain an image prediction\nimage = load_image(\"cat.jpg\")\n\nexplanation = explainer.explain_instance(\n    image,\n    predict_fn,\n    top_labels=3,\n    hide_color=0,\n    num_samples=1000,\n    batch_size=100\n)\n\n# Get image with superpixels highlighted\ntemp, mask = explanation.get_image_and_mask(\n    explanation.top_labels[0],\n    positive_only=True,\n    num_features=5,\n    hide_rest=False\n)\n\n# Visualize\nfig, axes = plt.subplots(1, 3, figsize=(15, 5))\n\naxes[0].imshow(image)\naxes[0].set_title(\"Original\")\n\naxes[1].imshow(mark_boundaries(temp, mask))\naxes[1].set_title(\"Positive regions\")\n\n# Show negative regions too\ntemp_neg, mask_neg = explanation.get_image_and_mask(\n    explanation.top_labels[0],\n    positive_only=False,\n    negative_only=True,\n    num_features=5,\n    hide_rest=False\n)\naxes[2].imshow(mark_boundaries(temp_neg, mask_neg))\naxes[2].set_title(\"Negative regions\")\n\nplt.tight_layout()\nplt.show()"
+              }
+            ],
+            "keyTakeaways": [
+              "LIME works with any model by local approximation",
+              "Works for tabular, text, and image data",
+              "Trade-off: simplicity vs accuracy",
+              "Use more samples for stable explanations"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "attention-analysis",
+      "title": "Attention Analysis",
+      "lessons": [
+        {
+          "id": "visualizing-attention",
+          "title": "Visualizing Attention Patterns",
+          "duration": "40 min",
+          "content": {
+            "overview": "Attention mechanisms in transformers provide a natural window into model behavior. While attention isn't always explanation, it reveals what the model focuses on.",
+            "sections": [
+              {
+                "title": "Extracting Attention Weights",
+                "content": "Attention weights show which tokens influence each other:",
+                "code": "from transformers import AutoTokenizer, AutoModel\nimport torch\nimport numpy as np\n\ndef get_attention_weights(text, model_name=\"bert-base-uncased\"):\n    \"\"\"Extract attention weights from a transformer model\"\"\"\n    tokenizer = AutoTokenizer.from_pretrained(model_name)\n    model = AutoModel.from_pretrained(\n        model_name,\n        output_attentions=True  # Enable attention output\n    )\n    \n    # Tokenize\n    inputs = tokenizer(text, return_tensors=\"pt\")\n    tokens = tokenizer.convert_ids_to_tokens(inputs[\"input_ids\"][0])\n    \n    # Forward pass\n    with torch.no_grad():\n        outputs = model(**inputs)\n    \n    # Attention shape: (batch, num_heads, seq_len, seq_len)\n    # One tensor per layer\n    attentions = outputs.attentions\n    \n    return tokens, attentions\n\ntext = \"The cat sat on the mat.\"\ntokens, attentions = get_attention_weights(text)\n\nprint(f\"Number of layers: {len(attentions)}\")\nprint(f\"Attention shape per layer: {attentions[0].shape}\")\nprint(f\"Tokens: {tokens}\")"
+              },
+              {
+                "title": "Attention Heatmap Visualization",
+                "code": "import matplotlib.pyplot as plt\nimport seaborn as sns\n\ndef plot_attention_heatmap(tokens, attention_weights, layer=0, head=0):\n    \"\"\"Plot attention heatmap for a specific layer and head\"\"\"\n    # Get attention for specific layer/head\n    attn = attention_weights[layer][0, head].numpy()\n    \n    fig, ax = plt.subplots(figsize=(10, 8))\n    \n    sns.heatmap(\n        attn,\n        xticklabels=tokens,\n        yticklabels=tokens,\n        cmap=\"Blues\",\n        ax=ax,\n        square=True\n    )\n    \n    ax.set_title(f\"Layer {layer}, Head {head}\")\n    ax.set_xlabel(\"Key (attending to)\")\n    ax.set_ylabel(\"Query (attending from)\")\n    \n    plt.tight_layout()\n    return fig\n\ndef plot_attention_heads(tokens, attention_weights, layer=0):\n    \"\"\"Plot all attention heads in a layer\"\"\"\n    num_heads = attention_weights[layer].shape[1]\n    \n    fig, axes = plt.subplots(\n        3, 4, figsize=(16, 12),\n        subplot_kw={\"aspect\": \"equal\"}\n    )\n    \n    for head, ax in enumerate(axes.flat):\n        if head < num_heads:\n            attn = attention_weights[layer][0, head].numpy()\n            im = ax.imshow(attn, cmap=\"Blues\")\n            ax.set_title(f\"Head {head}\")\n            ax.set_xticks(range(len(tokens)))\n            ax.set_yticks(range(len(tokens)))\n            ax.set_xticklabels(tokens, rotation=45, ha=\"right\", fontsize=8)\n            ax.set_yticklabels(tokens, fontsize=8)\n        else:\n            ax.axis(\"off\")\n    \n    plt.tight_layout()\n    return fig\n\n# Visualize\nfig = plot_attention_heatmap(tokens, attentions, layer=11, head=0)\nplt.savefig(\"attention_heatmap.png\")"
+              },
+              {
+                "title": "BertViz Interactive Visualization",
+                "code": "# pip install bertviz\nfrom bertviz import head_view, model_view\nfrom transformers import AutoTokenizer, AutoModel\n\ndef visualize_with_bertviz(text, model_name=\"bert-base-uncased\"):\n    \"\"\"Interactive attention visualization with BertViz\"\"\"\n    tokenizer = AutoTokenizer.from_pretrained(model_name)\n    model = AutoModel.from_pretrained(\n        model_name,\n        output_attentions=True\n    )\n    \n    inputs = tokenizer(text, return_tensors=\"pt\")\n    tokens = tokenizer.convert_ids_to_tokens(inputs[\"input_ids\"][0])\n    \n    with torch.no_grad():\n        outputs = model(**inputs)\n    \n    attention = outputs.attentions\n    \n    # Head view: detailed view of attention patterns\n    head_view(\n        attention,\n        tokens,\n        layer=None,  # Show all layers\n        heads=None   # Show all heads\n    )\n    \n    # Model view: bird's eye view of all layers\n    model_view(\n        attention,\n        tokens\n    )\n\nvisualize_with_bertviz(\"The bank by the river had a boat.\")"
+              },
+              {
+                "title": "Attention Patterns Analysis",
+                "content": "Different attention heads learn different patterns:",
+                "code": "import numpy as np\n\nclass AttentionAnalyzer:\n    def __init__(self, model_name=\"bert-base-uncased\"):\n        self.tokenizer = AutoTokenizer.from_pretrained(model_name)\n        self.model = AutoModel.from_pretrained(\n            model_name,\n            output_attentions=True\n        )\n    \n    def analyze_patterns(self, text):\n        \"\"\"Analyze common attention patterns\"\"\"\n        inputs = self.tokenizer(text, return_tensors=\"pt\")\n        tokens = self.tokenizer.convert_ids_to_tokens(inputs[\"input_ids\"][0])\n        seq_len = len(tokens)\n        \n        with torch.no_grad():\n            outputs = self.model(**inputs)\n        \n        patterns = []\n        \n        for layer_idx, layer_attn in enumerate(outputs.attentions):\n            for head_idx in range(layer_attn.shape[1]):\n                attn = layer_attn[0, head_idx].numpy()\n                \n                # Detect patterns\n                pattern = self._detect_pattern(attn, tokens)\n                patterns.append({\n                    \"layer\": layer_idx,\n                    \"head\": head_idx,\n                    \"pattern\": pattern,\n                    \"entropy\": self._attention_entropy(attn)\n                })\n        \n        return patterns\n    \n    def _detect_pattern(self, attn, tokens):\n        \"\"\"Detect what pattern an attention head follows\"\"\"\n        seq_len = len(tokens)\n        \n        # Check for positional patterns\n        diag = np.diag(attn)  # Self-attention\n        prev_diag = np.diag(attn, k=-1)  # Previous token\n        next_diag = np.diag(attn, k=1)  # Next token\n        \n        if diag.mean() > 0.5:\n            return \"self_attention\"\n        elif len(prev_diag) > 0 and prev_diag.mean() > 0.3:\n            return \"previous_token\"\n        elif len(next_diag) > 0 and next_diag.mean() > 0.3:\n            return \"next_token\"\n        \n        # Check for CLS attention (common in BERT)\n        if attn[:, 0].mean() > 0.3:\n            return \"cls_attention\"\n        \n        # Check for SEP attention\n        if attn[:, -1].mean() > 0.3:\n            return \"sep_attention\"\n        \n        # Broad attention (uniform)\n        if self._attention_entropy(attn) > 0.9 * np.log(seq_len):\n            return \"uniform\"\n        \n        return \"content_dependent\"\n    \n    def _attention_entropy(self, attn):\n        \"\"\"Compute average attention entropy\"\"\"\n        # Higher entropy = more spread out attention\n        entropies = []\n        for row in attn:\n            row = row + 1e-10  # Avoid log(0)\n            entropy = -np.sum(row * np.log(row))\n            entropies.append(entropy)\n        return np.mean(entropies)\n    \n    def find_heads_by_pattern(self, text, target_pattern):\n        \"\"\"Find attention heads with specific pattern\"\"\"\n        patterns = self.analyze_patterns(text)\n        return [\n            (p[\"layer\"], p[\"head\"])\n            for p in patterns\n            if p[\"pattern\"] == target_pattern\n        ]\n\n# Usage\nanalyzer = AttentionAnalyzer()\npatterns = analyzer.analyze_patterns(\"The cat sat on the mat and slept.\")\n\n# Find content-dependent heads (most interesting)\ncontent_heads = [\n    p for p in patterns if p[\"pattern\"] == \"content_dependent\"\n]\nprint(f\"Content-dependent heads: {len(content_heads)}\")"
+              }
+            ],
+            "keyTakeaways": [
+              "Attention weights show token-to-token relationships",
+              "Different heads learn different patterns",
+              "Use BertViz for interactive exploration",
+              "Attention isn't always explanation but provides insights"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "mechanistic-interpretability",
+      "title": "Mechanistic Interpretability",
+      "lessons": [
+        {
+          "id": "intro-mechanistic",
+          "title": "Introduction to Mechanistic Interpretability",
+          "duration": "40 min",
+          "content": {
+            "overview": "Mechanistic interpretability aims to reverse-engineer neural networks - understanding what computations they perform and how they represent information.",
+            "sections": [
+              {
+                "title": "What is Mechanistic Interpretability?",
+                "content": "**Goal:** Understand neural networks at the level of individual components (neurons, attention heads, circuits).\n\n**Key Questions:**\n- What does each neuron represent?\n- What computations do circuits perform?\n- How does information flow?\n- What algorithms has the model learned?\n\n**Research Highlights:**\n- **Anthropic**: Identified circuits for specific tasks\n- **OpenAI**: Feature visualization in vision models\n- **DeepMind**: Superposition and polysemantic neurons\n- **MIRI/EleutherAI**: Transformer circuits",
+                "diagram": {
+                  "title": "Mechanistic Interpretability Stack",
+                  "code": "flowchart TB\n    subgraph Levels[\"Analysis Levels\"]\n        N[Neurons] --> C[Circuits]\n        C --> M[Modules]\n        M --> B[Behaviors]\n    end\n    \n    subgraph Methods\n        N -.-> FV[Feature Visualization]\n        N -.-> P[Probing]\n        C -.-> AP[Activation Patching]\n        C -.-> CA[Circuit Analysis]\n        M -.-> CT[Causal Tracing]\n    end"
+                }
+              },
+              {
+                "title": "Probing Classifiers",
+                "content": "Train simple classifiers on hidden states to test what information they contain:",
+                "code": "import torch\nimport torch.nn as nn\nfrom transformers import AutoModel, AutoTokenizer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import train_test_split\nimport numpy as np\n\nclass ProbingClassifier:\n    \"\"\"\n    Probe what information is encoded in model representations\n    \"\"\"\n    def __init__(self, model_name=\"bert-base-uncased\"):\n        self.tokenizer = AutoTokenizer.from_pretrained(model_name)\n        self.model = AutoModel.from_pretrained(model_name)\n        self.model.eval()\n    \n    def extract_representations(self, texts, layer=-1):\n        \"\"\"\n        Extract hidden states from a specific layer\n        \"\"\"\n        representations = []\n        \n        for text in texts:\n            inputs = self.tokenizer(\n                text,\n                return_tensors=\"pt\",\n                padding=True,\n                truncation=True,\n                max_length=128\n            )\n            \n            with torch.no_grad():\n                outputs = self.model(**inputs, output_hidden_states=True)\n            \n            # Get representation from specified layer\n            # Use [CLS] token representation\n            hidden_states = outputs.hidden_states[layer]  # (batch, seq, hidden)\n            cls_repr = hidden_states[0, 0].numpy()  # [CLS] token\n            representations.append(cls_repr)\n        \n        return np.array(representations)\n    \n    def train_probe(self, texts, labels, layer=-1):\n        \"\"\"\n        Train a probing classifier\n        \"\"\"\n        # Extract representations\n        X = self.extract_representations(texts, layer)\n        \n        # Split data\n        X_train, X_test, y_train, y_test = train_test_split(\n            X, labels, test_size=0.2, random_state=42\n        )\n        \n        # Train simple linear classifier\n        probe = LogisticRegression(max_iter=1000)\n        probe.fit(X_train, y_train)\n        \n        # Evaluate\n        accuracy = probe.score(X_test, y_test)\n        \n        return probe, accuracy\n    \n    def probe_all_layers(self, texts, labels):\n        \"\"\"\n        Probe each layer to see where information emerges\n        \"\"\"\n        num_layers = self.model.config.num_hidden_layers + 1  # +1 for embeddings\n        results = []\n        \n        for layer in range(num_layers):\n            probe, accuracy = self.train_probe(texts, labels, layer=layer)\n            results.append({\n                \"layer\": layer,\n                \"accuracy\": accuracy\n            })\n            print(f\"Layer {layer}: {accuracy:.3f}\")\n        \n        return results\n\n# Example: Probe for sentiment\nprober = ProbingClassifier()\n\n# Prepare data\ntexts = [\"I love this!\", \"This is terrible.\", \"Great product!\", \"Awful experience.\"]\nlabels = [1, 0, 1, 0]  # 1=positive, 0=negative\n\n# Probe each layer\nresults = prober.probe_all_layers(texts, labels)\n\n# See which layer encodes sentiment best\nbest_layer = max(results, key=lambda x: x[\"accuracy\"])\nprint(f\"\\nSentiment best encoded at layer {best_layer['layer']}\")"
+              },
+              {
+                "title": "Activation Patching",
+                "content": "Swap activations between runs to identify causal importance:",
+                "code": "import torch\nfrom typing import Callable\n\nclass ActivationPatcher:\n    \"\"\"\n    Activation patching to find causally important components\n    \"\"\"\n    def __init__(self, model, tokenizer):\n        self.model = model\n        self.tokenizer = tokenizer\n        self.hooks = []\n        self.activations = {}\n    \n    def _save_activation(self, name):\n        \"\"\"Hook to save activations\"\"\"\n        def hook(module, input, output):\n            self.activations[name] = output.detach().clone()\n        return hook\n    \n    def _patch_activation(self, name, patch_value):\n        \"\"\"Hook to patch activations\"\"\"\n        def hook(module, input, output):\n            return patch_value\n        return hook\n    \n    def get_clean_activations(self, text):\n        \"\"\"Get activations from clean run\"\"\"\n        self.activations = {}\n        handles = []\n        \n        # Register save hooks on all attention outputs\n        for name, module in self.model.named_modules():\n            if \"attention\" in name and \"output\" in name:\n                handle = module.register_forward_hook(\n                    self._save_activation(name)\n                )\n                handles.append(handle)\n        \n        # Forward pass\n        inputs = self.tokenizer(text, return_tensors=\"pt\")\n        with torch.no_grad():\n            outputs = self.model(**inputs)\n        \n        # Remove hooks\n        for h in handles:\n            h.remove()\n        \n        return self.activations.copy(), outputs\n    \n    def patch_and_run(self, text, component_name, patch_value):\n        \"\"\"Run with patched activation\"\"\"\n        # Register patch hook\n        for name, module in self.model.named_modules():\n            if name == component_name:\n                handle = module.register_forward_hook(\n                    self._patch_activation(name, patch_value)\n                )\n                break\n        \n        # Forward pass\n        inputs = self.tokenizer(text, return_tensors=\"pt\")\n        with torch.no_grad():\n            outputs = self.model(**inputs)\n        \n        handle.remove()\n        return outputs\n    \n    def find_important_components(self, clean_text, corrupted_text):\n        \"\"\"\n        Find which components are causally important\n        by restoring them from clean to corrupted run\n        \"\"\"\n        # Get clean activations\n        clean_acts, clean_output = self.get_clean_activations(clean_text)\n        \n        # Get corrupted baseline\n        _, corrupted_output = self.get_clean_activations(corrupted_text)\n        \n        importance_scores = {}\n        \n        # For each component, patch clean activation into corrupted run\n        for component_name, clean_act in clean_acts.items():\n            patched_output = self.patch_and_run(\n                corrupted_text,\n                component_name,\n                clean_act\n            )\n            \n            # Measure how much patching restores clean behavior\n            # (implementation depends on your metric)\n            restoration = self._compute_restoration(\n                clean_output, corrupted_output, patched_output\n            )\n            importance_scores[component_name] = restoration\n        \n        return sorted(\n            importance_scores.items(),\n            key=lambda x: x[1],\n            reverse=True\n        )"
+              },
+              {
+                "title": "TransformerLens for Interpretability",
+                "content": "Use TransformerLens library for mechanistic analysis:",
+                "code": "# pip install transformer-lens\nimport transformer_lens\nfrom transformer_lens import HookedTransformer\nimport torch\n\n# Load model with hooks built in\nmodel = HookedTransformer.from_pretrained(\"gpt2-small\")\n\n# Easy activation access\ntext = \"The Eiffel Tower is in\"\ntokens = model.to_tokens(text)\n\n# Run with cache to save all activations\nlogits, cache = model.run_with_cache(tokens)\n\n# Access any activation\nresidual = cache[\"resid_post\", 5]  # Residual stream after layer 5\nattn_pattern = cache[\"pattern\", 3]  # Attention patterns in layer 3\nmlp_out = cache[\"mlp_out\", 7]  # MLP output in layer 7\n\nprint(f\"Residual shape: {residual.shape}\")\nprint(f\"Attention pattern shape: {attn_pattern.shape}\")\n\n# Analyze specific head\nhead_5_3 = cache[\"pattern\", 5][:, 3]  # Layer 5, Head 3\nprint(f\"Head 5.3 attention: {head_5_3.shape}\")\n\n# Get logit lens: project residual stream to vocabulary\ndef logit_lens(cache, layer):\n    \"\"\"See what token the model would predict at each layer\"\"\"\n    residual = cache[\"resid_post\", layer]\n    logits = model.unembed(model.ln_final(residual))\n    return logits.argmax(dim=-1)\n\n# Track prediction through layers\nfor layer in range(model.cfg.n_layers):\n    pred_tokens = logit_lens(cache, layer)\n    pred_text = model.to_string(pred_tokens[0, -1:])\n    print(f\"Layer {layer}: {pred_text}\")"
+              }
+            ],
+            "keyTakeaways": [
+              "Mechanistic interpretability reverse-engineers neural networks",
+              "Probing classifiers test what information is encoded",
+              "Activation patching identifies causal importance",
+              "TransformerLens makes analysis easier"
+            ]
+          }
+        },
+        {
+          "id": "circuits",
+          "title": "Circuit Analysis",
+          "duration": "35 min",
+          "content": {
+            "overview": "Circuits are subnetworks that perform specific computations. Finding and understanding circuits reveals the algorithms learned by neural networks.",
+            "sections": [
+              {
+                "title": "What Are Circuits?",
+                "content": "**Definition:** A circuit is a subnetwork of connected neurons/heads that together perform a recognizable computation.\n\n**Famous Circuits:**\n- **Induction Heads**: Copy patterns from earlier in context\n- **IOI Circuit**: Indirect Object Identification in GPT-2\n- **Greater-Than Circuit**: Compare numbers\n\n**Circuit Properties:**\n- **Locality**: Only uses subset of model\n- **Compositionality**: Built from smaller circuits\n- **Universality**: Same circuits appear across models",
+                "code": "# Example: Detecting induction heads\n# Induction heads copy previous tokens that followed the current token\n\nimport torch\nfrom transformer_lens import HookedTransformer\n\nmodel = HookedTransformer.from_pretrained(\"gpt2-small\")\n\ndef detect_induction_heads(model):\n    \"\"\"\n    Find attention heads that exhibit induction behavior\n    (high attention to tokens that previously preceded the current token)\n    \"\"\"\n    # Create a repeated pattern: A B ... A [should predict B]\n    text = \"The cat sat on the mat. The cat sat on the\"\n    tokens = model.to_tokens(text)\n    \n    logits, cache = model.run_with_cache(tokens)\n    \n    induction_scores = []\n    \n    for layer in range(model.cfg.n_layers):\n        for head in range(model.cfg.n_heads):\n            pattern = cache[\"pattern\", layer][0, head]  # (seq, seq)\n            \n            # Check if head attends to position that matches current token\n            # Induction pattern: attend to token after previous occurrence\n            \n            # For each position, find previous occurrence of current token\n            score = 0\n            count = 0\n            \n            for pos in range(1, len(tokens[0])):\n                current_token = tokens[0, pos].item()\n                \n                # Find previous occurrences\n                for prev_pos in range(pos - 1):\n                    if tokens[0, prev_pos].item() == current_token:\n                        # Induction head should attend to prev_pos + 1\n                        if prev_pos + 1 < pattern.shape[1]:\n                            score += pattern[pos, prev_pos + 1].item()\n                            count += 1\n            \n            if count > 0:\n                induction_scores.append({\n                    \"layer\": layer,\n                    \"head\": head,\n                    \"score\": score / count\n                })\n    \n    return sorted(induction_scores, key=lambda x: x[\"score\"], reverse=True)\n\n# Find induction heads\nheads = detect_induction_heads(model)\nprint(\"Top induction heads:\")\nfor h in heads[:5]:\n    print(f\"  Layer {h['layer']}, Head {h['head']}: {h['score']:.3f}\")"
+              },
+              {
+                "title": "Ablation Studies",
+                "content": "Remove components to understand their importance:",
+                "code": "import torch\nfrom transformer_lens import HookedTransformer\nfrom functools import partial\n\ndef ablate_head(model, text, layer, head):\n    \"\"\"\n    Zero out a specific attention head and measure impact\n    \"\"\"\n    tokens = model.to_tokens(text)\n    \n    def head_ablation_hook(z, hook, head_idx):\n        \"\"\"Zero out specific head's output\"\"\"\n        z[:, :, head_idx] = 0\n        return z\n    \n    # Hook name for attention output\n    hook_name = f\"blocks.{layer}.attn.hook_z\"\n    \n    # Run with ablation\n    with model.hooks(\n        fwd_hooks=[(hook_name, partial(head_ablation_hook, head_idx=head))]\n    ):\n        logits_ablated = model(tokens)\n    \n    # Run without ablation\n    logits_normal = model(tokens)\n    \n    # Measure difference (e.g., KL divergence)\n    probs_normal = torch.softmax(logits_normal[:, -1], dim=-1)\n    probs_ablated = torch.softmax(logits_ablated[:, -1], dim=-1)\n    \n    kl_div = torch.sum(\n        probs_normal * (torch.log(probs_normal) - torch.log(probs_ablated))\n    ).item()\n    \n    return kl_div\n\ndef find_important_heads(model, text):\n    \"\"\"\n    Ablate each head and measure importance\n    \"\"\"\n    importance = []\n    \n    for layer in range(model.cfg.n_layers):\n        for head in range(model.cfg.n_heads):\n            kl = ablate_head(model, text, layer, head)\n            importance.append({\n                \"layer\": layer,\n                \"head\": head,\n                \"importance\": kl\n            })\n    \n    return sorted(importance, key=lambda x: x[\"importance\"], reverse=True)\n\n# Find important heads for a specific task\ntext = \"The capital of France is\"\nimportant = find_important_heads(model, text)\n\nprint(\"Most important heads for this completion:\")\nfor h in important[:10]:\n    print(f\"  L{h['layer']}H{h['head']}: {h['importance']:.4f}\")"
+              }
+            ],
+            "keyTakeaways": [
+              "Circuits are interpretable subnetworks",
+              "Ablation studies reveal component importance",
+              "Induction heads are a well-documented circuit",
+              "Circuit analysis reveals learned algorithms"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

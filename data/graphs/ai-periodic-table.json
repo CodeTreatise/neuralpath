@@ -1,0 +1,53 @@
+{
+  "id": "ai-periodic-table",
+  "title": "The AI Periodic Table",
+  "description": "A structured view of the Generative AI ecosystem, organized like a periodic table of elements.",
+  "sections": [
+    { "id": "infra", "title": "Infrastructure", "color": "#64748b" },
+    { "id": "data", "title": "Data Layer", "color": "#3b82f6" },
+    { "id": "models", "title": "Foundation Models", "color": "#8b5cf6" },
+    { "id": "lifecycle", "title": "Model Lifecycle", "color": "#f97316" },
+    { "id": "patterns", "title": "Patterns & Architecture", "color": "#10b981" },
+    { "id": "safety", "title": "Governance & Safety", "color": "#ef4444" },
+    { "id": "apps", "title": "Applications", "color": "#06b6d4" }
+  ],
+  "nodes": [
+    { "id": "infra_gpu", "label": "Compute (GPU/TPU)", "type": "concept", "section": "infra", "description": "Hardware processing units for training and inference (NVIDIA H100s, TPUs).", "difficulty": "Advanced" },
+    { "id": "infra_cloud", "label": "Hybrid Cloud", "type": "concept", "section": "infra", "description": "Cloud infrastructure providers (AWS, Azure, GCP) hosting models.", "difficulty": "Intermediate" },
+    
+    { "id": "data_unstructured", "label": "Unstructured Data", "type": "concept", "section": "data", "description": "Text, images, PDF documents used for RAG and training.", "difficulty": "Beginner" },
+    { "id": "data_vector_db", "label": "Vector Database", "type": "concept", "section": "data", "description": "Stores high-dimensional vectors for semantic search (Pinecone, Milvus, Weaviate).", "difficulty": "Intermediate" },
+    { "id": "data_synthetic", "label": "Synthetic Data", "type": "concept", "section": "data", "description": "AI-generated data used to train other AI models.", "difficulty": "Advanced" },
+    
+    { "id": "model_llm", "label": "LLMs", "type": "concept", "section": "models", "description": "Large Language Models (GPT-4, Claude 3, Gemini).", "difficulty": "Intermediate" },
+    { "id": "model_slm", "label": "SLMs", "type": "concept", "section": "models", "description": "Small Language Models optimized for edge/efficiency (Phi-3, Gemma).", "difficulty": "Intermediate" },
+    { "id": "model_embedding", "label": "Embedding Models", "type": "concept", "section": "models", "description": "Models that convert text/images into vector representations.", "difficulty": "Intermediate" },
+    
+    { "id": "cycle_prompt", "label": "Prompt Engineering", "type": "concept", "section": "lifecycle", "description": "Techniques to guide model output (Chain-of-Thought, Few-Shot).", "difficulty": "Beginner" },
+    { "id": "cycle_finetune", "label": "Fine-Tuning (PEFT)", "type": "concept", "section": "lifecycle", "description": "Parameter-Efficient Fine-Tuning methods like LoRA.", "difficulty": "Advanced" },
+    { "id": "cycle_quant", "label": "Quantization", "type": "concept", "section": "lifecycle", "description": "Reducing model precision (4-bit, 8-bit) for efficiency.", "difficulty": "Advanced" },
+    
+    { "id": "patt_rag", "label": "RAG", "type": "concept", "section": "patterns", "description": "Retrieval-Augmented Generation: connecting LLMs to external data.", "difficulty": "Intermediate" },
+    { "id": "patt_agents", "label": "AI Agents", "type": "concept", "section": "patterns", "description": "Autonomous systems that use tools to complete multi-step tasks.", "difficulty": "Advanced" },
+    { "id": "patt_orch", "label": "Orchestration", "type": "concept", "section": "patterns", "description": "Frameworks connecting components (LangChain, LlamaIndex).", "difficulty": "Intermediate" },
+    
+    { "id": "safe_guard", "label": "Guardrails", "type": "concept", "section": "safety", "description": "Filters to prevent harmful or off-topic outputs.", "difficulty": "Intermediate" },
+    { "id": "safe_eval", "label": "Evaluation", "type": "concept", "section": "safety", "description": "Measuring performance (accuracy, hallucinations, tone).", "difficulty": "Intermediate" },
+    
+    { "id": "app_copilot", "label": "Copilots", "type": "concept", "section": "apps", "description": "AI assistants embedded in workflows (Coding, Writing).", "difficulty": "Beginner" },
+    { "id": "app_search", "label": "Semantic Search", "type": "concept", "section": "apps", "description": "Search based on meaning rather than keywords.", "difficulty": "Intermediate" }
+  ],
+  "links": [
+    { "source": "infra_gpu", "target": "model_llm", "type": "powers" },
+    { "source": "data_unstructured", "target": "model_embedding", "type": "feeds" },
+    { "source": "model_embedding", "target": "data_vector_db", "type": "populates" },
+    { "source": "model_llm", "target": "patt_rag", "type": "core" },
+    { "source": "data_vector_db", "target": "patt_rag", "type": "retrieved-by" },
+    { "source": "patt_rag", "target": "app_search", "type": "enables" },
+    { "source": "model_llm", "target": "patt_agents", "type": "brain" },
+    { "source": "patt_orch", "target": "patt_agents", "type": "builds" },
+    { "source": "cycle_prompt", "target": "model_llm", "type": "guides" },
+    { "source": "cycle_finetune", "target": "model_llm", "type": "improves" },
+    { "source": "safe_guard", "target": "model_llm", "type": "constrains" }
+  ]
+}

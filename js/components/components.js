@@ -292,39 +292,6 @@ const Components = {
     },
     
     /**
-     * Section header with title, subtitle, and actions
-     */
-    sectionHeader(title, subtitle = '', actions = '') {
-        return `
-            <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-6); flex-wrap: wrap; gap: var(--space-4);">
-                <div>
-                    <h1 style="font-size: var(--text-3xl); font-weight: var(--font-bold);">${Helpers.escapeHtml(title)}</h1>
-                    ${subtitle ? `<p class="text-secondary" style="margin-top: var(--space-2);">${Helpers.escapeHtml(subtitle)}</p>` : ''}
-                </div>
-                ${actions ? `<div class="section-actions">${actions}</div>` : ''}
-            </div>
-        `;
-    },
-    
-    /**
-     * Filter chips component
-     */
-    filterChips(filters, currentFilter, onFilterChange) {
-        return `
-            <div class="filter-chips" style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
-                ${filters.map(f => `
-                    <button 
-                        class="btn btn-sm ${f.id === currentFilter ? 'btn-primary' : 'btn-ghost'}"
-                        onclick="${onFilterChange}('${f.id}')"
-                    >
-                        ${f.icon || ''} ${f.label}${f.count !== undefined ? ` (${f.count})` : ''}
-                    </button>
-                `).join('')}
-            </div>
-        `;
-    },
-    
-    /**
      * Toggle bookmark
      */
     toggleBookmark(id, type) {

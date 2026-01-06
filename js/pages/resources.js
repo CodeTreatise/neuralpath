@@ -39,7 +39,7 @@ const ResourcesPage = {
             <div class="tools-toolbar">
                 <div class="tools-toolbar-left">
                     <div class="search-wrapper">
-                        <span class="search-icon">⌘</span>
+                        <span class="search-icon">🔍</span>
                         <input 
                             type="text" 
                             id="resource-search" 

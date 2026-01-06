@@ -12,8 +12,9 @@
   ],
   "learningOutcomes": [
     "Understand why LLM evaluation is challenging and essential",
-    "Implement automated evaluation metrics for RAG and generation",
-    "Build evaluation pipelines with RAGAS and LangSmith",
+    "Use OpenAI Evals API for automated prompt testing",
+    "Implement RAG evaluation with RAGAS metrics",
+    "Build evaluation pipelines with LangSmith",
     "Design effective human evaluation workflows"
   ],
   "modules": [
@@ -77,6 +78,60 @@
       "id": "automated-eval",
       "title": "Automated Evaluation",
       "lessons": [
+        {
+          "id": "openai-evals-api",
+          "title": "OpenAI Evals API",
+          "duration": "35 min",
+          "content": {
+            "overview": "OpenAI provides an official Evals API for testing model outputs against your criteria - think of it as 'unit tests for your prompts'. You define what success looks like, provide test data, and the platform runs your prompts against multiple test cases automatically (Source: OpenAI Evals Guide).",
+            "sections": [
+              {
+                "title": "How OpenAI Evals Work",
+                "content": "The Evals workflow follows three steps - similar to behavior-driven development (BDD):\n\n**Step 1: Create an Eval** - Define the task and success criteria\n**Step 2: Run with Test Data** - Execute your prompt against test cases  \n**Step 3: Analyze Results** - See what passed/failed and iterate\n\n**Key Components:**\n- `data_source_config`: Schema for your test data (inputs + expected outputs)\n- `testing_criteria`: How to check if outputs are correct (graders)\n- `data_source`: Your test data file (JSONL format)",
+                "diagram": {
+                  "title": "OpenAI Evals Workflow",
+                  "code": "flowchart LR\n    subgraph Define\n        E[Create Eval] --> S[Set Schema]\n        S --> G[Add Graders]\n    end\n    \n    subgraph Run\n        D[Upload Test Data] --> R[Create Run]\n        R --> P[Generate Outputs]\n    end\n    \n    subgraph Analyze\n        P --> C[Check Criteria]\n        C --> RES[Pass/Fail Results]\n    end"
+                }
+              },
+              {
+                "title": "Creating an Eval",
+                "content": "First, define what you're testing and how to grade it:",
+                "code": "import requests\nimport os\n\n# Create an eval for IT ticket classification\neval_config = {\n    \"name\": \"IT Ticket Categorization\",\n    \"data_source_config\": {\n        \"type\": \"custom\",\n        \"item_schema\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"ticket_text\": {\"type\": \"string\"},\n                \"correct_label\": {\"type\": \"string\"}\n            },\n            \"required\": [\"ticket_text\", \"correct_label\"]\n        },\n        \"include_sample_schema\": True\n    },\n    # Testing criteria - how to grade outputs\n    \"testing_criteria\": [\n        {\n            \"type\": \"string_check\",  # Exact match grader\n            \"name\": \"Match output to human label\",\n            \"input\": \"{{ sample.output_text }}\",\n            \"operation\": \"eq\",  # equals\n            \"reference\": \"{{ item.correct_label }}\"\n        }\n    ]\n}\n\n# Create via API\nresponse = requests.post(\n    \"https://api.openai.com/v1/evals\",\n    headers={\n        \"Authorization\": f\"Bearer {os.environ['OPENAI_API_KEY']}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json=eval_config\n)\n\neval_id = response.json()[\"id\"]\nprint(f\"Created eval: {eval_id}\")"
+              },
+              {
+                "title": "Grader Types",
+                "content": "OpenAI provides several grader types for different testing needs:\n\n**`string_check`** - Simple string operations\n- `eq`: Exact match\n- `contains`: Output contains reference\n- `starts_with`, `ends_with`: Prefix/suffix matching\n- `regex`: Regular expression match\n\n**`model_graded_criteria`** - LLM-as-judge for subjective criteria\n- Define criteria in natural language\n- Model scores the output (typically 1-5 or pass/fail)\n\n**`model_graded_factual`** - Check factual accuracy against context\n\n**`code_execution`** - Run code to verify outputs\n- Great for testing structured outputs, JSON parsing, etc.",
+                "code": "# Different grader examples\n\n# 1. String check - exact match\nstring_grader = {\n    \"type\": \"string_check\",\n    \"name\": \"Category match\",\n    \"input\": \"{{ sample.output_text }}\",\n    \"operation\": \"eq\",\n    \"reference\": \"{{ item.expected }}\"\n}\n\n# 2. String check - contains\ncontains_grader = {\n    \"type\": \"string_check\",\n    \"name\": \"Contains key phrase\",\n    \"input\": \"{{ sample.output_text }}\",\n    \"operation\": \"contains\",\n    \"reference\": \"{{ item.required_phrase }}\"\n}\n\n# 3. Model-graded - subjective quality\nmodel_grader = {\n    \"type\": \"model_graded_criteria\",\n    \"name\": \"Helpfulness\",\n    \"model\": \"gpt-4o\",\n    \"criteria\": \"Is the response helpful and actionable for the user's question?\",\n    \"input\": {\n        \"question\": \"{{ item.question }}\",\n        \"answer\": \"{{ sample.output_text }}\"\n    }\n}\n\n# 4. Regex for format checking\nformat_grader = {\n    \"type\": \"string_check\",\n    \"name\": \"Valid JSON format\",\n    \"input\": \"{{ sample.output_text }}\",\n    \"operation\": \"regex\",\n    \"reference\": r'^\\{.*\\}$'  # Starts and ends with braces\n}"
+              },
+              {
+                "title": "Running an Eval",
+                "content": "Upload test data and run your eval:",
+                "code": "from openai import OpenAI\nimport json\n\nclient = OpenAI()\n\n# 1. Create test data file (JSONL format)\ntest_data = [\n    {\"item\": {\"ticket_text\": \"My monitor won't turn on!\", \"correct_label\": \"Hardware\"}},\n    {\"item\": {\"ticket_text\": \"I'm in vim and I can't quit!\", \"correct_label\": \"Software\"}},\n    {\"item\": {\"ticket_text\": \"Best restaurants near office?\", \"correct_label\": \"Other\"}}\n]\n\nwith open(\"test_tickets.jsonl\", \"w\") as f:\n    for item in test_data:\n        f.write(json.dumps(item) + \"\\n\")\n\n# 2. Upload the file\nwith open(\"test_tickets.jsonl\", \"rb\") as f:\n    file = client.files.create(file=f, purpose=\"evals\")\n\nprint(f\"Uploaded file: {file.id}\")\n\n# 3. Create an eval run\nimport requests\n\nrun_config = {\n    \"name\": \"Classification test v1.0\",\n    \"data_source\": {\n        \"type\": \"responses\",\n        \"model\": \"gpt-4.1\",\n        \"input_messages\": {\n            \"type\": \"template\",\n            \"template\": [\n                {\n                    \"role\": \"developer\",\n                    \"content\": \"\"\"Categorize the IT support ticket into one of: \nHardware, Software, or Other. Respond with only one word.\"\"\"\n                },\n                {\n                    \"role\": \"user\",\n                    \"content\": \"{{ item.ticket_text }}\"  # Template variable!\n                }\n            ]\n        },\n        \"source\": {\"type\": \"file_id\", \"id\": file.id}\n    }\n}\n\nresponse = requests.post(\n    f\"https://api.openai.com/v1/evals/{eval_id}/runs\",\n    headers={\n        \"Authorization\": f\"Bearer {os.environ['OPENAI_API_KEY']}\",\n        \"Content-Type\": \"application/json\"\n    },\n    json=run_config\n)\n\nrun = response.json()\nprint(f\"Run started: {run['id']}\")\nprint(f\"View results: {run['report_url']}\")"
+              },
+              {
+                "title": "Analyzing Results",
+                "content": "Check your eval run results programmatically or in the dashboard:",
+                "code": "import time\n\ndef wait_for_eval_run(eval_id, run_id):\n    \"\"\"Poll until eval run completes\"\"\"\n    while True:\n        response = requests.get(\n            f\"https://api.openai.com/v1/evals/{eval_id}/runs/{run_id}\",\n            headers={\"Authorization\": f\"Bearer {os.environ['OPENAI_API_KEY']}\"}\n        )\n        run = response.json()\n        \n        if run[\"status\"] == \"completed\":\n            return run\n        elif run[\"status\"] in [\"failed\", \"canceled\"]:\n            raise Exception(f\"Run failed: {run['error']}\")\n        \n        print(f\"Status: {run['status']}...\")\n        time.sleep(5)\n\n# Wait for completion\nresults = wait_for_eval_run(eval_id, run[\"id\"])\n\n# Check results\nprint(f\"\\n=== Eval Results ===\")\nprint(f\"Total tests: {results['result_counts']['total']}\")\nprint(f\"Passed: {results['result_counts']['passed']}\")\nprint(f\"Failed: {results['result_counts']['failed']}\")\nprint(f\"Errors: {results['result_counts']['errored']}\")\n\n# Per-criteria breakdown\nfor criteria in results['per_testing_criteria_results']:\n    print(f\"\\n{criteria['testing_criteria']}:\")\n    print(f\"  Passed: {criteria['passed']}, Failed: {criteria['failed']}\")\n\n# Token usage\nfor usage in results['per_model_usage']:\n    print(f\"\\nModel: {usage['model_name']}\")\n    print(f\"  Invocations: {usage['invocation_count']}\")\n    print(f\"  Tokens: {usage['total_tokens']}\")\n\n# View detailed results in dashboard\nprint(f\"\\n📊 Full report: {results['report_url']}\")"
+              }
+            ],
+            "keyTakeaways": [
+              "OpenAI Evals API lets you create 'unit tests' for your prompts",
+              "Define success criteria with graders: string_check, model_graded, regex",
+              "Upload test data as JSONL with inputs and expected outputs",
+              "Run evals to compare prompts, models, and track regressions"
+            ],
+            "sources": [
+              {
+                "title": "OpenAI Evals Guide",
+                "url": "https://platform.openai.com/docs/guides/evals"
+              },
+              {
+                "title": "OpenAI Graders Reference",
+                "url": "https://platform.openai.com/docs/guides/graders"
+              }
+            ]
+          }
+        },
         {
           "id": "ragas-eval",
           "title": "Evaluating RAG with RAGAS",

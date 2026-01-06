@@ -1,0 +1,244 @@
+{
+  "id": "reasoning-models",
+  "title": "Reasoning & Thinking Models",
+  "description": "Master advanced reasoning techniques from Chain-of-Thought to OpenAI o1 and test-time compute scaling",
+  "icon": "🧠",
+  "level": "intermediate",
+  "duration": "3 weeks",
+  "prerequisites": ["Used ChatGPT or similar AI assistants", "Basic Python (can run scripts)", "OpenAI API access (for code examples)"],
+  "prerequisitesClarification": "If you've chatted with ChatGPT and noticed it sometimes makes mistakes on math or logic problems, you're ready to learn why - and how reasoning models fix this.",
+  "whatYouNeed": [
+    "Any AI chatbot for testing (ChatGPT free tier works)",
+    "OpenAI API key for code examples (~$5)",
+    "Python 3.8+ for running examples",
+    "Curiosity about why AI makes mistakes!"
+  ],
+  "learningOutcomes": [
+    "Understand why AI makes reasoning mistakes and how to fix them",
+    "Use Chain-of-Thought prompting to improve any LLM",
+    "Know when to use thinking models like o1 vs regular models",
+    "Apply test-time compute techniques for better accuracy"
+  ],
+  "modules": [
+    {
+      "id": "reasoning-intro",
+      "title": "Understanding AI Reasoning",
+      "lessons": [
+        {
+          "id": "what-is-reasoning",
+          "title": "What is AI Reasoning?",
+          "duration": "20 min",
+          "content": {
+            "overview": "Why does ChatGPT fail at simple math sometimes? This lesson explains the reasoning problem in AI and introduces the solutions.",
+            "sections": [
+              {
+                "title": "The Reasoning Problem",
+                "content": "**Try this in ChatGPT:**\n\"A farmer has 17 sheep. All but 9 die. How many are left?\"\n\nMany people (and older AI models) say \"8\" - but the answer is 9! \"All but 9\" means 9 survive.\n\n**Why do LLMs make these mistakes?**\n\nLLMs are trained to predict the next word. They don't actually \"think\" - they pattern-match. On tricky problems, pattern-matching fails.\n\n**The solution: Make AI think step-by-step**\n\nInstead of jumping to an answer, we can:\n1. Break problems into steps\n2. Have the AI \"show its work\"\n3. Check each step\n\nThis dramatically improves accuracy on reasoning tasks.",
+                "diagram": {
+                  "title": "Pattern Matching vs Reasoning",
+                  "code": "flowchart TB\n    subgraph Pattern[\"Pattern Matching (Fast, Error-prone)\"]\n        Q1[\"17 sheep, 9 die\"] -->|\"Pattern: 17-9\"| A1[\"8 ❌\"]\n    end\n    \n    subgraph Reason[\"Reasoning (Slower, Accurate)\"]\n        Q2[\"17 sheep, all but 9 die\"] --> S1[\"'All but 9' means 9 remain\"]\n        S1 --> A2[\"9 ✅\"]\n    end"
+                }
+              },
+              {
+                "title": "Key Concepts You'll Learn",
+                "content": "**Chain-of-Thought (CoT)**\nAsking AI to \"think step by step\" before answering. Works with any model!\n\n**Thinking/Reasoning Models (o1, DeepSeek-R1)**\nSpecial models designed to reason internally. They think before they answer.\n\n**Test-Time Compute**\nUsing more computing power when answering (not training) to get better results.\n\n**Self-Consistency**\nAsking the same question multiple times and picking the most common answer.\n\n| Technique | What it does | When to use |\n|-----------|--------------|-------------|\n| Chain-of-Thought | Shows reasoning steps | Math, logic, any hard problem |\n| o1/Reasoning models | Built-in deep thinking | Very hard problems |\n| Self-consistency | Multiple attempts + voting | When accuracy is critical |\n| Iterative refinement | Improve answer over rounds | Code, writing |"
+              },
+              {
+                "title": "Quick Demo: Chain-of-Thought",
+                "content": "The simplest technique that works with any AI:",
+                "code": "# Without Chain-of-Thought\nresponse = ask_ai(\"What's 17 * 23 + 456 / 8?\")\n# Might get wrong answer!\n\n# With Chain-of-Thought - just add this phrase!\nresponse = ask_ai(\"\"\"\nWhat's 17 * 23 + 456 / 8?\n\nLet's think step by step.\n\"\"\")\n# Much more accurate!\n\n# Why it works:\n# The AI now writes out each step:\n# \"Step 1: 17 * 23 = 391\"\n# \"Step 2: 456 / 8 = 57\" \n# \"Step 3: 391 + 57 = 448\"\n# \"Answer: 448\""
+              }
+            ],
+            "keyTakeaways": [
+              "LLMs pattern-match, they don't truly 'think' - this causes reasoning errors",
+              "Chain-of-Thought (adding 'think step by step') dramatically improves accuracy",
+              "Reasoning models (o1) are designed to think before answering",
+              "More compute at inference time = better reasoning"
+            ],
+            "beginnerQuestions": [
+              {"q": "Why doesn't ChatGPT always think step-by-step automatically?", "a": "It's trained to be fast and conversational. Reasoning takes more tokens/time. Models like o1 are specifically trained to reason, but cost more."},
+              {"q": "Is Chain-of-Thought just a prompt trick?", "a": "It's surprisingly effective! Adding 'think step by step' can improve math accuracy from 17% to 78% on some benchmarks."},
+              {"q": "When should I use o1 vs GPT-4?", "a": "Use o1 for hard math, logic, or coding problems. Use GPT-4 for creative writing, simple Q&A, and when speed matters."}
+            ],
+            "references": [
+              {"title": "Chain-of-Thought Prompting Paper", "url": "https://arxiv.org/abs/2201.11903"},
+              {"title": "OpenAI Reasoning Models Guide", "url": "https://platform.openai.com/docs/guides/reasoning"},
+              {"title": "OpenAI Reasoning Best Practices", "url": "https://platform.openai.com/docs/guides/reasoning-best-practices"},
+              {"title": "Google Gemini Thinking Mode", "url": "https://ai.google.dev/gemini-api/docs/thinking-mode"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "reasoning-fundamentals",
+      "title": "Reasoning Fundamentals",
+      "lessons": [
+        {
+          "id": "thinking-vs-answering",
+          "title": "Thinking vs Answering",
+          "duration": "35 min",
+          "content": {
+            "overview": "Traditional LLMs answer immediately. Thinking models deliberate before responding, trading latency for accuracy on complex tasks.",
+            "sections": [
+              {
+                "title": "The Reasoning Revolution",
+                "content": "A fundamental shift in how LLMs work:\n\n**System 1 and System 2 Thinking** (from psychology):\n\n**System 1** = Fast, intuitive, automatic\n- \"What's 2 + 2?\" → \"4!\" (instant)\n- Good for simple tasks\n- Error-prone on tricky problems\n\n**System 2** = Slow, deliberate, effortful\n- \"What's 17 × 23?\" → *thinks, calculates* → \"391\"\n- Takes more time and energy\n- Much more accurate\n\n**AI models follow the same pattern:**\n\n| Model Type | Thinking Style | Speed | Accuracy on Hard Tasks |\n|------------|---------------|-------|------------------------|\n| GPT-4, Claude | System 1 | Fast | Moderate |\n| o1, DeepSeek-R1 | System 2 | Slow | High |",
+                "diagram": {
+                  "title": "System 1 vs System 2 Thinking",
+                  "code": "flowchart LR\n    subgraph System1[\"System 1 (GPT-4)\"]\n        Q1[Question] --> A1[Answer]\n    end\n    \n    subgraph System2[\"System 2 (o1)\"]\n        Q2[Question] --> T[Think...] --> R[Reason...] --> V[Verify...] --> A2[Answer]\n    end\n    \n    style T fill:#fbbf24\n    style R fill:#fbbf24\n    style V fill:#fbbf24"
+                }
+              },
+              {
+                "title": "When to Use Thinking Models",
+                "content": "Thinking models excel at specific task types:\n\n**✅ Use thinking models for:**\n- Multi-step math and logic problems\n- Complex code generation and debugging\n- Scientific reasoning\n- Strategic planning\n- Problems requiring verification\n\n**❌ Prefer standard models for:**\n- Simple Q&A\n- Creative writing\n- Summarization\n- Translation\n- Speed-critical applications\n\n**Cost consideration:**\n- o1 tokens are 3-6x more expensive\n- Thinking takes many hidden tokens\n- But accuracy on hard problems is much higher",
+                "code": "import openai\n\ndef should_use_reasoning(task):\n    \"\"\"Decide whether to use reasoning model\"\"\"\n    reasoning_indicators = [\n        \"calculate\", \"prove\", \"derive\", \"solve\",\n        \"debug\", \"analyze\", \"compare\", \"evaluate\",\n        \"step by step\", \"reasoning\", \"logic\"\n    ]\n    \n    complexity_indicators = [\n        \"complex\", \"difficult\", \"challenging\",\n        \"multiple steps\", \"constraints\"\n    ]\n    \n    task_lower = task.lower()\n    \n    has_reasoning = any(ind in task_lower for ind in reasoning_indicators)\n    has_complexity = any(ind in task_lower for ind in complexity_indicators)\n    \n    return has_reasoning or has_complexity\n\n# Route to appropriate model\ndef smart_query(prompt):\n    if should_use_reasoning(prompt):\n        return openai.chat.completions.create(\n            model=\"o1\",\n            messages=[{\"role\": \"user\", \"content\": prompt}]\n        )\n    else:\n        return openai.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=[{\"role\": \"user\", \"content\": prompt}]\n        )"
+              },
+              {
+                "title": "Understanding o1",
+                "content": "OpenAI's o1 represents a new paradigm:\n\n**How it works:**\n1. Receives query\n2. Generates internal chain-of-thought (hidden)\n3. Reasons through the problem\n4. Verifies its reasoning\n5. Returns final answer\n\n**Key differences from GPT-4:**\n- Uses the Responses API (recommended)\n- Control reasoning with `reasoning.effort` (low/medium/high)\n- Cannot stream (must complete thinking first)\n- Much higher latency (seconds to minutes)\n- Significantly better at math, code, logic\n\n**Reasoning Effort Levels:**\n| Level | Description | Best For |\n|-------|-------------|----------|\n| `low` | Fast, economical | Simple reasoning |\n| `medium` | Balanced (default) | Most tasks |\n| `high` | Deep reasoning | Complex problems |",
+                "code": "from openai import OpenAI\n\nclient = OpenAI()\n\n# Using the Responses API (recommended for reasoning models)\nresponse = client.responses.create(\n    model=\"gpt-5\",  # or \"gpt-5-mini\", \"gpt-5-nano\"\n    reasoning={\"effort\": \"medium\"},  # low, medium, or high\n    input=[\n        {\n            \"role\": \"user\",\n            \"content\": \"\"\"Prove that the square root of 2 is irrational.\n\nProvide a rigorous mathematical proof.\"\"\"\n        }\n    ]\n)\n\nprint(response.output_text)\n\n# Check reasoning tokens used\nprint(f\"Reasoning tokens: {response.usage.output_tokens_details.reasoning_tokens}\")\nprint(f\"Total tokens: {response.usage.total_tokens}\")\n\n# For simpler tasks, use low effort to save cost\nfast_response = client.responses.create(\n    model=\"gpt-5-mini\",\n    reasoning={\"effort\": \"low\"},\n    input=[{\"role\": \"user\", \"content\": \"What's 17 * 23 + 456 / 8?\"}]\n)\n\n# For very complex problems, use high effort\ndeep_response = client.responses.create(\n    model=\"gpt-5\",\n    reasoning={\"effort\": \"high\"},\n    input=[{\"role\": \"user\", \"content\": \"Solve this Olympiad problem: ...\"}]\n)"
+              },
+              {
+                "title": "Gemini Thinking Modes",
+                "content": "Google's Gemini 2.5+ and 3 series also support thinking modes:\n\n**Gemini 3 Thinking Levels:**\n| Level | Description | Use Case |\n|-------|-------------|----------|\n| `minimal` | Almost no thinking | Chat, high-throughput |\n| `low` | Minimal reasoning | Simple tasks |\n| `medium` | Balanced (Flash only) | Most tasks |\n| `high` | Deep reasoning (default) | Complex problems |\n\n**Key Features:**\n- `thinkingLevel` for Gemini 3 models\n- `thinkingBudget` (token count) for Gemini 2.5\n- Thought summaries available via `include_thoughts`",
+                "code": "from google import genai\nfrom google.genai import types\n\nclient = genai.Client()\n\n# Gemini 3 with thinking levels\nresponse = client.models.generate_content(\n    model=\"gemini-3-flash-preview\",\n    contents=\"Solve this logic puzzle: Alice lives in the red house...\",\n    config=types.GenerateContentConfig(\n        thinking_config=types.ThinkingConfig(\n            thinking_level=\"high\"  # minimal, low, medium, high\n        )\n    )\n)\nprint(response.text)\n\n# Gemini 2.5 with thinking budget (token count)\nresponse = client.models.generate_content(\n    model=\"gemini-2.5-flash\",\n    contents=\"What is the sum of the first 50 prime numbers?\",\n    config=types.GenerateContentConfig(\n        thinking_config=types.ThinkingConfig(\n            thinking_budget=1024  # Number of thinking tokens\n            # thinking_budget=0 to disable\n            # thinking_budget=-1 for dynamic\n        )\n    )\n)\n\n# Get thought summaries (see the model's reasoning)\nresponse = client.models.generate_content(\n    model=\"gemini-2.5-pro\",\n    contents=\"Prove that there are infinitely many prime numbers.\",\n    config=types.GenerateContentConfig(\n        thinking_config=types.ThinkingConfig(\n            include_thoughts=True  # See reasoning summaries\n        )\n    )\n)\n\n# Check for thought parts\nfor part in response.candidates[0].content.parts:\n    if part.thought:\n        print(\"Thought summary:\", part.text)\n    else:\n        print(\"Answer:\", part.text)"
+              }
+            ],
+            "keyTakeaways": [
+              "Thinking models trade latency for accuracy on hard problems",
+              "Use for math, logic, code, and complex reasoning",
+              "OpenAI: Use reasoning.effort (low/medium/high) via Responses API",
+              "Gemini: Use thinkingLevel or thinkingBudget with include_thoughts",
+              "Route simple tasks to faster models to save cost"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chain-of-thought",
+      "title": "Chain-of-Thought Techniques",
+      "lessons": [
+        {
+          "id": "cot-fundamentals",
+          "title": "Chain-of-Thought Prompting",
+          "duration": "40 min",
+          "content": {
+            "overview": "Chain-of-Thought (CoT) prompting elicits step-by-step reasoning from any LLM, dramatically improving performance on reasoning tasks.",
+            "sections": [
+              {
+                "title": "Basic Chain-of-Thought",
+                "content": "Simply ask the model to think step by step:\n\n**Zero-shot CoT:**\nAdd \"Let's think step by step\" to the prompt.\n\n**Few-shot CoT:**\nProvide examples that show the reasoning process.",
+                "code": "import openai\n\ndef zero_shot_cot(question):\n    \"\"\"Zero-shot chain-of-thought: Just add the magic words\"\"\"\n    response = openai.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"{question}\\n\\nLet's think step by step.\"\n        }]\n    )\n    return response.choices[0].message.content\n\ndef few_shot_cot(question):\n    \"\"\"Few-shot CoT: Show examples of reasoning\"\"\"\n    examples = \"\"\"\nQ: Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 balls. How many tennis balls does he have now?\n\nA: Let's think step by step.\n1. Roger starts with 5 balls\n2. He buys 2 cans with 3 balls each\n3. 2 cans × 3 balls = 6 new balls\n4. Total: 5 + 6 = 11 balls\nThe answer is 11.\n\nQ: The cafeteria had 23 apples. If they used 20 to make lunch and bought 6 more, how many apples do they have?\n\nA: Let's think step by step.\n1. Started with 23 apples\n2. Used 20 for lunch: 23 - 20 = 3 remaining\n3. Bought 6 more: 3 + 6 = 9 apples\nThe answer is 9.\n\"\"\"\n    \n    response = openai.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"{examples}\\nQ: {question}\\n\\nA: Let's think step by step.\"\n        }]\n    )\n    return response.choices[0].message.content\n\n# Example\nquestion = \"A farmer has 17 sheep. All but 9 die. How many are left?\"\nprint(\"Without CoT:\", query(question))  # Might say 8 (wrong!)\nprint(\"With CoT:\", zero_shot_cot(question))  # Correctly says 9"
+              },
+              {
+                "title": "Self-Consistency",
+                "content": "Generate multiple reasoning paths and vote on the answer:\n\n**Process:**\n1. Generate N independent CoT solutions\n2. Extract the final answer from each\n3. Return the most common answer (majority vote)\n\n**Why it works:**\n- Different reasoning paths may catch different errors\n- Correct answer is more likely to be consistent\n- Trades compute for accuracy",
+                "code": "from collections import Counter\nimport re\n\ndef self_consistency(question, n_samples=5, temperature=0.7):\n    \"\"\"\n    Self-consistency: Sample multiple reasoning paths, vote on answer\n    \"\"\"\n    answers = []\n    \n    for _ in range(n_samples):\n        response = openai.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"\"\"{question}\n\nThink step by step and provide your final answer as:\nFinal Answer: [your answer]\"\"\"\n            }],\n            temperature=temperature  # Add randomness for diversity\n        )\n        \n        text = response.choices[0].message.content\n        \n        # Extract final answer\n        match = re.search(r'Final Answer:\\s*(.+?)(?:\\n|$)', text, re.IGNORECASE)\n        if match:\n            answers.append(match.group(1).strip())\n    \n    # Majority vote\n    if answers:\n        answer_counts = Counter(answers)\n        best_answer, count = answer_counts.most_common(1)[0]\n        confidence = count / len(answers)\n        return {\n            \"answer\": best_answer,\n            \"confidence\": confidence,\n            \"all_answers\": answers\n        }\n    \n    return {\"answer\": None, \"confidence\": 0, \"all_answers\": []}\n\n# Example\nresult = self_consistency(\n    \"If a train leaves at 9:00 AM traveling at 60 mph, and another leaves at 10:00 AM traveling at 80 mph, when will they meet if they're 280 miles apart?\",\n    n_samples=5\n)\nprint(f\"Answer: {result['answer']} (confidence: {result['confidence']:.0%})\")"
+              },
+              {
+                "title": "Tree of Thoughts",
+                "content": "Explore multiple reasoning branches, not just one chain:\n\n**Process:**\n1. Generate multiple next-step options\n2. Evaluate each option\n3. Expand promising branches\n4. Backtrack from dead ends\n\n**Best for:** Problems with multiple solution paths or requiring exploration.",
+                "code": "class TreeOfThoughts:\n    def __init__(self, model=\"gpt-4o\"):\n        self.model = model\n    \n    def generate_thoughts(self, problem, current_state, n=3):\n        \"\"\"Generate possible next steps\"\"\"\n        response = openai.chat.completions.create(\n            model=self.model,\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"\"\"Problem: {problem}\n\nCurrent progress:\n{current_state}\n\nGenerate {n} different possible next steps to make progress.\nFor each, explain the step briefly.\n\nFormat as:\n1. [Step 1]\n2. [Step 2]\n3. [Step 3]\"\"\"\n            }]\n        )\n        return self._parse_thoughts(response.choices[0].message.content)\n    \n    def evaluate_thought(self, problem, state, thought):\n        \"\"\"Rate how promising a thought is (1-10)\"\"\"\n        response = openai.chat.completions.create(\n            model=self.model,\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"\"\"Problem: {problem}\n\nCurrent state:\n{state}\n\nProposed next step:\n{thought}\n\nRate this step from 1-10 on how likely it leads to a solution.\nRespond with just the number.\"\"\"\n            }]\n        )\n        try:\n            return int(response.choices[0].message.content.strip())\n        except:\n            return 5\n    \n    def solve(self, problem, max_depth=5, beam_width=2):\n        \"\"\"Beam search through thought tree\"\"\"\n        states = [{\"path\": [], \"state\": \"Starting the problem...\", \"score\": 0}]\n        \n        for depth in range(max_depth):\n            candidates = []\n            \n            for s in states:\n                thoughts = self.generate_thoughts(problem, s[\"state\"])\n                \n                for thought in thoughts:\n                    score = self.evaluate_thought(problem, s[\"state\"], thought)\n                    candidates.append({\n                        \"path\": s[\"path\"] + [thought],\n                        \"state\": s[\"state\"] + \"\\n\" + thought,\n                        \"score\": s[\"score\"] + score\n                    })\n            \n            # Keep top beam_width candidates\n            candidates.sort(key=lambda x: x[\"score\"], reverse=True)\n            states = candidates[:beam_width]\n            \n            # Check if solved\n            if self._is_solved(states[0][\"state\"]):\n                break\n        \n        return states[0]"
+              }
+            ],
+            "keyTakeaways": [
+              "\"Let's think step by step\" dramatically improves reasoning",
+              "Self-consistency improves accuracy through voting",
+              "Tree of Thoughts explores multiple reasoning paths",
+              "These techniques work with any LLM, not just reasoning models"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "test-time-compute",
+      "title": "Test-Time Compute Scaling",
+      "lessons": [
+        {
+          "id": "scaling-inference",
+          "title": "Scaling Compute at Inference",
+          "duration": "45 min",
+          "content": {
+            "overview": "Instead of making models bigger, we can make them think longer. Test-time compute scaling trades inference time for better results.",
+            "sections": [
+              {
+                "title": "The New Scaling Paradigm",
+                "content": "Traditional scaling: Bigger models, more training compute.\n\nNew scaling: Same model, more inference compute.\n\n**Key insight from o1:**\n- Reasoning tokens scale with problem difficulty\n- More thinking = better answers\n- Diminishing returns, but works!\n\n**Techniques:**\n1. Multiple samples + voting (self-consistency)\n2. Longer chain-of-thought\n3. Iterative refinement\n4. Search-based methods (beam search, MCTS)",
+                "diagram": {
+                  "title": "Scaling Laws Comparison",
+                  "code": "flowchart TB\n    subgraph Traditional[\"Traditional Scaling\"]\n        T1[\"More Training Compute\"] --> T2[\"Bigger Model\"]\n        T2 --> T3[\"Better Results\"]\n    end\n    \n    subgraph TestTime[\"Test-Time Scaling\"]\n        I1[\"More Inference Compute\"] --> I2[\"More Reasoning\"]\n        I2 --> I3[\"Better Results\"]\n    end\n    \n    Traditional --> TestTime\n    \n    style TestTime fill:#10b981"
+                }
+              },
+              {
+                "title": "Compute-Optimal Inference",
+                "content": "Match compute to task difficulty:",
+                "code": "import time\n\nclass AdaptiveReasoner:\n    def __init__(self):\n        self.models = {\n            \"fast\": \"gpt-4o-mini\",\n            \"medium\": \"gpt-4o\",\n            \"slow\": \"o1-mini\",\n            \"thorough\": \"o1\"\n        }\n    \n    def estimate_difficulty(self, problem):\n        \"\"\"Estimate problem difficulty to allocate compute\"\"\"\n        # Simple heuristics - could use a classifier\n        indicators = {\n            \"simple\": [\"what is\", \"define\", \"list\", \"name\"],\n            \"medium\": [\"explain\", \"describe\", \"compare\", \"why\"],\n            \"hard\": [\"prove\", \"derive\", \"solve\", \"calculate\", \"debug\"],\n            \"very_hard\": [\"novel\", \"research\", \"complex algorithm\", \"optimization\"]\n        }\n        \n        problem_lower = problem.lower()\n        \n        for level, words in reversed(list(indicators.items())):\n            if any(w in problem_lower for w in words):\n                return level\n        \n        return \"medium\"\n    \n    def solve(self, problem, budget=\"auto\"):\n        \"\"\"Solve with appropriate compute budget\"\"\"\n        if budget == \"auto\":\n            difficulty = self.estimate_difficulty(problem)\n            budget = {\n                \"simple\": \"fast\",\n                \"medium\": \"medium\",\n                \"hard\": \"slow\",\n                \"very_hard\": \"thorough\"\n            }.get(difficulty, \"medium\")\n        \n        model = self.models[budget]\n        start = time.time()\n        \n        if model.startswith(\"o1\"):\n            # Reasoning model - no system prompt\n            response = openai.chat.completions.create(\n                model=model,\n                messages=[{\"role\": \"user\", \"content\": problem}]\n            )\n        else:\n            # Standard model with CoT\n            response = openai.chat.completions.create(\n                model=model,\n                messages=[\n                    {\"role\": \"system\", \"content\": \"Think step by step.\"},\n                    {\"role\": \"user\", \"content\": problem}\n                ]\n            )\n        \n        return {\n            \"answer\": response.choices[0].message.content,\n            \"model\": model,\n            \"time\": time.time() - start,\n            \"tokens\": response.usage.total_tokens\n        }\n\n# Usage\nreasoner = AdaptiveReasoner()\n\n# Simple question -> fast model\nresult = reasoner.solve(\"What is the capital of France?\")\nprint(f\"Used {result['model']}, took {result['time']:.2f}s\")\n\n# Hard problem -> reasoning model\nresult = reasoner.solve(\"Prove that there are infinitely many primes\")\nprint(f\"Used {result['model']}, took {result['time']:.2f}s\")"
+              },
+              {
+                "title": "Iterative Refinement",
+                "content": "Improve answers through multiple passes:",
+                "code": "def iterative_refinement(problem, max_iterations=3):\n    \"\"\"\n    Iteratively improve an answer through self-critique\n    \"\"\"\n    # Initial solution\n    response = openai.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"{problem}\\n\\nThink step by step.\"\n        }]\n    )\n    current_answer = response.choices[0].message.content\n    \n    for i in range(max_iterations):\n        # Self-critique\n        critique_response = openai.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"\"\"Problem: {problem}\n\nProposed solution:\n{current_answer}\n\nCritique this solution:\n1. Are there any errors in reasoning?\n2. Are there any missing steps?\n3. Is the answer complete?\n\nList specific issues, or say \"LOOKS GOOD\" if correct.\"\"\"\n            }]\n        )\n        critique = critique_response.choices[0].message.content\n        \n        # Check if we're done\n        if \"LOOKS GOOD\" in critique.upper():\n            break\n        \n        # Refine based on critique\n        refine_response = openai.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"\"\"Problem: {problem}\n\nPrevious solution:\n{current_answer}\n\nCritique:\n{critique}\n\nProvide an improved solution addressing the critique.\"\"\"\n            }]\n        )\n        current_answer = refine_response.choices[0].message.content\n    \n    return {\n        \"answer\": current_answer,\n        \"iterations\": i + 1\n    }\n\n# Example\nresult = iterative_refinement(\n    \"Write a function to check if a binary tree is balanced. Handle all edge cases.\"\n)\nprint(f\"Refined over {result['iterations']} iterations\")"
+              },
+              {
+                "title": "Best-of-N Sampling",
+                "content": "Generate multiple solutions, select the best:",
+                "code": "def best_of_n(problem, n=5, judge_model=\"gpt-4o\"):\n    \"\"\"\n    Generate N solutions, use LLM to select best\n    \"\"\"\n    # Generate N solutions\n    solutions = []\n    for _ in range(n):\n        response = openai.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"{problem}\\n\\nThink step by step.\"\n            }],\n            temperature=0.8  # Add diversity\n        )\n        solutions.append(response.choices[0].message.content)\n    \n    # Have judge select best\n    solutions_text = \"\\n\\n---\\n\\n\".join([\n        f\"SOLUTION {i+1}:\\n{sol}\" for i, sol in enumerate(solutions)\n    ])\n    \n    judge_response = openai.chat.completions.create(\n        model=judge_model,\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Problem: {problem}\n\nHere are {n} different solutions:\n\n{solutions_text}\n\nWhich solution is best? Consider:\n- Correctness\n- Completeness\n- Clarity\n- Elegance\n\nRespond with just the solution number (1-{n}).\"\"\"\n        }]\n    )\n    \n    try:\n        best_idx = int(judge_response.choices[0].message.content.strip()) - 1\n        return solutions[best_idx]\n    except:\n        return solutions[0]\n\n# Example\nbest = best_of_n(\n    \"Implement a LRU cache in Python with O(1) get and put operations\",\n    n=5\n)\nprint(best)"
+              }
+            ],
+            "keyTakeaways": [
+              "More inference compute = better answers (up to a point)",
+              "Match compute budget to task difficulty",
+              "Iterative refinement catches and fixes errors",
+              "Best-of-N with judging combines diversity with selection"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "practical-applications",
+      "title": "Practical Applications",
+      "lessons": [
+        {
+          "id": "reasoning-patterns",
+          "title": "Reasoning Patterns in Practice",
+          "duration": "45 min",
+          "content": {
+            "overview": "Apply reasoning techniques to real-world problems: math, code, analysis, and decision-making.",
+            "sections": [
+              {
+                "title": "Mathematical Problem Solving",
+                "content": "Reasoning models excel at math:",
+                "code": "def solve_math(problem, show_work=True):\n    \"\"\"Solve math problems with o1\"\"\"\n    prompt = problem\n    if show_work:\n        prompt += \"\\n\\nShow all your work and explain each step.\"\n    \n    response = openai.chat.completions.create(\n        model=\"o1-mini\",  # Good balance for math\n        messages=[{\"role\": \"user\", \"content\": prompt}]\n    )\n    \n    return response.choices[0].message.content\n\n# Example problems\nproblems = [\n    \"Solve: x² - 5x + 6 = 0\",\n    \"Find the derivative of f(x) = ln(x² + 1) * e^x\",\n    \"A rectangle has perimeter 24 and area 35. Find its dimensions.\",\n    \"Prove that the sum of first n odd numbers equals n²\"\n]\n\nfor p in problems:\n    print(f\"Problem: {p}\")\n    print(f\"Solution: {solve_math(p)}\\n\")"
+              },
+              {
+                "title": "Code Generation and Debugging",
+                "content": "Use reasoning for complex code tasks:",
+                "code": "def code_with_reasoning(task, language=\"python\"):\n    \"\"\"Generate code with reasoning about design decisions\"\"\"\n    response = openai.chat.completions.create(\n        model=\"o1\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Write {language} code for the following task.\n\nTask: {task}\n\nRequirements:\n- Think through the algorithm before coding\n- Consider edge cases\n- Write clean, well-documented code\n- Include example usage\"\"\"\n        }]\n    )\n    return response.choices[0].message.content\n\ndef debug_with_reasoning(code, error):\n    \"\"\"Debug code using reasoning model\"\"\"\n    response = openai.chat.completions.create(\n        model=\"o1-mini\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Debug this code:\n\n```\n{code}\n```\n\nError: {error}\n\nAnalyze the code systematically to find and fix the bug.\"\"\"\n        }]\n    )\n    return response.choices[0].message.content\n\n# Example\ncode = code_with_reasoning(\n    \"Implement a trie data structure with insert, search, and prefix matching\"\n)\nprint(code)"
+              },
+              {
+                "title": "Complex Analysis and Decision Making",
+                "content": "Structured reasoning for business and analysis tasks:",
+                "code": "def analyze_decision(situation, options, criteria):\n    \"\"\"\n    Use structured reasoning for decision analysis\n    \"\"\"\n    response = openai.chat.completions.create(\n        model=\"o1\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Analyze this decision systematically.\n\n## Situation\n{situation}\n\n## Options\n{chr(10).join(f'{i+1}. {opt}' for i, opt in enumerate(options))}\n\n## Evaluation Criteria\n{chr(10).join(f'- {c}' for c in criteria)}\n\n## Your Task\n1. Analyze each option against all criteria\n2. Identify pros and cons\n3. Consider risks and uncertainties\n4. Provide a reasoned recommendation\n\nThink through this carefully before concluding.\"\"\"\n        }]\n    )\n    return response.choices[0].message.content\n\n# Example\nanalysis = analyze_decision(\n    situation=\"Our startup needs to choose a database for our new product\",\n    options=[\n        \"PostgreSQL (self-hosted)\",\n        \"MongoDB Atlas (managed)\",\n        \"Supabase (Postgres-as-a-service)\"\n    ],\n    criteria=[\n        \"Cost at 10K, 100K, 1M users\",\n        \"Development speed\",\n        \"Scalability\",\n        \"Team expertise (we know SQL)\",\n        \"Vendor lock-in risk\"\n    ]\n)\nprint(analysis)"
+              },
+              {
+                "title": "Building a Reasoning Pipeline",
+                "content": "Combine techniques for production systems:",
+                "code": "class ReasoningPipeline:\n    \"\"\"Production reasoning pipeline with fallback and verification\"\"\"\n    \n    def __init__(self):\n        self.history = []\n    \n    def solve(self, problem, verify=True):\n        # Step 1: Initial solution with reasoning model\n        solution = self._reason(problem)\n        \n        # Step 2: Verification (optional)\n        if verify:\n            is_valid, issues = self._verify(problem, solution)\n            \n            if not is_valid:\n                # Step 3: Self-correction\n                solution = self._correct(problem, solution, issues)\n        \n        # Step 4: Extract final answer\n        answer = self._extract_answer(solution)\n        \n        self.history.append({\n            \"problem\": problem,\n            \"solution\": solution,\n            \"answer\": answer\n        })\n        \n        return answer\n    \n    def _reason(self, problem):\n        response = openai.chat.completions.create(\n            model=\"o1-mini\",\n            messages=[{\"role\": \"user\", \"content\": problem}]\n        )\n        return response.choices[0].message.content\n    \n    def _verify(self, problem, solution):\n        response = openai.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"\"\"Verify this solution:\n\nProblem: {problem}\n\nSolution: {solution}\n\nIs this correct? List any issues.\nRespond with JSON: {{\"valid\": true/false, \"issues\": [\"issue1\", ...]}}\"\"\"\n            }],\n            response_format={\"type\": \"json_object\"}\n        )\n        result = json.loads(response.choices[0].message.content)\n        return result[\"valid\"], result.get(\"issues\", [])\n    \n    def _correct(self, problem, solution, issues):\n        response = openai.chat.completions.create(\n            model=\"o1\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"\"\"Fix this solution:\n\nProblem: {problem}\n\nAttempted solution: {solution}\n\nIssues found: {issues}\n\nProvide a corrected solution.\"\"\"\n            }]\n        )\n        return response.choices[0].message.content\n    \n    def _extract_answer(self, solution):\n        # Extract final answer from solution text\n        response = openai.chat.completions.create(\n            model=\"gpt-4o-mini\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"Extract just the final answer from this solution (no explanation):\\n\\n{solution}\"\n            }]\n        )\n        return response.choices[0].message.content\n\n# Usage\npipeline = ReasoningPipeline()\nanswer = pipeline.solve(\n    \"What is the sum of all prime numbers less than 100?\",\n    verify=True\n)\nprint(answer)"
+              }
+            ],
+            "keyTakeaways": [
+              "Use o1 for math, complex code, and multi-step analysis",
+              "Verification catches errors reasoning models might make",
+              "Self-correction improves reliability",
+              "Build pipelines that combine reasoning with verification"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

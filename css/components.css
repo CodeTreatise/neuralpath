@@ -115,6 +115,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     font-size: var(--text-2xl);
     background: linear-gradient(135deg, var(--color-bg-tertiary) 0%, var(--color-bg-hover) 100%);
     border-radius: var(--radius-md);
@@ -123,8 +124,6 @@
 
 .card:hover .card-icon {
     transform: scale(1.1);
-}
-    flex-shrink: 0;
 }
 
 .card-title {

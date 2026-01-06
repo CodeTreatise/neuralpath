@@ -841,7 +841,14 @@ const CoursesPage = {
     renderMarkdown(text) {
         if (!text) return '';
         
-        let html = Helpers.escapeHtml(text);
+        // First, parse and protect tables from escaping
+        const tableBlocks = [];
+        let processed = text.replace(/^(\|.+\|\r?\n)(\|[-:|\s]+\|\r?\n)((\|.+\|\r?\n?)+)/gm, (match) => {
+            tableBlocks.push(match.trim());
+            return `%%TABLE_BLOCK_${tableBlocks.length - 1}%%`;
+        });
+        
+        let html = Helpers.escapeHtml(processed);
         
         // Convert markdown-style formatting
         html = html
@@ -856,7 +863,86 @@ const CoursesPage = {
             .replace(/\n\n/g, '</p><p>')
             .replace(/\n/g, '<br>');
         
+        // Restore tables as HTML
+        tableBlocks.forEach((tableText, index) => {
+            const placeholder = `%%TABLE_BLOCK_${index}%%`;
+            const tableHtml = this.parseMarkdownTable(tableText);
+            html = html.replace(placeholder, `</p>${tableHtml}<p>`);
+        });
+        
         return `<p>${html}</p>`;
+    },
+    
+    /**
+     * Parse markdown table into HTML table
+     */
+    parseMarkdownTable(tableText) {
+        const lines = tableText.trim().split('\n');
+        if (lines.length < 2) return Helpers.escapeHtml(tableText);
+        
+        const headerCells = lines[0].split('|').filter(c => c.trim());
+        const alignments = lines[1].split('|').filter(c => c.trim()).map(c => {
+            if (c.startsWith(':') && c.endsWith(':')) return 'center';
+            if (c.endsWith(':')) return 'right';
+            return 'left';
+        });
+        const bodyRows = lines.slice(2);
+        
+        let html = `<div style="overflow-x: auto; margin: var(--space-4) 0;">
+            <table style="
+                width: 100%;
+                border-collapse: collapse;
+                font-size: var(--text-sm);
+                background: var(--color-bg-secondary);
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-md);
+            "><thead><tr>`;
+        
+        headerCells.forEach((cell, i) => {
+            const align = alignments[i] || 'left';
+            html += `<th style="
+                padding: var(--space-3) var(--space-4);
+                text-align: ${align};
+                font-weight: var(--font-semibold);
+                background: var(--color-bg-tertiary);
+                border-bottom: 2px solid var(--color-border);
+                color: var(--color-text-primary);
+                white-space: nowrap;
+            ">${Helpers.escapeHtml(cell.trim())}</th>`;
+        });
+        
+        html += '</tr></thead><tbody>';
+        
+        bodyRows.forEach((row, rowIdx) => {
+            const cells = row.split('|').filter(c => c.trim() !== '' || c === '');
+            html += '<tr>';
+            cells.forEach((cell, i) => {
+                if (cell.trim() === '' && i === 0) return; // Skip empty first cell
+                const align = alignments[i] || 'left';
+                html += `<td style="
+                    padding: var(--space-3) var(--space-4);
+                    text-align: ${align};
+                    border-bottom: 1px solid var(--color-border);
+                    color: var(--color-text-secondary);
+                ">${this.renderInlineMarkdown(cell.trim())}</td>`;
+            });
+            html += '</tr>';
+        });
+        
+        html += '</tbody></table></div>';
+        return html;
+    },
+    
+    /**
+     * Render inline markdown (bold, code) without block elements
+     */
+    renderInlineMarkdown(text) {
+        if (!text) return '';
+        let html = Helpers.escapeHtml(text);
+        html = html
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            .replace(/`([^`]+)`/g, '<code style="background: var(--color-surface); padding: 1px 4px; border-radius: 3px; font-size: 0.85em;">$1</code>');
+        return html;
     },
 
     /**
@@ -948,7 +1034,14 @@ const CoursesPage = {
         // First, protect special blocks from HTML escaping
         const mathBlocks = [];
         const mermaidBlocks = [];
+        const tableBlocks = [];
         let processed = text;
+        
+        // Extract tables first (before other processing)
+        processed = processed.replace(/^(\|.+\|\r?\n)(\|[-:|\s]+\|\r?\n)((\|.+\|\r?\n?)+)/gm, (match) => {
+            tableBlocks.push(match.trim());
+            return `%%TABLE_BLOCK_${tableBlocks.length - 1}%%`;
+        });
         
         // Extract mermaid code blocks (```mermaid ... ```)
         processed = processed.replace(/```mermaid\n([\s\S]*?)```/g, (match, code) => {
@@ -1012,6 +1105,13 @@ const CoursesPage = {
             } else {
                 html = html.replace(placeholder, `<span class="math-inline">\\(${block.content}\\)</span>`);
             }
+        });
+        
+        // Restore tables as HTML
+        tableBlocks.forEach((tableText, index) => {
+            const placeholder = `%%TABLE_BLOCK_${index}%%`;
+            const tableHtml = this.parseMarkdownTable(tableText);
+            html = html.replace(placeholder, `</p>${tableHtml}<p>`);
         });
         
         // Clean up empty paragraphs

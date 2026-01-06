@@ -127,6 +127,11 @@ const App = {
             await JobsPage.render();
         });
         
+        // Periodic Table
+        Router.register('/periodic-table', async () => {
+            await PeriodicTablePage.render();
+        });
+        
         // 404 handler
         Router.setNotFound(() => {
             const main = document.getElementById('main');

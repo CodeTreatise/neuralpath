@@ -1,0 +1,335 @@
+{
+  "id": "small-language-models",
+  "title": "Small Language Models",
+  "description": "Master efficient, deployable AI with small language models - from Phi to Gemma to edge deployment",
+  "icon": "📦",
+  "level": "intermediate",
+  "duration": "4 weeks",
+  "prerequisites": ["Basic Python programming (variables, functions, pip install)", "Understanding of what AI chatbots like ChatGPT do"],
+  "prerequisitesClarification": "If you can write a Python function and have used ChatGPT or similar AI assistants, you're ready for this course. No machine learning math required.",
+  "whatYouNeed": [
+    "Computer with 8GB+ RAM (16GB recommended)",
+    "Python 3.8 or newer installed",
+    "Internet connection to download models (one-time)",
+    "No GPU required - CPU works fine for small models!"
+  ],
+  "learningOutcomes": [
+    "Understand what language models are and why size matters",
+    "Run AI models on your own computer without internet",
+    "Select the right small model for your use case",
+    "Apply quantization to shrink models while keeping quality",
+    "Deploy models on phones, Raspberry Pi, and browsers"
+  ],
+  "modules": [
+    {
+      "id": "slm-fundamentals",
+      "title": "SLM Fundamentals",
+      "lessons": [
+        {
+          "id": "what-are-llms",
+          "title": "What Are Language Models?",
+          "duration": "25 min",
+          "content": {
+            "overview": "Before diving into small models, let's understand what language models are and the key terms you'll encounter throughout this course.",
+            "sections": [
+              {
+                "title": "Language Models Explained Simply",
+                "content": "**What is a Language Model?**\nA language model is a program that predicts what words come next. When you type in your phone and it suggests the next word - that's a simple language model!\n\n**ChatGPT, Claude, etc.** are Large Language Models (LLMs) - they've learned patterns from massive amounts of text and can have conversations, write code, and answer questions.\n\n**Key Terms You Need to Know:**\n\n| Term | Simple Explanation | Example |\n|------|-------------------|--------|\n| **Parameters** | The \"memory\" of the model - numbers it learned during training | 7B = 7 billion parameters |\n| **Inference** | Using a trained model to get answers (not training it) | Asking ChatGPT a question |\n| **Tokens** | Pieces of words the model works with | \"Hello\" = 1 token, \"unhappiness\" = 3 tokens |\n| **Context Window** | How much text the model can \"see\" at once | 4K = ~3,000 words |\n| **GPU** | Graphics card - makes AI run faster | NVIDIA RTX, Apple M1/M2 |\n| **VRAM** | GPU's memory - limits model size | 8GB, 16GB, 24GB |",
+                "diagram": {
+                  "title": "How Language Models Work",
+                  "code": "flowchart LR\n    A[\"Your Question\"] --> B[\"Tokenizer\\n(breaks into pieces)\"]\n    B --> C[\"Model\\n(predicts next tokens)\"]\n    C --> D[\"Response\"]\n    \n    subgraph Model[\"Inside the Model\"]\n        P[\"Parameters\\n(learned patterns)\"]\n    end"
+                }
+              },
+              {
+                "title": "Why Model Size Matters",
+                "content": "**The Size-Capability Trade-off:**\n\nThink of it like cars:\n- **Large models (70B+)** = Luxury SUV: Powerful, comfortable, expensive, needs lots of fuel\n- **Medium models (7-13B)** = Sedan: Good balance, fits in normal garage\n- **Small models (1-3B)** = Electric scooter: Fast, cheap, fits anywhere, good for specific trips\n\n**Bigger isn't always better!**\n- Bigger models need expensive GPUs ($1000s)\n- Bigger models are slower\n- Bigger models cost more per query\n- Small models can do many tasks just as well\n\n**Memory Rule of Thumb:**\n- ~2GB of memory per 1 billion parameters (full precision)\n- Quantization (we'll learn this) can cut this by 4x!",
+                "code": "# Quick check: What GPU memory do you have?\n# Run this in Python to find out:\n\nimport subprocess\nimport sys\n\ndef check_gpu():\n    \"\"\"Check if you have a GPU and how much memory\"\"\"\n    try:\n        # NVIDIA GPU\n        result = subprocess.run(\n            ['nvidia-smi', '--query-gpu=name,memory.total', '--format=csv,noheader'],\n            capture_output=True, text=True\n        )\n        if result.returncode == 0:\n            print(\"NVIDIA GPU found:\")\n            print(result.stdout)\n            return\n    except FileNotFoundError:\n        pass\n    \n    # Check for Apple Silicon\n    if sys.platform == 'darwin':\n        print(\"Mac detected - Apple Silicon uses shared memory\")\n        print(\"M1/M2/M3 Macs can run small models efficiently!\")\n        return\n    \n    print(\"No NVIDIA GPU found - you can still run models on CPU (slower)\")\n    print(\"Tip: 16GB RAM can run 7B Q4 models on CPU\")\n\ncheck_gpu()"
+              },
+              {
+                "title": "Setting Up Your Environment",
+                "content": "**Before we begin, let's make sure you're set up:**\n\n**Step 1: Check Python**\n```bash\npython --version  # Should be 3.8 or higher\n```\nIf not installed: https://python.org/downloads\n\n**Step 2: Create a project folder**\n```bash\nmkdir my-local-ai\ncd my-local-ai\npython -m venv venv  # Creates isolated environment\nsource venv/bin/activate  # Mac/Linux\nvenv\\Scripts\\activate  # Windows\n```\n\n**Step 3: Install basic packages**\n```bash\npip install requests  # For API calls\n```\n\n**What is pip?** It's Python's package installer - like an app store for Python libraries.",
+                "references": [
+                  {"title": "Python Installation Guide", "url": "https://python.org/downloads"},
+                  {"title": "Virtual Environments Explained", "url": "https://docs.python.org/3/tutorial/venv.html"}
+                ]
+              }
+            ],
+            "keyTakeaways": [
+              "Language models predict text based on patterns learned from training",
+              "Parameters = model's learned knowledge (7B = 7 billion numbers)",
+              "Bigger models need more memory and are slower",
+              "You need Python 3.8+ to follow along - check with 'python --version'"
+            ],
+            "beginnerQuestions": [
+              {"q": "Do I need an expensive GPU?", "a": "No! This course shows you how to run models on regular computers, even Raspberry Pi. GPUs make it faster but aren't required."},
+              {"q": "Is this the same as training AI?", "a": "No, we're using pre-trained models. Training requires massive computing power. We just download and run them."},
+              {"q": "Will my computer be slow while running models?", "a": "The model uses resources only when generating responses. When idle, it doesn't slow your computer."}
+            ]
+          }
+        },
+        {
+          "id": "why-small-models",
+          "title": "Why Small Language Models?",
+          "duration": "35 min",
+          "content": {
+            "overview": "Small Language Models (SLMs) offer a compelling alternative to massive LLMs. They're faster, cheaper, more private, and can run on consumer hardware. Understanding when to use SLMs vs. large models is a critical skill for AI engineers.",
+            "sections": [
+              {
+                "title": "The Case for Small Models",
+                "content": "**Why would you choose a smaller model?**\n\nLarge models aren't always better. Consider these trade-offs:\n\n**When to use Small Models:**\n- Latency-sensitive applications (real-time, mobile)\n- Cost constraints (high volume, limited budget)\n- Privacy requirements (on-device, no data leaves device)\n- Specific narrow tasks (classification, extraction)\n- Edge deployment (IoT, embedded systems)\n\n**When to use Large Models:**\n- Complex reasoning and multi-step problems\n- Broad general knowledge required\n- Creative and nuanced generation\n- Multi-turn complex conversations\n\n| Model Size | Parameters | Use Cases | Deployment |\n|------------|------------|-----------|------------|\n| Tiny | <1B | Classification, NER | Mobile, IoT |\n| Small | 1-3B | Simple Q&A, summarization | Edge, laptop |\n| Medium | 7-13B | RAG, chat, coding | Single GPU |\n| Large | 70B+ | Complex reasoning | Multi-GPU, cloud |",
+                "diagram": {
+                  "title": "Model Size vs Capability Trade-off",
+                  "code": "flowchart LR\n    subgraph Small[\"Small Models\"]\n        S1[\"⚡ Fast\"]\n        S2[\"💰 Cheap\"]\n        S3[\"🔒 Private\"]\n        S4[\"📱 Edge-ready\"]\n    end\n    \n    subgraph Large[\"Large Models\"]\n        L1[\"🧠 Smart\"]\n        L2[\"📚 Knowledgeable\"]\n        L3[\"✍️ Creative\"]\n        L4[\"🔄 Flexible\"]\n    end\n    \n    Small -->|\"Trade-off\"| Large"
+                }
+              },
+              {
+                "title": "Small Model Landscape (2025)",
+                "content": "The SLM space has exploded with capable options:\n\n**Microsoft Phi Series:**\n- Phi-3 Mini (3.8B) - Surprisingly capable for size\n- Phi-3 Small (7B) - Competitive with larger models\n- Phi-3 Vision - Multimodal capabilities\n\n**Google Gemma Series:**\n- Gemma 2B - Efficient, open weights\n- Gemma 7B - Strong reasoning\n- Gemma 2 9B - Latest generation\n\n**Mistral:**\n- Mistral 7B - Excellent instruction following\n- Mixtral 8x7B - MoE architecture (sparse)\n\n**Meta Llama:**\n- Llama 3 8B - Great balance of size/capability\n- Llama 3.2 1B/3B - Mobile-optimized\n\n**Alibaba Qwen:**\n- Qwen 2.5 0.5B/1.5B/3B - Multilingual\n- Qwen-Coder - Code-specialized",
+                "code": "# Compare small models\nSMALL_MODELS = {\n    \"phi-3-mini\": {\n        \"params\": \"3.8B\",\n        \"context\": 128000,\n        \"strengths\": [\"reasoning\", \"math\", \"coding\"],\n        \"license\": \"MIT\",\n        \"quantized_size\": \"2.3GB (Q4)\"\n    },\n    \"gemma-2-9b\": {\n        \"params\": \"9B\",\n        \"context\": 8192,\n        \"strengths\": [\"instruction following\", \"safety\"],\n        \"license\": \"Gemma License\",\n        \"quantized_size\": \"5.5GB (Q4)\"\n    },\n    \"llama-3-8b\": {\n        \"params\": \"8B\",\n        \"context\": 8192,\n        \"strengths\": [\"general\", \"chat\", \"multilingual\"],\n        \"license\": \"Meta Llama 3\",\n        \"quantized_size\": \"4.7GB (Q4)\"\n    },\n    \"mistral-7b\": {\n        \"params\": \"7B\",\n        \"context\": 32768,\n        \"strengths\": [\"instruction\", \"long context\"],\n        \"license\": \"Apache 2.0\",\n        \"quantized_size\": \"4.1GB (Q4)\"\n    },\n    \"qwen-2.5-3b\": {\n        \"params\": \"3B\",\n        \"context\": 32768,\n        \"strengths\": [\"multilingual\", \"coding\"],\n        \"license\": \"Apache 2.0\",\n        \"quantized_size\": \"1.8GB (Q4)\"\n    }\n}\n\ndef select_model(requirements):\n    \"\"\"Simple model selection based on requirements\"\"\"\n    if requirements.get(\"mobile\"):\n        return \"qwen-2.5-3b\"  # Smallest\n    if requirements.get(\"long_context\"):\n        return \"phi-3-mini\"  # 128k context\n    if requirements.get(\"coding\"):\n        return \"phi-3-mini\"  # Best at code\n    if requirements.get(\"multilingual\"):\n        return \"qwen-2.5-3b\"  # Strong multilingual\n    return \"llama-3-8b\"  # Good default"
+              },
+              {
+                "title": "Benchmarks and Evaluation",
+                "content": "Key benchmarks to evaluate small models:\n\n**Reasoning:**\n- MMLU (knowledge)\n- ARC (science reasoning)\n- HellaSwag (commonsense)\n- GSM8K (math)\n\n**Coding:**\n- HumanEval\n- MBPP\n\n**Important**: Benchmark scores don't tell the whole story. Always test on YOUR specific use case.",
+                "code": "# Sample benchmark comparison (approximate, check latest)\nBENCHMARKS = {\n    \"model\": [\"Phi-3-mini\", \"Gemma-7B\", \"Llama-3-8B\", \"Mistral-7B\"],\n    \"MMLU\": [69.0, 64.3, 66.6, 62.5],\n    \"GSM8K\": [82.5, 52.8, 56.8, 52.2],\n    \"HumanEval\": [58.5, 32.3, 62.2, 40.2],\n    \"HellaSwag\": [76.7, 81.2, 82.0, 83.3]\n}\n\n# Phi-3 punches above its weight on reasoning/math\n# Llama-3 is well-rounded\n# Test on your actual tasks!"
+              }
+            ],
+            "keyTakeaways": [
+              "Small models excel at specific, focused tasks",
+              "Choose based on your deployment constraints and use case",
+              "Phi-3, Gemma 2, Llama 3 8B are leading options",
+              "Always benchmark on your actual task, not just public benchmarks"
+            ]
+          }
+        },
+        {
+          "id": "running-local-models",
+          "title": "Running Models Locally",
+          "duration": "45 min",
+          "content": {
+            "overview": "Running LLMs locally gives you privacy, low latency, and no API costs. Learn to set up local inference with Ollama, llama.cpp, and Hugging Face.",
+            "sections": [
+              {
+                "title": "Why Run Models Locally?",
+                "content": "**Benefits of local AI:**\n\n🔒 **Privacy**: Your data never leaves your computer\n💰 **Free**: No API costs - run unlimited queries\n⚡ **Fast**: No network latency\n🌐 **Offline**: Works without internet\n\n**When to run locally vs use APIs:**\n\n| Run Locally | Use API (OpenAI, etc.) |\n|-------------|------------------------|\n| Sensitive data | Need the smartest models |\n| High volume | Occasional use |\n| Offline required | No setup wanted |\n| Learning/experimenting | Production with SLAs |"
+              },
+              {
+                "title": "Ollama: Easiest Local LLMs",
+                "content": "**What is Ollama?**\nOllama is like an app store for AI models. One command to install, one command to run. It handles all the complexity for you.\n\n**Step-by-step Installation:**\n\n**Mac/Linux:**\n```bash\n# This downloads and installs Ollama\ncurl -fsSL https://ollama.com/install.sh | sh\n```\n\n**Windows:**\n1. Go to https://ollama.com\n2. Click Download for Windows\n3. Run the installer\n\n**Your first AI conversation:**\n```bash\n# Download and run Llama 3 (takes a few minutes first time)\nollama run llama3:8b\n\n# Now you can chat! Type your message and press Enter\n# Type /bye to exit\n```\n\n**Useful commands:**\n```bash\nollama list           # See downloaded models\nollama pull phi3:mini # Download without running\nollama rm llama3:8b   # Delete a model\n```",
+                "code": "# Using Ollama from Python\n# First install: pip install ollama requests\n\n# Method 1: Simple HTTP request (no extra library needed)\nimport requests\n\ndef ask_ollama(question, model=\"llama3:8b\"):\n    \"\"\"Send a question to your local Ollama model\"\"\"\n    response = requests.post(\n        \"http://localhost:11434/api/generate\",\n        json={\n            \"model\": model,\n            \"prompt\": question,\n            \"stream\": False  # Wait for full response\n        }\n    )\n    return response.json()[\"response\"]\n\n# Try it!\nprint(ask_ollama(\"What is machine learning in one sentence?\"))\n\n# Method 2: Official Ollama library (cleaner)\n# pip install ollama\nimport ollama\n\nresponse = ollama.chat(\n    model=\"llama3:8b\",\n    messages=[{\"role\": \"user\", \"content\": \"Explain AI simply\"}]\n)\nprint(response[\"message\"][\"content\"])\n\n# Streaming (see response as it generates)\nprint(\"\\nStreaming response:\")\nfor chunk in ollama.chat(\n    model=\"phi3:mini\",\n    messages=[{\"role\": \"user\", \"content\": \"Write a haiku about coding\"}],\n    stream=True\n):\n    print(chunk[\"message\"][\"content\"], end=\"\", flush=True)",
+                "troubleshooting": [
+                  {"problem": "Connection refused error", "solution": "Make sure Ollama is running. On Mac/Linux run 'ollama serve' in another terminal. On Windows, check Ollama is in your system tray."},
+                  {"problem": "Model not found", "solution": "Run 'ollama pull modelname' first to download it."},
+                  {"problem": "Very slow responses", "solution": "Try a smaller model like 'phi3:mini' or 'llama3:8b' instead of larger ones."}
+                ],
+                "references": [
+                  {"title": "Ollama Official Site", "url": "https://ollama.com"},
+                  {"title": "Ollama Model Library", "url": "https://ollama.com/library"},
+                  {"title": "Ollama Python Library", "url": "https://github.com/ollama/ollama-python"}
+                ]
+              },
+              {
+                "title": "llama.cpp: Maximum Performance",
+                "content": "**What is llama.cpp?**\nIt's the engine under Ollama's hood - a super-efficient way to run AI models. Use it when you need maximum speed or control.\n\n**When to use llama.cpp directly:**\n- Need fastest possible performance\n- Want fine-grained control over settings\n- Building into a larger application\n- Ollama doesn't support your use case\n\n**Key terms:**\n- **GGUF**: File format for llama.cpp models (like .mp3 is for music)\n- **Layers to GPU**: How much of the model runs on graphics card vs CPU",
+                "code": "# Install llama-cpp-python\n# For most computers (CPU only - works everywhere):\npip install llama-cpp-python\n\n# If you have an NVIDIA GPU (much faster):\n# CMAKE_ARGS=\"-DLLAMA_CUDA=on\" pip install llama-cpp-python --force-reinstall\n\n# If you have a Mac with M1/M2/M3 (uses Metal acceleration):\n# CMAKE_ARGS=\"-DLLAMA_METAL=on\" pip install llama-cpp-python --force-reinstall\n\n# ---------------------------------------------------------\n# First, download a model file (GGUF format)\n# Go to: https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf\n# Download: Phi-3-mini-4k-instruct-q4.gguf (~2.3GB)\n# ---------------------------------------------------------\n\nfrom llama_cpp import Llama\n\n# Load the model (change path to where you downloaded it)\nllm = Llama(\n    model_path=\"./Phi-3-mini-4k-instruct-q4.gguf\",\n    n_ctx=2048,        # How much text it can 'see' at once\n    n_gpu_layers=0,    # Set to -1 to use all GPU, 0 for CPU only\n    verbose=False      # Set True to see what's happening\n)\n\n# Simple question-answer\noutput = llm(\n    \"Question: What is the capital of France?\\nAnswer:\",\n    max_tokens=50,      # Maximum response length\n    temperature=0.7,    # Creativity (0=focused, 1=creative)\n    stop=[\"\\n\"]         # Stop when hitting newline\n)\nprint(output[\"choices\"][0][\"text\"])\n\n# Chat format (more natural)\noutput = llm.create_chat_completion(\n    messages=[\n        {\"role\": \"system\", \"content\": \"You are a helpful assistant.\"},\n        {\"role\": \"user\", \"content\": \"Explain what an API is to a 10-year-old.\"}\n    ]\n)\nprint(output[\"choices\"][0][\"message\"][\"content\"])",
+                "references": [
+                  {"title": "llama.cpp GitHub", "url": "https://github.com/ggerganov/llama.cpp"},
+                  {"title": "GGUF Models on HuggingFace", "url": "https://huggingface.co/models?sort=trending&search=gguf"}
+                ]
+              },
+              {
+                "title": "Hugging Face Transformers",
+                "content": "**What is Hugging Face?**\nIt's like GitHub for AI - a place where people share models, datasets, and tools. The `transformers` library lets you load and run any model from there.\n\n**When to use Hugging Face:**\n- Need a specific model not in Ollama\n- Want to fine-tune or modify models\n- Building research/production pipelines\n- Need the latest cutting-edge models\n\n**Note:** Uses more memory than quantized options. Good for GPUs with 8GB+.",
+                "code": "# Install required packages\n# pip install transformers torch accelerate\n\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\nimport torch\n\n# Load model and tokenizer (downloads on first run - ~7GB for Phi-3)\nmodel_name = \"microsoft/Phi-3-mini-4k-instruct\"\n\nprint(\"Loading model... (this takes a minute first time)\")\ntokenizer = AutoTokenizer.from_pretrained(model_name)\nmodel = AutoModelForCausalLM.from_pretrained(\n    model_name,\n    torch_dtype=torch.float16,  # Use half precision (saves memory)\n    device_map=\"auto\",          # Automatically use GPU if available\n    trust_remote_code=True\n)\n\n# Create a message\nmessages = [\n    {\"role\": \"user\", \"content\": \"Write a Python function to check if a number is prime\"}\n]\n\n# Convert to model's expected format\ninputs = tokenizer.apply_chat_template(\n    messages,\n    return_tensors=\"pt\",\n    add_generation_prompt=True\n).to(model.device)\n\n# Generate response\noutputs = model.generate(\n    inputs,\n    max_new_tokens=300,\n    temperature=0.7,\n    do_sample=True\n)\n\n# Decode and print\nresponse = tokenizer.decode(outputs[0][inputs.shape[1]:], skip_special_tokens=True)\nprint(response)\n\n# ---------------------------------------------------------\n# EASIER WAY: Using pipeline (recommended for beginners)\n# ---------------------------------------------------------\nfrom transformers import pipeline\n\n# Create a text generation pipeline\npipe = pipeline(\"text-generation\", model=model, tokenizer=tokenizer)\n\n# Use it simply\nresult = pipe(\"Explain recursion:\", max_new_tokens=100)\nprint(result[0][\"generated_text\"])",
+                "references": [
+                  {"title": "Hugging Face Hub", "url": "https://huggingface.co/models"},
+                  {"title": "Transformers Documentation", "url": "https://huggingface.co/docs/transformers"}
+                ]
+              },
+              {
+                "title": "Memory Requirements",
+                "content": "**How much memory do you need?**\n\nThis table helps you know which models will run on your computer:\n\n| Model Size | Full Precision (FP16) | Quantized (Q4) | Example Models |\n|------------|----------------------|----------------|----------------|\n| 1-3B | 4-6 GB | 1-2 GB | Phi-3 Mini, Qwen 2.5 3B |\n| 7-8B | 14-16 GB | 4-5 GB | Llama 3 8B, Mistral 7B |\n| 13B | 26 GB | 7-8 GB | Llama 2 13B |\n| 70B | 140 GB | 35-40 GB | Llama 3 70B |\n\n**What do FP16 and Q4 mean?**\n- **FP16** = Full quality, uses 2 bytes per parameter\n- **Q4** = Quantized to 4-bit, uses 0.5 bytes per parameter (75% smaller!)\n\n**Don't have a GPU?**\nYou can run models on CPU! It's slower but works. 16GB RAM can run Q4 7B models.",
+                "code": "def can_i_run_this_model(model_params_billions, your_vram_gb, quantization=\"q4\"):\n    \"\"\"\n    Check if a model will fit in your GPU memory.\n    \n    Args:\n        model_params_billions: Size like 7 for 7B, 13 for 13B\n        your_vram_gb: Your GPU memory (check with nvidia-smi)\n        quantization: 'fp16' for full, 'q8' for 8-bit, 'q4' for 4-bit\n    \"\"\"\n    # Memory per parameter\n    bytes_per_param = {\n        \"fp16\": 2.0,   # 2 bytes per parameter\n        \"q8\": 1.0,     # 1 byte per parameter  \n        \"q4\": 0.5      # 0.5 bytes per parameter\n    }\n    \n    # Calculate memory needed\n    model_gb = model_params_billions * bytes_per_param.get(quantization, 2.0)\n    overhead_gb = 2  # Extra for KV cache, activations, etc.\n    total_needed = model_gb + overhead_gb\n    \n    if total_needed <= your_vram_gb:\n        print(f\"✅ YES! {model_params_billions}B model ({quantization}) needs ~{total_needed:.1f}GB\")\n        print(f\"   You have {your_vram_gb}GB - {your_vram_gb - total_needed:.1f}GB to spare\")\n    else:\n        print(f\"❌ NO. {model_params_billions}B model ({quantization}) needs ~{total_needed:.1f}GB\")\n        print(f\"   You only have {your_vram_gb}GB\")\n        print(f\"   Try: smaller model, or more quantization (q4 < q8 < fp16)\")\n\n# Examples - check your own setup!\nprint(\"With 8GB GPU:\")\ncan_i_run_this_model(7, 8, \"q4\")   # 7B quantized\ncan_i_run_this_model(7, 8, \"fp16\") # 7B full - won't fit!\n\nprint(\"\\nWith 4GB GPU (like laptop):\")\ncan_i_run_this_model(3, 4, \"q4\")   # 3B models work great"
+              }
+            ],
+            "keyTakeaways": [
+              "Ollama is the easiest way to run local LLMs - start here!",
+              "llama.cpp offers best performance for resource-constrained devices",
+              "Hugging Face gives full control but needs more memory",
+              "Q4 quantization makes 7B models run on 8GB GPUs",
+              "No GPU? CPU works too - just slower"
+            ],
+            "beginnerQuestions": [
+              {"q": "Which should I use - Ollama, llama.cpp, or HuggingFace?", "a": "Start with Ollama - it's the easiest. Move to llama.cpp if you need more speed/control. Use HuggingFace if you need specific models or want to modify them."},
+              {"q": "My model is very slow - what can I do?", "a": "Try: 1) Use a smaller model 2) Use more quantization (Q4 instead of Q8) 3) Close other programs 4) If on laptop, plug in power"},
+              {"q": "Where do I find models to download?", "a": "Ollama: ollama.com/library. GGUF: huggingface.co/models?search=gguf. Any model: huggingface.co/models"}
+            ],
+            "references": [
+              {"title": "Ollama - Easy Local LLMs", "url": "https://ollama.com"},
+              {"title": "llama.cpp - Efficient Inference", "url": "https://github.com/ggerganov/llama.cpp"},
+              {"title": "Hugging Face Model Hub", "url": "https://huggingface.co/models"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "quantization",
+      "title": "Quantization Techniques",
+      "lessons": [
+        {
+          "id": "quantization-basics",
+          "title": "Understanding Quantization",
+          "duration": "40 min",
+          "content": {
+            "overview": "Quantization is like compressing a photo - you make the file smaller while keeping it looking good. For AI models, we shrink a 14GB model to 4GB with minimal quality loss!",
+            "sections": [
+              {
+                "title": "What is Quantization? (Simple Explanation)",
+                "content": "**The Problem:**\nAI models store billions of numbers. Each number normally takes 2-4 bytes of memory. A 7B parameter model = 7 billion numbers = 14-28GB!\n\n**The Solution: Quantization**\nInstead of using precise numbers (like 3.14159265...), we round them (like 3.14). The model still works well, but uses less memory.\n\n**Analogy:**\nImagine storing a recipe:\n- **Full precision**: \"Add exactly 1.73205080757 cups of flour\"\n- **Quantized**: \"Add 1¾ cups of flour\"\n\nBoth make the same cake! The second just uses less paper.\n\n**Common Precision Levels:**\n\n| Type | Bits | Size | Quality | When to Use |\n|------|------|------|---------|-------------|\n| FP32 | 32-bit | 100% | Perfect | Training only |\n| FP16/BF16 | 16-bit | 50% | ~100% | Good GPUs |\n| INT8/Q8 | 8-bit | 25% | ~99% | Balanced |\n| INT4/Q4 | 4-bit | 12.5% | ~95% | Most common! |",
+                "diagram": {
+                  "title": "Quantization Shrinks Models",
+                  "code": "flowchart LR\n    A[\"7B Model\\nFP16\\n14GB\"] -->|\"Quantize\"| B[\"7B Model\\nQ8\\n7GB\"]\n    B -->|\"More\"| C[\"7B Model\\nQ4\\n4GB\"]\n    \n    style A fill:#ff6b6b\n    style B fill:#feca57\n    style C fill:#48dbfb"
+                }
+              },
+              {
+                "title": "Quantization Quality - What Do You Lose?",
+                "content": "**Good news:** For most tasks, you won't notice a difference!\n\n**What quantization affects:**\n- Complex math/reasoning: Slight degradation at Q4\n- Creative writing: Usually fine\n- Code generation: Usually fine\n- Simple Q&A: No noticeable difference\n\n**Real-world quality (approximate):**\n```\nFP16 (full):    100% quality\nQ8 (8-bit):      99% quality  ← Almost no loss\nQ5 (5-bit):      97% quality  \nQ4 (4-bit):      95% quality  ← Sweet spot!\nQ3 (3-bit):      90% quality  ← Noticeable on complex tasks\nQ2 (2-bit):      85% quality  ← Only for very constrained devices\n```\n\n**Recommendation:** Start with Q4. Drop to Q3 only if you need more memory. Use Q8 or FP16 only if quality is critical."
+              },
+              {
+                "title": "How to Get Quantized Models",
+                "content": "**Method 1: Ollama (Easiest)**\nOllama automatically downloads quantized versions:\n```bash\n# Q4 is the default\nollama pull llama3:8b\n\n# Specify quantization explicitly\nollama pull llama3:8b-instruct-q4_K_M\nollama pull llama3:8b-instruct-q8_0\n```\n\n**Method 2: Download GGUF from HuggingFace**\nMany creators share pre-quantized models:\n1. Go to huggingface.co\n2. Search for your model + \"GGUF\"\n3. Look for files like `model-Q4_K_M.gguf`\n\n**What do the letters mean?**\n- Q4, Q5, Q8 = Number of bits\n- K = Knowledge-preserving (better quality)\n- S/M/L = Small/Medium/Large variant\n- `Q4_K_M` = 4-bit, knowledge-preserving, medium = **Best general choice!**",
+                "code": "# Download a GGUF model from HuggingFace\n# pip install huggingface_hub\n\nfrom huggingface_hub import hf_hub_download\n\n# Download Llama 2 7B quantized to Q4\nmodel_path = hf_hub_download(\n    repo_id=\"TheBloke/Llama-2-7B-GGUF\",  # Repository name\n    filename=\"llama-2-7b.Q4_K_M.gguf\"     # Specific file\n)\n\nprint(f\"Model downloaded to: {model_path}\")\n\n# Now use it with llama.cpp\nfrom llama_cpp import Llama\n\nllm = Llama(model_path=model_path)\nresponse = llm(\"Hello, how are you?\")\nprint(response[\"choices\"][0][\"text\"])"
+              },
+              {
+                "title": "Quantize Models Yourself (Advanced)",
+                "content": "**Why quantize yourself?**\n- Use a model not already quantized\n- Create custom quantization levels\n- Understand the process\n\n**Using bitsandbytes (HuggingFace):**\nThe easiest way to load a model in reduced precision:",
+                "code": "# Quantize a model when loading it\n# pip install transformers bitsandbytes accelerate\n\nfrom transformers import AutoModelForCausalLM, BitsAndBytesConfig\nimport torch\n\n# Configure 4-bit quantization\nquant_config = BitsAndBytesConfig(\n    load_in_4bit=True,               # Use 4-bit\n    bnb_4bit_quant_type=\"nf4\",       # NormalFloat4 - best quality\n    bnb_4bit_compute_dtype=torch.float16  # Compute in FP16\n)\n\n# Load model with quantization\nmodel = AutoModelForCausalLM.from_pretrained(\n    \"microsoft/Phi-3-mini-4k-instruct\",\n    quantization_config=quant_config,\n    device_map=\"auto\"  # Put on GPU automatically\n)\n\nprint(f\"Model loaded! Memory used: ~{torch.cuda.memory_allocated()/1e9:.1f}GB\")\n\n# Even simpler: 8-bit loading\nmodel_8bit = AutoModelForCausalLM.from_pretrained(\n    \"microsoft/Phi-3-mini-4k-instruct\",\n    load_in_8bit=True,  # Just add this!\n    device_map=\"auto\"\n)",
+                "references": [
+                  {"title": "bitsandbytes Library", "url": "https://github.com/TimDettmers/bitsandbytes"},
+                  {"title": "GGUF Format Specification", "url": "https://github.com/ggerganov/ggml/blob/master/docs/gguf.md"},
+                  {"title": "TheBloke's Quantized Models", "url": "https://huggingface.co/TheBloke"}
+                ]
+              }
+            ],
+            "keyTakeaways": [
+              "Quantization = compression for AI models (smaller with slight quality loss)",
+              "Q4_K_M is the sweet spot for most use cases (75% smaller, 95% quality)",
+              "Ollama handles quantization automatically - just pull and run",
+              "For manual control, download GGUF files or use bitsandbytes"
+            ],
+            "beginnerQuestions": [
+              {"q": "Will I notice the quality difference?", "a": "For most tasks (chat, Q&A, simple code), no. For complex math or reasoning, maybe slightly. Try Q4 first - you can always switch to Q8 if needed."},
+              {"q": "What's the best quantization level?", "a": "Q4_K_M for most uses. Q5_K_M if you have extra memory and want better quality. Q8 if quality is critical."},
+              {"q": "Can I quantize any model?", "a": "Most modern models can be quantized. Check HuggingFace for pre-quantized versions - it's easier than doing it yourself."}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge-deployment",
+      "title": "Edge Deployment",
+      "lessons": [
+        {
+          "id": "mobile-deployment",
+          "title": "Mobile and IoT Deployment",
+          "duration": "50 min",
+          "content": {
+            "overview": "Deploy LLMs on mobile devices and edge hardware for offline, private, low-latency AI applications.",
+            "sections": [
+              {
+                "title": "Mobile LLM Frameworks",
+                "content": "**MLC LLM:**\nUniversal deployment for any device\n- iOS, Android, WebGPU, CUDA\n- Automatic optimization for target\n- Based on Apache TVM\n\n**Llama.cpp:**\nCross-platform C++ inference\n- Works on anything with a C compiler\n- iOS, Android, Raspberry Pi\n- Very efficient memory usage\n\n**Google ML Kit / Core ML:**\nPlatform-native solutions\n- Best performance on respective platforms\n- Limited model flexibility",
+                "code": "# MLC LLM example for mobile\n# First, convert model to MLC format\n# mlc_llm convert --model meta-llama/Llama-3-8B\n\n# Python usage (also works as mobile SDK)\nfrom mlc_llm import MLCEngine\n\nengine = MLCEngine(\"Llama-3-8B-Instruct-q4f16_1\")\n\nresponse = engine.chat.completions.create(\n    messages=[{\"role\": \"user\", \"content\": \"Hello!\"}],\n    stream=True\n)\n\nfor chunk in response:\n    print(chunk.choices[0].delta.content, end=\"\")\n\n# For iOS/Android, use the MLC Chat app or integrate SDK\n# See: https://llm.mlc.ai/"
+              },
+              {
+                "title": "Raspberry Pi and Edge Devices",
+                "content": "Running LLMs on Raspberry Pi 5 and similar devices:\n\n**Hardware requirements:**\n- Raspberry Pi 5 (8GB) - can run 3B models\n- Jetson Nano/Orin - GPU acceleration\n- Intel NUC - x86 with good CPU\n\n**Model recommendations:**\n- Phi-3 Mini Q4 (2GB) - fits easily\n- Qwen 2.5 0.5B/1.5B - very small\n- TinyLlama 1.1B - designed for edge",
+                "code": "# Raspberry Pi setup with Ollama\n# Install Ollama on Pi 5\ncurl -fsSL https://ollama.com/install.sh | sh\n\n# Pull a small model\nollama pull phi3:mini\n\n# Or use llama.cpp directly for more control\n# Clone and build\ngit clone https://github.com/ggerganov/llama.cpp\ncd llama.cpp\nmake -j4  # Compile for ARM\n\n# Download small model\nwget https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf/resolve/main/Phi-3-mini-4k-instruct-q4.gguf\n\n# Run\n./main -m Phi-3-mini-4k-instruct-q4.gguf \\\n    -n 256 \\\n    --temp 0.7 \\\n    -p \"Explain IoT in simple terms:\""
+              },
+              {
+                "title": "WebGPU and Browser Deployment",
+                "content": "Run LLMs directly in the browser with WebGPU:\n\n**Benefits:**\n- No server needed\n- Complete privacy\n- Works offline\n- Cross-platform\n\n**Limitations:**\n- Model download on first use\n- Limited by device memory\n- WebGPU support required",
+                "code": "// Using WebLLM in browser\nimport * as webllm from \"@mlc-ai/web-llm\";\n\n// Initialize engine\nconst engine = new webllm.MLCEngine();\n\n// Load model (downloads on first use)\nawait engine.reload(\"Phi-3-mini-4k-instruct-q4f16_1-MLC\");\n\n// Chat\nconst response = await engine.chat.completions.create({\n    messages: [\n        { role: \"system\", content: \"You are a helpful assistant.\" },\n        { role: \"user\", content: \"What is WebGPU?\" }\n    ],\n    stream: true\n});\n\nfor await (const chunk of response) {\n    console.log(chunk.choices[0].delta.content);\n}\n\n// React hook example\nimport { useWebLLM } from \"@anthropic/webllm-react\";\n\nfunction ChatComponent() {\n    const { engine, loading, generate } = useWebLLM(\"Phi-3-mini\");\n    \n    const handleSend = async (message) => {\n        const response = await generate(message);\n        console.log(response);\n    };\n}"
+              }
+            ],
+            "keyTakeaways": [
+              "MLC LLM provides universal deployment across all platforms",
+              "Raspberry Pi 5 can run 3B parameter models",
+              "WebGPU enables browser-based LLM inference",
+              "Start with the smallest model that meets your quality needs"
+            ]
+          }
+        },
+        {
+          "id": "optimization-techniques",
+          "title": "Inference Optimization",
+          "duration": "40 min",
+          "content": {
+            "overview": "Maximize inference speed with advanced optimization techniques including speculative decoding, batching, and caching.",
+            "sections": [
+              {
+                "title": "Speculative Decoding",
+                "content": "Use a smaller draft model to speed up a larger model:\n\n1. Small model generates N candidate tokens quickly\n2. Large model verifies/corrects in parallel\n3. Accept correct tokens, regenerate from first error\n\n**Speedup:** 2-3x with good draft model",
+                "code": "# Speculative decoding with transformers\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\n# Main model (larger, slower)\nmain_model = AutoModelForCausalLM.from_pretrained(\n    \"meta-llama/Llama-3-8B-Instruct\",\n    device_map=\"auto\"\n)\n\n# Draft model (smaller, faster)\ndraft_model = AutoModelForCausalLM.from_pretrained(\n    \"meta-llama/Llama-3-1B\",\n    device_map=\"auto\"\n)\n\ntokenizer = AutoTokenizer.from_pretrained(\"meta-llama/Llama-3-8B-Instruct\")\n\n# Enable assisted generation\noutputs = main_model.generate(\n    inputs,\n    assistant_model=draft_model,\n    max_new_tokens=100,\n    do_sample=False  # Greedy for speculation\n)"
+              },
+              {
+                "title": "KV Cache Optimization",
+                "content": "The KV (Key-Value) cache stores attention states to avoid recomputation:\n\n**PagedAttention (vLLM):**\n- Memory-efficient KV cache management\n- Enables higher throughput\n- Used by vLLM, TensorRT-LLM\n\n**Sliding Window:**\n- Only cache last N tokens\n- Trades context for memory\n- Used by Mistral",
+                "code": "# vLLM for production serving with PagedAttention\nfrom vllm import LLM, SamplingParams\n\n# Initialize with optimization\nllm = LLM(\n    model=\"meta-llama/Llama-3-8B-Instruct\",\n    tensor_parallel_size=1,  # GPUs for tensor parallelism\n    gpu_memory_utilization=0.9,  # Use 90% of GPU memory\n    max_model_len=4096\n)\n\nparams = SamplingParams(\n    temperature=0.7,\n    max_tokens=256\n)\n\n# Batch inference (very efficient)\nprompts = [\n    \"Explain AI:\",\n    \"Write a poem:\",\n    \"Summarize ML:\"\n]\n\noutputs = llm.generate(prompts, params)\nfor output in outputs:\n    print(output.outputs[0].text)"
+              },
+              {
+                "title": "Prompt Caching",
+                "content": "Cache common prefixes to avoid recomputation:\n\n**Use cases:**\n- System prompts\n- Few-shot examples\n- Document prefixes in RAG\n\n**Savings:** Up to 90% for repeated prefixes",
+                "code": "# Prompt caching concept\nfrom functools import lru_cache\nimport hashlib\n\nclass CachedLLM:\n    def __init__(self, model):\n        self.model = model\n        self.prefix_cache = {}  # prefix_hash -> kv_cache\n    \n    def _hash_prefix(self, text):\n        return hashlib.md5(text.encode()).hexdigest()\n    \n    def generate_with_cache(self, system_prompt, user_message):\n        prefix_hash = self._hash_prefix(system_prompt)\n        \n        if prefix_hash in self.prefix_cache:\n            # Reuse cached KV states\n            kv_cache = self.prefix_cache[prefix_hash]\n            return self.model.generate(\n                user_message,\n                past_key_values=kv_cache\n            )\n        else:\n            # Compute and cache\n            output, kv_cache = self.model.generate_with_kv(\n                system_prompt + user_message\n            )\n            self.prefix_cache[prefix_hash] = kv_cache\n            return output\n\n# Many inference servers support this natively\n# - Anthropic API has prompt caching\n# - vLLM has automatic prefix caching"
+              }
+            ],
+            "keyTakeaways": [
+              "Speculative decoding can provide 2-3x speedup",
+              "PagedAttention (vLLM) optimizes memory for batching",
+              "Prompt caching saves computation for repeated prefixes",
+              "Combine techniques for maximum efficiency"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "use-cases",
+      "title": "Small Model Use Cases",
+      "lessons": [
+        {
+          "id": "slm-applications",
+          "title": "Building with Small Models",
+          "duration": "45 min",
+          "content": {
+            "overview": "Small models excel at focused tasks. Learn to build practical applications that leverage their strengths.",
+            "sections": [
+              {
+                "title": "Text Classification and Extraction",
+                "content": "Small models are perfect for structured extraction tasks:",
+                "code": "import ollama\nimport json\n\ndef classify_intent(text):\n    \"\"\"Classify user intent with a small local model\"\"\"\n    response = ollama.chat(\n        model=\"phi3:mini\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Classify this message into exactly one category:\n- question\n- complaint  \n- request\n- feedback\n- other\n\nMessage: {text}\n\nRespond with just the category name.\"\"\"\n        }],\n        options={\"temperature\": 0}\n    )\n    return response[\"message\"][\"content\"].strip().lower()\n\ndef extract_entities(text):\n    \"\"\"Extract structured data from text\"\"\"\n    response = ollama.chat(\n        model=\"phi3:mini\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Extract the following from this text:\n- names (list of person names)\n- dates (list of dates mentioned)\n- amounts (list of monetary amounts)\n\nText: {text}\n\nRespond in JSON format.\"\"\"\n        }],\n        format=\"json\"\n    )\n    return json.loads(response[\"message\"][\"content\"])\n\n# Example\ntext = \"John Smith ordered $500 worth of items on March 15th\"\nprint(classify_intent(\"How do I reset my password?\"))  # question\nprint(extract_entities(text))"
+              },
+              {
+                "title": "Local RAG System",
+                "content": "Build a completely offline RAG system:",
+                "code": "import ollama\nfrom sentence_transformers import SentenceTransformer\nimport numpy as np\n\n# Local embedding model (runs on CPU)\nembedder = SentenceTransformer('all-MiniLM-L6-v2')\n\nclass LocalRAG:\n    def __init__(self, documents):\n        self.documents = documents\n        self.embeddings = embedder.encode(documents)\n    \n    def search(self, query, k=3):\n        query_embedding = embedder.encode([query])[0]\n        scores = np.dot(self.embeddings, query_embedding)\n        top_indices = np.argsort(scores)[-k:][::-1]\n        return [self.documents[i] for i in top_indices]\n    \n    def answer(self, question):\n        # Retrieve relevant context\n        context = self.search(question)\n        context_text = \"\\n\".join(context)\n        \n        # Generate answer with local LLM\n        response = ollama.chat(\n            model=\"llama3:8b\",\n            messages=[{\n                \"role\": \"user\",\n                \"content\": f\"\"\"Context:\n{context_text}\n\nQuestion: {question}\n\nAnswer based only on the context provided.\"\"\"\n            }]\n        )\n        return response[\"message\"][\"content\"]\n\n# Usage\ndocs = [\n    \"Our return policy allows returns within 30 days.\",\n    \"Shipping takes 3-5 business days.\",\n    \"Contact support at help@example.com\"\n]\n\nrag = LocalRAG(docs)\nprint(rag.answer(\"How long do I have to return an item?\"))"
+              },
+              {
+                "title": "Code Assistant",
+                "content": "Small models fine-tuned for code are excellent coding assistants:",
+                "code": "import ollama\n\ndef code_complete(prefix, suffix=\"\"):\n    \"\"\"Fill-in-the-middle code completion\"\"\"\n    response = ollama.generate(\n        model=\"codellama:7b-code\",\n        prompt=f\"<PRE> {prefix} <SUF>{suffix} <MID>\",\n        options={\"temperature\": 0.2, \"num_predict\": 100}\n    )\n    return response[\"response\"]\n\ndef explain_code(code):\n    \"\"\"Explain what code does\"\"\"\n    response = ollama.chat(\n        model=\"phi3:mini\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"Explain this code concisely:\\n```\\n{code}\\n```\"\n        }]\n    )\n    return response[\"message\"][\"content\"]\n\ndef review_code(code):\n    \"\"\"Review code for issues\"\"\"\n    response = ollama.chat(\n        model=\"phi3:mini\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Review this code for bugs, security issues, and improvements.\nBe specific and concise.\n\n```python\n{code}\n```\"\"\"\n        }]\n    )\n    return response[\"message\"][\"content\"]\n\n# Example\ncode = '''\ndef get_user(id):\n    query = f\"SELECT * FROM users WHERE id = {id}\"\n    return db.execute(query)\n'''\n\nprint(review_code(code))\n# Output: SQL injection vulnerability, use parameterized query..."
+              }
+            ],
+            "keyTakeaways": [
+              "Small models excel at classification and extraction",
+              "Local RAG provides privacy with good quality",
+              "Code models like CodeLlama are surprisingly capable",
+              "Combine multiple small models for complex pipelines"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

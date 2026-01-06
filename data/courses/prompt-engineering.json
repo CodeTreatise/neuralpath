@@ -8,6 +8,11 @@
   "prerequisites": [
     "Basic understanding of LLMs"
   ],
+  "whatYouNeed": [
+    "Access to any AI chatbot (ChatGPT, Claude, Gemini - free tiers work fine)",
+    "Curiosity and willingness to experiment",
+    "No coding required for most lessons"
+  ],
   "learningOutcomes": [
     "Write clear, effective prompts for any task",
     "Apply advanced techniques like chain-of-thought and few-shot learning",
@@ -15,6 +20,58 @@
     "Build reliable AI applications with structured outputs"
   ],
   "modules": [
+    {
+      "id": "intro-to-prompting",
+      "title": "Why Prompt Engineering Matters",
+      "lessons": [
+        {
+          "id": "what-is-prompting",
+          "title": "What is Prompt Engineering? (Start Here!)",
+          "duration": "20 min",
+          "content": {
+            "overview": "Before we dive into techniques, let's understand what prompt engineering actually is and why it's become one of the most valuable skills in AI. If you've ever used ChatGPT and thought 'I wish it gave me a better answer' - this course is for you.",
+            "sections": [
+              {
+                "title": "The Simplest Explanation",
+                "content": "**Prompt engineering is the art of asking AI the right questions.**\n\nThink of it like this: Imagine you're asking a brilliant but literal-minded assistant to help you. If you say 'make me food', they might hand you a raw potato. But if you say 'make me a grilled cheese sandwich with cheddar on sourdough, golden brown but not burnt' - you'll get exactly what you want.\n\n**The AI is the assistant. Your prompt is your request. Prompt engineering is learning how to ask clearly.**\n\nThat's it. That's the core concept. Everything else in this course builds on making your requests clearer, more specific, and more effective."
+              },
+              {
+                "title": "Why Does This Matter?",
+                "content": "The same AI can give you:\n- A mediocre answer that wastes your time, OR\n- A brilliant answer that saves you hours of work\n\nThe ONLY difference? How you asked.\n\n**Real example:**\n\n❌ *Bad prompt*: 'Help me with my resume'\n→ AI gives generic advice you could find anywhere\n\n✅ *Good prompt*: 'I'm a software developer with 5 years of Python experience applying for a senior role at a fintech startup. Review my resume bullet points and make them more impactful using the XYZ formula (Accomplished X by doing Y, resulting in Z)'\n→ AI gives specific, actionable improvements tailored to you\n\n**Same AI. Dramatically different value. That's the power of prompt engineering.**"
+              },
+              {
+                "title": "Key Terms You'll Hear",
+                "content": "Let's define the jargon before we start:\n\n**Prompt**: The text you type to the AI. Your question or instruction.\n\n**LLM (Large Language Model)**: The AI brain behind ChatGPT, Claude, etc. It predicts what text should come next based on your prompt.\n\n**Output/Response**: What the AI gives you back.\n\n**Context**: Background information you give the AI so it understands your situation.\n\n**Token**: A chunk of text (roughly 4 characters or 3/4 of a word). AI models process text as tokens, and there's a limit to how many they can handle.\n\n**System prompt**: Instructions that set up the AI's behavior before you start chatting (like 'You are a helpful coding assistant').\n\n**Few-shot learning**: Showing the AI examples of what you want before asking it to do the task."
+              },
+              {
+                "title": "What Will You Be Able to Do?",
+                "content": "After this course, you'll be able to:\n\n**Everyday tasks:**\n- Get better answers from ChatGPT in one try instead of five\n- Write emails, reports, and documents faster\n- Debug your prompts when AI gives you garbage\n\n**Professional skills:**\n- Build AI-powered tools and applications\n- Create reliable, consistent AI outputs\n- Handle complex multi-step reasoning tasks\n\n**Advanced techniques:**\n- Chain multiple prompts for complex workflows\n- Get structured data (JSON, tables) from AI\n- Make AI 'think step by step' for better accuracy"
+              },
+              {
+                "title": "Common Beginner Questions",
+                "content": "**Q: Do I need to know how to code?**\nA: No! Most prompt engineering is just writing clear instructions. We have some coding examples, but they're optional.\n\n**Q: Which AI should I use to practice?**\nA: Any of them! ChatGPT (free tier), Claude, Gemini, or any other chatbot. The techniques work across all LLMs.\n\n**Q: Is this just about using ChatGPT better?**\nA: It starts there, but it goes much further. You'll learn to build applications, automate workflows, and create reliable AI systems.\n\n**Q: How long until I see improvement?**\nA: Immediately! The first lesson on 'Anatomy of a Prompt' will improve your results today.\n\n**Q: Why is it called 'engineering'?**\nA: Because like engineering, it's systematic. There are principles, patterns, and methods that work. It's not just guessing."
+              }
+            ],
+            "keyTakeaways": [
+              "Prompt engineering = asking AI the right questions",
+              "The same AI gives vastly different answers depending on your prompt",
+              "No coding required - just clear thinking and communication",
+              "Techniques work across ChatGPT, Claude, and all LLMs"
+            ],
+            "exercises": [
+              {
+                "title": "Before and After",
+                "description": "Take a simple prompt you've used before ('help me write an email') and rewrite it with more context and specificity. Compare the results."
+              },
+              {
+                "title": "The Grilled Cheese Test",
+                "description": "Ask an AI to 'make you a meal plan' with a vague prompt, then a detailed prompt. Notice the difference in quality."
+              }
+            ]
+          }
+        }
+      ]
+    },
     {
       "id": "prompt-fundamentals",
       "title": "Prompt Engineering Fundamentals",
@@ -67,8 +124,12 @@
                 "url": "https://platform.openai.com/docs/guides/prompt-engineering"
               },
               {
-                "title": "Anthropic Prompt Engineering",
-                "url": "https://docs.anthropic.com/claude/docs/prompt-engineering"
+                "title": "Google Gemini Prompt Design Strategies",
+                "url": "https://ai.google.dev/gemini-api/docs/prompting-strategies"
+              },
+              {
+                "title": "LearnPrompting.org",
+                "url": "https://learnprompting.org/docs/introduction"
               }
             ]
           }
@@ -117,8 +178,72 @@
                 "url": "https://platform.openai.com/docs/guides/chat"
               },
               {
-                "title": "Anthropic System Prompts",
-                "url": "https://docs.anthropic.com/claude/docs/system-prompts"
+                "title": "Google Gemini Prompt Strategies",
+                "url": "https://ai.google.dev/gemini-api/docs/prompting-strategies"
+              }
+            ]
+          }
+        },
+        {
+          "id": "model-parameters",
+          "title": "Model Parameters & Prompt Formatting",
+          "duration": "35 min",
+          "content": {
+            "overview": "Beyond the prompt text, model parameters like temperature and formatting strategies like XML tags significantly impact output quality. Understanding these tools is essential for fine-tuning AI behavior.",
+            "sections": [
+              {
+                "title": "Temperature and Sampling Parameters",
+                "content": "LLMs generate text probabilistically. These parameters control the randomness:\n\n**Temperature (0-2)**\n- **0**: Deterministic, always picks highest probability token\n- **0.3-0.7**: Balanced creativity and consistency\n- **1.0**: Default, natural variation\n- **>1.0**: More random, creative, but may be incoherent\n\n**Use Cases:**\n- Coding/Math: Temperature 0-0.3 (need accuracy)\n- Creative writing: Temperature 0.7-1.0 (need variety)\n- Factual Q&A: Temperature 0-0.5 (need reliability)\n\n**TopP (Nucleus Sampling)**\nOnly consider tokens whose cumulative probability ≤ TopP.\n- TopP 0.9: Consider tokens covering 90% probability mass\n- Lower = more focused, Higher = more diverse\n\n**TopK**\nOnly consider the K most likely tokens.\n- TopK 40: Only top 40 tokens considered\n- Lower = more focused\n\n**Best Practice**: Adjust temperature OR topP, not both.",
+                "code": "from openai import OpenAI\nclient = OpenAI()\n\n# Deterministic for coding\ncode_response = client.chat.completions.create(\n    model=\"gpt-4o\",\n    messages=[{\"role\": \"user\", \"content\": \"Write a Python function to reverse a string\"}],\n    temperature=0  # Always same output\n)\n\n# Creative for brainstorming  \ncreative_response = client.chat.completions.create(\n    model=\"gpt-4o\",\n    messages=[{\"role\": \"user\", \"content\": \"Generate 5 creative startup names for a pet food company\"}],\n    temperature=0.9  # More variety\n)\n\n# Balanced for general tasks\ngeneral_response = client.chat.completions.create(\n    model=\"gpt-4o\",\n    messages=[{\"role\": \"user\", \"content\": \"Explain quantum computing in simple terms\"}],\n    temperature=0.7  # Natural but focused\n)"
+              },
+              {
+                "title": "XML and Markdown Formatting",
+                "content": "Use structural formatting to clearly separate prompt components:\n\n**XML Tags** (Recommended by OpenAI, Google)\n- `<context>`, `<task>`, `<constraints>`, `<examples>`\n- Clear boundaries between sections\n- Model understands these as semantic separators\n\n**Markdown**\n- Headers (`#`, `##`) for sections\n- Lists for requirements\n- Code blocks for examples\n\n**Why This Matters:**\n1. Reduces ambiguity about what's instruction vs data\n2. Helps model parse complex prompts\n3. Makes prompts more maintainable",
+                "code": "# XML-structured prompt (recommended for complex tasks)\nxml_prompt = \"\"\"\n<role>\nYou are a senior code reviewer specializing in Python.\n</role>\n\n<context>\nThe user is submitting code for a production system handling financial data.\nSecurity and error handling are critical.\n</context>\n\n<task>\nReview the code below and provide:\n1. Security issues (if any)\n2. Error handling improvements\n3. Performance suggestions\n</task>\n\n<constraints>\n- Be concise but thorough\n- Prioritize issues by severity\n- Suggest fixes, don't just criticize\n</constraints>\n\n<code_to_review>\ndef transfer_funds(from_acct, to_acct, amount):\n    balance = get_balance(from_acct)\n    if balance >= amount:\n        deduct(from_acct, amount)\n        credit(to_acct, amount)\n        return True\n    return False\n</code_to_review>\n\n<output_format>\nReturn your review as:\n## Security Issues\n...\n## Error Handling\n...\n## Performance\n...\n</output_format>\n\"\"\"\n\n# Markdown-structured prompt (good for simpler tasks)\nmd_prompt = \"\"\"\n# Task\nWrite a product description.\n\n## Product Details\n- Name: CloudSync Pro\n- Category: Productivity Software\n- Key Features: Real-time sync, Offline mode, Team sharing\n\n## Requirements\n- Length: 150-200 words\n- Tone: Professional but approachable\n- Include a call-to-action\n\n## Example Output Style\n> \"Transform your workflow with [Product]...\"\n\"\"\""
+              },
+              {
+                "title": "The Magic of 'Let's Think Step by Step'",
+                "content": "**Zero-shot Chain-of-Thought** is remarkably simple and effective:\n\nJust add **\"Let's think step by step\"** to the end of your prompt.\n\n**Research shows:**\n- Improves math accuracy from 17.7% → 78.7% (GSM8K benchmark)\n- Works without any examples needed\n- Effective across different models\n\n**Why it works:**\nThe phrase triggers the model to generate intermediate reasoning steps before the final answer, catching errors along the way.\n\n**Variations that also work:**\n- \"Let me think through this carefully\"\n- \"Let's break this down\"\n- \"Step by step:\"\n- \"First, I'll consider... Then...\"",
+                "code": "# Without Zero-shot CoT\nbad_prompt = \"\"\"\nRoger has 5 tennis balls. He buys 2 more cans of tennis balls. \nEach can has 3 tennis balls. How many tennis balls does he have now?\n\"\"\"\n# Model might quickly answer: \"10\" (wrong!) or \"11\" (correct but might miss)\n\n# With Zero-shot CoT - just add the magic phrase!\ngood_prompt = \"\"\"\nRoger has 5 tennis balls. He buys 2 more cans of tennis balls. \nEach can has 3 tennis balls. How many tennis balls does he have now?\n\nLet's think step by step.\n\"\"\"\n# Model response:\n# \"Let's think step by step.\n# 1. Roger starts with 5 tennis balls.\n# 2. He buys 2 cans of tennis balls.\n# 3. Each can has 3 tennis balls, so 2 cans × 3 = 6 tennis balls.\n# 4. Total = 5 + 6 = 11 tennis balls.\n# \n# Roger has 11 tennis balls now.\"\n\n# Structured reasoning prompt\nreasoning_prompt = \"\"\"\n{question}\n\nThink through this step by step:\n1. What information is given?\n2. What is being asked?\n3. What operations are needed?\n4. Calculate step by step.\n5. State the final answer.\n\"\"\""
+              },
+              {
+                "title": "Prompt Caching for Cost Optimization",
+                "content": "OpenAI and other providers offer **prompt caching** - reusing computation for repeated prompt prefixes.\n\n**How it works:**\n- Static content at the START of your prompt gets cached\n- Subsequent requests with same prefix are cheaper and faster\n- Cache hit: ~50% cost reduction, lower latency\n\n**Best Practice:**\n1. Put system prompt and static instructions FIRST\n2. Put variable content (user input) LAST\n3. Keep the static portion consistent across requests",
+                "code": "# ❌ Bad: Variable content mixed throughout\nbad_order = [\n    {\"role\": \"user\", \"content\": user_question},  # Variable first!\n    {\"role\": \"system\", \"content\": system_prompt},  # Static after\n]\n\n# ✅ Good: Static content first for caching\ngood_order = [\n    {\"role\": \"system\", \"content\": system_prompt},  # Static first\n    {\"role\": \"user\", \"content\": user_question},    # Variable last\n]\n\n# ✅ Better: Large static context at start\noptimized_messages = [\n    {\n        \"role\": \"system\",\n        \"content\": \"\"\"\n        [Large system prompt with all rules and examples]\n        [This entire block gets cached after first request]\n        [500+ tokens of static content]\n        \"\"\"\n    },\n    {\"role\": \"user\", \"content\": f\"Process this: {variable_input}\"}\n]\n\n# First request: Full cost\n# Subsequent requests with same system prompt: ~50% cheaper"
+              }
+            ],
+            "keyTakeaways": [
+              "Temperature 0 for accuracy, 0.7-1.0 for creativity",
+              "Use XML tags or Markdown to structure complex prompts",
+              "'Let's think step by step' dramatically improves reasoning (Zero-shot CoT)",
+              "Put static content first in prompts for caching benefits"
+            ],
+            "exercises": [
+              {
+                "title": "Temperature Experiment",
+                "description": "Run the same creative prompt 5 times with temperature 0, 0.5, and 1.0. Compare the outputs."
+              },
+              {
+                "title": "XML Refactoring",
+                "description": "Take a messy paragraph-style prompt and refactor it using XML tags for clarity."
+              }
+            ],
+            "sources": [
+              {
+                "title": "Zero-shot Chain-of-Thought Paper (Kojima et al.)",
+                "url": "https://arxiv.org/abs/2205.11916"
+              },
+              {
+                "title": "OpenAI Prompt Caching",
+                "url": "https://platform.openai.com/docs/guides/prompt-caching"
+              },
+              {
+                "title": "Google Gemini Parameter Guide",
+                "url": "https://ai.google.dev/gemini-api/docs/prompting-strategies"
+              },
+              {
+                "title": "PromptingGuide.ai - Techniques",
+                "url": "https://www.promptingguide.ai/techniques"
               }
             ]
           }
@@ -177,8 +302,12 @@
                 "url": "https://arxiv.org/abs/2005.14165"
               },
               {
-                "title": "Anthropic Few-Shot Guide",
-                "url": "https://docs.anthropic.com/claude/docs/give-examples"
+                "title": "PromptingGuide.ai - Few-shot Prompting",
+                "url": "https://www.promptingguide.ai/techniques/fewshot"
+              },
+              {
+                "title": "Google Gemini - Few-shot Examples",
+                "url": "https://ai.google.dev/gemini-api/docs/prompting-strategies"
               }
             ]
           }
@@ -223,8 +352,12 @@
             ],
             "sources": [
               {
-                "title": "Chain-of-Thought Prompting (Wei et al.)",
+                "title": "Chain-of-Thought Prompting (Wei et al. 2022)",
                 "url": "https://arxiv.org/abs/2201.11903"
+              },
+              {
+                "title": "Zero-shot CoT 'Let's Think Step by Step' (Kojima et al. 2022)",
+                "url": "https://arxiv.org/abs/2205.11916"
               },
               {
                 "title": "Self-Consistency (Wang et al.)",
@@ -233,6 +366,10 @@
               {
                 "title": "ReAct (Yao et al.)",
                 "url": "https://arxiv.org/abs/2210.03629"
+              },
+              {
+                "title": "PromptingGuide.ai - Chain of Thought",
+                "url": "https://www.promptingguide.ai/techniques/cot"
               }
             ]
           }
@@ -333,8 +470,8 @@
             ],
             "sources": [
               {
-                "title": "OWASP LLM Top 10",
-                "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
+                "title": "OWASP LLM Top 10 2025",
+                "url": "https://genai.owasp.org/llm-top-10/"
               },
               {
                 "title": "Prompt Injection Attacks",

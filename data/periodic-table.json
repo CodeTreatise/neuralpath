@@ -1,0 +1,345 @@
+{
+  "title": "The AI Periodic Table",
+  "description": "A structured framework for understanding Generative AI components, inspired by IBM Technology.",
+  "source": {
+    "title": "AI Periodic Table Explained",
+    "author": "Martin Keen (IBM Master Inventor)",
+    "url": "https://www.youtube.com/watch?v=ESBMgZHzfG0"
+  },
+  "columns": [
+    { "id": "reactive", "name": "Reactive", "code": "S1", "description": "Control, action, and autonomy", "color": "#ef4444" },
+    { "id": "retrieval", "name": "Retrieval", "code": "S2", "description": "Memory and storage", "color": "#3b82f6" },
+    { "id": "orchestration", "name": "Orchestration", "code": "S3", "description": "Coordination and flow", "color": "#10b981" },
+    { "id": "validation", "name": "Validation", "code": "S4", "description": "Safety and testing", "color": "#f97316" },
+    { "id": "models", "name": "Models", "code": "S5", "description": "The AI models themselves", "color": "#8b5cf6" }
+  ],
+  "rows": [
+    { "id": "primitives", "name": "Primitives", "description": "Foundational building blocks" },
+    { "id": "compositions", "name": "Compositions", "description": "Combinations of primitives" },
+    { "id": "deployment", "name": "Deployment", "description": "Production-ready elements" },
+    { "id": "emerging", "name": "Emerging", "description": "Nascent/frontier concepts" }
+  ],
+  "elements": [
+    {
+      "symbol": "Pr",
+      "name": "Prompt",
+      "row": "primitives",
+      "column": "reactive",
+      "description": "Instructions given to AI models to guide their output.",
+      "details": "Prompts are highly reactive - change one word and you get completely different results. They're the primary interface for controlling LLM behavior.",
+      "examples": ["System prompts", "Few-shot examples", "Chain-of-Thought"],
+      "courseId": "prompt-engineering",
+      "links": []
+    },
+    {
+      "symbol": "Em",
+      "name": "Embeddings",
+      "row": "primitives",
+      "column": "retrieval",
+      "description": "Numerical vector representations of meaning.",
+      "details": "Embeddings convert text, images, or other data into high-dimensional vectors that capture semantic meaning. Similar concepts have similar vectors.",
+      "examples": ["OpenAI text-embedding-3", "Sentence Transformers", "CLIP"],
+      "courseId": "rag-applications",
+      "links": []
+    },
+    {
+      "symbol": "Lg",
+      "name": "Large Language Model",
+      "row": "primitives",
+      "column": "models",
+      "description": "Foundation models trained on vast text data.",
+      "details": "LLMs are like noble gases - stable foundations that power most GenAI applications. Examples include GPT-4, Claude, Gemini, and LLaMA.",
+      "examples": ["GPT-4", "Claude 3", "Gemini", "LLaMA 3"],
+      "courseId": "genai-applications",
+      "links": []
+    },
+    {
+      "symbol": "Fc",
+      "name": "Function Calling",
+      "row": "compositions",
+      "column": "reactive",
+      "description": "LLM ability to invoke external tools and APIs.",
+      "details": "Function calling allows LLMs to take actions beyond text generation - calling APIs, querying databases, or executing code.",
+      "examples": ["OpenAI Tools", "Tool Use", "API Integration"],
+      "courseId": "agentic-ai",
+      "links": []
+    },
+    {
+      "symbol": "Vx",
+      "name": "Vector Database",
+      "row": "compositions",
+      "column": "retrieval",
+      "description": "Specialized databases for storing and querying embeddings.",
+      "details": "Vector databases enable semantic search by finding vectors similar to a query. Essential for RAG systems.",
+      "examples": ["Pinecone", "Weaviate", "Milvus", "Chroma", "pgvector"],
+      "courseId": "rag-applications",
+      "links": []
+    },
+    {
+      "symbol": "Rg",
+      "name": "RAG",
+      "row": "compositions",
+      "column": "orchestration",
+      "description": "Retrieval-Augmented Generation - connecting LLMs to external data.",
+      "details": "RAG is a compound element combining Embeddings (Em) + Vector DB (Vx) + LLM (Lg). It grounds model responses in real data.",
+      "examples": ["Document Q&A", "Enterprise Search", "Knowledge Bases"],
+      "courseId": "rag-applications",
+      "links": []
+    },
+    {
+      "symbol": "Gr",
+      "name": "Guardrails",
+      "row": "compositions",
+      "column": "validation",
+      "description": "Filters and constraints to ensure safe AI outputs.",
+      "details": "Guardrails prevent harmful, off-topic, or policy-violating outputs. They act as safety nets around LLM responses.",
+      "examples": ["NVIDIA NeMo Guardrails", "Guardrails AI", "Content Filters"],
+      "courseId": "ai-safety-guardrails",
+      "links": []
+    },
+    {
+      "symbol": "Mm",
+      "name": "Multi-Modal Models",
+      "row": "compositions",
+      "column": "models",
+      "description": "Models that process multiple input types (text, image, audio).",
+      "details": "Multi-modal models can understand and generate across modalities - analyzing images, transcribing audio, or combining text with visuals.",
+      "examples": ["GPT-4V", "Gemini Pro Vision", "Claude 3 Vision"],
+      "courseId": "multimodal-ai",
+      "links": []
+    },
+    {
+      "symbol": "Ag",
+      "name": "Agents",
+      "row": "deployment",
+      "column": "reactive",
+      "description": "Autonomous systems with think-act-observe loops.",
+      "details": "Agents can plan, use tools, and iterate to complete complex tasks. They represent the highest level of LLM autonomy.",
+      "examples": ["AutoGPT", "LangGraph Agents", "CrewAI", "OpenAI Assistants"],
+      "courseId": "agentic-ai",
+      "links": []
+    },
+    {
+      "symbol": "Ft",
+      "name": "Fine-Tuning",
+      "row": "deployment",
+      "column": "retrieval",
+      "description": "Adapting models to specific domains or tasks.",
+      "details": "Fine-tuning embeds knowledge directly into model weights. Unlike RAG (runtime retrieval), this is compile-time memory.",
+      "examples": ["LoRA", "QLoRA", "PEFT", "Full Fine-Tuning"],
+      "courseId": "llm-finetuning",
+      "links": []
+    },
+    {
+      "symbol": "Fw",
+      "name": "Frameworks",
+      "row": "deployment",
+      "column": "orchestration",
+      "description": "Libraries for building and deploying AI applications.",
+      "details": "Frameworks provide abstractions for chaining prompts, managing memory, and orchestrating complex AI workflows.",
+      "examples": ["LangChain", "LlamaIndex", "Semantic Kernel", "Haystack"],
+      "courseId": "agentic-ai",
+      "links": []
+    },
+    {
+      "symbol": "Rt",
+      "name": "Red Teaming",
+      "row": "deployment",
+      "column": "validation",
+      "description": "Adversarial testing to find vulnerabilities.",
+      "details": "Red teaming involves deliberately trying to break AI systems - finding jailbreaks, biases, and failure modes before deployment.",
+      "examples": ["Prompt Injection Testing", "Bias Audits", "Safety Benchmarks"],
+      "courseId": "ai-safety-guardrails",
+      "links": []
+    },
+    {
+      "symbol": "Sm",
+      "name": "Small Models",
+      "row": "deployment",
+      "column": "models",
+      "description": "Efficient, distilled models for edge deployment.",
+      "details": "Small Language Models (SLMs) trade some capability for efficiency - running on devices, lower latency, lower cost.",
+      "examples": ["Phi-3", "Gemma", "Mistral 7B", "Llama 3 8B"],
+      "courseId": "small-language-models",
+      "links": []
+    },
+    {
+      "symbol": "Ma",
+      "name": "Multi-Agent Systems",
+      "row": "emerging",
+      "column": "reactive",
+      "description": "Multiple AI agents collaborating on tasks.",
+      "details": "Multi-agent systems have specialized agents working together - one for research, one for coding, one for review.",
+      "examples": ["CrewAI", "AutoGen", "ChatDev", "MetaGPT"],
+      "courseId": "agentic-ai",
+      "links": []
+    },
+    {
+      "symbol": "Sy",
+      "name": "Synthetic Data",
+      "row": "emerging",
+      "column": "retrieval",
+      "description": "AI-generated data used to train other AI.",
+      "details": "Synthetic data can augment training sets, create edge cases, or enable training where real data is scarce or private.",
+      "examples": ["Distillation", "Data Augmentation", "Simulation"],
+      "courseId": "synthetic-data",
+      "links": []
+    },
+    {
+      "symbol": "In",
+      "name": "Interpretability",
+      "row": "emerging",
+      "column": "validation",
+      "description": "Understanding how and why models make decisions.",
+      "details": "Interpretability research aims to open the 'black box' - understanding attention patterns, feature attribution, and reasoning.",
+      "examples": ["Mechanistic Interpretability", "SHAP", "Attention Visualization"],
+      "courseId": "interpretability",
+      "links": []
+    },
+    {
+      "symbol": "Th",
+      "name": "Thinking Models",
+      "row": "emerging",
+      "column": "models",
+      "description": "Models that reason and deliberate before responding.",
+      "details": "Thinking models (like o1) spend compute on reasoning before generating output, enabling better problem-solving.",
+      "examples": ["OpenAI o1", "o3", "DeepSeek R1", "Chain-of-Thought"],
+      "courseId": "reasoning-models",
+      "links": []
+    }
+  ],
+  "reactions": [
+    {
+      "id": "rag-formula",
+      "name": "RAG System",
+      "formula": "Em + Vx + Lg → Rg",
+      "inputs": ["Em", "Vx", "Lg"],
+      "output": "Rg",
+      "description": "Embeddings encode data, Vector DB stores it, LLM generates answers.",
+      "level": "intermediate",
+      "learnPath": ["rag-applications"],
+      "howToBuild": "1. Set up embeddings API (OpenAI/local) 2. Create vector DB (pgvector/Chroma) 3. Ingest documents → chunks → embeddings 4. Query: embed question → find similar → pass to LLM"
+    },
+    {
+      "id": "agent-formula",
+      "name": "AI Agent",
+      "formula": "Pr + Fc + Lg → Ag",
+      "inputs": ["Pr", "Fc", "Lg"],
+      "output": "Ag",
+      "description": "Prompts guide the LLM, Function Calling enables actions.",
+      "level": "intermediate",
+      "learnPath": ["prompt-engineering", "agentic-ai"],
+      "howToBuild": "1. Design system prompt with agent persona 2. Define tools/functions with JSON schemas 3. Implement ReAct loop: Think → Act → Observe 4. Add memory for conversation context"
+    },
+    {
+      "id": "multiagent-formula",
+      "name": "Multi-Agent System",
+      "formula": "Ag + Fw + Gr → Ma",
+      "inputs": ["Ag", "Fw", "Gr"],
+      "output": "Ma",
+      "description": "Multiple Agents orchestrated by Frameworks with Guardrails.",
+      "level": "advanced",
+      "learnPath": ["agentic-ai", "ai-safety-guardrails"],
+      "howToBuild": "1. Define agent roles (researcher, coder, reviewer) 2. Use CrewAI/AutoGen for orchestration 3. Add guardrails for each agent 4. Define communication protocols between agents"
+    },
+    {
+      "id": "safe-rag",
+      "name": "Production RAG",
+      "formula": "Rg + Gr + Rt → Production",
+      "inputs": ["Rg", "Gr", "Rt"],
+      "output": null,
+      "description": "RAG system with Guardrails and Red Teaming for production.",
+      "level": "advanced",
+      "learnPath": ["rag-applications", "ai-safety-guardrails", "llm-evaluation"],
+      "howToBuild": "1. Build RAG pipeline 2. Add input/output guardrails (NeMo/Guardrails AI) 3. Red team for prompt injection 4. Monitor with evaluation metrics 5. Add fallback responses"
+    },
+    {
+      "id": "agentic-rag",
+      "name": "Agentic RAG",
+      "formula": "Rg + Ag → Fw",
+      "inputs": ["Rg", "Ag"],
+      "output": "Fw",
+      "description": "Agent-driven retrieval that decides when and what to search.",
+      "level": "advanced",
+      "learnPath": ["rag-applications", "agentic-ai"],
+      "howToBuild": "1. Create RAG as a tool 2. Agent decides: answer directly OR search 3. Agent can refine queries 4. Use LangGraph for state management 5. Add routing logic"
+    },
+    {
+      "id": "multimodal-rag",
+      "name": "Multimodal RAG",
+      "formula": "Mm + Em + Vx → Rg",
+      "inputs": ["Mm", "Em", "Vx"],
+      "output": "Rg",
+      "description": "RAG with images, PDFs, and documents using vision models.",
+      "level": "advanced",
+      "learnPath": ["multimodal-ai", "rag-applications"],
+      "howToBuild": "1. Extract text + images from PDFs 2. Use CLIP/vision model for image embeddings 3. Store both text and image vectors 4. Query with multimodal model (GPT-4V) 5. Return relevant images + text"
+    },
+    {
+      "id": "finetuned-agent",
+      "name": "Specialized Agent",
+      "formula": "Ft + Fc + Pr → Ag",
+      "inputs": ["Ft", "Fc", "Pr"],
+      "output": "Ag",
+      "description": "Fine-tuned model with function calling for domain-specific agents.",
+      "level": "advanced",
+      "learnPath": ["llm-finetuning", "agentic-ai", "prompt-engineering"],
+      "howToBuild": "1. Collect domain-specific data 2. Fine-tune base model (LoRA/QLoRA) 3. Train on function-calling format 4. Define domain tools 5. Deploy with specialized prompts"
+    },
+    {
+      "id": "edge-ai",
+      "name": "Edge AI",
+      "formula": "Sm + Ft → Production",
+      "inputs": ["Sm", "Ft"],
+      "output": null,
+      "description": "Small models fine-tuned for efficient on-device deployment.",
+      "level": "advanced",
+      "learnPath": ["small-language-models", "llm-finetuning"],
+      "howToBuild": "1. Choose small base (Phi-3, Gemma, Llama-3-8B) 2. Quantize to 4-bit 3. Fine-tune for specific task 4. Deploy with Ollama/llama.cpp 5. Optimize for latency"
+    },
+    {
+      "id": "reasoning-chain",
+      "name": "Reasoning Pipeline",
+      "formula": "Th + Pr + Gr → Production",
+      "inputs": ["Th", "Pr", "Gr"],
+      "output": null,
+      "description": "Thinking models with structured prompts and safety guardrails.",
+      "level": "intermediate",
+      "learnPath": ["reasoning-models", "prompt-engineering", "ai-safety-guardrails"],
+      "howToBuild": "1. Use o1/o3 or add CoT prompting 2. Structure prompts for step-by-step 3. Validate reasoning steps 4. Add output guardrails 5. Monitor for reasoning errors"
+    },
+    {
+      "id": "synthetic-training",
+      "name": "Synthetic Training",
+      "formula": "Lg + Sy → Ft",
+      "inputs": ["Lg", "Sy"],
+      "output": "Ft",
+      "description": "Use LLMs to generate synthetic data for fine-tuning.",
+      "level": "intermediate",
+      "learnPath": ["synthetic-data", "llm-finetuning"],
+      "howToBuild": "1. Define task format 2. Use GPT-4/Claude to generate examples 3. Quality filter with LLM 4. Format as training data 5. Fine-tune smaller model"
+    },
+    {
+      "id": "safe-agent",
+      "name": "Safe Agent",
+      "formula": "Ag + Gr + In → Production",
+      "inputs": ["Ag", "Gr", "In"],
+      "output": null,
+      "description": "Agents with guardrails and interpretability for safe deployment.",
+      "level": "advanced",
+      "learnPath": ["agentic-ai", "ai-safety-guardrails", "interpretability"],
+      "howToBuild": "1. Build agent with ReAct 2. Add input/output guardrails 3. Log all decisions for audit 4. Add SHAP/attention viz 5. Human-in-the-loop for critical actions"
+    },
+    {
+      "id": "chatbot",
+      "name": "Basic Chatbot",
+      "formula": "Pr + Lg → Production",
+      "inputs": ["Pr", "Lg"],
+      "output": null,
+      "description": "Simple prompt-based LLM chat application.",
+      "level": "beginner",
+      "learnPath": ["prompt-engineering", "genai-applications"],
+      "howToBuild": "1. Choose API (OpenAI/Anthropic) 2. Design system prompt 3. Maintain conversation history 4. Add basic UI (Gradio/Streamlit) 5. Deploy to cloud"
+    }
+  ]
+}
