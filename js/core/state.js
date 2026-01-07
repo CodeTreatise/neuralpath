@@ -9,6 +9,9 @@ const State = {
         toolCategories: [],
         graphs: [],
         jobs: [],
+        careers: [],
+        learningPaths: [],
+        resources: [],
         searchIndex: []
     },
     
@@ -16,7 +19,10 @@ const State = {
         courses: false,
         tools: false,
         graphs: false,
-        jobs: false
+        jobs: false,
+        careers: false,
+        learningPaths: false,
+        resources: false
     },
     
     /**
@@ -27,8 +33,10 @@ const State = {
         await Promise.all([
             this.loadCourses(),
             this.loadTools(),
-            this.loadGraphs()
-            // Jobs loaded on demand
+            this.loadGraphs(),
+            this.loadCareers(),
+            this.loadLearningPaths(),
+            this.loadResources()
         ]);
         
         // Build search index
@@ -106,6 +114,77 @@ const State = {
         }
         
         return this.data.jobs;
+    },
+
+    /**
+     * Load careers data for stats
+     */
+    async loadCareers() {
+        if (this.loaded.careers) return this.data.careers;
+        
+        try {
+            const response = await fetch('data/careers.json');
+            if (response.ok) {
+                const data = await response.json();
+                // Careers are in 'roles' array
+                this.data.careers = data.roles || [];
+                this.loaded.careers = true;
+            }
+        } catch (e) {
+            console.warn('Careers not loaded:', e);
+            this.data.careers = [];
+        }
+        
+        return this.data.careers;
+    },
+
+    /**
+     * Load learning paths data
+     */
+    async loadLearningPaths() {
+        if (this.loaded.learningPaths) return this.data.learningPaths;
+        
+        try {
+            const response = await fetch('data/learning-paths.json');
+            if (response.ok) {
+                const data = await response.json();
+                this.data.learningPaths = data.learningPaths || [];
+                this.loaded.learningPaths = true;
+            }
+        } catch (e) {
+            console.warn('Learning paths not loaded:', e);
+            this.data.learningPaths = [];
+        }
+        
+        return this.data.learningPaths;
+    },
+
+    /**
+     * Load resources data
+     */
+    async loadResources() {
+        if (this.loaded.resources) return this.data.resources;
+        
+        try {
+            const response = await fetch('data/resources.json');
+            if (response.ok) {
+                const data = await response.json();
+                // Resources are in categories[].items[], flatten them
+                if (data.categories) {
+                    this.data.resources = data.categories.reduce((all, cat) => {
+                        return all.concat(cat.items || []);
+                    }, []);
+                } else {
+                    this.data.resources = data.resources || [];
+                }
+                this.loaded.resources = true;
+            }
+        } catch (e) {
+            console.warn('Resources not loaded:', e);
+            this.data.resources = [];
+        }
+        
+        return this.data.resources;
     },
     
     /**
@@ -257,6 +336,9 @@ const State = {
         const toolCount = this.getAllTools().length;
         const courseCount = this.data.courses.length;
         const graphCount = this.data.graphs.length;
+        const careerCount = Array.isArray(this.data.careers) ? this.data.careers.length : 0;
+        const learningPathCount = this.data.learningPaths.length;
+        const resourceCount = Array.isArray(this.data.resources) ? this.data.resources.length : 0;
         
         // Get user progress
         const progress = Storage.get('course_progress', {});
@@ -267,6 +349,9 @@ const State = {
             tools: toolCount,
             courses: courseCount,
             graphs: graphCount,
+            careers: careerCount,
+            learningPaths: learningPathCount,
+            resources: resourceCount,
             completedLessons
         };
     }

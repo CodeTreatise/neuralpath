@@ -5,7 +5,17 @@
   "icon": "🤖",
   "level": "beginner",
   "duration": "10 weeks",
-  "prerequisites": ["Python basics", "NumPy fundamentals"],
+  "validationSources": [
+    "https://www.ibm.com/topics/machine-learning",
+    "https://www.ibm.com/topics/supervised-learning",
+    "https://www.ibm.com/topics/unsupervised-learning",
+    "https://www.ibm.com/topics/decision-trees",
+    "https://www.ibm.com/topics/random-forest"
+  ],
+  "prerequisites": [
+    "Python basics",
+    "NumPy fundamentals"
+  ],
   "learningOutcomes": [
     "Understand supervised vs unsupervised learning",
     "Implement core algorithms from scratch",
@@ -22,7 +32,7 @@
           "title": "What is Machine Learning?",
           "duration": "30 min",
           "content": {
-            "overview": "Machine Learning is a subset of artificial intelligence that enables systems to learn and improve from experience without being explicitly programmed. Arthur Samuel coined the term in 1959, defining it as the 'field of study that gives computers the ability to learn without being explicitly programmed.'",
+            "overview": "Machine Learning is the subset of artificial intelligence (AI) focused on algorithms that can 'learn' the patterns of training data and, subsequently, make accurate inferences about new data. Unlike traditional programming where rules are explicitly coded, ML algorithms discover patterns from data—enabling systems to make decisions or predictions without explicit, hard-coded instructions. Arthur Samuel coined the term in 1959, defining it as the 'field of study that gives computers the ability to learn without being explicitly programmed.'",
             "sections": [
               {
                 "title": "The ML Paradigm Shift",
@@ -31,7 +41,7 @@
               },
               {
                 "title": "Types of Machine Learning",
-                "content": "Machine learning is broadly categorized into three types:\n\n**1. Supervised Learning**\n- Learn from labeled data (inputs with correct outputs)\n- Goal: Predict output for new inputs\n- Examples: Classification, Regression\n\n**2. Unsupervised Learning**\n- Learn from unlabeled data\n- Goal: Find hidden patterns or structure\n- Examples: Clustering, Dimensionality Reduction\n\n**3. Reinforcement Learning**\n- Learn through interaction with environment\n- Goal: Maximize cumulative reward\n- Examples: Game playing, Robotics",
+                "content": "Machine learning is broadly categorized into three distinct learning paradigms, based on the nature of their training objectives and data:\n\n**1. Supervised Learning**\n- Learn from labeled data (inputs with correct outputs)\n- Goal: Predict the 'correct' output for a given input\n- Examples: Classification (discrete outputs), Regression (continuous outputs)\n- Ground truth provided by labeled datasets\n\n**2. Unsupervised Learning**\n- Learn from unlabeled data without supervisory signals\n- Goal: Discern intrinsic patterns, dependencies and correlations\n- Examples: Clustering, Association rules, Dimensionality Reduction\n- No external ground truth to compare outputs against\n\n**3. Reinforcement Learning**\n- Learn through interaction with environment via trial and error\n- Goal: Take actions that maximize cumulative reward\n- Uses state-action-reward tuples instead of input-output pairs\n- Examples: Game playing, Robotics, Autonomous vehicles",
                 "diagram": {
                   "title": "Types of Machine Learning",
                   "code": "flowchart TB\n    ML[Machine Learning] --> SUP[Supervised]\n    ML --> UNSUP[Unsupervised]\n    ML --> RL[Reinforcement]\n    \n    SUP --> CLS[Classification]\n    SUP --> REG[Regression]\n    \n    UNSUP --> CLUST[Clustering]\n    UNSUP --> DIM[Dimensionality Reduction]\n    \n    RL --> GAME[Game Playing]\n    RL --> ROB[Robotics]"
@@ -64,9 +74,24 @@
               }
             ],
             "sources": [
-              {"title": "Machine Learning", "author": "Tom Mitchell", "year": 1997},
-              {"title": "Hands-On Machine Learning", "author": "Aurélien Géron", "year": 2022},
-              {"title": "Google ML Crash Course", "url": "https://developers.google.com/machine-learning/crash-course"}
+              {
+                "title": "Machine Learning",
+                "author": "Tom Mitchell",
+                "year": 1997
+              },
+              {
+                "title": "Hands-On Machine Learning",
+                "author": "Aurélien Géron",
+                "year": 2022
+              },
+              {
+                "title": "Google ML Crash Course",
+                "url": "https://developers.google.com/machine-learning/crash-course"
+              },
+              {
+                "title": "IBM: What is Machine Learning?",
+                "url": "https://www.ibm.com/topics/machine-learning"
+              }
             ]
           }
         },
@@ -109,8 +134,15 @@
               }
             ],
             "sources": [
-              {"title": "Understanding the Bias-Variance Tradeoff", "url": "http://scott.fortmann-roe.com/docs/BiasVariance.html"},
-              {"title": "Elements of Statistical Learning", "author": "Hastie, Tibshirani, Friedman", "year": 2009}
+              {
+                "title": "Understanding the Bias-Variance Tradeoff",
+                "url": "http://scott.fortmann-roe.com/docs/BiasVariance.html"
+              },
+              {
+                "title": "Elements of Statistical Learning",
+                "author": "Hastie, Tibshirani, Friedman",
+                "year": 2009
+              }
             ]
           }
         }
@@ -159,8 +191,15 @@
               }
             ],
             "sources": [
-              {"title": "An Introduction to Statistical Learning", "author": "James, Witten, Hastie, Tibshirani", "year": 2021},
-              {"title": "Scikit-learn Linear Models", "url": "https://scikit-learn.org/stable/modules/linear_model.html"}
+              {
+                "title": "An Introduction to Statistical Learning",
+                "author": "James, Witten, Hastie, Tibshirani",
+                "year": 2021
+              },
+              {
+                "title": "Scikit-learn Linear Models",
+                "url": "https://scikit-learn.org/stable/modules/linear_model.html"
+              }
             ]
           }
         },
@@ -203,8 +242,16 @@
               }
             ],
             "sources": [
-              {"title": "CS229 Lecture Notes", "author": "Andrew Ng", "url": "https://cs229.stanford.edu/"},
-              {"title": "Pattern Recognition and ML", "author": "Christopher Bishop", "year": 2006}
+              {
+                "title": "CS229 Lecture Notes",
+                "author": "Andrew Ng",
+                "url": "https://cs229.stanford.edu/"
+              },
+              {
+                "title": "Pattern Recognition and ML",
+                "author": "Christopher Bishop",
+                "year": 2006
+              }
             ]
           }
         },
@@ -221,12 +268,12 @@
                   "title": "Decision Tree Structure",
                   "code": "flowchart TB\n    Root{Is Age > 30?}\n    Root -->|Yes| Node1{Income > 50k?}\n    Root -->|No| Node2{Student?}\n    \n    Node1 -->|Yes| Leaf1[Buy: Yes]\n    Node1 -->|No| Leaf2[Buy: No]\n    \n    Node2 -->|Yes| Leaf3[Buy: Yes]\n    Node2 -->|No| Leaf4[Buy: No]\n    \n    style Root fill:#dbeafe,stroke:#2563eb\n    style Node1 fill:#dbeafe,stroke:#2563eb\n    style Node2 fill:#dbeafe,stroke:#2563eb\n    style Leaf1 fill:#dcfce7,stroke:#16a34a\n    style Leaf2 fill:#fce7f3,stroke:#db2777\n    style Leaf3 fill:#dcfce7,stroke:#16a34a\n    style Leaf4 fill:#fce7f3,stroke:#db2777"
                 },
-                "content": "Decision trees recursively split data based on feature thresholds to create pure leaf nodes:\n\n**Algorithm (ID3/CART)**:\n1. Select the best feature and threshold to split\n2. Partition data into subsets\n3. Recursively build subtrees\n4. Stop when pure or max depth reached\n\n**Splitting Criteria**:\n- **Gini Impurity**: Probability of misclassification\n$$Gini = 1 - \\sum_{k=1}^{K} p_k^2$$\n\n- **Entropy**: Information disorder\n$$Entropy = -\\sum_{k=1}^{K} p_k \\log_2(p_k)$$",
+                "content": "A decision tree is a non-parametric supervised learning algorithm utilized for both classification and regression tasks. It has a hierarchical tree structure consisting of a root node, branches, internal nodes (decision nodes), and leaf nodes (terminal nodes).\n\nDecision trees recursively split data based on feature thresholds to create pure leaf nodes. The process employs a divide-and-conquer strategy through greedy search:\n\n**Algorithm (ID3/CART)**:\n1. Select the best feature and threshold to split\n2. Partition data into subsets\n3. Recursively build subtrees\n4. Stop when pure or max depth reached\n\n**Splitting Criteria**:\n- **Gini Impurity**: Probability of misclassification if a randomly chosen element was labeled according to the class distribution\n$$Gini = 1 - \\sum_{k=1}^{K} p_k^2$$\n\n- **Entropy (Information Gain)**: Measures the impurity or disorder of sample values. The attribute with highest information gain produces the best split.\n$$Entropy = -\\sum_{k=1}^{K} p_k \\log_2(p_k)$$\n\n**Preventing Overfitting**: Decision trees have preference for small trees (Occam's Razor). Pre-pruning halts tree growth when data is insufficient; post-pruning removes subtrees with inadequate data after construction.",
                 "code": "from sklearn.tree import DecisionTreeClassifier, plot_tree\nimport matplotlib.pyplot as plt\n\n# Train decision tree\ntree = DecisionTreeClassifier(\n    max_depth=3,           # Prevent overfitting\n    min_samples_split=10,  # Min samples to split\n    criterion='gini'       # or 'entropy'\n)\ntree.fit(X_train, y_train)\n\n# Visualize the tree\nplt.figure(figsize=(20, 10))\nplot_tree(\n    tree,\n    feature_names=feature_names,\n    class_names=class_names,\n    filled=True,\n    rounded=True\n)\nplt.show()\n\n# Feature importance\nimportances = tree.feature_importances_\nfor name, imp in zip(feature_names, importances):\n    print(f\"{name}: {imp:.4f}\")"
               },
               {
                 "title": "Random Forests",
-                "content": "Random Forests address tree overfitting through **bagging** (Bootstrap Aggregating) and **feature randomization**:\n\n1. Create many trees, each trained on:\n   - Random sample of data (with replacement)\n   - Random subset of features at each split\n\n2. Aggregate predictions:\n   - Classification: Majority vote\n   - Regression: Average\n\n**Why it works**: Errors of individual trees cancel out when averaged.",
+                "content": "Random Forest is a commonly-used machine learning algorithm that combines the output of multiple decision trees to reach a single result. It addresses tree overfitting through **bagging** (Bootstrap Aggregating) and **feature randomness**:\n\n**Key Hyperparameters**:\n- Node size\n- Number of trees (n_estimators)\n- Number of features sampled per split\n\n**How it works**:\n1. Create many trees, each trained on a bootstrap sample (random sample with replacement)\n2. One-third is set aside as out-of-bag (OOB) sample for validation\n3. At each split, only a random subset of features is considered (feature bagging)\n4. Aggregate predictions: Majority vote (classification) or average (regression)\n\n**Why it works**: When individual trees are uncorrelated, their errors cancel out when averaged—reducing overall variance and prediction error.\n\n**Key Benefits**:\n- Reduced risk of overfitting through averaging uncorrelated trees\n- Provides flexibility for both regression and classification\n- Easy to determine feature importance using Gini importance (MDI) or permutation importance (MDA)",
                 "code": "from sklearn.ensemble import RandomForestClassifier\nfrom sklearn.model_selection import cross_val_score\n\n# Random Forest\nrf = RandomForestClassifier(\n    n_estimators=100,      # Number of trees\n    max_depth=10,          # Max depth per tree\n    max_features='sqrt',   # Features per split\n    min_samples_leaf=5,    # Min samples in leaf\n    random_state=42,\n    n_jobs=-1              # Use all CPU cores\n)\n\nrf.fit(X_train, y_train)\n\n# Cross-validation\nscores = cross_val_score(rf, X, y, cv=5, scoring='accuracy')\nprint(f\"CV Accuracy: {scores.mean():.4f} (+/- {scores.std()*2:.4f})\")\n\n# Feature importance\nimportances = rf.feature_importances_\nindices = np.argsort(importances)[::-1]\n\nplt.figure(figsize=(10, 6))\nplt.title(\"Feature Importances\")\nplt.bar(range(10), importances[indices][:10])\nplt.xticks(range(10), [feature_names[i] for i in indices[:10]], rotation=45)\nplt.show()"
               },
               {
@@ -251,8 +298,24 @@
               }
             ],
             "sources": [
-              {"title": "XGBoost Documentation", "url": "https://xgboost.readthedocs.io/"},
-              {"title": "Random Forests", "author": "Leo Breiman", "year": 2001, "url": "https://link.springer.com/article/10.1023/A:1010933404324"}
+              {
+                "title": "XGBoost Documentation",
+                "url": "https://xgboost.readthedocs.io/"
+              },
+              {
+                "title": "Random Forests",
+                "author": "Leo Breiman",
+                "year": 2001,
+                "url": "https://link.springer.com/article/10.1023/A:1010933404324"
+              },
+              {
+                "title": "IBM: What is a Decision Tree?",
+                "url": "https://www.ibm.com/topics/decision-trees"
+              },
+              {
+                "title": "IBM: What is Random Forest?",
+                "url": "https://www.ibm.com/topics/random-forest"
+              }
             ]
           }
         }
@@ -301,8 +364,15 @@
               }
             ],
             "sources": [
-              {"title": "Scikit-learn Cross-validation", "url": "https://scikit-learn.org/stable/modules/cross_validation.html"},
-              {"title": "Random Search for Hyper-Parameter Optimization", "author": "Bergstra & Bengio", "year": 2012}
+              {
+                "title": "Scikit-learn Cross-validation",
+                "url": "https://scikit-learn.org/stable/modules/cross_validation.html"
+              },
+              {
+                "title": "Random Search for Hyper-Parameter Optimization",
+                "author": "Bergstra & Bengio",
+                "year": 2012
+              }
             ]
           }
         },
@@ -345,8 +415,15 @@
               }
             ],
             "sources": [
-              {"title": "The Relationship Between Precision-Recall and ROC Curves", "author": "Davis & Goadrich", "year": 2006},
-              {"title": "Scikit-learn Metrics", "url": "https://scikit-learn.org/stable/modules/model_evaluation.html"}
+              {
+                "title": "The Relationship Between Precision-Recall and ROC Curves",
+                "author": "Davis & Goadrich",
+                "year": 2006
+              },
+              {
+                "title": "Scikit-learn Metrics",
+                "url": "https://scikit-learn.org/stable/modules/model_evaluation.html"
+              }
             ]
           }
         },
@@ -410,8 +487,80 @@
               ],
               "correct": 1,
               "explanation": "Entropy is a measure of impurity. A split that reduces entropy (increases information gain) results in more homogeneous child nodes."
+            },
+            {
+              "question": "What distinguishes machine learning from traditional rules-based programming?",
+              "options": [
+                "ML uses more powerful computers",
+                "ML learns patterns from data instead of requiring explicit hard-coded rules",
+                "ML only works on numerical data",
+                "ML cannot make predictions"
+              ],
+              "correct": 1,
+              "explanation": "Traditional programming uses Data + Rules → Answers. Machine learning uses Data + Answers → Rules, discovering patterns implicitly from data."
+            },
+            {
+              "question": "How does Random Forest reduce overfitting compared to a single decision tree?",
+              "options": [
+                "By using a larger training dataset",
+                "By averaging predictions from many uncorrelated trees trained on bootstrap samples with feature randomization",
+                "By using deeper trees",
+                "By removing all regularization"
+              ],
+              "correct": 1,
+              "explanation": "Random Forest uses bagging (bootstrap aggregation) and feature randomization to create uncorrelated trees. Their individual errors cancel out when averaged, reducing variance."
+            },
+            {
+              "question": "What is the purpose of L1 (Lasso) and L2 (Ridge) regularization?",
+              "options": [
+                "To speed up training",
+                "To add a penalty for model complexity, reducing variance at the cost of slightly increased bias",
+                "To increase the number of features",
+                "To remove the need for cross-validation"
+              ],
+              "correct": 1,
+              "explanation": "Regularization adds a penalty term to the loss function based on weight magnitudes. L1 can produce sparse models (feature selection), while L2 shrinks all weights uniformly."
+            },
+            {
+              "question": "When should you use Precision over Recall as your primary metric?",
+              "options": [
+                "When false negatives are very costly",
+                "When false positives are very costly (e.g., spam detection where legitimate emails should not be blocked)",
+                "When you have balanced classes",
+                "When training time is limited"
+              ],
+              "correct": 1,
+              "explanation": "Precision measures 'of predicted positives, how many are correct?' Use high precision when false positives are costly, such as marking legitimate emails as spam."
+            },
+            {
+              "question": "What is the primary advantage of Gradient Boosting over Random Forest?",
+              "options": [
+                "It trains faster",
+                "It builds trees sequentially, with each tree correcting errors of the previous ensemble",
+                "It uses fewer trees",
+                "It doesn't require hyperparameter tuning"
+              ],
+              "correct": 1,
+              "explanation": "Gradient Boosting builds trees sequentially, with each new tree trained to predict the residuals (errors) of the current ensemble, often achieving higher accuracy than Random Forest."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "supervised-learning",
+              "model-evaluation",
+              "cross-validation"
+            ],
+            "externalRefs": [
+              {
+                "title": "Scikit-learn Documentation",
+                "url": "https://scikit-learn.org/stable/"
+              },
+              {
+                "title": "Google ML Crash Course",
+                "url": "https://developers.google.com/machine-learning/crash-course"
+              }
+            ]
+          }
         }
       ]
     }

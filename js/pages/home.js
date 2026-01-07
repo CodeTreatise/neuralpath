@@ -75,8 +75,14 @@ const HomePage = {
                     </div>
                     <div class="stat-divider"></div>
                     <div class="stat-item">
+                        <span class="stat-icon">�️</span>
+                        <span class="stat-number">${stats.learningPaths}</span>
+                        <span class="stat-label">Learning Paths</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
                         <span class="stat-icon">💼</span>
-                        <span class="stat-number">12</span>
+                        <span class="stat-number">${stats.careers}</span>
                         <span class="stat-label">Career Paths</span>
                     </div>
                 </div>

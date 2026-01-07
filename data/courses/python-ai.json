@@ -2,7 +2,7 @@
   "id": "python-ai",
   "title": "Python for AI & Machine Learning",
   "description": "Master Python from fundamentals to advanced AI programming",
-  "icon": "\ud83d\udc0d",
+  "icon": "🐍",
   "level": "beginner",
   "duration": "8 weeks",
   "prerequisites": [
@@ -15,6 +15,23 @@
     "Internet connection to install Python",
     "No prior coding experience needed!",
     "30-60 minutes per day to practice"
+  ],
+  "validationSources": [
+    {
+      "title": "IBM: What is Machine Learning?",
+      "url": "https://www.ibm.com/topics/machine-learning",
+      "topics": ["ML types", "supervised learning", "feature engineering"]
+    },
+    {
+      "title": "IBM: What is Scikit-Learn?",
+      "url": "https://www.ibm.com/topics/scikit-learn",
+      "topics": ["preprocessing", "fit/predict pattern", "metrics"]
+    },
+    {
+      "title": "IBM: What is Data Science?",
+      "url": "https://www.ibm.com/topics/data-science",
+      "topics": ["data lifecycle", "Python tools", "data cleaning"]
+    }
   ],
   "learningOutcomes": [
     "Write efficient Python code for data manipulation",
@@ -217,7 +234,7 @@
           "title": "Object-Oriented Programming for AI",
           "duration": "60 min",
           "content": {
-            "overview": "Object-oriented programming (OOP) is essential for building maintainable AI systems. PyTorch and TensorFlow both use OOP extensively\u2014models are classes, layers are objects, and training loops use polymorphism.",
+            "overview": "Object-oriented programming (OOP) is essential for building maintainable AI systems. PyTorch and TensorFlow both use OOP extensively—models are classes, layers are objects, and training loops use polymorphism.",
             "sections": [
               {
                 "title": "Classes and Objects",
@@ -275,6 +292,10 @@
           "content": {
             "overview": "NumPy (Numerical Python) is the fundamental package for scientific computing in Python. It provides support for large, multi-dimensional arrays and matrices, along with a vast collection of mathematical functions. All major AI frameworks build upon NumPy's array interface.",
             "sections": [
+              {
+                "title": "Why NumPy for Machine Learning?",
+                "content": "**IBM Insight:** 'Data points in machine learning are usually represented in vector form, in which each element of a data point's vector embedding corresponds to its numerical value for a specific feature.' (ibm.com/topics/machine-learning)\n\n**NumPy enables this by providing:**\n- Efficient N-dimensional arrays for data representation\n- Vectorized operations (100x faster than Python loops)\n- Mathematical functions for statistics and linear algebra\n- Memory-efficient storage in contiguous blocks\n\n| Python List | NumPy Array |\n|------------|-------------|\n| Slow loops | Vectorized ops |\n| Any types | Homogeneous |\n| Scattered memory | Contiguous |\n| Limited math | Full linear algebra |"
+              },
               {
                 "title": "Understanding NumPy Arrays",
                 "content": "NumPy arrays are the backbone of data representation in ML. Unlike Python lists, they store homogeneous data in contiguous memory blocks, enabling fast vectorized operations:",
@@ -379,8 +400,12 @@
           "title": "Pandas for Data Manipulation",
           "duration": "60 min",
           "content": {
-            "overview": "Pandas provides high-performance, easy-to-use data structures for data analysis. The DataFrame is the primary structure, representing tabular data with labeled rows and columns\u2014essential for loading, cleaning, and transforming datasets.",
+            "overview": "Pandas provides high-performance, easy-to-use data structures for data analysis. The DataFrame is the primary structure, representing tabular data with labeled rows and columns—essential for loading, cleaning, and transforming datasets.",
             "sections": [
+              {
+                "title": "The Data Science Lifecycle",
+                "content": "**IBM Definition:** 'Data science combines math and statistics, specialized programming, advanced analytics, and machine learning to uncover actionable insights hidden in data.' (ibm.com/topics/data-science)\n\n**The Data Lifecycle (from IBM):**\n1. **Data Ingestion**: Collect raw data from various sources\n2. **Data Storage/Processing**: Clean, deduplicate, transform with ETL\n3. **Data Analysis**: Exploratory analysis, pattern discovery\n4. **Communicate**: Visualize insights for decision-makers\n\n**Pandas handles stages 2-4!**"
+              },
               {
                 "title": "DataFrames and Series",
                 "content": "DataFrames are 2D labeled data structures with columns of potentially different types:",
@@ -404,6 +429,7 @@
             ],
             "keyTakeaways": [
               "DataFrames are the go-to structure for tabular data in ML",
+              "The data science lifecycle: ingest → process → analyze → communicate",
               "Boolean indexing enables powerful filtering",
               "GroupBy operations are essential for feature engineering"
             ],
@@ -418,6 +444,10 @@
               }
             ],
             "sources": [
+              {
+                "title": "IBM: What is Data Science?",
+                "url": "https://www.ibm.com/topics/data-science"
+              },
               {
                 "title": "Pandas User Guide",
                 "url": "https://pandas.pydata.org/docs/user_guide/"
@@ -439,17 +469,25 @@
           "title": "Scikit-learn: Machine Learning Made Easy",
           "duration": "60 min",
           "content": {
-            "overview": "Scikit-learn is the most popular machine learning library for Python. It provides simple, consistent APIs for training models, preprocessing data, and evaluating performance. This lesson covers the core patterns you'll use in every ML project.",
+            "overview": "Scikit-learn is the most popular machine learning library for Python. It provides simple, consistent APIs for training models, preprocessing data, and evaluating performance. Built on top of NumPy, SciPy, and Matplotlib, it streamlines AI and statistical modeling with a consistent interface.",
             "sections": [
               {
+                "title": "The Three Types of Machine Learning",
+                "content": "Before diving into scikit-learn, understand the three fundamental ML paradigms:\n\n| Type | Goal | Example |\n|------|------|--------|\n| **Supervised** | Predict labels from features | Spam detection, price prediction |\n| **Unsupervised** | Find patterns in unlabeled data | Customer segmentation, anomaly detection |\n| **Reinforcement** | Learn actions via trial and error | Game AI, robotics |\n\n**IBM Definition:** 'Machine learning is the subset of AI focused on algorithms that can learn patterns from training data and make accurate inferences about new data.' (ibm.com/topics/machine-learning)",
+                "diagram": {
+                  "title": "Machine Learning Types",
+                  "code": "flowchart TB\n    ML[Machine Learning] --> SUP[Supervised]\n    ML --> UNSUP[Unsupervised]\n    ML --> RL[Reinforcement]\n    \n    SUP --> CLASS[Classification]\n    SUP --> REG[Regression]\n    \n    UNSUP --> CLUST[Clustering]\n    UNSUP --> DIM[Dimensionality Reduction]\n    \n    RL --> AGENT[Agent learns via rewards]"
+                }
+              },
+              {
                 "title": "The Estimator Pattern: fit() and predict()",
-                "content": "Every scikit-learn model follows the same pattern:\n1. Create the estimator (model)\n2. Call `fit(X, y)` to train it\n3. Call `predict(X)` to make predictions\n\n**Analogy:** Think of it like teaching a student. First you show examples (fit), then they can answer new questions (predict).",
+                "content": "Every scikit-learn model follows the same pattern:\n1. Create the estimator (model)\n2. Call `fit(X, y)` to train it\n3. Call `predict(X)` to make predictions\n\n**Analogy:** Think of it like teaching a student. First you show examples (fit), then they can answer new questions (predict).\n\n**IBM Insight:** 'Scikit-learn's robust suite of pretrained neural networks and ML algorithms allows newcomers to quickly preprocess datasets for supervised learning without needing in-depth mathematical understanding.' (ibm.com/topics/scikit-learn)",
                 "code": "from sklearn.ensemble import RandomForestClassifier\nfrom sklearn.linear_model import LogisticRegression\n\n# All models follow the same API!\n\n# Example 1: Random Forest\nclf = RandomForestClassifier(random_state=42)\nX_train = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]  # Features\ny_train = [0, 1, 0]                           # Labels\n\nclf.fit(X_train, y_train)           # Train\npredictions = clf.predict([[2, 3, 4]])  # Predict: [0]\n\n# Example 2: Logistic Regression - same API!\nlr = LogisticRegression()\nlr.fit(X_train, y_train)\nlr.predict([[2, 3, 4]])             # Same interface!"
               },
               {
-                "title": "Preprocessing: Transformers and StandardScaler",
-                "content": "Real data needs preprocessing. Scikit-learn transformers also follow a consistent pattern:\n- `fit()`: Learn parameters from training data\n- `transform()`: Apply the transformation\n- `fit_transform()`: Do both in one step",
-                "code": "from sklearn.preprocessing import StandardScaler, MinMaxScaler\nfrom sklearn.preprocessing import LabelEncoder, OneHotEncoder\n\n# StandardScaler: zero mean, unit variance\nscaler = StandardScaler()\nX = [[1, 2], [3, 4], [5, 6]]\n\nscaler.fit(X)                    # Learn mean and std\nX_scaled = scaler.transform(X)   # Apply scaling\n# Or in one step:\nX_scaled = scaler.fit_transform(X)\n\nprint(f\"Mean: {X_scaled.mean(axis=0)}\")  # [0, 0]\nprint(f\"Std: {X_scaled.std(axis=0)}\")    # [1, 1]\n\n# IMPORTANT: Only fit on training data!\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)  # Use same scaler!\n\n# Encode categorical variables\nencoder = LabelEncoder()\ncategories = ['cat', 'dog', 'cat', 'bird']\nencoded = encoder.fit_transform(categories)  # [0, 1, 0, 2]"
+                "title": "Preprocessing: Transformers and Scalers",
+                "content": "Real data needs preprocessing. Scikit-learn transformers also follow a consistent pattern:\n- `fit()`: Learn parameters from training data\n- `transform()`: Apply the transformation\n- `fit_transform()`: Do both in one step\n\n**Common Preprocessing Tasks (from IBM):**\n- **Normalization**: Scale numeric features with MinMaxScaler or StandardScaler\n- **Encoding**: Convert categorical to numerical with OneHotEncoder or LabelEncoder\n- **Missing values**: Impute with SimpleImputer using mean/median\n- **Feature selection**: Use RFE or mutual information to choose relevant features",
+                "code": "from sklearn.preprocessing import StandardScaler, MinMaxScaler\nfrom sklearn.preprocessing import LabelEncoder, OneHotEncoder\nfrom sklearn.impute import SimpleImputer\n\n# StandardScaler: zero mean, unit variance\nscaler = StandardScaler()\nX = [[1, 2], [3, 4], [5, 6]]\n\nscaler.fit(X)                    # Learn mean and std\nX_scaled = scaler.transform(X)   # Apply scaling\n# Or in one step:\nX_scaled = scaler.fit_transform(X)\n\nprint(f\"Mean: {X_scaled.mean(axis=0)}\")  # [0, 0]\nprint(f\"Std: {X_scaled.std(axis=0)}\")    # [1, 1]\n\n# IMPORTANT: Only fit on training data!\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)  # Use same scaler!\n\n# Handle missing values\nimputer = SimpleImputer(strategy='mean')\nX_imputed = imputer.fit_transform(X_with_nans)\n\n# Encode categorical variables\nencoder = OneHotEncoder(sparse_output=False)\ncategories = [['cat'], ['dog'], ['cat'], ['bird']]\nencoded = encoder.fit_transform(categories)  # Binary vectors"
               },
               {
                 "title": "Train-Test Split and Model Evaluation",
@@ -469,11 +507,20 @@
             ],
             "keyTakeaways": [
               "All sklearn models use fit(X, y) and predict(X) - learn once, use everywhere",
+              "Machine learning has 3 types: supervised, unsupervised, reinforcement",
               "Always split data before preprocessing to avoid data leakage",
               "Use Pipelines to chain preprocessing and models safely",
               "Cross-validation gives more reliable performance estimates than a single split"
             ],
             "sources": [
+              {
+                "title": "IBM: What is Scikit-Learn?",
+                "url": "https://www.ibm.com/topics/scikit-learn"
+              },
+              {
+                "title": "IBM: What is Machine Learning?",
+                "url": "https://www.ibm.com/topics/machine-learning"
+              },
               {
                 "title": "Scikit-learn Getting Started",
                 "url": "https://scikit-learn.org/stable/getting_started.html"
@@ -611,8 +658,8 @@
                 "Fastest raw execution speed compared to C++",
                 "Strong community support"
               ],
-              "correctAnswer": 2,
-              "explanation": "Python is interpreted and generally slower than C++ in raw execution. Its speed in AI comes from optimized C/C++ backends used by libraries like NumPy and PyTorch."
+              "explanation": "Python is interpreted and generally slower than C++ in raw execution. Its speed in AI comes from optimized C/C++ backends used by libraries like NumPy and PyTorch.",
+              "correct": 2
             },
             {
               "id": "numpy-arrays",
@@ -623,8 +670,8 @@
                 "They are built-in to the Python standard library",
                 "They are slower but more flexible"
               ],
-              "correctAnswer": 1,
-              "explanation": "NumPy arrays store data in contiguous memory blocks, allowing for SIMD vectorization and significantly faster numerical computations compared to lists."
+              "explanation": "NumPy arrays store data in contiguous memory blocks, allowing for SIMD vectorization and significantly faster numerical computations compared to lists.",
+              "correct": 1
             },
             {
               "id": "pandas-dataframe",
@@ -635,8 +682,65 @@
                 "Panel",
                 "Tensor"
               ],
-              "correctAnswer": 1,
-              "explanation": "The DataFrame is the primary 2D labeled data structure in Pandas, similar to a SQL table or Excel spreadsheet."
+              "explanation": "The DataFrame is the primary 2D labeled data structure in Pandas, similar to a SQL table or Excel spreadsheet.",
+              "correct": 1
+            },
+            {
+              "id": "ml-types",
+              "question": "According to IBM, which type of machine learning is used to 'find patterns in unlabeled data'?",
+              "options": [
+                "Supervised learning",
+                "Unsupervised learning",
+                "Reinforcement learning",
+                "Transfer learning"
+              ],
+              "explanation": "IBM defines unsupervised learning as algorithms that 'discern intrinsic patterns in unlabeled data, such as similarities, correlations or potential groupings' - useful for clustering and anomaly detection.",
+              "correct": 1,
+              "references": [
+                {"title": "IBM: What is Machine Learning?", "url": "https://www.ibm.com/topics/machine-learning"}
+              ]
+            },
+            {
+              "id": "sklearn-pattern",
+              "question": "What is the consistent API pattern used by all scikit-learn models?",
+              "options": [
+                "train() and test()",
+                "fit() and predict()",
+                "learn() and infer()",
+                "compile() and run()"
+              ],
+              "explanation": "Scikit-learn uses a consistent estimator API: fit(X, y) to train the model and predict(X) to make predictions. This consistency makes it easy to swap models.",
+              "correct": 1,
+              "references": [
+                {"title": "IBM: What is Scikit-Learn?", "url": "https://www.ibm.com/topics/scikit-learn"}
+              ]
+            },
+            {
+              "id": "data-leakage",
+              "question": "What is 'data leakage' in machine learning?",
+              "options": [
+                "When your model is too large for memory",
+                "When test data information leaks into training",
+                "When data is stored insecurely",
+                "When predictions are too slow"
+              ],
+              "explanation": "Data leakage occurs when information from the test set influences training (e.g., scaling entire dataset before splitting). Use Pipelines to prevent this!",
+              "correct": 1
+            },
+            {
+              "id": "preprocessing-scaler",
+              "question": "According to IBM, what does StandardScaler do in scikit-learn?",
+              "options": [
+                "Converts text to numbers",
+                "Scales features to zero mean and unit variance",
+                "Removes duplicate rows",
+                "Fills missing values"
+              ],
+              "explanation": "StandardScaler is a normalization technique that scales numeric features to have similar magnitudes - specifically zero mean and unit standard deviation.",
+              "correct": 1,
+              "references": [
+                {"title": "IBM: What is Scikit-Learn?", "url": "https://www.ibm.com/topics/scikit-learn"}
+              ]
             },
             {
               "id": "generators",
@@ -647,8 +751,8 @@
                 "They automatically parallelize code on GPUs",
                 "They compress the data on disk"
               ],
-              "correctAnswer": 1,
-              "explanation": "Generators produce values lazily (on demand), allowing you to iterate over massive datasets without loading everything into memory simultaneously."
+              "explanation": "Generators produce values lazily (on demand), allowing you to iterate over massive datasets without loading everything into memory simultaneously.",
+              "correct": 1
             },
             {
               "id": "async-io",
@@ -659,10 +763,51 @@
                 "It replaces the need for GPUs",
                 "It automatically optimizes hyperparameters"
               ],
-              "correctAnswer": 1,
-              "explanation": "Asyncio enables concurrent execution, which is ideal for I/O-bound operations such as making multiple API requests to LLMs or fetching data without blocking the main thread."
+              "explanation": "Asyncio enables concurrent execution, which is ideal for I/O-bound operations such as making multiple API requests to LLMs or fetching data without blocking the main thread.",
+              "correct": 1
+            },
+            {
+              "id": "cross-validation",
+              "question": "Why is cross-validation more reliable than a single train/test split?",
+              "options": [
+                "It uses less memory",
+                "It trains faster",
+                "It evaluates performance across multiple data splits",
+                "It automatically tunes hyperparameters"
+              ],
+              "explanation": "Cross-validation trains and tests on multiple different splits of the data, giving a more robust estimate of model performance that's less dependent on how the data was randomly divided.",
+              "correct": 2
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "numpy-basics",
+              "pandas-basics",
+              "sklearn-basics"
+            ],
+            "externalRefs": [
+              {
+                "title": "IBM: What is Machine Learning?",
+                "url": "https://www.ibm.com/topics/machine-learning"
+              },
+              {
+                "title": "IBM: What is Scikit-Learn?",
+                "url": "https://www.ibm.com/topics/scikit-learn"
+              },
+              {
+                "title": "IBM: What is Data Science?",
+                "url": "https://www.ibm.com/topics/data-science"
+              },
+              {
+                "title": "NumPy Documentation",
+                "url": "https://numpy.org/doc/"
+              },
+              {
+                "title": "Pandas Documentation",
+                "url": "https://pandas.pydata.org/docs/"
+              }
+            ]
+          }
         }
       ]
     }

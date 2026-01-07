@@ -1,0 +1,391 @@
+{
+  "learningPaths": [
+    {
+      "id": "ai-agent-builder",
+      "title": "Build AI Agents From Scratch",
+      "icon": "🤖",
+      "description": "Master the complete journey from prompts to autonomous agents",
+      "difficulty": "advanced",
+      "duration": "12 weeks",
+      "goal": "Build autonomous AI systems that can plan, execute, and iterate",
+      "targetAudience": "Developers wanting to create intelligent autonomous systems",
+      "periodicTableElements": ["Pr", "Fc", "Lg", "Ag"],
+      "elementDescriptions": {
+        "Pr": "Learn to write system prompts that guide agent behavior",
+        "Fc": "Master function calling to give agents tools and actions",
+        "Lg": "Understand LLM capabilities that power agent reasoning",
+        "Ag": "Build complete agents with ReAct loops"
+      },
+      "stages": [
+        {
+          "stageNumber": 1,
+          "stageName": "Foundation (Weeks 1-2)",
+          "stageDuration": "2 weeks",
+          "stageGoal": "Understand LLM basics and how to interact with them",
+          "courses": [
+            {
+              "courseId": "prompt-engineering",
+              "courseName": "Prompt Engineering Mastery",
+              "why": "Learn to write system prompts - the brain of your agent",
+              "duration": "2 weeks",
+              "effort": "5-7 hours/week",
+              "keyLessons": ["System Prompts", "Few-shot Examples", "Role-based Prompts"],
+              "outcome": "Write effective prompts that guide LLM behavior",
+              "practicalTask": "Create a system prompt for a data analyst agent"
+            }
+          ],
+          "periodicElements": ["Pr"]
+        },
+        {
+          "stageNumber": 2,
+          "stageName": "Core Concepts (Weeks 3-5)",
+          "stageDuration": "3 weeks",
+          "stageGoal": "Understand function calling and tool use",
+          "courses": [
+            {
+              "courseId": "python-ai",
+              "courseName": "Python Fundamentals for AI",
+              "why": "You need Python to build agent systems",
+              "duration": "2 weeks (review sections)",
+              "effort": "3-5 hours/week",
+              "keyLessons": ["Functions", "APIs", "Libraries"],
+              "outcome": "Comfortable with Python for AI development",
+              "prerequisite": true,
+              "skip": "If you already know Python well"
+            },
+            {
+              "courseId": "genai-applications",
+              "courseName": "GenAI Fundamentals",
+              "why": "Understand LLM capabilities and limitations",
+              "duration": "3 weeks",
+              "effort": "5-7 hours/week",
+              "keyLessons": ["Function Calling", "Tool Use", "LLM APIs"],
+              "outcome": "Know how to call LLMs and invoke functions",
+              "practicalTask": "Build a simple tool-using agent that calls APIs"
+            }
+          ],
+          "periodicElements": ["Fc", "Lg"]
+        },
+        {
+          "stageNumber": 3,
+          "stageName": "Building Agents (Weeks 6-10)",
+          "stageDuration": "5 weeks",
+          "stageGoal": "Build working autonomous agents",
+          "courses": [
+            {
+              "courseId": "agentic-ai",
+              "courseName": "Agentic AI & Agent Systems",
+              "why": "THE core course - Learn ReAct loops, planning, memory",
+              "duration": "5 weeks",
+              "effort": "8-10 hours/week",
+              "keyLessons": ["ReAct Pattern", "Agent Loops", "Planning Strategies", "Error Handling", "State Management"],
+              "outcome": "Build production-grade agents",
+              "practicalTasks": [
+                "Simple agent with 3 tools",
+                "Multi-step planning agent",
+                "Agent with memory and context",
+                "Error recovery mechanisms"
+              ]
+            }
+          ],
+          "periodicElements": ["Ag", "Pr", "Fc"]
+        },
+        {
+          "stageNumber": 4,
+          "stageName": "Advanced & Safety (Weeks 11-12)",
+          "stageDuration": "2 weeks",
+          "stageGoal": "Make agents safe and production-ready",
+          "courses": [
+            {
+              "courseId": "ai-safety-guardrails",
+              "courseName": "AI Safety & Guardrails",
+              "why": "Agents need safety constraints before production",
+              "duration": "2 weeks",
+              "effort": "4-6 hours/week",
+              "keyLessons": ["Input Validation", "Output Guardrails", "Monitoring"],
+              "outcome": "Deploy safe, monitored agents",
+              "practicalTask": "Add guardrails to your agent from stage 3"
+            }
+          ],
+          "periodicElements": ["Ag"]
+        }
+      ],
+      "prerequisites": [
+        "Basic Python knowledge",
+        "Understanding of APIs and HTTP requests",
+        "Familiarity with LLMs (ChatGPT, Claude, etc.)"
+      ],
+      "projectMilestones": [
+        {
+          "milestone": 1,
+          "name": "Simple Agent",
+          "week": 7,
+          "description": "Build an agent that can call 3 tools and answer questions",
+          "periodicElements": ["Pr", "Fc", "Lg"]
+        },
+        {
+          "milestone": 2,
+          "name": "Planning Agent",
+          "week": 9,
+          "description": "Agent that breaks down complex tasks into subtasks",
+          "periodicElements": ["Ag"]
+        },
+        {
+          "milestone": 3,
+          "name": "Production Agent",
+          "week": 12,
+          "description": "Complete agent with error handling, guardrails, monitoring",
+          "periodicElements": ["Ag", "Gr"]
+        }
+      ],
+      "relatedReactions": ["agent-formula", "safe-agent", "multiagent-formula"],
+      "nextSteps": ["Multi-Agent Systems", "Specialized Agents with Fine-tuning"]
+    },
+    {
+      "id": "rag-master",
+      "title": "Master Retrieval-Augmented Generation (RAG)",
+      "icon": "🔗",
+      "description": "Build knowledge-grounded AI systems that reason over your data",
+      "difficulty": "advanced",
+      "duration": "10 weeks",
+      "goal": "Build production-grade RAG systems for document Q&A and semantic search",
+      "targetAudience": "Engineers building enterprise AI systems that need real data",
+      "periodicTableElements": ["Em", "Vx", "Lg", "Rg", "Gr"],
+      "elementDescriptions": {
+        "Em": "Convert documents into semantic vectors",
+        "Vx": "Store and retrieve similar vectors efficiently",
+        "Lg": "Generate answers grounded in retrieved context",
+        "Rg": "Combine all three to build RAG systems",
+        "Gr": "Add safety constraints to RAG outputs"
+      },
+      "stages": [
+        {
+          "stageNumber": 1,
+          "stageName": "Foundations (Weeks 1-2)",
+          "stageDuration": "2 weeks",
+          "courses": [
+            {
+              "courseId": "python-ai",
+              "courseName": "Python Fundamentals for AI",
+              "why": "Need Python for RAG implementations",
+              "duration": "1-2 weeks (review)",
+              "skip": "If experienced Python developer"
+            },
+            {
+              "courseId": "data-science",
+              "courseName": "Data Science Fundamentals",
+              "why": "Data manipulation and preparation for RAG",
+              "duration": "2 weeks",
+              "effort": "5-7 hours/week",
+              "keyLessons": ["Data cleaning", "Feature engineering", "Data formats"]
+            }
+          ],
+          "periodicElements": ["Em"]
+        },
+        {
+          "stageNumber": 2,
+          "stageName": "Embeddings & Vectors (Weeks 3-5)",
+          "stageDuration": "3 weeks",
+          "courses": [
+            {
+              "courseId": "genai-applications",
+              "courseName": "GenAI Fundamentals",
+              "why": "Understand embeddings and vector representations",
+              "duration": "2 weeks",
+              "effort": "5-7 hours/week",
+              "keyLessons": ["Embeddings", "Vector spaces", "Similarity search"]
+            }
+          ],
+          "periodicElements": ["Em", "Vx"]
+        },
+        {
+          "stageNumber": 3,
+          "stageName": "Building RAG (Weeks 6-9)",
+          "stageDuration": "4 weeks",
+          "courses": [
+            {
+              "courseId": "rag-applications",
+              "courseName": "Building RAG Applications",
+              "why": "Core RAG system building with LangChain",
+              "duration": "4 weeks",
+              "effort": "8-10 hours/week",
+              "keyLessons": [
+                "Vector databases",
+                "Retrieval strategies",
+                "Prompt augmentation",
+                "Context management",
+                "Re-ranking and filtering"
+              ],
+              "practicalTasks": [
+                "Basic RAG pipeline",
+                "Multi-document Q&A",
+                "Semantic search system"
+              ]
+            }
+          ],
+          "periodicElements": ["Rg", "Lg", "Vx"]
+        },
+        {
+          "stageNumber": 4,
+          "stageName": "Production & Safety (Weeks 10)",
+          "stageDuration": "1 week",
+          "courses": [
+            {
+              "courseId": "ai-safety-guardrails",
+              "courseName": "AI Safety & Guardrails",
+              "why": "Add safety to RAG before deployment",
+              "duration": "1 week",
+              "keyLessons": ["Output validation", "Fact checking", "Monitoring"]
+            }
+          ],
+          "periodicElements": ["Gr"]
+        }
+      ],
+      "prerequisites": ["Understanding of LLMs", "Python experience", "Familiarity with APIs"],
+      "projectMilestones": [
+        {
+          "milestone": 1,
+          "name": "Simple RAG",
+          "week": 6,
+          "description": "Basic document Q&A system",
+          "periodicElements": ["Em", "Vx", "Lg"]
+        },
+        {
+          "milestone": 2,
+          "name": "Advanced RAG",
+          "week": 8,
+          "description": "Multi-document RAG with filtering",
+          "periodicElements": ["Rg"]
+        },
+        {
+          "milestone": 3,
+          "name": "Production RAG",
+          "week": 10,
+          "description": "Safe, monitored RAG in production",
+          "periodicElements": ["Rg", "Gr"]
+        }
+      ],
+      "relatedReactions": ["rag-formula", "safe-rag", "agentic-rag", "multimodal-rag"],
+      "nextSteps": ["Agentic RAG", "Multimodal RAG", "Advanced Fine-tuning"]
+    },
+    {
+      "id": "llm-specialist",
+      "title": "Become an LLM Specialist",
+      "icon": "🧠",
+      "description": "Master large language models: from theory to fine-tuning to deployment",
+      "difficulty": "advanced",
+      "duration": "16 weeks",
+      "goal": "Deep expertise in LLMs - training, fine-tuning, deployment, optimization",
+      "targetAudience": "ML engineers wanting specialized LLM expertise",
+      "periodicTableElements": ["Lg", "Ft", "Sm", "Th"],
+      "stages": [
+        {
+          "stageNumber": 1,
+          "stageName": "Deep Learning Foundation (Weeks 1-4)",
+          "courses": [
+            {
+              "courseId": "math-for-ai",
+              "courseName": "Mathematics for AI"
+            },
+            {
+              "courseId": "deep-learning-pytorch",
+              "courseName": "Deep Learning with PyTorch"
+            }
+          ],
+          "periodicElements": ["Lg"]
+        },
+        {
+          "stageNumber": 2,
+          "stageName": "NLP & Transformers (Weeks 5-9)",
+          "courses": [
+            {
+              "courseId": "nlp-transformers",
+              "courseName": "NLP & Transformers"
+            }
+          ],
+          "periodicElements": ["Lg"]
+        },
+        {
+          "stageNumber": 3,
+          "stageName": "Fine-tuning & Adaptation (Weeks 10-13)",
+          "courses": [
+            {
+              "courseId": "llm-finetuning",
+              "courseName": "Fine-tuning Large Language Models"
+            }
+          ],
+          "periodicElements": ["Ft"]
+        },
+        {
+          "stageNumber": 4,
+          "stageName": "Specialization (Weeks 14-16)",
+          "courses": [
+            {
+              "courseId": "small-language-models",
+              "courseName": "Small Language Models & Edge Deployment"
+            }
+          ],
+          "periodicElements": ["Sm"]
+        }
+      ]
+    },
+    {
+      "id": "practical-builder",
+      "title": "Practical AI Builder - Build Real Projects",
+      "icon": "🔨",
+      "description": "Fast-track to building working AI applications",
+      "difficulty": "intermediate-advanced",
+      "duration": "8 weeks",
+      "goal": "Build 3 complete AI projects you can show to employers",
+      "periodicTableElements": ["Pr", "Em", "Vx", "Rg", "Ag"],
+      "stages": [
+        {
+          "stageNumber": 1,
+          "stageName": "Week 1-2: Quick Wins",
+          "courses": [
+            {
+              "courseId": "prompt-engineering",
+              "courseName": "Prompt Engineering Mastery",
+              "project": "Build a prompt library for 5 use cases"
+            }
+          ]
+        },
+        {
+          "stageNumber": 2,
+          "stageName": "Week 3-5: RAG Project",
+          "courses": [
+            {
+              "courseId": "rag-applications",
+              "courseName": "Building RAG Applications",
+              "project": "Build a document Q&A system for a real domain (legal, medical, etc.)"
+            }
+          ]
+        },
+        {
+          "stageNumber": 3,
+          "stageName": "Week 6-8: Agent Project",
+          "courses": [
+            {
+              "courseId": "agentic-ai",
+              "courseName": "Agentic AI & Agent Systems",
+              "project": "Build an autonomous agent that performs real work"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pathsByGoal": {
+    "buildAgents": ["ai-agent-builder", "agentic-ai"],
+    "buildRAG": ["rag-master"],
+    "becomeSpecialist": ["llm-specialist"],
+    "buildQuickly": ["practical-builder"],
+    "getJob": ["practical-builder"]
+  },
+  "pathsByTimeAvailable": {
+    "1-2weeks": ["prompt-engineering"],
+    "1month": ["practical-builder"],
+    "3months": ["ai-agent-builder", "rag-master"],
+    "6months": ["llm-specialist"]
+  }
+}

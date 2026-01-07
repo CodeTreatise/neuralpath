@@ -1,10 +1,15 @@
 {
   "id": "agentic-ai",
   "title": "Building AI Agents",
-  "description": "Master the architecture and implementation of autonomous AI agents",
+  "description": "Master the architecture and implementation of autonomous AI agents. AI agents are intelligent systems that use LLMs as reasoning engines to perceive their environment, make decisions, and take actions to achieve specific goals with minimal human intervention.",
   "icon": "🤖",
   "level": "advanced",
   "duration": "5 weeks",
+  "validationSources": [
+    "https://www.ibm.com/topics/ai-agents",
+    "https://www.ibm.com/think/topics/ai-agents",
+    "https://www.ibm.com/topics/agentic-ai"
+  ],
   "prerequisites": [
     "Comfortable with Python functions and classes",
     "Have used LLM APIs (OpenAI, Anthropic, or Ollama)",
@@ -113,9 +118,18 @@
               }
             ],
             "sources": [
-              {"title": "ReAct: Synergizing Reasoning and Acting", "url": "https://arxiv.org/abs/2210.03629"},
-              {"title": "LangChain Agents (Official Docs)", "url": "https://docs.langchain.com/oss/python/langchain/agents"},
-              {"title": "LLM Powered Autonomous Agents - Lilian Weng", "url": "https://lilianweng.github.io/posts/2023-06-23-agent/"}
+              {
+                "title": "ReAct: Synergizing Reasoning and Acting",
+                "url": "https://arxiv.org/abs/2210.03629"
+              },
+              {
+                "title": "LangChain Agents (Official Docs)",
+                "url": "https://docs.langchain.com/oss/python/langchain/agents"
+              },
+              {
+                "title": "LLM Powered Autonomous Agents - Lilian Weng",
+                "url": "https://lilianweng.github.io/posts/2023-06-23-agent/"
+              }
             ]
           }
         },
@@ -164,9 +178,18 @@
               }
             ],
             "sources": [
-              {"title": "LangGraph Documentation", "url": "https://langchain-ai.github.io/langgraph/"},
-              {"title": "CrewAI Documentation", "url": "https://docs.crewai.com/"},
-              {"title": "OpenAI Assistants API", "url": "https://platform.openai.com/docs/assistants/overview"}
+              {
+                "title": "LangGraph Documentation",
+                "url": "https://langchain-ai.github.io/langgraph/"
+              },
+              {
+                "title": "CrewAI Documentation",
+                "url": "https://docs.crewai.com/"
+              },
+              {
+                "title": "OpenAI Assistants API",
+                "url": "https://platform.openai.com/docs/assistants/overview"
+              }
             ]
           }
         }
@@ -176,6 +199,77 @@
       "id": "tool-use",
       "title": "Tool Use & Function Calling",
       "lessons": [
+        {
+          "id": "agent-types-principles",
+          "title": "Agent Types and Core Principles",
+          "duration": "35 min",
+          "content": {
+            "overview": "Understand the industry-standard classification of AI agents and the key principles that define agentic behavior.",
+            "sections": [
+              {
+                "title": "The Five Types of AI Agents",
+                "content": "Industry classifies AI agents by their capabilities, from simple to advanced:\n\n**1. Simple Reflex Agents**\n- Act based on predefined condition-action rules\n- No memory, no learning\n- Only works in fully observable environments\n- Example: Thermostat that turns on heating at 8 PM\n\n**2. Model-Based Reflex Agents**\n- Maintain internal model of the world\n- Update model with new perceptions\n- Can handle partially observable environments\n- Example: Robot vacuum that remembers cleaned areas\n\n**3. Goal-Based Agents**\n- Have explicit goals to achieve\n- Plan actions to reach goals\n- More flexible than reflex agents\n- Example: Navigation system finding fastest route\n\n**4. Utility-Based Agents**\n- Maximize a utility/reward function\n- Choose optimal actions among alternatives\n- Balance multiple objectives\n- Example: Route optimizer balancing time, fuel, and tolls\n\n**5. Learning Agents**\n- Improve from experience\n- Adapt to new situations\n- Four components: Learning, Critic, Performance, Problem generator\n- Example: Recommendation systems that learn preferences"
+              },
+              {
+                "title": "Eight Key Principles of AI Agents",
+                "content": "These principles distinguish AI agents from traditional software:\n\n**1. Autonomy** - Act without constant human intervention\n\n**2. Goal-Oriented Behavior** - Driven by objectives, evaluate consequences\n\n**3. Perception** - Collect data from environment via sensors/APIs\n\n**4. Rationality** - Make informed decisions using reasoning\n\n**5. Proactivity** - Anticipate events, take initiative\n\n**6. Continuous Learning** - Improve from past interactions\n\n**7. Adaptability** - Adjust strategies for new circumstances\n\n**8. Collaboration** - Work with other agents or humans toward shared goals",
+                "diagram": {
+                  "title": "Agent Type Progression",
+                  "code": "flowchart LR\n    A[Simple Reflex] --> B[Model-Based]\n    B --> C[Goal-Based]\n    C --> D[Utility-Based]\n    D --> E[Learning]\n    \n    style A fill:#fee2e2\n    style E fill:#dcfce7"
+                }
+              },
+              {
+                "title": "ReWOO: Reasoning Without Observation",
+                "content": "ReWOO is an alternative to ReAct that plans upfront instead of interleaving:\n\n**ReAct**: Think → Act → Observe → Think → Act → Observe...\n**ReWOO**: Plan all steps first → Execute all tools → Combine results\n\n**Benefits:**\n- Reduces token usage (no repeated context)\n- User can confirm plan before execution\n- Less impacted by intermediate tool failures\n- More predictable execution\n\n**When to use ReWOO:**\n- Tasks with predictable tool sequences\n- When user confirmation is needed\n- To minimize API costs",
+                "code": "# ReWOO Pattern: Plan-Execute-Solve\nclass ReWOOAgent:\n    def __init__(self, llm, tools):\n        self.llm = llm\n        self.tools = tools\n    \n    def run(self, query: str):\n        # PHASE 1: PLANNING - Generate complete plan upfront\n        plan = self._generate_plan(query)\n        \n        # Optional: Get user confirmation\n        if not self._confirm_with_user(plan):\n            return \"Plan rejected by user\"\n        \n        # PHASE 2: EXECUTION - Run all planned tool calls\n        results = {}\n        for step in plan['steps']:\n            tool_name = step['tool']\n            tool_args = step['args']\n            results[step['id']] = self.tools[tool_name](**tool_args)\n        \n        # PHASE 3: SOLVING - Combine plan with results\n        final_answer = self._solve(query, plan, results)\n        return final_answer\n    \n    def _generate_plan(self, query):\n        prompt = f\"\"\"\n        Create a plan to answer: {query}\n        \n        Available tools: {list(self.tools.keys())}\n        \n        Output a JSON plan with steps:\n        {{\n            \"steps\": [\n                {{\"id\": \"step1\", \"tool\": \"search\", \"args\": {{\"query\": \"...\"}}}},\n                {{\"id\": \"step2\", \"tool\": \"calculate\", \"args\": {{\"expr\": \"...\"}}}}\n            ]\n        }}\n        \"\"\"\n        return json.loads(self.llm.generate(prompt))\n    \n    def _confirm_with_user(self, plan):\n        print(\"Proposed plan:\")\n        for step in plan['steps']:\n            print(f\"  - {step['tool']}({step['args']})\")\n        return input(\"Proceed? (y/n): \").lower() == 'y'"
+              },
+              {
+                "title": "Comparing ReAct vs ReWOO",
+                "content": "| Aspect | ReAct | ReWOO |\n|--------|-------|-------|\n| Planning | Iterative, after each observation | Upfront, before execution |\n| Token usage | Higher (repeated context) | Lower (single planning phase) |\n| Adaptability | High (adjusts based on results) | Lower (fixed plan) |\n| User visibility | Limited mid-execution | Full plan visible before start |\n| Error handling | Can recover mid-stream | Must handle in solve phase |\n| Best for | Uncertain, exploratory tasks | Predictable, structured tasks |"
+              }
+            ],
+            "keyTakeaways": [
+              "Five agent types: Simple reflex → Model-based → Goal-based → Utility-based → Learning",
+              "Eight principles define agentic behavior: autonomy, goal-orientation, perception, rationality, proactivity, learning, adaptability, collaboration",
+              "ReWOO plans upfront, reducing tokens and enabling user confirmation",
+              "Choose ReAct for exploration, ReWOO for predictable workflows"
+            ]
+          }
+        },
+        {
+          "id": "agent-risks-guardrails",
+          "title": "Agent Risks and Guardrails",
+          "duration": "30 min",
+          "content": {
+            "overview": "AI agents introduce unique risks that require specific guardrails and best practices for safe deployment.",
+            "sections": [
+              {
+                "title": "Common Agent Risks",
+                "content": "**1. Infinite Feedback Loops**\nAgents unable to make progress may repeatedly call the same tools:\n- Causes token/cost explosion\n- Blocks user progress\n- Can trigger rate limits\n\n**2. Multi-Agent Dependencies**\nAgents built on same foundation models may share weaknesses:\n- Cascading failures across agents\n- Shared blind spots in reasoning\n- Vulnerability to adversarial attacks\n\n**3. Computational Complexity**\n- Complex tasks may take days to complete\n- High resource usage for training/running\n- Unpredictable execution times\n\n**4. Data Privacy Concerns**\n- Agents access sensitive data to function\n- Data flows between tools and external systems\n- Logging may capture private information"
+              },
+              {
+                "title": "Essential Guardrails",
+                "content": "**Activity Logs**\n- Log all agent actions and tool calls\n- Enable audit trails for debugging\n- Build user trust through transparency\n\n**Interruptibility**\n- Allow graceful stopping of agents\n- Implement max iteration limits\n- Timeout long-running operations\n\n**Unique Agent Identifiers**\n- Track which agent performed which action\n- Enable traceability to developers/deployers\n- Support accountability in failures\n\n**Human Supervision**\n- Require approval for high-impact actions\n- Monitor early-stage deployments closely\n- Feedback loop improves agent performance",
+                "code": "class SafeAgent:\n    def __init__(self, agent, config):\n        self.agent = agent\n        self.max_iterations = config.get('max_iterations', 20)\n        self.timeout_seconds = config.get('timeout', 300)\n        self.require_approval_for = config.get('approval_actions', [])\n        self.agent_id = str(uuid.uuid4())\n        self.action_log = []\n    \n    def run(self, task):\n        start_time = time.time()\n        iterations = 0\n        \n        while True:\n            # Check iteration limit\n            iterations += 1\n            if iterations > self.max_iterations:\n                self._log_event('MAX_ITERATIONS_REACHED')\n                return {'error': 'Agent reached maximum iterations', 'log': self.action_log}\n            \n            # Check timeout\n            if time.time() - start_time > self.timeout_seconds:\n                self._log_event('TIMEOUT')\n                return {'error': 'Agent timed out', 'log': self.action_log}\n            \n            # Get next action\n            action = self.agent.next_action(task)\n            \n            # Log the action\n            self._log_event('ACTION', action)\n            \n            # Check if approval required\n            if action.type in self.require_approval_for:\n                if not self._get_human_approval(action):\n                    self._log_event('ACTION_REJECTED', action)\n                    continue\n            \n            # Execute action\n            result = self.agent.execute(action)\n            \n            if result.is_complete:\n                self._log_event('COMPLETED', result)\n                return {'result': result.value, 'log': self.action_log}\n    \n    def _log_event(self, event_type, data=None):\n        self.action_log.append({\n            'timestamp': datetime.now().isoformat(),\n            'agent_id': self.agent_id,\n            'event': event_type,\n            'data': data\n        })\n    \n    def _get_human_approval(self, action):\n        print(f\"\\n⚠️ Agent wants to: {action}\")\n        return input(\"Approve? (y/n): \").lower() == 'y'"
+              },
+              {
+                "title": "Detecting and Preventing Loops",
+                "content": "Agents can get stuck repeating the same actions. Detection strategies:",
+                "code": "class LoopDetector:\n    def __init__(self, window_size=5, similarity_threshold=0.9):\n        self.recent_actions = []\n        self.window_size = window_size\n        self.threshold = similarity_threshold\n    \n    def check_and_record(self, action):\n        # Record action\n        action_hash = self._hash_action(action)\n        self.recent_actions.append(action_hash)\n        \n        # Keep window size\n        if len(self.recent_actions) > self.window_size * 2:\n            self.recent_actions = self.recent_actions[-self.window_size * 2:]\n        \n        # Check for repetition patterns\n        if len(self.recent_actions) >= self.window_size:\n            if self._detect_loop():\n                return True, \"Loop detected: agent repeating same actions\"\n        \n        return False, None\n    \n    def _detect_loop(self):\n        recent = self.recent_actions[-self.window_size:]\n        # Check if recent actions are all the same\n        if len(set(recent)) <= 2:  # Only 1-2 unique actions\n            return True\n        # Check for alternating pattern\n        if len(set(recent[::2])) == 1 and len(set(recent[1::2])) == 1:\n            return True\n        return False\n    \n    def _hash_action(self, action):\n        return hash(json.dumps(action, sort_keys=True))"
+              },
+              {
+                "title": "Production Safety Checklist",
+                "content": "Before deploying agents to production:\n\n**Pre-Deployment:**\n☐ Set maximum iteration/token limits\n☐ Implement timeout handling\n☐ Add loop detection\n☐ Define which actions need human approval\n☐ Set up comprehensive logging\n\n**Runtime Monitoring:**\n☐ Track token usage and costs\n☐ Monitor for unusual patterns\n☐ Alert on repeated failures\n☐ Dashboard for agent activity\n\n**Data Safety:**\n☐ Minimize data exposure to tools\n☐ Encrypt sensitive data in logs\n☐ Implement access controls\n☐ Regular security audits"
+              }
+            ],
+            "keyTakeaways": [
+              "Key risks: infinite loops, multi-agent dependencies, computational costs, data privacy",
+              "Essential guardrails: logging, interruptibility, identifiers, human supervision",
+              "Implement loop detection to prevent runaway agents",
+              "Require human approval for high-impact actions"
+            ]
+          }
+        },
         {
           "id": "function-calling",
           "title": "Function Calling Fundamentals",
@@ -225,9 +319,18 @@
               }
             ],
             "sources": [
-              {"title": "OpenAI Function Calling Guide", "url": "https://platform.openai.com/docs/guides/function-calling"},
-              {"title": "OpenAI Structured Outputs (100% Schema Match)", "url": "https://openai.com/index/introducing-structured-outputs-in-the-api/"},
-              {"title": "Anthropic Tool Use", "url": "https://docs.anthropic.com/claude/docs/tool-use"}
+              {
+                "title": "OpenAI Function Calling Guide",
+                "url": "https://platform.openai.com/docs/guides/function-calling"
+              },
+              {
+                "title": "OpenAI Structured Outputs (100% Schema Match)",
+                "url": "https://openai.com/index/introducing-structured-outputs-in-the-api/"
+              },
+              {
+                "title": "Anthropic Tool Use",
+                "url": "https://docs.anthropic.com/claude/docs/tool-use"
+              }
             ]
           }
         },
@@ -271,7 +374,10 @@
               }
             ],
             "sources": [
-              {"title": "Building Effective Agents - Anthropic", "url": "https://docs.anthropic.com/claude/docs/building-effective-agents"}
+              {
+                "title": "Building Effective Agents - Anthropic",
+                "url": "https://docs.anthropic.com/claude/docs/building-effective-agents"
+              }
             ]
           }
         }
@@ -330,8 +436,14 @@
               }
             ],
             "sources": [
-              {"title": "Generative Agents: Interactive Simulacra", "url": "https://arxiv.org/abs/2304.03442"},
-              {"title": "MemGPT: Towards LLMs as Operating Systems", "url": "https://arxiv.org/abs/2310.08560"}
+              {
+                "title": "Generative Agents: Interactive Simulacra",
+                "url": "https://arxiv.org/abs/2304.03442"
+              },
+              {
+                "title": "MemGPT: Towards LLMs as Operating Systems",
+                "url": "https://arxiv.org/abs/2310.08560"
+              }
             ]
           }
         }
@@ -399,8 +511,14 @@
               }
             ],
             "sources": [
-              {"title": "AutoGen: Multi-Agent Conversation Framework", "url": "https://microsoft.github.io/autogen/"},
-              {"title": "LangGraph Multi-Agent Tutorial", "url": "https://langchain-ai.github.io/langgraph/tutorials/multi_agent/"}
+              {
+                "title": "AutoGen: Multi-Agent Conversation Framework",
+                "url": "https://microsoft.github.io/autogen/"
+              },
+              {
+                "title": "LangGraph Multi-Agent Tutorial",
+                "url": "https://langchain-ai.github.io/langgraph/tutorials/multi_agent/"
+              }
             ]
           }
         },
@@ -464,8 +582,102 @@
               ],
               "correct": 2,
               "explanation": "The LLM generates the *specification* for the function call (name and arguments), but the actual execution happens in the application code."
+            },
+            {
+              "question": "According to IBM, what distinguishes AI agents from traditional AI systems?",
+              "options": [
+                "AI agents are always larger models",
+                "AI agents can autonomously perceive, reason, and take actions to achieve goals",
+                "AI agents only work with text",
+                "AI agents don't require any programming"
+              ],
+              "correct": 1,
+              "explanation": "AI agents are distinguished by their ability to autonomously perceive their environment, make decisions, and take actions to achieve specific goals with minimal human intervention."
+            },
+            {
+              "question": "What is the purpose of a 'planning' module in an AI agent architecture?",
+              "options": [
+                "To schedule when the agent runs",
+                "To break down complex goals into actionable steps and sub-tasks",
+                "To store the agent's memory",
+                "To handle user authentication"
+              ],
+              "correct": 1,
+              "explanation": "The planning module enables agents to decompose complex goals into manageable sub-tasks, determine the order of operations, and adapt plans based on intermediate results."
+            },
+            {
+              "question": "What is 'tool use' in the context of AI agents?",
+              "options": [
+                "The physical tools used to build the agent",
+                "The ability to call external APIs, run code, or interact with external systems",
+                "The programming language used",
+                "The monitoring dashboard"
+              ],
+              "correct": 1,
+              "explanation": "Tool use enables AI agents to extend their capabilities by calling APIs, executing code, searching databases, or interacting with external services to accomplish tasks."
+            },
+            {
+              "question": "What is a 'supervisor' or 'orchestrator' agent in multi-agent systems?",
+              "options": [
+                "The oldest agent in the system",
+                "An agent that coordinates and delegates tasks to specialized worker agents",
+                "The agent with the most memory",
+                "An agent that only handles errors"
+              ],
+              "correct": 1,
+              "explanation": "A supervisor/orchestrator agent coordinates multi-agent systems by routing tasks to appropriate specialized agents, aggregating results, and ensuring goal completion."
+            },
+            {
+              "question": "What are the five types of AI agents in order from simplest to most advanced?",
+              "options": [
+                "Basic, Standard, Advanced, Expert, Master",
+                "Simple reflex, Model-based reflex, Goal-based, Utility-based, Learning",
+                "Input, Processing, Output, Feedback, Adaptive",
+                "Reactive, Proactive, Interactive, Cognitive, Autonomous"
+              ],
+              "correct": 1,
+              "explanation": "Industry classifies agents from simple reflex (rule-based) to learning agents (improve from experience), with model-based, goal-based, and utility-based in between."
+            },
+            {
+              "question": "How does ReWOO differ from ReAct?",
+              "options": [
+                "ReWOO uses more memory",
+                "ReWOO plans all steps upfront before executing, while ReAct interleaves thinking and acting",
+                "ReWOO is faster at runtime",
+                "ReWOO doesn't use tools"
+              ],
+              "correct": 1,
+              "explanation": "ReWOO (Reasoning Without Observation) creates a complete plan before execution, reducing token usage and enabling user confirmation, while ReAct iterates between thinking and acting."
+            },
+            {
+              "question": "What is the primary risk of 'infinite feedback loops' in AI agents?",
+              "options": [
+                "The agent becomes too intelligent",
+                "The agent repeatedly calls the same tools without progress, causing cost/token explosion",
+                "The agent stops responding entirely",
+                "The agent learns too quickly"
+              ],
+              "correct": 1,
+              "explanation": "Agents stuck in loops repeatedly call tools without making progress, causing escalating costs, blocking user tasks, and potentially triggering API rate limits."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "what-are-agents",
+              "react-pattern",
+              "tool-use"
+            ],
+            "externalRefs": [
+              {
+                "title": "LangGraph Documentation",
+                "url": "https://langchain-ai.github.io/langgraph/"
+              },
+              {
+                "title": "ReAct Paper",
+                "url": "https://arxiv.org/abs/2210.03629"
+              }
+            ]
+          }
         }
       ]
     }

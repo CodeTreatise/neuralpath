@@ -1,10 +1,15 @@
 {
   "id": "reasoning-models",
   "title": "Reasoning & Thinking Models",
-  "description": "Master advanced reasoning techniques from Chain-of-Thought to OpenAI o1 and test-time compute scaling",
+  "description": "Master advanced reasoning techniques from Chain-of-Thought to OpenAI o1 and test-time compute scaling. Learn how modern AI systems perform deliberate reasoning to solve complex problems in mathematics, coding, and analysis with significantly improved accuracy.",
   "icon": "🧠",
   "level": "intermediate",
   "duration": "3 weeks",
+  "validationSources": [
+    "https://www.ibm.com/topics/chain-of-thought",
+    "https://www.ibm.com/topics/prompt-engineering",
+    "https://www.ibm.com/topics/ai-reasoning"
+  ],
   "prerequisites": ["Used ChatGPT or similar AI assistants", "Basic Python (can run scripts)", "OpenAI API access (for code examples)"],
   "prerequisitesClarification": "If you've chatted with ChatGPT and noticed it sometimes makes mistakes on math or logic problems, you're ready to learn why - and how reasoning models fix this.",
   "whatYouNeed": [
@@ -235,6 +240,174 @@
               "Verification catches errors reasoning models might make",
               "Self-correction improves reliability",
               "Build pipelines that combine reasoning with verification"
+            ]
+          }
+        },
+        {
+          "id": "reasoning-quiz",
+          "title": "Reasoning Models Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is Chain-of-Thought (CoT) prompting?",
+              "options": [
+                "Linking multiple AI models together",
+                "Asking the AI to show its reasoning steps before giving a final answer",
+                "Creating a chain of related questions",
+                "Training a model on thought data"
+              ],
+              "correct": 1,
+              "explanation": "Chain-of-Thought prompting asks the model to show intermediate reasoning steps, dramatically improving accuracy on complex reasoning tasks."
+            },
+            {
+              "question": "Why do standard LLMs sometimes fail at simple math problems?",
+              "options": [
+                "They don't know math",
+                "They pattern-match rather than truly reason, which fails on tricky problems",
+                "Math is always too complex for AI",
+                "They are designed to fail at math"
+              ],
+              "correct": 1,
+              "explanation": "LLMs are trained to predict the next token through pattern matching, which can fail on problems requiring multi-step reasoning or careful attention to wording."
+            },
+            {
+              "question": "What is the key difference between o1 and GPT-4?",
+              "options": [
+                "o1 is smaller",
+                "o1 performs deliberate reasoning before answering, trading speed for accuracy",
+                "GPT-4 cannot process text",
+                "o1 only works with images"
+              ],
+              "correct": 1,
+              "explanation": "o1-class models perform internal deliberation and reasoning before producing output, taking more time but achieving significantly higher accuracy on complex tasks."
+            },
+            {
+              "question": "What is 'test-time compute' in the context of reasoning models?",
+              "options": [
+                "Computing power used for testing",
+                "Using more computation during inference (not training) to improve answer quality",
+                "The time it takes to run tests",
+                "Computing used during model evaluation"
+              ],
+              "correct": 1,
+              "explanation": "Test-time compute refers to using more computational resources during inference (answer generation), enabling models to reason more deeply and produce better answers."
+            },
+            {
+              "question": "What is self-consistency in reasoning?",
+              "options": [
+                "Using the same model version",
+                "Generating multiple reasoning paths and selecting the most common answer",
+                "Ensuring consistent API responses",
+                "Training with consistent data"
+              ],
+              "correct": 1,
+              "explanation": "Self-consistency generates multiple solutions to the same problem with different reasoning paths, then selects the most frequent answer to improve reliability."
+            },
+            {
+              "question": "When should you prefer a reasoning model over a standard LLM?",
+              "options": [
+                "For simple Q&A and casual conversation",
+                "For complex math, logic, coding problems, and multi-step analysis",
+                "For generating creative stories",
+                "For translation tasks"
+              ],
+              "correct": 1,
+              "explanation": "Reasoning models excel at complex problems requiring deliberate thinking: mathematical proofs, debugging, multi-step analysis, and problems with verifiable answers."
+            },
+            {
+              "question": "What is iterative refinement in reasoning?",
+              "options": [
+                "Training the model multiple times",
+                "Improving an answer through multiple passes of critique and correction",
+                "Refining the model's weights",
+                "Iterating through training data"
+              ],
+              "correct": 1,
+              "explanation": "Iterative refinement improves answers by having the model critique its own solution and make corrections, often catching errors and producing better final answers."
+            },
+            {
+              "question": "What is 'best-of-N' sampling?",
+              "options": [
+                "Selecting the best model from N options",
+                "Generating N solutions and using a judge to select the best one",
+                "Training on the best N examples",
+                "Using N GPUs for inference"
+              ],
+              "correct": 1,
+              "explanation": "Best-of-N generates multiple candidate solutions and uses a judge (LLM or other metric) to select the best one, combining diversity with quality selection."
+            },
+            {
+              "question": "What is the reasoning effort parameter in o1?",
+              "options": [
+                "How hard the model tries",
+                "Controls the depth of reasoning: low/medium/high corresponding to more thinking tokens",
+                "The training effort used",
+                "The API rate limit"
+              ],
+              "correct": 1,
+              "explanation": "The reasoning effort parameter (low/medium/high) controls how much internal deliberation o1 performs, balancing cost and latency against reasoning depth."
+            },
+            {
+              "question": "Why can adding 'Let's think step by step' to a prompt improve results?",
+              "options": [
+                "It makes the API faster",
+                "It triggers the model to generate intermediate reasoning steps before answering",
+                "It reduces token costs",
+                "It enables special model features"
+              ],
+              "correct": 1,
+              "explanation": "This phrase triggers Chain-of-Thought behavior, causing the model to show intermediate reasoning steps that help it arrive at more accurate answers."
+            },
+            {
+              "question": "What are the three fundamental types of logical reasoning?",
+              "options": [
+                "Fast, medium, and slow thinking",
+                "Deductive (general to specific), Inductive (specific to general), and Abductive (best explanation)",
+                "Forward, backward, and bidirectional",
+                "Symbolic, neural, and hybrid"
+              ],
+              "correct": 1,
+              "explanation": "Deductive reasoning applies general rules to reach specific conclusions, inductive reasoning generalizes patterns from specific observations, and abductive reasoning infers the most likely explanation for observations."
+            },
+            {
+              "question": "What does System 1 vs System 2 thinking refer to in the context of AI reasoning?",
+              "options": [
+                "Different model architectures",
+                "Fast/intuitive processing vs slow/deliberate reasoning",
+                "CPU vs GPU processing",
+                "Training vs inference phases"
+              ],
+              "correct": 1,
+              "explanation": "From cognitive psychology: System 1 is fast and automatic (like pattern matching in GPT-4), while System 2 is slow and deliberate (like reasoning in o1), requiring more effort but producing more accurate results on complex problems."
+            },
+            {
+              "question": "What is 'semantic enrichment' in knowledge graphs used for reasoning?",
+              "options": [
+                "Making text more colorful",
+                "Using NLP to identify objects and understand relationships between entities",
+                "Adding more training data",
+                "Encrypting sensitive information"
+              ],
+              "correct": 1,
+              "explanation": "Semantic enrichment uses NLP to construct comprehensive views of entities and their relationships, enabling question-answering systems to retrieve more accurate and contextual answers."
+            }
+          ],
+          "references": {
+            "lessonRefs": [
+              "what-is-reasoning",
+              "thinking-vs-answering",
+              "reasoning-patterns"
+            ],
+            "externalRefs": [
+              {
+                "title": "OpenAI Reasoning Models",
+                "url": "https://platform.openai.com/docs/guides/reasoning"
+              },
+              {
+                "title": "Chain-of-Thought Paper",
+                "url": "https://arxiv.org/abs/2201.11903"
+              }
             ]
           }
         }

@@ -1,11 +1,16 @@
 {
   "id": "nlp-transformers",
   "title": "NLP & Transformers",
-  "icon": "\ud83d\udcdd",
-  "description": "Master Natural Language Processing from text preprocessing to building transformer models.",
+  "icon": "📝",
+  "description": "Master Natural Language Processing from text preprocessing to building transformer models. NLP is a subfield of computer science and AI that uses machine learning to enable computers to understand and communicate with human language.",
   "level": "intermediate",
   "duration": "7 weeks",
   "totalLessons": 20,
+  "validationSources": [
+    "https://www.ibm.com/topics/natural-language-processing",
+    "https://www.ibm.com/topics/transformer-model",
+    "https://www.ibm.com/topics/large-language-models"
+  ],
   "prerequisites": [
     "Python Fundamentals",
     "Deep Learning Basics"
@@ -29,11 +34,21 @@
           "type": "lesson",
           "duration": "20 min",
           "content": {
-            "overview": "Natural Language Processing (NLP) enables computers to understand, interpret, and generate human language. It powers search engines, chatbots, translation, and LLMs.",
+            "overview": "Natural Language Processing (NLP) is a subfield of computer science and AI that uses machine learning to enable computers to understand and communicate with human language. NLP combines computational linguistics (rule-based modeling) with statistical, machine learning, and deep learning approaches. It powers search engines, chatbots, translation, and LLMs.",
             "sections": [
               {
+                "title": "Three Approaches to NLP",
+                "content": "NLP has evolved through three main approaches:\n\n**1. Rules-based NLP:**\n- Hand-coded linguistic rules\n- Pattern matching, regular expressions\n- Limited flexibility, labor-intensive\n\n**2. Statistical NLP:**\n- Probabilistic models (n-grams, HMMs)\n- Machine learning on labeled data\n- Bag-of-words, TF-IDF features\n\n**3. Deep Learning NLP:**\n- Neural networks learn representations\n- Sequence-to-sequence models (RNNs, LSTMs)\n- Transformer models with self-attention\n- Foundation/autoregressive models (GPT, BERT)",
+                "keyPoints": [
+                  "Each approach built on limitations of the previous",
+                  "Deep learning now dominates NLP",
+                  "Transformers eliminated the need for sequential processing",
+                  "LLMs are foundation models trained on massive text corpora"
+                ]
+              },
+              {
                 "title": "NLP Tasks Overview",
-                "content": "NLP encompasses a wide range of tasks:\n\n**Understanding:**\n- Text Classification (sentiment, topic)\n- Named Entity Recognition (NER)\n- Question Answering\n- Reading Comprehension\n\n**Generation:**\n- Machine Translation\n- Text Summarization\n- Content Generation\n- Dialogue Systems",
+                "content": "NLP encompasses a wide range of tasks:\n\n**Understanding:**\n- Text Classification (sentiment, topic)\n- Named Entity Recognition (NER)\n- Part-of-Speech (POS) Tagging\n- Coreference Resolution\n- Word Sense Disambiguation\n- Question Answering\n\n**Generation:**\n- Machine Translation\n- Text Summarization\n- Content Generation\n- Dialogue Systems",
                 "keyPoints": [
                   "NLP bridges human language and computer understanding",
                   "Transformers have unified most NLP tasks",
@@ -43,6 +58,7 @@
               },
               {
                 "title": "Text Preprocessing Pipeline",
+                "content": "Standard NLP preprocessing involves:\n\n**Text Preprocessing:** Tokenization, lowercasing, stop word removal, stemming/lemmatization, text cleaning\n\n**Feature Extraction:** Bag of Words, TF-IDF, Word2Vec, GloVe, contextual embeddings",
                 "diagram": {
                   "title": "Standard NLP Preprocessing Pipeline",
                   "code": "flowchart LR\n    Raw[Raw Text] --> Clean[Cleaning]\n    Clean --> Token[Tokenization]\n    Token --> Stop[Stopword Removal]\n    Stop --> Norm[Normalization]\n    Norm --> Vector[Vectorization]\n    \n    subgraph Cleaning\n        C1[Lowercasing]\n        C2[Remove HTML/URLs]\n        C3[Remove Special Chars]\n    end\n    \n    subgraph Normalization\n        N1[Stemming]\n        N2[Lemmatization]\n    end\n    \n    Clean -.-> C1\n    Norm -.-> N1\n    \n    style Raw fill:#fff,stroke:#333\n    style Clean fill:#dbeafe,stroke:#2563eb\n    style Token fill:#fce7f3,stroke:#db2777\n    style Vector fill:#dcfce7,stroke:#16a34a"
@@ -84,7 +100,7 @@
             "sections": [
               {
                 "title": "From One-Hot to Embeddings",
-                "content": "One-hot encoding creates sparse, high-dimensional vectors where each word is a unique dimension. Embeddings compress this into dense, meaningful vectors.\n\n**One-hot:** [0,0,1,0,0...] (10,000 dims)\n**Embedding:** [0.25, -0.8, 0.1, ...] (300 dims)\n\nKey property: king - man + woman \u2248 queen"
+                "content": "One-hot encoding creates sparse, high-dimensional vectors where each word is a unique dimension. Embeddings compress this into dense, meaningful vectors.\n\n**One-hot:** [0,0,1,0,0...] (10,000 dims)\n**Embedding:** [0.25, -0.8, 0.1, ...] (300 dims)\n\nKey property: king - man + woman ≈ queen"
               },
               {
                 "title": "Word2Vec & GloVe",
@@ -115,11 +131,11 @@
           "type": "lesson",
           "duration": "30 min",
           "content": {
-            "overview": "Attention allows models to focus on relevant parts of the input when producing output. It's the key innovation that enabled transformers to revolutionize NLP.",
+            "overview": "Attention is the central feature of transformer models. Self-attention detects relationships and dependencies between each part of the input sequence, enabling parallel processing and long-range dependency capture. It's the key innovation that revolutionized NLP.",
             "sections": [
               {
-                "title": "The Intuition",
-                "content": "When translating 'The cat sat on the mat' to French, attention helps the model focus on 'cat' when generating 'chat'.\n\nAttention computes a weighted sum of values, where weights are determined by how relevant each value is to the current query."
+                "title": "Query, Key, Value Vectors",
+                "content": "Attention uses three vector types:\n\n**Query (Q):** What the current token is 'seeking' - the information it wants to know\n\n**Key (K):** What information each token contains - like a label\n\n**Value (V):** The actual content returned, scaled by attention weight\n\n**Intuition:** When translating 'The cat sat on the mat', attention helps focus on 'cat' when generating 'chat'. The query from the decoder asks 'what animal?', keys in the encoder identify relevant words, and values return the actual content."
               },
               {
                 "title": "Scaled Dot-Product Attention",
@@ -140,7 +156,7 @@
               "Attention enables dynamic focus on relevant inputs",
               "Scaling prevents softmax from saturating",
               "Multi-head attention captures different relationships",
-              "Attention is O(n\u00b2) in sequence length"
+              "Attention is O(n²) in sequence length"
             ]
           }
         },
@@ -150,11 +166,11 @@
           "type": "lesson",
           "duration": "40 min",
           "content": {
-            "overview": "The Transformer (Vaswani et al., 2017) replaced recurrence with self-attention, enabling parallelization and capturing long-range dependencies. It's the foundation of GPT, BERT, and all modern LLMs.",
+            "overview": "The Transformer (Vaswani et al., 2017) is a neural network architecture that excels at processing sequential data. Unlike RNNs that process sequentially, Transformers use only attention layers and feedforward layers, enabling full parallelization and well-suited GPU acceleration. The architecture captures long-range dependencies effectively and is the foundation of GPT, BERT, and all modern LLMs.",
             "sections": [
               {
                 "title": "Architecture Overview",
-                "content": "The original Transformer has an encoder-decoder structure:\n\n**Encoder**: Processes input sequence\n- Self-attention (attend to all positions)\n- Feed-forward network\n- Layer normalization & residual connections\n\n**Decoder**: Generates output sequence\n- Masked self-attention (causal)\n- Cross-attention (attend to encoder)\n- Feed-forward network",
+                "content": "The original Transformer has an encoder-decoder structure:\n\n**Encoder**: Processes input sequence bidirectionally\n- Self-attention (attend to all positions)\n- Feed-forward network\n- Residual connections + Layer normalization for stability\n\n**Decoder**: Generates output sequence autoregressively\n- Masked self-attention (causal)\n- Cross-attention (attend to encoder)\n- Feed-forward network\n\n**Key Benefits:**\n- Parallelization (no sequential bottleneck)\n- Long-range dependency capture\n- Well-suited for GPU computation",
                 "diagram": {
                   "title": "Transformer Architecture",
                   "code": "flowchart TB\n    subgraph Encoder[\"Encoder Stack\"]\n        E_IN[Input Embedding] --> E_POS[+ Positional Encoding]\n        E_POS --> E_ATT[Multi-Head Self-Attention]\n        E_ATT --> E_ADD1[Add & Norm]\n        E_ADD1 --> E_FF[Feed Forward]\n        E_FF --> E_ADD2[Add & Norm]\n    end\n    \n    subgraph Decoder[\"Decoder Stack\"]\n        D_IN[Output Embedding] --> D_POS[+ Positional Encoding]\n        D_POS --> D_ATT1[Masked Multi-Head Attention]\n        D_ATT1 --> D_ADD1[Add & Norm]\n        D_ADD1 --> D_ATT2[Cross-Attention]\n        E_ADD2 --> D_ATT2\n        D_ATT2 --> D_ADD2[Add & Norm]\n        D_ADD2 --> D_FF[Feed Forward]\n        D_FF --> D_ADD3[Add & Norm]\n    end\n    \n    D_ADD3 --> LINEAR[Linear]\n    LINEAR --> SOFT[Softmax]\n    SOFT --> OUT[Output Probabilities]"
@@ -270,11 +286,15 @@
           "type": "lesson",
           "duration": "35 min",
           "content": {
-            "overview": "GPT (Generative Pre-trained Transformer) uses a decoder-only architecture for autoregressive text generation. It's the foundation of ChatGPT and modern LLMs.",
+            "overview": "GPT (Generative Pre-trained Transformer) uses a decoder-only architecture for autoregressive text generation. LLMs like GPT are essentially 'giant statistical prediction machines that repeatedly predict the next word' based on the context window. They are deep learning models trained on immense amounts of text data and are the foundation of ChatGPT and modern AI assistants.",
             "sections": [
               {
                 "title": "Autoregressive Generation",
-                "content": "GPT predicts the next token given all previous tokens:\n\nP(x\u2081, x\u2082, ..., x\u2099) = P(x\u2081) \u00d7 P(x\u2082|x\u2081) \u00d7 P(x\u2083|x\u2081,x\u2082) \u00d7 ...\n\n**Causal Masking**: Each position can only attend to previous positions (left context). This enables generation one token at a time."
+                "content": "GPT predicts the next token given all previous tokens:\n\nP(x₁, x₂, ..., xₙ) = P(x₁) × P(x₂|x₁) × P(x₃|x₁,x₂) × ...\n\n**Causal Masking**: Each position can only attend to previous positions (left context). This enables generation one token at a time.\n\n**Context Window**: The maximum number of tokens the model can 'see' at once. Modern models support 4K to 128K+ tokens."
+              },
+              {
+                "title": "LLM Training Pipeline",
+                "content": "**Pre-training:**\n1. Tokenization - break text into subword units\n2. Self-attention learns word relationships\n3. Backpropagation and gradient descent optimize billions of parameters\n\n**Fine-tuning Types:**\n- Supervised fine-tuning (SFT) on task-specific data\n- RLHF (Reinforcement Learning from Human Feedback) for alignment\n- Instruction tuning for following directions\n- Reasoning models for step-by-step thinking"
               },
               {
                 "title": "Text Generation Strategies",
@@ -460,7 +480,7 @@
                 "title": "Translation with Transformers",
                 "codeExample": {
                   "language": "python",
-                  "code": "from transformers import pipeline, MarianMTModel, MarianTokenizer\n\n# Using pipeline\ntranslator = pipeline('translation_en_to_fr', model='Helsinki-NLP/opus-mt-en-fr')\nresult = translator('Hello, how are you today?')\nprint(result[0]['translation_text'])  # Bonjour, comment allez-vous aujourd'hui?\n\n# Direct model usage for more control\nmodel_name = 'Helsinki-NLP/opus-mt-en-de'\ntokenizer = MarianTokenizer.from_pretrained(model_name)\nmodel = MarianMTModel.from_pretrained(model_name)\n\ntext = \"Machine learning is transforming every industry.\"\ninputs = tokenizer(text, return_tensors='pt', padding=True)\n\noutputs = model.generate(\n    **inputs,\n    max_length=100,\n    num_beams=5,\n    early_stopping=True\n)\n\ntranslation = tokenizer.decode(outputs[0], skip_special_tokens=True)\nprint(translation)  # Maschinelles Lernen ver\u00e4ndert jede Branche."
+                  "code": "from transformers import pipeline, MarianMTModel, MarianTokenizer\n\n# Using pipeline\ntranslator = pipeline('translation_en_to_fr', model='Helsinki-NLP/opus-mt-en-fr')\nresult = translator('Hello, how are you today?')\nprint(result[0]['translation_text'])  # Bonjour, comment allez-vous aujourd'hui?\n\n# Direct model usage for more control\nmodel_name = 'Helsinki-NLP/opus-mt-en-de'\ntokenizer = MarianTokenizer.from_pretrained(model_name)\nmodel = MarianMTModel.from_pretrained(model_name)\n\ntext = \"Machine learning is transforming every industry.\"\ninputs = tokenizer(text, return_tensors='pt', padding=True)\n\noutputs = model.generate(\n    **inputs,\n    max_length=100,\n    num_beams=5,\n    early_stopping=True\n)\n\ntranslation = tokenizer.decode(outputs[0], skip_special_tokens=True)\nprint(translation)  # Maschinelles Lernen verändert jede Branche."
                 }
               },
               {
@@ -474,7 +494,7 @@
                 "title": "Evaluation: BLEU Score",
                 "codeExample": {
                   "language": "python",
-                  "code": "from evaluate import load\n\nbleu = load('bleu')\n\npredictions = [\"The cat sat on the mat.\"]\nreferences = [[\"The cat is sitting on the mat.\", \"A cat sat on the mat.\"]]\n\nresults = bleu.compute(predictions=predictions, references=references)\nprint(f\"BLEU: {results['bleu']:.3f}\")\nprint(f\"Precisions: {results['precisions']}\")\n\n# COMET (learned metric, better correlation with human judgment)\ncomet = load('comet')\nresults = comet.compute(\n    sources=[\"The cat sat on the mat.\"],\n    predictions=[\"Le chat \u00e9tait assis sur le tapis.\"],\n    references=[\"Le chat s'est assis sur le tapis.\"]\n)"
+                  "code": "from evaluate import load\n\nbleu = load('bleu')\n\npredictions = [\"The cat sat on the mat.\"]\nreferences = [[\"The cat is sitting on the mat.\", \"A cat sat on the mat.\"]]\n\nresults = bleu.compute(predictions=predictions, references=references)\nprint(f\"BLEU: {results['bleu']:.3f}\")\nprint(f\"Precisions: {results['precisions']}\")\n\n# COMET (learned metric, better correlation with human judgment)\ncomet = load('comet')\nresults = comet.compute(\n    sources=[\"The cat sat on the mat.\"],\n    predictions=[\"Le chat était assis sur le tapis.\"],\n    references=[\"Le chat s'est assis sur le tapis.\"]\n)"
                 }
               }
             ],
@@ -574,7 +594,7 @@
                 "title": "Tokenization Algorithms",
                 "codeExample": {
                   "language": "python",
-                  "code": "from transformers import AutoTokenizer\n\n# BPE (Byte Pair Encoding) - GPT family\ngpt_tok = AutoTokenizer.from_pretrained('gpt2')\nprint(gpt_tok.tokenize('Tokenization'))  # ['Token', 'ization']\n\n# WordPiece - BERT family\nbert_tok = AutoTokenizer.from_pretrained('bert-base-uncased')\nprint(bert_tok.tokenize('Tokenization'))  # ['token', '##ization']\n\n# SentencePiece/Unigram - T5, ALBERT\nt5_tok = AutoTokenizer.from_pretrained('t5-base')\nprint(t5_tok.tokenize('Tokenization'))  # ['\u2581Token', 'ization']\n\n# Byte-level BPE - handles any unicode\nroberta_tok = AutoTokenizer.from_pretrained('roberta-base')\nprint(roberta_tok.tokenize('\ud83e\udd16 AI'))  # Handles emojis!"
+                  "code": "from transformers import AutoTokenizer\n\n# BPE (Byte Pair Encoding) - GPT family\ngpt_tok = AutoTokenizer.from_pretrained('gpt2')\nprint(gpt_tok.tokenize('Tokenization'))  # ['Token', 'ization']\n\n# WordPiece - BERT family\nbert_tok = AutoTokenizer.from_pretrained('bert-base-uncased')\nprint(bert_tok.tokenize('Tokenization'))  # ['token', '##ization']\n\n# SentencePiece/Unigram - T5, ALBERT\nt5_tok = AutoTokenizer.from_pretrained('t5-base')\nprint(t5_tok.tokenize('Tokenization'))  # ['▁Token', 'ization']\n\n# Byte-level BPE - handles any unicode\nroberta_tok = AutoTokenizer.from_pretrained('roberta-base')\nprint(roberta_tok.tokenize('🤖 AI'))  # Handles emojis!"
                 }
               },
               {
@@ -606,11 +626,11 @@
           "type": "lesson",
           "duration": "30 min",
           "content": {
-            "overview": "Transformers have O(n\u00b2) complexity in sequence length. Learn techniques to scale to longer sequences and reduce computational costs.",
+            "overview": "Transformers have O(n²) complexity in sequence length. Learn techniques to scale to longer sequences and reduce computational costs.",
             "sections": [
               {
                 "title": "The Efficiency Problem",
-                "content": "Self-attention computes all pairwise relationships:\n- 512 tokens \u2192 262K attention scores\n- 4K tokens \u2192 16M attention scores\n- 128K tokens \u2192 16B attention scores\n\nApproaches to solve this:\n1. **Sparse attention** - Attend to subset of positions\n2. **Linear attention** - Replace softmax with linear ops\n3. **Compression** - Reduce sequence length"
+                "content": "Self-attention computes all pairwise relationships:\n- 512 tokens → 262K attention scores\n- 4K tokens → 16M attention scores\n- 128K tokens → 16B attention scores\n\nApproaches to solve this:\n1. **Sparse attention** - Attend to subset of positions\n2. **Linear attention** - Replace softmax with linear ops\n3. **Compression** - Reduce sequence length"
               },
               {
                 "title": "Efficient Architectures",
@@ -628,7 +648,7 @@
               }
             ],
             "keyTakeaways": [
-              "Standard attention is O(n\u00b2), limiting sequence length",
+              "Standard attention is O(n²), limiting sequence length",
               "Longformer/BigBird handle long documents",
               "Flash Attention speeds up without architecture changes",
               "Gradient checkpointing trades compute for memory"
@@ -670,6 +690,70 @@
               "Use seqeval for NER to get entity-level metrics",
               "ROUGE for summarization, BLEU for translation",
               "BERTScore captures semantic similarity"
+            ]
+          }
+        },
+        {
+          "id": "modern-transformer-innovations",
+          "title": "Modern Transformer Innovations",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "Explore cutting-edge innovations in transformer architectures that power state-of-the-art LLMs. The field has evolved rapidly since the original 2017 paper, with key improvements in attention efficiency, positional encoding, and alternative architectures.",
+            "sections": [
+              {
+                "title": "Attention Efficiency Improvements",
+                "content": "Modern LLMs use optimized attention mechanisms to reduce computational costs:\n\n**Multi-Query Attention (MQA):**\n- All attention heads share a single Key and Value head\n- Reduces KV cache memory significantly\n- Used in: PaLM, Falcon\n\n**Grouped Query Attention (GQA):**\n- Middle ground: groups of heads share K and V\n- Better quality than MQA, more efficient than full MHA\n- Used in: Llama 2, Mistral, Gemma\n\n**Flash Attention:**\n- Not a new architecture, but optimized GPU implementation\n- Reduces memory from O(n²) to O(n) via tiling\n- 2-4x speedup on long sequences\n- Standard in modern training and inference",
+                "diagram": {
+                  "title": "Attention Variants Comparison",
+                  "code": "flowchart LR\n    subgraph MHA[\"Multi-Head Attention\"]\n        Q1[Q1] --> K1[K1]\n        Q1 --> V1[V1]\n        Q2[Q2] --> K2[K2]\n        Q2 --> V2[V2]\n        Q3[Q3] --> K3[K3]\n        Q3 --> V3[V3]\n    end\n    \n    subgraph MQA[\"Multi-Query Attention\"]\n        Q1m[Q1] --> Km[K]\n        Q1m --> Vm[V]\n        Q2m[Q2] --> Km\n        Q2m --> Vm\n        Q3m[Q3] --> Km\n        Q3m --> Vm\n    end\n    \n    subgraph GQA[\"Grouped Query Attention\"]\n        Q1g[Q1] --> Kg1[K1]\n        Q1g --> Vg1[V1]\n        Q2g[Q2] --> Kg1\n        Q2g --> Vg1\n        Q3g[Q3] --> Kg2[K2]\n        Q3g --> Vg2[V2]\n    end\n    \n    style MHA fill:#fce7f3,stroke:#db2777\n    style MQA fill:#dbeafe,stroke:#2563eb\n    style GQA fill:#dcfce7,stroke:#16a34a"
+                },
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torch.nn as nn\n\nclass GroupedQueryAttention(nn.Module):\n    \"\"\"Grouped Query Attention as used in Llama 2.\"\"\"\n    \n    def __init__(self, d_model=512, num_heads=8, num_kv_heads=2):\n        super().__init__()\n        self.num_heads = num_heads\n        self.num_kv_heads = num_kv_heads\n        self.num_groups = num_heads // num_kv_heads  # Heads per KV group\n        \n        self.head_dim = d_model // num_heads\n        \n        # Q has full heads, K and V have reduced heads\n        self.W_q = nn.Linear(d_model, num_heads * self.head_dim)\n        self.W_k = nn.Linear(d_model, num_kv_heads * self.head_dim)\n        self.W_v = nn.Linear(d_model, num_kv_heads * self.head_dim)\n        self.W_o = nn.Linear(d_model, d_model)\n    \n    def forward(self, x):\n        batch, seq_len, _ = x.shape\n        \n        # Project\n        Q = self.W_q(x).view(batch, seq_len, self.num_heads, self.head_dim)\n        K = self.W_k(x).view(batch, seq_len, self.num_kv_heads, self.head_dim)\n        V = self.W_v(x).view(batch, seq_len, self.num_kv_heads, self.head_dim)\n        \n        # Repeat K, V for each group\n        K = K.repeat_interleave(self.num_groups, dim=2)\n        V = V.repeat_interleave(self.num_groups, dim=2)\n        \n        # Standard attention computation...\n        return self.W_o(output)"
+                }
+              },
+              {
+                "title": "Rotary Position Embedding (RoPE)",
+                "content": "RoPE has become the standard positional encoding in modern LLMs, replacing sinusoidal encodings:\n\n**Key advantages:**\n- Encodes relative positions naturally\n- Better length extrapolation\n- Compatible with linear attention\n\n**How it works:**\n- Rotates query and key vectors based on position\n- Dot product naturally captures relative position\n- No learned parameters needed\n\n**Used in:** LLaMA, Mistral, Qwen, Phi, most modern LLMs\n\n**Extensions:**\n- YaRN: extends context length via interpolation\n- NTK-Aware: frequency-based scaling\n- Dynamic NTK: adaptive context extension",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport math\n\nclass RotaryPositionalEmbedding(nn.Module):\n    \"\"\"RoPE as used in LLaMA.\"\"\"\n    \n    def __init__(self, dim, max_seq_len=8192, base=10000):\n        super().__init__()\n        # Compute frequencies\n        inv_freq = 1.0 / (base ** (torch.arange(0, dim, 2).float() / dim))\n        self.register_buffer('inv_freq', inv_freq)\n        \n        # Precompute cos and sin\n        t = torch.arange(max_seq_len).float()\n        freqs = torch.outer(t, inv_freq)\n        self.register_buffer('cos_cached', freqs.cos())\n        self.register_buffer('sin_cached', freqs.sin())\n    \n    def rotate_half(self, x):\n        \"\"\"Rotate half the hidden dims.\"\"\"\n        x1, x2 = x.chunk(2, dim=-1)\n        return torch.cat((-x2, x1), dim=-1)\n    \n    def forward(self, q, k, positions):\n        \"\"\"Apply rotary embeddings to Q and K.\"\"\"\n        cos = self.cos_cached[positions].unsqueeze(1)  # (seq, 1, dim/2)\n        sin = self.sin_cached[positions].unsqueeze(1)\n        \n        # Rotate queries and keys\n        q_embed = (q * cos) + (self.rotate_half(q) * sin)\n        k_embed = (k * cos) + (self.rotate_half(k) * sin)\n        \n        return q_embed, k_embed\n\n# Usage with context length extension (YaRN)\ndef extend_rope_with_yarn(rope, scale_factor=4):\n    \"\"\"Extend context length via YaRN interpolation.\"\"\"\n    # Interpolate frequencies for longer contexts\n    rope.inv_freq = rope.inv_freq / scale_factor\n    # Recache cos/sin for extended length\n    return rope"
+                }
+              },
+              {
+                "title": "Context Window Evolution",
+                "content": "Context windows have grown dramatically:\n\n| Model | Year | Context Length |\n|-------|------|----------------|\n| GPT-2 | 2019 | 1,024 tokens |\n| GPT-3 | 2020 | 2,048 tokens |\n| GPT-4 | 2023 | 8K / 128K tokens |\n| Claude 3 | 2024 | 200K tokens |\n| Gemini 1.5 | 2024 | 1M tokens |\n\n**Techniques enabling long context:**\n- RoPE with interpolation (YaRN, NTK)\n- Flash Attention for memory efficiency\n- Sliding Window Attention (Mistral)\n- Ring Attention for distributed contexts\n- Compression/retrieval hybrid approaches",
+                "keyPoints": [
+                  "Long context enables document QA, code analysis",
+                  "Memory grows linearly, compute grows quadratically",
+                  "Retrieval + generation often beats pure long context",
+                  "Position interpolation extends trained contexts"
+                ]
+              },
+              {
+                "title": "Alternative Architectures: State Space Models",
+                "content": "**Mamba and State Space Models (SSMs)** are emerging as transformer alternatives:\n\n**Advantages over Transformers:**\n- Linear time complexity O(n) vs O(n²)\n- Constant memory per token during inference\n- Better for very long sequences\n\n**Key innovations:**\n- Selective state spaces (input-dependent dynamics)\n- Hardware-aware algorithm design\n- No attention mechanism needed\n\n**Models:**\n- Mamba, Mamba-2\n- RWKV (RNN-transformer hybrid)\n- RetNet (retention networks)\n- Hyena (long convolutions)\n\n**Current status:** Promising for specific use cases, but transformers still dominate for most LLM applications.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Mamba usage (conceptual - simplified)\nfrom mamba_ssm import Mamba\n\n# Mamba block replaces attention + FFN\nmamba = Mamba(\n    d_model=512,    # Model dimension\n    d_state=16,     # SSM state expansion factor\n    d_conv=4,       # Local convolution width\n    expand=2,       # Block expansion factor\n)\n\n# Linear time inference\noutput = mamba(x)  # (batch, seq_len, d_model)\n\n# For long sequences, Mamba scales much better\n# 100K tokens: Mamba ~100x faster than transformer\n\n# Hybrid architectures combine both\nclass HybridBlock(nn.Module):\n    \"\"\"Alternate attention and Mamba layers.\"\"\"\n    def __init__(self, d_model, use_attention=True):\n        super().__init__()\n        if use_attention:\n            self.mixer = MultiHeadAttention(d_model)\n        else:\n            self.mixer = Mamba(d_model)\n        self.norm = nn.LayerNorm(d_model)\n        self.ffn = FeedForward(d_model)\n    \n    def forward(self, x):\n        x = x + self.mixer(self.norm(x))\n        x = x + self.ffn(self.norm(x))\n        return x"
+                }
+              },
+              {
+                "title": "Vision Transformers and Multimodal",
+                "content": "Transformers have extended beyond text to vision and multimodal:\n\n**Vision Transformers (ViT):**\n- Images split into patches (16x16 or 14x14)\n- Patches treated like tokens\n- Self-attention captures global relationships\n- Often outperforms CNNs on large datasets\n\n**Multimodal LLMs:**\n- Vision encoder (CLIP, SigLIP) → image tokens\n- Image tokens interleaved with text tokens\n- Same transformer processes both modalities\n- Examples: GPT-4V, LLaVA, Gemini\n\n**Cross-attention for multimodal:**\n- Text attends to image features\n- Enables image understanding and generation",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import ViTModel, ViTImageProcessor\nimport torch\nfrom PIL import Image\n\n# Load Vision Transformer\nprocessor = ViTImageProcessor.from_pretrained('google/vit-base-patch16-224')\nmodel = ViTModel.from_pretrained('google/vit-base-patch16-224')\n\n# Process image into patches\nimage = Image.open('image.jpg')\ninputs = processor(images=image, return_tensors='pt')\n\n# Get patch embeddings\nwith torch.no_grad():\n    outputs = model(**inputs)\n    # outputs.last_hidden_state: (1, 197, 768)\n    # 196 patches (14x14) + 1 CLS token\n    patch_embeddings = outputs.last_hidden_state[:, 1:, :]  # Exclude CLS\n    cls_embedding = outputs.last_hidden_state[:, 0, :]      # Image summary\n\n# For multimodal LLMs\nfrom transformers import LlavaNextProcessor, LlavaNextForConditionalGeneration\n\nprocessor = LlavaNextProcessor.from_pretrained('llava-hf/llava-v1.6-mistral-7b-hf')\nmodel = LlavaNextForConditionalGeneration.from_pretrained(\n    'llava-hf/llava-v1.6-mistral-7b-hf'\n)\n\n# Image + text input\ninputs = processor(images=image, text='Describe this image:', return_tensors='pt')\noutput = model.generate(**inputs, max_new_tokens=100)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "GQA balances MHA quality with MQA efficiency",
+              "RoPE enables better context length extrapolation",
+              "Flash Attention makes long contexts practical",
+              "State Space Models offer O(n) alternative to transformers",
+              "Vision Transformers extend attention to images via patches"
             ]
           }
         },
@@ -799,8 +883,124 @@
               ],
               "correct": 2,
               "explanation": "Temperature controls the randomness of predictions. Lower values (< 1) make output more focused/deterministic, while higher values (> 1) increase diversity and creativity."
+            },
+            {
+              "question": "What is the main difference between BERT and GPT architectures?",
+              "options": [
+                "BERT is larger than GPT",
+                "BERT is bidirectional (encoder), GPT is autoregressive (decoder)",
+                "GPT uses attention, BERT uses RNNs",
+                "BERT is for translation, GPT is for classification"
+              ],
+              "correct": 1,
+              "explanation": "BERT uses encoder-only architecture with bidirectional attention (good for understanding), while GPT uses decoder-only with causal masking (good for generation)."
+            },
+            {
+              "question": "What three NLP approaches evolved historically?",
+              "options": [
+                "Supervised, unsupervised, reinforcement learning",
+                "Rules-based, statistical, deep learning",
+                "Classification, regression, clustering",
+                "Tokenization, embedding, attention"
+              ],
+              "correct": 1,
+              "explanation": "NLP evolved from rules-based (hand-coded linguistic rules), to statistical (probabilistic models like n-grams), to deep learning (neural networks with transformers)."
+            },
+            {
+              "question": "What is the purpose of positional encoding in transformers?",
+              "options": [
+                "To reduce model size",
+                "To add sequence order information since attention has no inherent order",
+                "To improve training speed",
+                "To handle multiple languages"
+              ],
+              "correct": 1,
+              "explanation": "Since self-attention processes all positions in parallel without inherent ordering, positional encodings add information about where each token appears in the sequence."
+            },
+            {
+              "question": "What do Query, Key, and Value vectors represent in attention?",
+              "options": [
+                "Input, hidden state, and output",
+                "What token seeks, what tokens contain, information returned",
+                "Past, present, and future tokens",
+                "Encoder, decoder, and output"
+              ],
+              "correct": 1,
+              "explanation": "Query represents what the token is 'seeking', Key represents what information each token contains (like a label), and Value is the actual content returned scaled by attention weight."
+            },
+            {
+              "question": "Why are LLMs described as 'giant statistical prediction machines'?",
+              "options": [
+                "They use statistics instead of neural networks",
+                "They repeatedly predict the next token based on probability",
+                "They only work with numerical data",
+                "They perform statistical tests on input"
+              ],
+              "correct": 1,
+              "explanation": "LLMs are trained to predict the next token given previous context. At inference, they generate text one token at a time by sampling from the predicted probability distribution."
+            },
+            {
+              "question": "What is Grouped Query Attention (GQA) used in Llama 2?",
+              "options": [
+                "Each head has its own K and V (full MHA)",
+                "All heads share one K and V (MQA)",
+                "Groups of query heads share K and V projections",
+                "Attention is replaced with convolutions"
+              ],
+              "correct": 2,
+              "explanation": "GQA is a middle ground where groups of query heads share Key and Value projections, offering better quality than MQA with more efficiency than full multi-head attention."
+            },
+            {
+              "question": "What advantage does Rotary Position Embedding (RoPE) have over sinusoidal encoding?",
+              "options": [
+                "Requires more parameters",
+                "Only works with short sequences",
+                "Better length extrapolation and relative position encoding",
+                "Faster training on small datasets"
+              ],
+              "correct": 2,
+              "explanation": "RoPE naturally encodes relative positions through rotation of Q and K vectors, enabling better extrapolation to longer sequences than the model was trained on."
+            },
+            {
+              "question": "What is the time complexity advantage of State Space Models (Mamba) over Transformers?",
+              "options": [
+                "O(n²) vs O(n³)",
+                "O(n) vs O(n²)",
+                "O(log n) vs O(n)",
+                "O(1) vs O(n)"
+              ],
+              "correct": 1,
+              "explanation": "Mamba and other SSMs achieve O(n) linear time complexity compared to the O(n²) quadratic complexity of transformer self-attention, making them much faster for long sequences."
+            },
+            {
+              "question": "How do Vision Transformers (ViT) process images?",
+              "options": [
+                "Using convolutional layers only",
+                "Splitting images into patches treated as tokens",
+                "Processing pixels one at a time",
+                "Using recurrent connections"
+              ],
+              "correct": 1,
+              "explanation": "ViT splits images into fixed-size patches (e.g., 16x16), linearly projects them into embeddings, and processes them with transformer attention as if they were tokens in a sequence."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "attention-mechanism",
+              "transformer-architecture",
+              "bert-gpt"
+            ],
+            "externalRefs": [
+              {
+                "title": "Illustrated Transformer",
+                "url": "https://jalammar.github.io/illustrated-transformer/"
+              },
+              {
+                "title": "Hugging Face NLP Course",
+                "url": "https://huggingface.co/learn/nlp-course"
+              }
+            ]
+          }
         }
       ]
     }

@@ -1,11 +1,16 @@
 {
   "id": "mlops",
   "title": "MLOps & Model Deployment",
-  "icon": "\ud83d\ude80",
-  "description": "Learn to deploy, monitor, and maintain ML models in production environments.",
+  "icon": "🚀",
+  "description": "Master MLOps practices to deploy, monitor, and maintain ML models in production environments. MLOps combines machine learning, DevOps, and data engineering to standardize and streamline the machine learning lifecycle, from development through deployment and ongoing operations.",
   "level": "advanced",
   "duration": "5 weeks",
   "totalLessons": 16,
+  "validationSources": [
+    "https://www.ibm.com/topics/mlops",
+    "https://www.ibm.com/think/topics/machine-learning-operations",
+    "https://www.ibm.com/topics/model-monitoring"
+  ],
   "prerequisites": [
     "ML Fundamentals",
     "Python Proficiency",
@@ -494,7 +499,7 @@
                 "title": "Running Experiments",
                 "codeExample": {
                   "language": "bash",
-                  "code": "# Run pipeline\ndvc repro\n\n# Only runs stages with changed dependencies\ndvc repro  # \"Stage 'preprocess' didn't change, skipping\"\n\n# Run experiments with different params\ndvc exp run --set-param train.learning_rate=0.01\ndvc exp run --set-param train.learning_rate=0.001\ndvc exp run --set-param train.n_estimators=200\n\n# Compare experiments\ndvc exp show\n# \u250f\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2513\n# \u2503 Experiment     \u2503 accuracy \u2503 learning_rate  \u2503\n# \u2521\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2529\n# \u2502 exp-1          \u2502 0.92     \u2502 0.01           \u2502\n# \u2502 exp-2          \u2502 0.94     \u2502 0.001          \u2502\n# \u2502 exp-3          \u2502 0.93     \u2502 0.001          \u2502\n# \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n\n# Apply best experiment\ndvc exp apply exp-2\ngit commit -am \"Apply best experiment\""
+                  "code": "# Run pipeline\ndvc repro\n\n# Only runs stages with changed dependencies\ndvc repro  # \"Stage 'preprocess' didn't change, skipping\"\n\n# Run experiments with different params\ndvc exp run --set-param train.learning_rate=0.01\ndvc exp run --set-param train.learning_rate=0.001\ndvc exp run --set-param train.n_estimators=200\n\n# Compare experiments\ndvc exp show\n# ┏━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓\n# ┃ Experiment     ┃ accuracy ┃ learning_rate  ┃\n# ┡━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩\n# │ exp-1          │ 0.92     │ 0.01           │\n# │ exp-2          │ 0.94     │ 0.001          │\n# │ exp-3          │ 0.93     │ 0.001          │\n# └────────────────┴──────────┴────────────────┘\n\n# Apply best experiment\ndvc exp apply exp-2\ngit commit -am \"Apply best experiment\""
                 }
               }
             ],
@@ -503,6 +508,74 @@
               "Pipelines ensure reproducibility",
               "Experiments enable hyperparameter search",
               "Remote storage handles large files"
+            ]
+          }
+        },
+        {
+          "id": "llmops",
+          "title": "LLMOps: ML Operations for LLMs",
+          "type": "lesson",
+          "duration": "40 min",
+          "content": {
+            "overview": "LLMOps (Large Language Model Operations) applies MLOps principles to LLM-specific challenges. While sharing foundations with MLOps, LLMOps addresses unique requirements around prompt management, evaluation, fine-tuning workflows, and cost optimization.",
+            "sections": [
+              {
+                "title": "LLMOps vs MLOps",
+                "content": "**Key Differences**\n\n| Aspect | Traditional MLOps | LLMOps |\n|--------|------------------|--------|\n| **Data** | Feature engineering, labeled datasets | Prompt engineering, instruction data |\n| **Training** | Full training common | Fine-tuning, often start from foundation model |\n| **Evaluation** | Accuracy, F1, precision | BLEU, ROUGE, human preference, LLM-as-judge |\n| **Inference** | Low latency critical | Token streaming, longer latency acceptable |\n| **Cost** | Compute for training | Ongoing API/inference costs per token |\n| **Versioning** | Model weights | Model weights + prompts + RAG configs |\n\n**LLMOps-Specific Concerns**\n- Prompt versioning and testing\n- Token cost optimization\n- Hallucination monitoring\n- Safety and guardrails\n- RAG pipeline management",
+                "diagram": {
+                  "title": "LLMOps vs MLOps Stack",
+                  "code": "flowchart TB\n    subgraph MLOps[\"Traditional MLOps\"]\n        D1[Feature Store] --> T1[Training]\n        T1 --> R1[Model Registry]\n        R1 --> S1[Serving]\n    end\n    \n    subgraph LLMOps[\"LLMOps Additions\"]\n        P[Prompt Registry]\n        V[Vector Store]\n        G[Guardrails]\n        E[LLM Evaluation]\n    end\n    \n    P --> S1\n    V --> S1\n    S1 --> G\n    S1 --> E"
+                }
+              },
+              {
+                "title": "Prompt Management",
+                "content": "Prompts are code for LLMs. They need versioning, testing, and deployment workflows.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from dataclasses import dataclass\nfrom typing import Optional\nimport json\nimport hashlib\nfrom datetime import datetime\n\n@dataclass\nclass PromptVersion:\n    \"\"\"Versioned prompt with metadata.\"\"\"\n    name: str\n    version: str\n    system_prompt: str\n    user_template: str\n    model: str\n    temperature: float\n    created_at: str\n    created_by: str\n    tags: list[str]\n    \n    def get_hash(self) -> str:\n        \"\"\"Content-based hash for deduplication.\"\"\"\n        content = f\"{self.system_prompt}{self.user_template}{self.model}\"\n        return hashlib.sha256(content.encode()).hexdigest()[:12]\n\nclass PromptRegistry:\n    \"\"\"Registry for managing prompt versions.\"\"\"\n    \n    def __init__(self, storage_path: str):\n        self.storage_path = storage_path\n        self.prompts = self._load_prompts()\n    \n    def register(self, prompt: PromptVersion) -> str:\n        \"\"\"Register a new prompt version.\"\"\"\n        key = f\"{prompt.name}/{prompt.version}\"\n        self.prompts[key] = prompt\n        self._save()\n        return key\n    \n    def get(self, name: str, version: str = \"latest\") -> PromptVersion:\n        \"\"\"Get prompt by name and version.\"\"\"\n        if version == \"latest\":\n            versions = [k for k in self.prompts if k.startswith(f\"{name}/\")]\n            key = sorted(versions)[-1]\n        else:\n            key = f\"{name}/{version}\"\n        return self.prompts[key]\n    \n    def promote(self, name: str, from_version: str, to_stage: str):\n        \"\"\"Promote prompt to staging/production.\"\"\"\n        prompt = self.get(name, from_version)\n        self.prompts[f\"{name}/{to_stage}\"] = prompt\n        self._save()\n\n# Usage\nregistry = PromptRegistry(\"./prompts\")\n\n# Register new version\nprompt = PromptVersion(\n    name=\"customer-support\",\n    version=\"v2.1.0\",\n    system_prompt=\"You are a helpful customer support agent...\",\n    user_template=\"Customer query: {query}\\nOrder history: {history}\",\n    model=\"gpt-4o\",\n    temperature=0.3,\n    created_at=datetime.now().isoformat(),\n    created_by=\"alice@company.com\",\n    tags=[\"support\", \"tested\"]\n)\n\nregistry.register(prompt)\nregistry.promote(\"customer-support\", \"v2.1.0\", \"production\")"
+                }
+              },
+              {
+                "title": "LLM Evaluation Pipeline",
+                "content": "LLM evaluation differs from traditional ML:\n\n**Traditional Metrics Don't Apply**\n- No single 'accuracy' for open-ended generation\n- Requires semantic evaluation\n\n**LLM-Specific Metrics**\n- **BLEU/ROUGE**: N-gram overlap (translation, summarization)\n- **Semantic similarity**: Embedding distance\n- **LLM-as-judge**: Another LLM grades outputs\n- **Human preference**: A/B testing with users",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from typing import Callable\nimport openai\n\nclass LLMEvaluator:\n    \"\"\"Evaluation pipeline for LLM outputs.\"\"\"\n    \n    def __init__(self, judge_model: str = \"gpt-4o\"):\n        self.judge_model = judge_model\n    \n    def evaluate_batch(\n        self,\n        test_cases: list[dict],\n        llm_fn: Callable[[str], str],\n        criteria: list[str]\n    ) -> dict:\n        \"\"\"Evaluate LLM on test cases.\"\"\"\n        \n        results = []\n        for case in test_cases:\n            # Get LLM output\n            output = llm_fn(case[\"input\"])\n            \n            # LLM-as-judge scoring\n            scores = {}\n            for criterion in criteria:\n                score = self._judge_criterion(case, output, criterion)\n                scores[criterion] = score\n            \n            results.append({\n                \"input\": case[\"input\"],\n                \"output\": output,\n                \"expected\": case.get(\"expected\"),\n                \"scores\": scores\n            })\n        \n        # Aggregate\n        aggregate = {}\n        for criterion in criteria:\n            scores = [r[\"scores\"][criterion] for r in results]\n            aggregate[criterion] = sum(scores) / len(scores)\n        \n        return {\"results\": results, \"aggregate\": aggregate}\n    \n    def _judge_criterion(self, case: dict, output: str, criterion: str) -> float:\n        \"\"\"Use LLM to judge output on criterion.\"\"\"\n        \n        prompt = f\"\"\"Rate the following response on {criterion} (1-5 scale):\n\nUser Query: {case['input']}\nResponse: {output}\n\nCriteria: {criterion}\nScore (just the number):\"\"\"\n        \n        response = openai.chat.completions.create(\n            model=self.judge_model,\n            messages=[{\"role\": \"user\", \"content\": prompt}],\n            temperature=0\n        )\n        \n        try:\n            return float(response.choices[0].message.content.strip())\n        except:\n            return 0.0\n\n# Run evaluation\nevaluator = LLMEvaluator()\nresults = evaluator.evaluate_batch(\n    test_cases=[{\"input\": \"How do I return an item?\", \"expected\": \"...\"}],\n    llm_fn=my_chatbot,\n    criteria=[\"helpfulness\", \"accuracy\", \"safety\"]\n)"
+                }
+              },
+              {
+                "title": "Cost Optimization",
+                "content": "LLM inference costs are significant. Optimization techniques:\n\n**1. Model Selection**\n- Use smaller models for simple tasks\n- Route complex queries to larger models\n\n**2. Prompt Optimization**\n- Shorter prompts = fewer tokens\n- Avoid redundant instructions\n\n**3. Caching**\n- Cache identical queries\n- Semantic caching for similar queries\n\n**4. Model Optimization**\n- Quantization (INT8, INT4)\n- Distillation to smaller models\n- Pruning unused weights",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import hashlib\nfrom functools import lru_cache\nimport numpy as np\nfrom typing import Optional\n\nclass CostOptimizedLLM:\n    \"\"\"LLM wrapper with cost optimization.\"\"\"\n    \n    def __init__(self):\n        self.cache = {}\n        self.embeddings_cache = {}\n        self.small_model = \"gpt-4o-mini\"  # $0.15/1M tokens\n        self.large_model = \"gpt-4o\"       # $2.50/1M tokens\n    \n    def query(self, prompt: str, complexity: str = \"auto\") -> str:\n        # 1. Check exact cache\n        cache_key = hashlib.sha256(prompt.encode()).hexdigest()\n        if cache_key in self.cache:\n            return self.cache[cache_key]\n        \n        # 2. Check semantic cache (similar queries)\n        similar = self._find_similar(prompt)\n        if similar:\n            return similar\n        \n        # 3. Route to appropriate model\n        if complexity == \"auto\":\n            model = self._classify_complexity(prompt)\n        else:\n            model = self.large_model if complexity == \"complex\" else self.small_model\n        \n        # 4. Call model\n        response = self._call_llm(prompt, model)\n        \n        # 5. Cache response\n        self.cache[cache_key] = response\n        self._cache_embedding(prompt, response)\n        \n        return response\n    \n    def _classify_complexity(self, prompt: str) -> str:\n        \"\"\"Route to appropriate model based on complexity.\"\"\"\n        # Simple heuristic - could use classifier\n        complex_indicators = [\n            \"analyze\", \"compare\", \"explain in detail\",\n            \"step by step\", \"comprehensive\", \"multiple\"\n        ]\n        \n        if any(ind in prompt.lower() for ind in complex_indicators):\n            return self.large_model\n        if len(prompt) > 500:\n            return self.large_model\n        return self.small_model\n    \n    def _find_similar(self, prompt: str, threshold: float = 0.95) -> Optional[str]:\n        \"\"\"Find cached response for semantically similar query.\"\"\"\n        if not self.embeddings_cache:\n            return None\n        \n        query_emb = self._get_embedding(prompt)\n        \n        for cached_prompt, (cached_emb, response) in self.embeddings_cache.items():\n            similarity = np.dot(query_emb, cached_emb)\n            if similarity > threshold:\n                return response\n        \n        return None\n\n# Usage\nllm = CostOptimizedLLM()\n\n# First call - hits API\nresponse1 = llm.query(\"What is your return policy?\")\n\n# Second identical call - from cache (free)\nresponse2 = llm.query(\"What is your return policy?\")\n\n# Similar query - might hit semantic cache\nresponse3 = llm.query(\"How can I return an item?\")"
+                }
+              },
+              {
+                "title": "LLM Monitoring & Guardrails",
+                "content": "Production LLMs need specialized monitoring:\n\n**What to Monitor**\n- Token usage and costs\n- Latency (time to first token, total time)\n- Hallucination detection\n- Safety violations\n- User satisfaction signals\n\n**Guardrails**\n- Input validation (prompt injection detection)\n- Output filtering (PII, toxicity)\n- Fallback responses for failures",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from dataclasses import dataclass\nimport re\nimport time\n\n@dataclass\nclass LLMMetrics:\n    prompt_tokens: int\n    completion_tokens: int\n    latency_ms: float\n    cost_usd: float\n    model: str\n\nclass LLMGuardrails:\n    \"\"\"Safety guardrails for LLM applications.\"\"\"\n    \n    def __init__(self):\n        self.blocked_patterns = [\n            r\"ignore previous instructions\",\n            r\"you are now\",\n            r\"pretend to be\",\n            r\"jailbreak\"\n        ]\n        self.pii_patterns = [\n            r\"\\b\\d{3}-\\d{2}-\\d{4}\\b\",  # SSN\n            r\"\\b\\d{16}\\b\",              # Credit card\n            r\"\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b\"  # Email\n        ]\n    \n    def check_input(self, user_input: str) -> tuple[bool, str]:\n        \"\"\"Check if input is safe to process.\"\"\"\n        user_lower = user_input.lower()\n        \n        for pattern in self.blocked_patterns:\n            if re.search(pattern, user_lower):\n                return False, \"Potentially harmful input detected\"\n        \n        return True, \"OK\"\n    \n    def filter_output(self, output: str) -> str:\n        \"\"\"Remove sensitive information from output.\"\"\"\n        filtered = output\n        \n        for pattern in self.pii_patterns:\n            filtered = re.sub(pattern, \"[REDACTED]\", filtered)\n        \n        return filtered\n    \n    def check_hallucination(self, output: str, context: str) -> float:\n        \"\"\"Score likelihood of hallucination (0-1).\"\"\"\n        # Simplified - in practice use NLI model or LLM judge\n        output_claims = self._extract_claims(output)\n        supported = sum(1 for c in output_claims if c.lower() in context.lower())\n        return 1 - (supported / max(len(output_claims), 1))\n\nclass MonitoredLLM:\n    \"\"\"LLM wrapper with monitoring and guardrails.\"\"\"\n    \n    def __init__(self, llm_client, guardrails: LLMGuardrails):\n        self.client = llm_client\n        self.guardrails = guardrails\n        self.metrics = []\n    \n    def query(self, prompt: str) -> dict:\n        # Check input\n        safe, reason = self.guardrails.check_input(prompt)\n        if not safe:\n            return {\"error\": reason, \"blocked\": True}\n        \n        # Call LLM with metrics\n        start = time.time()\n        response = self.client.chat.completions.create(\n            model=\"gpt-4o\",\n            messages=[{\"role\": \"user\", \"content\": prompt}]\n        )\n        latency = (time.time() - start) * 1000\n        \n        # Filter output\n        content = response.choices[0].message.content\n        filtered = self.guardrails.filter_output(content)\n        \n        # Record metrics\n        metrics = LLMMetrics(\n            prompt_tokens=response.usage.prompt_tokens,\n            completion_tokens=response.usage.completion_tokens,\n            latency_ms=latency,\n            cost_usd=self._calculate_cost(response.usage),\n            model=\"gpt-4o\"\n        )\n        self.metrics.append(metrics)\n        \n        return {\"content\": filtered, \"metrics\": metrics}"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "LLMOps extends MLOps with prompt management, LLM evaluation, and token cost optimization",
+              "Prompts need versioning and testing like code - use a prompt registry",
+              "LLM evaluation uses LLM-as-judge, BLEU/ROUGE, and human preference rather than traditional metrics",
+              "Cost optimization through model routing, caching, and quantization is essential",
+              "Guardrails for input validation and output filtering prevent safety issues"
+            ],
+            "sources": [
+              {
+                "title": "IBM - LLMOps",
+                "url": "https://www.ibm.com/topics/llmops"
+              },
+              {
+                "title": "LangSmith for LLMOps",
+                "url": "https://docs.smith.langchain.com/"
+              }
             ]
           }
         },
@@ -561,7 +634,7 @@
                 "title": "Implementation Guide",
                 "codeExample": {
                   "language": "python",
-                  "code": "# Complete MLOps Pipeline Structure\n\"\"\"\nchurn-prediction/\n\u251c\u2500\u2500 .github/\n\u2502   \u2514\u2500\u2500 workflows/\n\u2502       \u2514\u2500\u2500 ml-pipeline.yml\n\u251c\u2500\u2500 data/\n\u2502   \u2514\u2500\u2500 .gitkeep\n\u251c\u2500\u2500 src/\n\u2502   \u251c\u2500\u2500 __init__.py\n\u2502   \u251c\u2500\u2500 data/\n\u2502   \u2502   \u251c\u2500\u2500 preprocess.py\n\u2502   \u2502   \u2514\u2500\u2500 validate.py\n\u2502   \u251c\u2500\u2500 training/\n\u2502   \u2502   \u251c\u2500\u2500 train.py\n\u2502   \u2502   \u2514\u2500\u2500 evaluate.py\n\u2502   \u251c\u2500\u2500 serving/\n\u2502   \u2502   \u251c\u2500\u2500 app.py\n\u2502   \u2502   \u2514\u2500\u2500 model_loader.py\n\u2502   \u2514\u2500\u2500 monitoring/\n\u2502       \u251c\u2500\u2500 drift_detection.py\n\u2502       \u2514\u2500\u2500 metrics.py\n\u251c\u2500\u2500 tests/\n\u2502   \u251c\u2500\u2500 test_data.py\n\u2502   \u251c\u2500\u2500 test_model.py\n\u2502   \u2514\u2500\u2500 test_api.py\n\u251c\u2500\u2500 pipelines/\n\u2502   \u2514\u2500\u2500 training_dag.py\n\u251c\u2500\u2500 docker/\n\u2502   \u251c\u2500\u2500 Dockerfile.training\n\u2502   \u2514\u2500\u2500 Dockerfile.serving\n\u251c\u2500\u2500 k8s/\n\u2502   \u251c\u2500\u2500 deployment.yaml\n\u2502   \u2514\u2500\u2500 service.yaml\n\u251c\u2500\u2500 dvc.yaml\n\u251c\u2500\u2500 params.yaml\n\u251c\u2500\u2500 requirements.txt\n\u2514\u2500\u2500 README.md\n\"\"\"\n\n# Key components\n\n# 1. Training pipeline (pipelines/training_dag.py)\nfrom prefect import flow, task\n\n@flow(name=\"Training Pipeline\")\ndef training_pipeline():\n    data = extract_data()\n    validated = validate_data(data)\n    processed = preprocess(validated)\n    model, metrics = train_model(processed)\n    \n    if metrics[\"f1\"] > 0.85:\n        register_model(model, metrics)\n        deploy_if_approved(model)\n\n# 2. Serving API (src/serving/app.py)\nfrom fastapi import FastAPI\nimport mlflow\n\napp = FastAPI()\nmodel = mlflow.pyfunc.load_model(\"models:/churn-model/Production\")\n\n@app.post(\"/predict\")\nasync def predict(request: PredictRequest):\n    prediction = model.predict([request.features])\n    log_prediction(request, prediction)\n    return {\"churn_probability\": prediction[0]}\n\n# 3. Monitoring (src/monitoring/drift_detection.py)\ndef check_drift_and_alert():\n    current_data = get_recent_predictions()\n    reference_data = get_training_data()\n    \n    drift_report = detect_drift(reference_data, current_data)\n    \n    if drift_report[\"drift_detected\"]:\n        send_alert(\"Data drift detected!\")\n        trigger_retraining()"
+                  "code": "# Complete MLOps Pipeline Structure\n\"\"\"\nchurn-prediction/\n├── .github/\n│   └── workflows/\n│       └── ml-pipeline.yml\n├── data/\n│   └── .gitkeep\n├── src/\n│   ├── __init__.py\n│   ├── data/\n│   │   ├── preprocess.py\n│   │   └── validate.py\n│   ├── training/\n│   │   ├── train.py\n│   │   └── evaluate.py\n│   ├── serving/\n│   │   ├── app.py\n│   │   └── model_loader.py\n│   └── monitoring/\n│       ├── drift_detection.py\n│       └── metrics.py\n├── tests/\n│   ├── test_data.py\n│   ├── test_model.py\n│   └── test_api.py\n├── pipelines/\n│   └── training_dag.py\n├── docker/\n│   ├── Dockerfile.training\n│   └── Dockerfile.serving\n├── k8s/\n│   ├── deployment.yaml\n│   └── service.yaml\n├── dvc.yaml\n├── params.yaml\n├── requirements.txt\n└── README.md\n\"\"\"\n\n# Key components\n\n# 1. Training pipeline (pipelines/training_dag.py)\nfrom prefect import flow, task\n\n@flow(name=\"Training Pipeline\")\ndef training_pipeline():\n    data = extract_data()\n    validated = validate_data(data)\n    processed = preprocess(validated)\n    model, metrics = train_model(processed)\n    \n    if metrics[\"f1\"] > 0.85:\n        register_model(model, metrics)\n        deploy_if_approved(model)\n\n# 2. Serving API (src/serving/app.py)\nfrom fastapi import FastAPI\nimport mlflow\n\napp = FastAPI()\nmodel = mlflow.pyfunc.load_model(\"models:/churn-model/Production\")\n\n@app.post(\"/predict\")\nasync def predict(request: PredictRequest):\n    prediction = model.predict([request.features])\n    log_prediction(request, prediction)\n    return {\"churn_probability\": prediction[0]}\n\n# 3. Monitoring (src/monitoring/drift_detection.py)\ndef check_drift_and_alert():\n    current_data = get_recent_predictions()\n    reference_data = get_training_data()\n    \n    drift_report = detect_drift(reference_data, current_data)\n    \n    if drift_report[\"drift_detected\"]:\n        send_alert(\"Data drift detected!\")\n        trigger_retraining()"
                 }
               }
             ],
@@ -579,6 +652,39 @@
           "type": "quiz",
           "duration": "15 min",
           "questions": [
+            {
+              "question": "What is a key difference between LLMOps and traditional MLOps?",
+              "options": [
+                "LLMOps doesn't require monitoring",
+                "LLMOps requires prompt versioning and management in addition to model versioning",
+                "LLMOps doesn't use CI/CD pipelines",
+                "LLMOps doesn't need evaluation"
+              ],
+              "correct": 1,
+              "explanation": "LLMOps extends MLOps with prompt management - prompts need versioning, testing, and deployment workflows just like code and models."
+            },
+            {
+              "question": "Why is cost optimization particularly important in LLMOps?",
+              "options": [
+                "LLMs are smaller and faster",
+                "LLM inference costs scale with token usage, making ongoing costs significant",
+                "LLMs don't need GPUs",
+                "LLMs are always free to use"
+              ],
+              "correct": 1,
+              "explanation": "Unlike traditional ML where inference is relatively cheap, LLM inference costs scale with token usage - making optimization through caching, model routing, and prompt efficiency essential."
+            },
+            {
+              "question": "What is 'LLM-as-judge' evaluation?",
+              "options": [
+                "Using a lawyer to review AI outputs",
+                "Using a capable LLM to score or critique outputs of another LLM",
+                "Asking users to rate responses",
+                "Measuring inference latency"
+              ],
+              "correct": 1,
+              "explanation": "LLM-as-judge uses a capable LLM (like GPT-4) to evaluate the quality of outputs from another model based on defined criteria, offering scalable evaluation."
+            },
             {
               "question": "What is the primary purpose of a feature store?",
               "options": [
@@ -633,8 +739,69 @@
               ],
               "correct": 1,
               "explanation": "Canary deployments route a small percentage of traffic (e.g., 10%) to the new model, allowing you to detect issues before exposing all users to potential problems."
+            },
+            {
+              "question": "According to IBM, what is the primary goal of MLOps?",
+              "options": [
+                "To replace data scientists with automation",
+                "To standardize and streamline the ML lifecycle from development to production",
+                "To reduce the number of models in production",
+                "To eliminate the need for monitoring"
+              ],
+              "correct": 1,
+              "explanation": "MLOps aims to standardize and streamline the machine learning lifecycle, bridging the gap between model development and reliable production deployment."
+            },
+            {
+              "question": "What is model monitoring in MLOps?",
+              "options": [
+                "Watching the model train in real-time",
+                "Tracking model performance, data quality, and system health in production",
+                "Reviewing model code for bugs",
+                "Testing the model before deployment"
+              ],
+              "correct": 1,
+              "explanation": "Model monitoring continuously tracks production model performance, detects drift, monitors data quality, and alerts teams to degradation requiring action."
+            },
+            {
+              "question": "What is concept drift in machine learning?",
+              "options": [
+                "When the model file becomes corrupted",
+                "When the relationship between input features and target variable changes over time",
+                "When the model runs out of memory",
+                "When developers forget how the model works"
+              ],
+              "correct": 1,
+              "explanation": "Concept drift occurs when the underlying patterns the model learned change over time, causing model performance to degrade even if input data distribution stays the same."
+            },
+            {
+              "question": "Why is reproducibility important in MLOps?",
+              "options": [
+                "It makes training faster",
+                "It ensures experiments can be recreated for debugging, auditing, and compliance",
+                "It reduces model size",
+                "It eliminates the need for version control"
+              ],
+              "correct": 1,
+              "explanation": "Reproducibility enables teams to recreate any experiment or model version, essential for debugging issues, meeting regulatory requirements, and ensuring consistent results."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "ml-pipelines",
+              "model-versioning",
+              "monitoring"
+            ],
+            "externalRefs": [
+              {
+                "title": "MLflow Documentation",
+                "url": "https://mlflow.org/docs/latest/index.html"
+              },
+              {
+                "title": "Made with ML",
+                "url": "https://madewithml.com/"
+              }
+            ]
+          }
         }
       ]
     }

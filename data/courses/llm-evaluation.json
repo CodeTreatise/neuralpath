@@ -1,10 +1,15 @@
 {
   "id": "llm-evaluation",
   "title": "LLM Evaluation & Testing",
-  "description": "Master techniques for evaluating and testing LLM-powered applications",
-  "icon": "\ud83d\udccf",
+  "description": "Master comprehensive techniques for evaluating and testing LLM-powered applications. Learn to measure accuracy, reliability, and safety of AI systems using automated metrics, LLM-as-judge approaches, and human evaluation frameworks to ensure production-ready AI solutions.",
+  "icon": "📏",
   "level": "intermediate",
   "duration": "3 weeks",
+  "validationSources": [
+    "https://www.ibm.com/topics/ai-model-evaluation",
+    "https://www.ibm.com/topics/ai-benchmarks",
+    "https://www.ibm.com/topics/ai-hallucinations"
+  ],
   "prerequisites": [
     "LLM fundamentals",
     "RAG basics",
@@ -249,6 +254,102 @@
       ]
     },
     {
+      "id": "benchmarks-leaderboards",
+      "title": "Benchmarks & Leaderboards",
+      "lessons": [
+        {
+          "id": "standard-benchmarks",
+          "title": "Standard LLM Benchmarks",
+          "duration": "45 min",
+          "content": {
+            "overview": "LLM benchmarks are standardized frameworks for assessing model performance. Understanding major benchmarks helps you interpret model capabilities and choose the right model for your use case. However, benchmark scores don't always predict real-world performance.",
+            "sections": [
+              {
+                "title": "Core Benchmark Categories",
+                "content": "Benchmarks are classified by what they measure:\n\n**Knowledge & Reasoning**\n- MMLU: 15,000+ questions across 57 subjects\n- HellaSwag: Commonsense reasoning completion\n- ARC: Grade-school science questions\n- Winogrande: Pronoun resolution reasoning\n\n**Mathematics**\n- GSM8K: 8,500 grade-school math word problems\n- MATH: Competition-level math problems\n\n**Code Generation**\n- HumanEval: 164 programming problems with unit tests\n- MBPP: 900+ basic Python problems\n- SWE-bench: Real GitHub issues to fix\n\n**Truthfulness & Safety**\n- TruthfulQA: Measures hallucination tendency\n- ToxiGen: Detects toxic content generation\n\n**Multi-turn & Preference**\n- MT-Bench: 80 multi-turn dialogue questions\n- Chatbot Arena: Human preference ELO ratings",
+                "diagram": {
+                  "title": "Benchmark Categories",
+                  "code": "flowchart TB\n    subgraph Knowledge\n        MMLU[MMLU\\n57 subjects]\n        HS[HellaSwag\\nCommonsense]\n        ARC[ARC\\nScience QA]\n    end\n    \n    subgraph Code\n        HE[HumanEval\\npass@k]\n        SWE[SWE-bench\\nGitHub fixes]\n    end\n    \n    subgraph Math\n        GSM[GSM8K\\nWord problems]\n        MATH[MATH\\nCompetition]\n    end\n    \n    subgraph Safety\n        TQA[TruthfulQA\\nHallucinations]\n        TOX[ToxiGen\\nToxicity]\n    end"
+                }
+              },
+              {
+                "title": "Key Benchmarks Explained",
+                "content": "**MMLU (Massive Multitask Language Understanding)**\nTests breadth of knowledge across 57 academic subjects from STEM to humanities. Multiple-choice format, scored by accuracy.\n\n**HumanEval**\nMeasures code generation with **pass@k** metric:\n- Model generates k code samples per problem\n- pass@k = probability that at least 1 sample passes unit tests\n- Higher k gives more chances but reflects consistency\n\n**TruthfulQA**\nMeasures tendency to hallucinate with 817 questions designed to elicit false answers. Models trained on web data often confidently give wrong answers to these adversarial questions.\n\n**GSM8K**\nTests multi-step mathematical reasoning with grade-school word problems. Requires breaking down problems into steps.\n\n**SWE-bench**\nTests real software engineering ability by presenting GitHub issues from popular Python repos. Models must generate patches that pass existing test suites.",
+                "code": "# Example: Running HumanEval locally\nimport human_eval\nfrom human_eval.data import write_jsonl, read_problems\nfrom human_eval.evaluation import evaluate_functional_correctness\n\n# Get problems\nproblems = read_problems()\n\n# Generate solutions with your model\ndef generate_solution(prompt):\n    # Your model inference here\n    response = model.generate(prompt)\n    return response\n\n# Generate samples\nsamples = []\nfor task_id, problem in problems.items():\n    completion = generate_solution(problem['prompt'])\n    samples.append({\n        'task_id': task_id,\n        'completion': completion\n    })\n\n# Save and evaluate\nwrite_jsonl('samples.jsonl', samples)\n\n# Evaluate pass@k\nresults = evaluate_functional_correctness(\n    'samples.jsonl',\n    k=[1, 10, 100]  # Calculate pass@1, pass@10, pass@100\n)\n\nprint(f\"pass@1: {results['pass@1']:.2%}\")\nprint(f\"pass@10: {results['pass@10']:.2%}\")"
+              },
+              {
+                "title": "Zero-Shot vs Few-Shot Evaluation",
+                "content": "Benchmarks test models in different settings:\n\n**Zero-Shot**: Model performs task with no examples\n- Tests generalization ability\n- More challenging, realistic scenario\n\n**Few-Shot**: Model given 1-5 examples before task\n- Tests in-context learning ability\n- Usually higher scores than zero-shot\n\n**Chain-of-Thought (CoT)**: Model prompted to 'think step by step'\n- Dramatically improves reasoning tasks\n- GSM8K: ~20% zero-shot → ~80% with CoT",
+                "code": "# Zero-shot evaluation\nzero_shot_prompt = \"\"\"Q: What is the capital of France?\nA:\"\"\"\n\n# Few-shot evaluation (2 examples)\nfew_shot_prompt = \"\"\"Q: What is the capital of Germany?\nA: Berlin\n\nQ: What is the capital of Japan?\nA: Tokyo\n\nQ: What is the capital of France?\nA:\"\"\"\n\n# Chain-of-thought for reasoning\ncot_prompt = \"\"\"Q: A store had 25 apples. They sold 8 in the morning \nand 12 in the afternoon. How many are left?\n\nA: Let me solve this step by step:\n1. Started with: 25 apples\n2. Sold in morning: 8 apples\n3. After morning: 25 - 8 = 17 apples\n4. Sold in afternoon: 12 apples\n5. Remaining: 17 - 12 = 5 apples\n\nThe answer is 5 apples.\n\nQ: [Your actual question]\nA: Let me solve this step by step:\"\"\""
+              },
+              {
+                "title": "Benchmark Limitations",
+                "content": "**Why Benchmark Scores Don't Tell the Whole Story**\n\n**1. Benchmark Saturation**\nTop models score 90%+ on older benchmarks like MMLU. At ceiling, benchmarks lose discriminative power. New harder benchmarks keep emerging.\n\n**2. Overfitting Risk**\nIf training data overlaps with benchmark data, scores inflate. Some model providers may inadvertently or intentionally train on benchmark data.\n\n**3. Transfer Gap**\nHigh benchmark scores don't guarantee good performance on your specific use case. Your domain may have unique requirements not captured by general benchmarks.\n\n**4. Gaming Metrics**\nModels can be optimized to game specific metrics without genuine capability improvement.\n\n**Best Practice**: Use benchmarks for initial filtering, then run your own domain-specific evaluations.",
+                "code": "# Why you need custom evals beyond benchmarks\nclass BenchmarkVsRealWorld:\n    \"\"\"\n    Benchmark: MMLU score 85%\n    Real-world: Legal contract analysis for your company\n    \n    Problems:\n    1. MMLU tests general knowledge, not legal domain depth\n    2. MMLU is multiple choice, your task is free-form analysis\n    3. MMLU doesn't test your specific contract format\n    4. MMLU doesn't measure safety for your use case\n    \"\"\"\n    \n    def evaluation_strategy(self):\n        return [\n            \"1. Filter by benchmark (MMLU > 80%, TruthfulQA > 60%)\",\n            \"2. Run on 100 representative legal documents\",\n            \"3. Have lawyers grade accuracy on 5-point scale\",\n            \"4. Test adversarial inputs (edge cases, trick questions)\",\n            \"5. Measure latency and cost at production scale\"\n        ]"
+              }
+            ],
+            "keyTakeaways": [
+              "Major benchmarks test knowledge (MMLU), code (HumanEval), math (GSM8K), and truthfulness (TruthfulQA)",
+              "pass@k measures code generation: probability that at least 1 of k samples passes tests",
+              "Few-shot and Chain-of-Thought prompting significantly improve benchmark scores",
+              "Benchmark scores are useful for filtering but don't guarantee real-world performance"
+            ],
+            "sources": [
+              {
+                "title": "IBM - LLM Benchmarks",
+                "url": "https://www.ibm.com/think/topics/llm-benchmarks"
+              },
+              {
+                "title": "HumanEval Paper",
+                "url": "https://arxiv.org/abs/2107.03374"
+              }
+            ]
+          }
+        },
+        {
+          "id": "leaderboards-model-selection",
+          "title": "Leaderboards & Model Selection",
+          "duration": "35 min",
+          "content": {
+            "overview": "LLM leaderboards rank models across multiple benchmarks. They're valuable for model selection but require careful interpretation. Learn to use leaderboards effectively and understand their limitations.",
+            "sections": [
+              {
+                "title": "Major LLM Leaderboards",
+                "content": "**Hugging Face Open LLM Leaderboard**\n- Ranks open-source models\n- Composite score from: ARC, HellaSwag, MMLU, TruthfulQA, Winogrande, GSM8K\n- Transparent methodology, reproducible results\n\n**Chatbot Arena (LMSYS)**\n- Human preference-based ELO ratings\n- Crowdsourced: users chat with 2 anonymous models, vote for winner\n- Most realistic measure of user preference\n- Covers both open and closed models\n\n**MT-Bench**\n- GPT-4 as judge for multi-turn conversations\n- 80 questions across 8 categories\n- Tests instruction-following and dialogue\n\n**HELM (Holistic Evaluation)**\n- Stanford's comprehensive evaluation\n- Tests 42 scenarios with 7 metric types\n- Focuses on holistic assessment beyond accuracy",
+                "code": "# Fetching leaderboard data programmatically\nimport requests\nimport pandas as pd\n\n# Hugging Face Open LLM Leaderboard API\nHF_LEADERBOARD_URL = \"https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard\"\n\n# Example: Model selection based on leaderboard + requirements\nclass ModelSelector:\n    def __init__(self, requirements):\n        self.requirements = requirements\n        # Example requirements:\n        # {'min_mmlu': 70, 'max_params': 13, 'open_source': True}\n    \n    def filter_models(self, leaderboard_df):\n        filtered = leaderboard_df.copy()\n        \n        if 'min_mmlu' in self.requirements:\n            filtered = filtered[filtered['MMLU'] >= self.requirements['min_mmlu']]\n        \n        if 'max_params' in self.requirements:\n            filtered = filtered[filtered['params_b'] <= self.requirements['max_params']]\n        \n        if self.requirements.get('open_source'):\n            filtered = filtered[filtered['license'].isin(['MIT', 'Apache-2.0', 'Llama'])]\n        \n        return filtered.sort_values('average', ascending=False)\n    \n    def recommend(self, leaderboard_df):\n        candidates = self.filter_models(leaderboard_df)\n        \n        print(\"Top candidates for your requirements:\")\n        for _, model in candidates.head(5).iterrows():\n            print(f\"  {model['model_name']}: {model['average']:.1f}%\")\n        \n        return candidates"
+              },
+              {
+                "title": "Interpreting Leaderboard Scores",
+                "content": "**What High Scores Mean**\n- Model has strong general capabilities in tested areas\n- Useful baseline for shortlisting candidates\n\n**What High Scores DON'T Mean**\n- Will work well for your specific use case\n- Safe for production deployment\n- Cost-effective at scale\n- Good at following your specific instructions\n\n**Red Flags to Watch For**\n- Suspiciously high scores on all benchmarks (possible data contamination)\n- High variance between runs (unreliable model)\n- Missing benchmarks (may hide weaknesses)\n- No reproduction details",
+                "code": "# Decision framework for model selection\ndef select_model_for_production(use_case):\n    selection_criteria = {\n        'rag_qa': {\n            'priority_benchmarks': ['TruthfulQA', 'MMLU'],\n            'reasoning': 'Need low hallucination + broad knowledge',\n            'test_focus': 'Faithfulness to retrieved context'\n        },\n        'code_assistant': {\n            'priority_benchmarks': ['HumanEval', 'MBPP', 'SWE-bench'],\n            'reasoning': 'Need code correctness + real-world fixing ability',\n            'test_focus': 'pass@1 on your language/framework'\n        },\n        'math_tutor': {\n            'priority_benchmarks': ['GSM8K', 'MATH'],\n            'reasoning': 'Need step-by-step reasoning ability',\n            'test_focus': 'Explanation quality, not just answer'\n        },\n        'creative_writing': {\n            'priority_benchmarks': ['MT-Bench', 'Chatbot Arena'],\n            'reasoning': 'Need user preference + style variety',\n            'test_focus': 'Tone matching, originality'\n        },\n        'customer_support': {\n            'priority_benchmarks': ['MT-Bench', 'HellaSwag'],\n            'reasoning': 'Need instruction following + commonsense',\n            'test_focus': 'Policy compliance, empathy'\n        }\n    }\n    \n    config = selection_criteria.get(use_case, selection_criteria['rag_qa'])\n    \n    return {\n        'step_1': f\"Filter by {config['priority_benchmarks']} scores\",\n        'step_2': f\"Shortlist top 3-5 models\",\n        'step_3': f\"Run custom eval focused on: {config['test_focus']}\",\n        'step_4': 'Test latency and cost at expected scale',\n        'step_5': 'Red-team for safety in your domain'\n    }"
+              },
+              {
+                "title": "Model vs System Evaluation",
+                "content": "**Model Evaluation**\n- Tests the LLM in isolation\n- Measures raw capabilities\n- What benchmarks typically assess\n\n**System Evaluation**\n- Tests your complete application\n- Includes: retrieval, prompts, guardrails, post-processing\n- What actually matters for production\n\n**Why the Distinction Matters**\nA weaker model in a well-designed system can outperform a stronger model with poor prompts. Always evaluate your full stack, not just the model.",
+                "code": "class EvaluationLevels:\n    \"\"\"\n    Three levels of LLM evaluation\n    \"\"\"\n    \n    def model_level(self, model):\n        \"\"\"Level 1: Raw model capabilities\"\"\"\n        return {\n            'what': 'Model in isolation',\n            'how': 'Standard benchmarks (MMLU, HumanEval)',\n            'when': 'Choosing between base models',\n            'example': 'GPT-4 vs Claude vs Llama'\n        }\n    \n    def prompt_level(self, model, prompts):\n        \"\"\"Level 2: Model + your prompts\"\"\"\n        return {\n            'what': 'Model with your system/user prompts',\n            'how': 'Custom test set, A/B testing prompts',\n            'when': 'Optimizing prompt design',\n            'example': 'Testing 5 different system prompts'\n        }\n    \n    def system_level(self, full_app):\n        \"\"\"Level 3: Complete application\"\"\"\n        return {\n            'what': 'End-to-end: retrieval + model + post-processing',\n            'how': 'RAGAS, user studies, production monitoring',\n            'when': 'Pre-launch validation, ongoing monitoring',\n            'example': 'Full RAG pipeline with guardrails'\n        }\n\n# Production evaluation should be at system level\n# but informed by model-level benchmarks for selection"
+              }
+            ],
+            "keyTakeaways": [
+              "Hugging Face Leaderboard ranks open-source models; Chatbot Arena uses human preference ELO",
+              "Use leaderboards for initial shortlisting, then run domain-specific evaluations",
+              "High benchmark scores don't guarantee production success - test your full system",
+              "Match benchmark priorities to your use case (code → HumanEval, QA → TruthfulQA)"
+            ],
+            "sources": [
+              {
+                "title": "Hugging Face Open LLM Leaderboard",
+                "url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard"
+              },
+              {
+                "title": "Chatbot Arena Paper",
+                "url": "https://arxiv.org/abs/2403.04132"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "human-eval",
       "title": "Human Evaluation",
       "lessons": [
@@ -315,6 +416,66 @@
           "duration": "15 min",
           "questions": [
             {
+              "id": "mmlu-benchmark",
+              "question": "What does the MMLU benchmark primarily measure?",
+              "options": [
+                "Code generation ability",
+                "Breadth of knowledge across 57 academic subjects",
+                "Speed of inference",
+                "Image recognition accuracy"
+              ],
+              "explanation": "MMLU (Massive Multitask Language Understanding) tests breadth of knowledge across 57 academic subjects from STEM to humanities using multiple-choice questions.",
+              "correct": 1
+            },
+            {
+              "id": "pass-at-k",
+              "question": "In the HumanEval benchmark, what does 'pass@k' measure?",
+              "options": [
+                "The percentage of code that runs without errors",
+                "The probability that at least 1 of k generated samples passes unit tests",
+                "How many seconds the code takes to execute",
+                "The number of lines of code generated"
+              ],
+              "explanation": "pass@k is the probability that at least one of k code samples generated for a problem passes the corresponding unit tests. Higher k gives more chances but reflects model consistency.",
+              "correct": 1
+            },
+            {
+              "id": "truthfulqa-purpose",
+              "question": "What is the primary purpose of the TruthfulQA benchmark?",
+              "options": [
+                "Testing mathematical reasoning",
+                "Measuring hallucination tendency with adversarial questions",
+                "Evaluating translation quality",
+                "Assessing code debugging ability"
+              ],
+              "explanation": "TruthfulQA measures a model's tendency to generate false but plausible-sounding information (hallucinations) using questions specifically designed to elicit incorrect answers.",
+              "correct": 1
+            },
+            {
+              "id": "chatbot-arena",
+              "question": "How does Chatbot Arena rank LLMs?",
+              "options": [
+                "By measuring response latency",
+                "Using crowdsourced human preference votes in pairwise comparisons",
+                "By counting the number of parameters",
+                "Through automated grammar checking"
+              ],
+              "explanation": "Chatbot Arena uses crowdsourced human preference: users chat with two anonymous models and vote for their preferred response, generating ELO ratings similar to chess rankings.",
+              "correct": 1
+            },
+            {
+              "id": "benchmark-limitation",
+              "question": "What is a major limitation of relying solely on benchmark leaderboards for model selection?",
+              "options": [
+                "Benchmarks are always too easy",
+                "Leaderboards don't show model names",
+                "High benchmark scores don't guarantee good performance on your specific use case",
+                "Benchmarks can only test closed-source models"
+              ],
+              "explanation": "Benchmarks test general capabilities, but your production application has specific requirements, domains, and edge cases that require custom evaluation tailored to your use case.",
+              "correct": 2
+            },
+            {
               "id": "eval-challenges",
               "question": "Why is evaluating LLM outputs significantly harder than traditional software testing?",
               "options": [
@@ -323,8 +484,8 @@
                 "There are no tools available for LLM testing",
                 "LLMs cannot output text"
               ],
-              "correctAnswer": 1,
-              "explanation": "LLMs can produce different outputs for the same input (non-determinism), and 'quality' often depends on context and human preference (subjectivity), making exact-match testing insufficient."
+              "explanation": "LLMs can produce different outputs for the same input (non-determinism), and 'quality' often depends on context and human preference (subjectivity), making exact-match testing insufficient.",
+              "correct": 1
             },
             {
               "id": "ragas-faithfulness",
@@ -335,8 +496,8 @@
                 "Whether the answer is grammatically correct",
                 "How fast the model responds"
               ],
-              "correctAnswer": 1,
-              "explanation": "Faithfulness measures if the claims in the generated answer can be inferred from the retrieved context, helping to detect hallucinations."
+              "explanation": "Faithfulness measures if the claims in the generated answer can be inferred from the retrieved context, helping to detect hallucinations.",
+              "correct": 1
             },
             {
               "id": "llm-as-judge",
@@ -347,8 +508,8 @@
                 "Asking the model to judge its own training data",
                 "A legal framework for AI regulation"
               ],
-              "correctAnswer": 1,
-              "explanation": "LLM-as-Judge involves using a capable LLM to score or critique the outputs of another system based on defined criteria, offering a scalable alternative to human review."
+              "explanation": "LLM-as-Judge involves using a capable LLM to score or critique the outputs of another system based on defined criteria, offering a scalable alternative to human review.",
+              "correct": 1
             },
             {
               "id": "inter-rater-reliability",
@@ -359,8 +520,8 @@
                 "It calculates the cost of evaluation",
                 "It checks if the model likes the humans"
               ],
-              "correctAnswer": 1,
-              "explanation": "Inter-rater reliability metrics (like Cohen's Kappa) quantify the level of agreement between different human evaluators, ensuring that the evaluation criteria are clear and the scores are trustworthy."
+              "explanation": "Inter-rater reliability metrics (like Cohen's Kappa) quantify the level of agreement between different human evaluators, ensuring that the evaluation criteria are clear and the scores are trustworthy.",
+              "correct": 1
             },
             {
               "id": "eval-dimensions",
@@ -371,10 +532,87 @@
                 "Creativity (how novel the answer is)",
                 "Latency (how fast it answers)"
               ],
-              "correctAnswer": 1,
-              "explanation": "In high-stakes domains like medicine, factual accuracy is paramount. A fluent but incorrect answer could be dangerous."
+              "explanation": "In high-stakes domains like medicine, factual accuracy is paramount. A fluent but incorrect answer could be dangerous.",
+              "correct": 1
+            },
+            {
+              "id": "hallucination-detection",
+              "question": "What is an AI hallucination in the context of LLM evaluation?",
+              "options": [
+                "When the model runs too slowly",
+                "When the model generates confident but factually incorrect or fabricated information",
+                "When the model refuses to answer",
+                "When the model outputs are too short"
+              ],
+              "explanation": "AI hallucinations occur when LLMs generate plausible-sounding but false or unsupported information, presenting it as fact. Detecting and preventing hallucinations is a key evaluation concern.",
+              "correct": 1
+            },
+            {
+              "id": "context-relevance",
+              "question": "In RAG evaluation, what does 'context relevance' measure?",
+              "options": [
+                "How fast the retrieval system responds",
+                "Whether the retrieved documents are relevant to the user's query",
+                "The total number of documents in the database",
+                "The formatting of the context window"
+              ],
+              "explanation": "Context relevance measures whether the retrieval system finds documents that are actually relevant to answering the user's question, which directly impacts answer quality.",
+              "correct": 1
+            },
+            {
+              "id": "answer-correctness",
+              "question": "What does 'answer correctness' measure in LLM evaluation?",
+              "options": [
+                "Whether the answer uses correct grammar",
+                "Whether the answer accurately addresses the question and aligns with ground truth",
+                "Whether the answer is short enough",
+                "Whether the answer contains code"
+              ],
+              "explanation": "Answer correctness evaluates whether the generated response accurately and completely answers the question, often compared against ground truth or verified information.",
+              "correct": 1
+            },
+            {
+              "id": "benchmark-limitations",
+              "question": "Why can't we rely solely on standard benchmarks like MMLU for evaluating production LLM applications?",
+              "options": [
+                "Benchmarks are too expensive to run",
+                "Standard benchmarks may not reflect your specific use case, domain, or quality requirements",
+                "Benchmarks only work for small models",
+                "Benchmarks require special hardware"
+              ],
+              "explanation": "Standard benchmarks test general capabilities, but production applications have specific requirements, domains, and edge cases that require custom evaluation tailored to your use case.",
+              "correct": 1
+            },
+            {
+              "id": "evaluation-frequency",
+              "question": "When should you run LLM evaluations in a production system?",
+              "options": [
+                "Only before the initial launch",
+                "Continuously - before deployment, after prompt changes, and regularly in production",
+                "Only when users complain",
+                "Once per year during audits"
+              ],
+              "explanation": "Continuous evaluation catches regressions from prompt changes, model updates, and distribution shift. Evaluation should be part of your CI/CD pipeline and ongoing monitoring.",
+              "correct": 1
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "intro-to-llm-evaluation",
+              "automated-metrics",
+              "human-evaluation"
+            ],
+            "externalRefs": [
+              {
+                "title": "RAGAS Framework",
+                "url": "https://docs.ragas.io/"
+              },
+              {
+                "title": "OpenAI Evals",
+                "url": "https://github.com/openai/evals"
+              }
+            ]
+          }
         }
       ]
     }

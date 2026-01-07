@@ -1,11 +1,16 @@
 {
   "id": "ai-ethics",
   "title": "AI Ethics & Safety",
-  "icon": "\u2696\ufe0f",
-  "description": "Understand responsible AI development, bias mitigation, safety considerations, and ethical frameworks.",
+  "icon": "⚖️",
+  "description": "Understand responsible AI development practices including bias mitigation, fairness, safety considerations, and ethical frameworks. AI ethics encompasses the moral principles and governance practices that guide the responsible design, development, and deployment of AI systems to ensure they benefit society while minimizing harm.",
   "level": "intermediate",
   "duration": "4 weeks",
   "totalLessons": 14,
+  "validationSources": [
+    "https://www.ibm.com/topics/ai-ethics",
+    "https://www.ibm.com/topics/responsible-ai",
+    "https://www.ibm.com/topics/ai-governance"
+  ],
   "prerequisites": [
     "ML Fundamentals"
   ],
@@ -55,7 +60,7 @@
               }
             ],
             "keyTakeaways": [
-              "Ethics isn't optional\u2014it's essential for AI adoption",
+              "Ethics isn't optional—it's essential for AI adoption",
               "Technical solutions alone aren't enough",
               "Diverse teams build more equitable AI",
               "Regulation is increasing globally"
@@ -83,12 +88,12 @@
               },
               {
                 "title": "Fairness Metrics",
-                "content": "Different fairness definitions can conflict\u2014you must choose based on context:\n\n**Demographic Parity**: Equal positive prediction rates\n- P(\u0176=1|A=0) = P(\u0176=1|A=1)\n\n**Equalized Odds**: Equal TPR and FPR across groups\n- P(\u0176=1|Y=1,A=0) = P(\u0176=1|Y=1,A=1)\n\n**Predictive Parity**: Equal precision across groups\n- P(Y=1|\u0176=1,A=0) = P(Y=1|\u0176=1,A=1)\n\n**Individual Fairness**: Similar individuals get similar predictions"
+                "content": "Different fairness definitions can conflict—you must choose based on context:\n\n**Demographic Parity**: Equal positive prediction rates\n- P(Ŷ=1|A=0) = P(Ŷ=1|A=1)\n\n**Equalized Odds**: Equal TPR and FPR across groups\n- P(Ŷ=1|Y=1,A=0) = P(Ŷ=1|Y=1,A=1)\n\n**Predictive Parity**: Equal precision across groups\n- P(Y=1|Ŷ=1,A=0) = P(Y=1|Ŷ=1,A=1)\n\n**Individual Fairness**: Similar individuals get similar predictions"
               }
             ],
             "keyTakeaways": [
               "Bias can enter at any stage of the ML pipeline",
-              "Multiple fairness definitions exist\u2014choose carefully",
+              "Multiple fairness definitions exist—choose carefully",
               "Perfect fairness across all metrics is mathematically impossible",
               "Context determines which fairness definition matters most"
             ]
@@ -142,6 +147,60 @@
       "title": "Fairness & Transparency",
       "description": "Fairness & Transparency module",
       "lessons": [
+        {
+          "id": "ethical-frameworks",
+          "title": "Ethical Frameworks & Governance Standards",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "Understanding foundational ethical frameworks and industry governance standards is essential for building responsible AI. Learn the Belmont principles, IBM's five pillars, NIST framework, and comprehensive bias taxonomy used across the industry.",
+            "sections": [
+              {
+                "title": "Belmont Report Principles",
+                "content": "The Belmont Report (1979) from bioethics research provides foundational principles now applied to AI ethics:\n\n**Respect for Persons (Autonomy)**\n- Individuals have the right to make informed decisions\n- Require informed consent for data collection and AI decisions affecting people\n- Protect individuals with diminished autonomy (children, vulnerable populations)\n\n**Beneficence ('Do No Harm')**\n- Maximize benefits while minimizing potential harms\n- AI should not amplify existing biases or create new forms of discrimination\n- Obligation to assess and mitigate risks before deployment\n\n**Justice (Fair Distribution)**\n- Benefits and burdens of AI should be distributed fairly\n- Avoid exploiting vulnerable populations for data while benefits go to others\n- Equal access to AI-powered services and opportunities",
+                "diagram": {
+                  "title": "Belmont Principles Applied to AI",
+                  "code": "flowchart TB\n    subgraph Belmont[\"Belmont Report Principles\"]\n        RP[\"Respect for Persons\\n(Autonomy & Consent)\"]\n        BN[\"Beneficence\\n(Do No Harm)\"]\n        JU[\"Justice\\n(Fair Distribution)\"]\n    end\n    \n    subgraph AI[\"AI Applications\"]\n        DC[\"Data Collection\\n& Consent\"]\n        MD[\"Model Development\\n& Testing\"]\n        DP[\"Deployment\\n& Access\"]\n    end\n    \n    RP --> DC\n    BN --> MD\n    JU --> DP\n    \n    DC -.-> |\"Informed consent\"| RP\n    MD -.-> |\"Risk assessment\"| BN\n    DP -.-> |\"Equitable access\"| JU"
+                }
+              },
+              {
+                "title": "Industry Five Pillars of Responsible AI",
+                "content": "Major tech organizations have converged on five core pillars for responsible AI:\n\n**1. Explainability**\n- Users understand how AI reaches conclusions\n- Stakeholders can audit decision-making processes\n- Appropriate explanations for different audiences\n\n**2. Fairness**\n- Equitable treatment across demographic groups\n- AI assists in countering human biases\n- Promotes inclusivity in outcomes\n\n**3. Robustness**\n- Actively defended against adversarial attacks\n- Minimizes security risks\n- Reliable under distribution shift\n\n**4. Transparency**\n- Users understand how AI services work\n- Clear communication of capabilities and limitations\n- Honest about AI involvement in decisions\n\n**5. Privacy**\n- Safeguards consumers' data rights\n- Explicit assurances on data usage\n- Compliance with data protection regulations",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from dataclasses import dataclass\nfrom typing import Dict, List, Optional\nfrom enum import Enum\n\nclass PillarStatus(Enum):\n    NOT_ASSESSED = \"not_assessed\"\n    NEEDS_WORK = \"needs_work\"\n    SATISFACTORY = \"satisfactory\"\n    EXEMPLARY = \"exemplary\"\n\n@dataclass\nclass ResponsibleAIAssessment:\n    \"\"\"Five Pillars Assessment Framework\"\"\"\n    model_name: str\n    version: str\n    \n    # Pillar assessments\n    explainability: PillarStatus = PillarStatus.NOT_ASSESSED\n    fairness: PillarStatus = PillarStatus.NOT_ASSESSED\n    robustness: PillarStatus = PillarStatus.NOT_ASSESSED\n    transparency: PillarStatus = PillarStatus.NOT_ASSESSED\n    privacy: PillarStatus = PillarStatus.NOT_ASSESSED\n    \n    # Supporting evidence\n    explainability_evidence: List[str] = None\n    fairness_metrics: Dict[str, float] = None\n    robustness_tests: List[str] = None\n    transparency_docs: List[str] = None\n    privacy_measures: List[str] = None\n    \n    def overall_status(self) -> str:\n        statuses = [self.explainability, self.fairness, \n                   self.robustness, self.transparency, self.privacy]\n        if PillarStatus.NOT_ASSESSED in statuses:\n            return \"INCOMPLETE - Some pillars not assessed\"\n        if PillarStatus.NEEDS_WORK in statuses:\n            return \"REQUIRES REMEDIATION\"\n        return \"DEPLOYMENT READY\"\n    \n    def generate_report(self) -> Dict:\n        return {\n            \"model\": f\"{self.model_name} v{self.version}\",\n            \"overall_status\": self.overall_status(),\n            \"pillars\": {\n                \"explainability\": self.explainability.value,\n                \"fairness\": self.fairness.value,\n                \"robustness\": self.robustness.value,\n                \"transparency\": self.transparency.value,\n                \"privacy\": self.privacy.value\n            }\n        }"
+                }
+              },
+              {
+                "title": "NIST AI Risk Management Framework",
+                "content": "The NIST AI RMF (2023) provides a voluntary, industry-standard framework for managing AI risks:\n\n**Core Functions:**\n\n**1. GOVERN** - Establish AI governance structures\n- Define roles and responsibilities\n- Create policies and processes\n- Establish accountability mechanisms\n\n**2. MAP** - Contextualize AI system risks\n- Identify intended purposes and users\n- Understand deployment context\n- Assess potential impacts\n\n**3. MEASURE** - Assess and analyze risks\n- Quantify identified risks\n- Test for bias, robustness, security\n- Evaluate against thresholds\n\n**4. MANAGE** - Prioritize and act on risks\n- Implement mitigations\n- Monitor continuously\n- Update as conditions change",
+                "diagram": {
+                  "title": "NIST AI RMF Core Functions",
+                  "code": "flowchart LR\n    subgraph NIST[\"NIST AI Risk Management Framework\"]\n        G[\"GOVERN\\n• Policies\\n• Roles\\n• Culture\"] --> M1[\"MAP\\n• Context\\n• Stakeholders\\n• Impacts\"]\n        M1 --> M2[\"MEASURE\\n• Assess risks\\n• Test & evaluate\\n• Quantify\"]\n        M2 --> M3[\"MANAGE\\n• Mitigate\\n• Monitor\\n• Document\"]\n        M3 -.-> G\n    end\n    \n    style G fill:#e3f2fd\n    style M1 fill:#fff3e0\n    style M2 fill:#f3e5f5\n    style M3 fill:#e8f5e9"
+                }
+              },
+              {
+                "title": "Comprehensive Bias Taxonomy",
+                "content": "Industry identifies multiple specific types of AI bias beyond historical and representation bias:\n\n**Data-Related Biases:**\n- **Exclusion Bias**: Important data left out (e.g., only graduates in dropout prediction)\n- **Measurement Bias**: Inconsistent or inaccurate data collection\n- **Sample/Selection Bias**: Non-representative training data\n- **Recall Bias**: Inconsistent labeling based on subjective observations\n\n**Algorithm-Related Biases:**\n- **Confirmation Bias**: Over-relying on existing patterns, missing new trends\n- **Algorithm Bias**: Incorrect problem formulation or feedback loops\n\n**Human-Related Biases:**\n- **Cognitive Bias**: Personal biases affecting design decisions\n- **Out-group Homogeneity Bias**: Poorer understanding of groups different from developers\n- **Stereotyping Bias**: Reinforcing harmful societal stereotypes\n- **Prejudice Bias**: Cultural assumptions embedded in datasets",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from enum import Enum\nfrom typing import List, Dict\nimport pandas as pd\n\nclass BiasType(Enum):\n    # Data-related\n    EXCLUSION = \"exclusion_bias\"\n    MEASUREMENT = \"measurement_bias\"\n    SAMPLE_SELECTION = \"sample_selection_bias\"\n    RECALL = \"recall_bias\"\n    \n    # Algorithm-related\n    CONFIRMATION = \"confirmation_bias\"\n    ALGORITHM = \"algorithm_bias\"\n    \n    # Human-related\n    COGNITIVE = \"cognitive_bias\"\n    OUTGROUP_HOMOGENEITY = \"outgroup_homogeneity_bias\"\n    STEREOTYPING = \"stereotyping_bias\"\n    PREJUDICE = \"prejudice_bias\"\n\nclass BiasDiagnostic:\n    \"\"\"Diagnose potential biases in dataset and model.\"\"\"\n    \n    def __init__(self, df: pd.DataFrame, target: str, sensitive_cols: List[str]):\n        self.df = df\n        self.target = target\n        self.sensitive_cols = sensitive_cols\n        self.findings: List[Dict] = []\n    \n    def check_exclusion_bias(self, expected_categories: Dict[str, List]):\n        \"\"\"Check if expected categories are missing from data.\"\"\"\n        for col, expected in expected_categories.items():\n            present = set(self.df[col].unique())\n            missing = set(expected) - present\n            if missing:\n                self.findings.append({\n                    \"bias_type\": BiasType.EXCLUSION,\n                    \"column\": col,\n                    \"severity\": \"HIGH\",\n                    \"detail\": f\"Missing categories: {missing}\"\n                })\n    \n    def check_sample_selection_bias(self, population_dist: Dict[str, Dict]):\n        \"\"\"Compare sample distribution to known population.\"\"\"\n        for col, pop_dist in population_dist.items():\n            sample_dist = self.df[col].value_counts(normalize=True)\n            for category, pop_pct in pop_dist.items():\n                sample_pct = sample_dist.get(category, 0)\n                deviation = abs(sample_pct - pop_pct)\n                if deviation > 0.1:  # 10% threshold\n                    self.findings.append({\n                        \"bias_type\": BiasType.SAMPLE_SELECTION,\n                        \"column\": col,\n                        \"category\": category,\n                        \"severity\": \"MEDIUM\" if deviation < 0.2 else \"HIGH\",\n                        \"detail\": f\"Sample: {sample_pct:.1%}, Population: {pop_pct:.1%}\"\n                    })\n    \n    def check_label_consistency(self, label_col: str, agreement_threshold: float = 0.8):\n        \"\"\"Flag potential recall bias from inconsistent labeling.\"\"\"\n        # This would typically compare multiple annotators\n        # Simplified: check label distribution across sensitive groups\n        for col in self.sensitive_cols:\n            group_rates = self.df.groupby(col)[label_col].mean()\n            if group_rates.std() > 0.15:  # High variance\n                self.findings.append({\n                    \"bias_type\": BiasType.RECALL,\n                    \"column\": label_col,\n                    \"severity\": \"MEDIUM\",\n                    \"detail\": f\"Label rates vary significantly across {col}: {group_rates.to_dict()}\"\n                })\n    \n    def generate_report(self) -> pd.DataFrame:\n        if not self.findings:\n            return pd.DataFrame({\"result\": [\"No biases detected\"]})\n        return pd.DataFrame(self.findings)"
+                }
+              },
+              {
+                "title": "AI Ethics Organizations & Resources",
+                "content": "Key organizations advancing AI ethics that practitioners should follow:\n\n**Research & Advocacy:**\n- **AI Now Institute** (NYU): Researches social implications of AI\n- **AlgorithmWatch**: Nonprofit for algorithmic transparency and accountability\n- **Partnership on AI**: Multi-stakeholder consortium for responsible AI\n- **CHAI** (UC Berkeley): Center for Human-Compatible AI\n\n**Government & Standards:**\n- **NIST**: National Institute of Standards and Technology AI program\n- **OECD AI Policy Observatory**: International AI principles and data\n- **EU AI Office**: Implementing the EU AI Act\n- **Singapore IMDA**: Model AI Governance Framework\n\n**Industry Initiatives:**\n- **Responsible AI Institute**: RAI certifications and assessments\n- **MLCommons**: AI benchmarks including safety and fairness\n- **Hugging Face Ethics**: Open model cards and dataset documentation"
+              }
+            ],
+            "keyTakeaways": [
+              "Belmont principles (autonomy, beneficence, justice) underpin AI ethics",
+              "Five pillars: explainability, fairness, robustness, transparency, privacy",
+              "NIST AI RMF provides structured risk management (Govern, Map, Measure, Manage)",
+              "Multiple specific bias types require different detection and mitigation approaches",
+              "Stay connected with AI ethics organizations for evolving best practices"
+            ]
+          }
+        },
         {
           "id": "explainability",
           "title": "Explainability & Interpretability",
@@ -345,7 +404,7 @@
                 "title": "Trust Calibration",
                 "codeExample": {
                   "language": "python",
-                  "code": "class CalibratedAIResponse:\n    def __init__(self, prediction, confidence, explanation):\n        self.prediction = prediction\n        self.confidence = confidence\n        self.explanation = explanation\n    \n    def format_for_user(self):\n        confidence_text = {\n            (0.9, 1.0): \"I'm very confident\",\n            (0.7, 0.9): \"I'm fairly confident\",\n            (0.5, 0.7): \"I'm somewhat uncertain\",\n            (0.0, 0.5): \"I'm quite uncertain\"\n        }\n        \n        for (low, high), text in confidence_text.items():\n            if low <= self.confidence < high:\n                conf_msg = text\n                break\n        \n        return f\"\"\"\n        Recommendation: {self.prediction}\n        \n        {conf_msg} about this ({self.confidence:.0%}).\n        \n        Reasoning: {self.explanation}\n        \n        {self._get_action_guidance()}\n        \"\"\"\n    \n    def _get_action_guidance(self):\n        if self.confidence < 0.7:\n            return \"\u26a0\ufe0f Please verify this with additional sources.\"\n        elif self.confidence < 0.9:\n            return \"Consider reviewing before acting.\"\n        return \"This assessment appears reliable.\""
+                  "code": "class CalibratedAIResponse:\n    def __init__(self, prediction, confidence, explanation):\n        self.prediction = prediction\n        self.confidence = confidence\n        self.explanation = explanation\n    \n    def format_for_user(self):\n        confidence_text = {\n            (0.9, 1.0): \"I'm very confident\",\n            (0.7, 0.9): \"I'm fairly confident\",\n            (0.5, 0.7): \"I'm somewhat uncertain\",\n            (0.0, 0.5): \"I'm quite uncertain\"\n        }\n        \n        for (low, high), text in confidence_text.items():\n            if low <= self.confidence < high:\n                conf_msg = text\n                break\n        \n        return f\"\"\"\n        Recommendation: {self.prediction}\n        \n        {conf_msg} about this ({self.confidence:.0%}).\n        \n        Reasoning: {self.explanation}\n        \n        {self._get_action_guidance()}\n        \"\"\"\n    \n    def _get_action_guidance(self):\n        if self.confidence < 0.7:\n            return \"⚠️ Please verify this with additional sources.\"\n        elif self.confidence < 0.9:\n            return \"Consider reviewing before acting.\"\n        return \"This assessment appears reliable.\""
                 }
               },
               {
@@ -557,8 +616,113 @@
               ],
               "correct": 1,
               "explanation": "Model inversion is a privacy attack that attempts to reconstruct training examples or sensitive attributes from a trained model's outputs or parameters."
+            },
+            {
+              "question": "According to IBM, what is responsible AI?",
+              "options": [
+                "AI that only uses renewable energy",
+                "The practice of designing and deploying AI that is fair, transparent, accountable, and respects privacy",
+                "AI that responds responsibly to user queries",
+                "AI that is only used by responsible companies"
+              ],
+              "correct": 1,
+              "explanation": "Responsible AI refers to the practice of developing AI systems that are fair, transparent, accountable, privacy-respecting, and aligned with ethical principles and societal values."
+            },
+            {
+              "question": "What are the three principles from the Belmont Report applied to AI ethics?",
+              "options": [
+                "Speed, Accuracy, Efficiency",
+                "Respect for Persons, Beneficence, Justice",
+                "Privacy, Security, Compliance",
+                "Transparency, Fairness, Robustness"
+              ],
+              "correct": 1,
+              "explanation": "The Belmont Report (1979) established three foundational bioethics principles now applied to AI: Respect for Persons (autonomy and consent), Beneficence (do no harm), and Justice (fair distribution of benefits and burdens)."
+            },
+            {
+              "question": "What are the four core functions of the NIST AI Risk Management Framework?",
+              "options": [
+                "Plan, Do, Check, Act",
+                "Govern, Map, Measure, Manage",
+                "Design, Develop, Deploy, Monitor",
+                "Assess, Mitigate, Document, Audit"
+              ],
+              "correct": 1,
+              "explanation": "The NIST AI RMF defines four core functions: Govern (establish governance structures), Map (contextualize risks), Measure (assess and analyze risks), and Manage (prioritize and act on risks)."
+            },
+            {
+              "question": "Which type of bias occurs when AI training data doesn't include all relevant population segments?",
+              "options": [
+                "Confirmation bias",
+                "Exclusion bias",
+                "Algorithm bias",
+                "Recall bias"
+              ],
+              "correct": 1,
+              "explanation": "Exclusion bias occurs when important data is left out, such as only including graduates in a study predicting dropout factors, completely missing factors that cause students to leave."
+            },
+            {
+              "question": "What is 'out-group homogeneity bias' in AI development?",
+              "options": [
+                "When AI treats all outputs the same",
+                "When developers better understand their own group and create algorithms less capable of distinguishing individuals from other groups",
+                "When AI produces homogeneous outputs",
+                "When training data comes from only one source"
+              ],
+              "correct": 1,
+              "explanation": "Out-group homogeneity bias occurs when developers have better understanding of their own group (ingroup) and create algorithms less capable of distinguishing between individuals from other groups, leading to misclassification."
+            },
+            {
+              "question": "What is algorithmic transparency?",
+              "options": [
+                "Making the code open source",
+                "The ability to explain how an AI system makes decisions and reaches conclusions",
+                "Using transparent hardware",
+                "Hiding the algorithm from competitors"
+              ],
+              "correct": 1,
+              "explanation": "Algorithmic transparency involves being able to explain and understand how AI systems make decisions, which is essential for trust, accountability, and regulatory compliance."
+            },
+            {
+              "question": "What is AI governance?",
+              "options": [
+                "The government department that controls AI",
+                "Policies, frameworks, and practices for responsible AI development and deployment",
+                "The speed at which AI makes decisions",
+                "How AI systems govern other AI systems"
+              ],
+              "correct": 1,
+              "explanation": "AI governance encompasses the policies, frameworks, and organizational practices that ensure AI systems are developed and deployed responsibly, ethically, and in compliance with regulations."
+            },
+            {
+              "question": "What is the purpose of bias mitigation techniques in AI?",
+              "options": [
+                "To make models run faster",
+                "To reduce or eliminate unfair discrimination in AI predictions across protected groups",
+                "To increase model accuracy",
+                "To reduce model size"
+              ],
+              "correct": 1,
+              "explanation": "Bias mitigation techniques aim to reduce unfair discrimination in AI systems, ensuring equitable treatment across different demographic groups and protected characteristics."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "bias-in-ai",
+              "fairness-metrics",
+              "transparency"
+            ],
+            "externalRefs": [
+              {
+                "title": "AI Ethics Guidelines (EU)",
+                "url": "https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai"
+              },
+              {
+                "title": "Google AI Principles",
+                "url": "https://ai.google/responsibility/principles/"
+              }
+            ]
+          }
         }
       ]
     }

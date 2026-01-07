@@ -26,8 +26,10 @@
       "row": "primitives",
       "column": "reactive",
       "description": "Instructions given to AI models to guide their output.",
-      "details": "Prompts are highly reactive - change one word and you get completely different results. They're the primary interface for controlling LLM behavior.",
-      "examples": ["System prompts", "Few-shot examples", "Chain-of-Thought"],
+      "details": "Prompts are highly reactive - change one word and you get completely different results. They're the primary interface for controlling LLM behavior. A prompt is essentially a specification you give to an AI model that influences how it processes input and generates output.",
+      "fullExplanation": "Prompts are the language through which humans communicate intent to large language models. They range from simple instructions ('Summarize this text') to complex multi-step specifications with examples, constraints, and formatting requirements. The effectiveness of a prompt depends on clarity, specificity, and structure. Key techniques include: (1) System prompts that define model behavior and role, (2) Few-shot examples that demonstrate expected behavior, (3) Chain-of-Thought prompts that encourage step-by-step reasoning, (4) Role-based prompts that assign personas to the model. Prompts directly impact output quality, so prompt engineering—the art of crafting effective prompts—has become a critical skill in AI applications.",
+      "examples": ["System prompts", "Few-shot examples", "Chain-of-Thought", "Role-based prompts", "Constrained prompts"],
+      "keyTechniques": ["System role definition", "Few-shot demonstrations", "Chain-of-Thought reasoning", "Output formatting specification", "Constraint definition"],
       "courseId": "prompt-engineering",
       "links": []
     },
@@ -38,7 +40,9 @@
       "column": "retrieval",
       "description": "Numerical vector representations of meaning.",
       "details": "Embeddings convert text, images, or other data into high-dimensional vectors that capture semantic meaning. Similar concepts have similar vectors.",
-      "examples": ["OpenAI text-embedding-3", "Sentence Transformers", "CLIP"],
+      "fullExplanation": "Embeddings are numerical representations of data—usually text, images, or audio—encoded as vectors in high-dimensional space. The key insight: similar concepts are positioned close together in this space, enabling semantic search and similarity computation. For example, 'king - man + woman ≈ queen' works because embedding relationships capture analogies. Embeddings bridge the gap between human language and machine computation. They enable: (1) Semantic search—finding relevant content by meaning rather than keywords, (2) Similarity comparison—measuring how alike two pieces of content are, (3) Clustering—grouping similar items automatically. Modern embedding models like OpenAI's text-embedding-3-large, Sentence Transformers, and CLIP are trained on billions of examples to capture nuanced semantic relationships. Dimensions typically range from 768 to 3072, with higher dimensions capturing finer distinctions.",
+      "examples": ["OpenAI text-embedding-3-large", "Sentence Transformers", "CLIP for images", "Google embeddings", "Cohere embeddings"],
+      "keyTechniques": ["Vector representation", "Semantic search", "Similarity scoring", "Dimensionality", "Distance metrics"],
       "courseId": "rag-applications",
       "links": []
     },
@@ -49,7 +53,9 @@
       "column": "models",
       "description": "Foundation models trained on vast text data.",
       "details": "LLMs are like noble gases - stable foundations that power most GenAI applications. Examples include GPT-4, Claude, Gemini, and LLaMA.",
-      "examples": ["GPT-4", "Claude 3", "Gemini", "LLaMA 3"],
+      "fullExplanation": "Large Language Models (LLMs) are neural networks trained on trillions of tokens of text data, developing sophisticated capabilities in language understanding, reasoning, and generation. They're 'foundation models' because their general capabilities serve as the foundation for countless downstream applications. LLMs work by predicting the next token (word piece) in a sequence, but this simple objective—repeated across billions of examples—develops emergent abilities: reasoning, code generation, translation, summarization, and more. Key characteristics: (1) Scaling laws—performance improves predictably with model size and training data, (2) In-context learning—ability to adapt to new tasks from examples without retraining, (3) Emergent abilities—capabilities that appear only above certain scale thresholds. LLMs range from open-source models (LLaMA, Mistral) to proprietary services (OpenAI GPT-4, Anthropic Claude, Google Gemini). Choosing an LLM involves trade-offs: capability vs. cost vs. latency vs. privacy vs. context window size.",
+      "examples": ["GPT-4", "Claude 3 Opus", "Gemini Ultra", "LLaMA 3 70B", "Mistral Large"],
+      "keyTechniques": ["Transformer architecture", "Attention mechanism", "In-context learning", "Scaling laws", "Emergent abilities"],
       "courseId": "genai-applications",
       "links": []
     },
@@ -60,7 +66,9 @@
       "column": "reactive",
       "description": "LLM ability to invoke external tools and APIs.",
       "details": "Function calling allows LLMs to take actions beyond text generation - calling APIs, querying databases, or executing code.",
-      "examples": ["OpenAI Tools", "Tool Use", "API Integration"],
+      "fullExplanation": "Function calling (also called tool use) enables LLMs to request execution of external functions or APIs. Instead of the model generating text about what should be done, it generates structured requests to invoke specific tools. The workflow: (1) Developer defines available functions with schemas (parameters, types, descriptions), (2) LLM receives a request and decides which function(s) to call with what parameters, (3) System executes the function and returns the result, (4) LLM processes the result and continues. This capability is transformational because it bridges the gap between language and action—the model can now control external systems. Common use cases: (1) API calls—fetch data from services, (2) Code execution—run Python or SQL, (3) Database queries—retrieve or update information, (4) Calculator tools—perform precise math. Function calling is essential for building agents and autonomous systems because it lets models take actions beyond generating text.",
+      "examples": ["OpenAI Tools", "Anthropic Tool Use", "API integration", "Database queries", "Code execution"],
+      "keyTechniques": ["Function schema definition", "Parameter specification", "Tool selection", "Result handling", "Error recovery"],
       "courseId": "agentic-ai",
       "links": []
     },
@@ -71,7 +79,9 @@
       "column": "retrieval",
       "description": "Specialized databases for storing and querying embeddings.",
       "details": "Vector databases enable semantic search by finding vectors similar to a query. Essential for RAG systems.",
-      "examples": ["Pinecone", "Weaviate", "Milvus", "Chroma", "pgvector"],
+      "fullExplanation": "Vector databases are purpose-built systems for storing and searching high-dimensional vectors (embeddings). Unlike traditional databases optimized for structured data and exact matches, vector databases use specialized indexing algorithms (like HNSW, IVF, or LSH) to enable fast approximate nearest-neighbor search. How they work: (1) Store embeddings from documents/chunks along with metadata, (2) When queried, embed the search query using the same embedding model, (3) Find vectors closest to the query vector in high-dimensional space, (4) Return the nearest matches, representing the most semantically similar content. Key advantages: (1) Speed—index structures enable sub-second retrieval even from millions of vectors, (2) Scalability—handle massive datasets efficiently, (3) Flexibility—support various metadata filters. Popular choices: Pinecone (managed service), Weaviate (open-source/cloud), Milvus (open-source), Chroma (lightweight), pgvector (PostgreSQL extension). Vector databases are the backbone of RAG systems—without them, you can't efficiently retrieve relevant context for LLM generation.",
+      "examples": ["Pinecone", "Weaviate", "Milvus", "Chroma", "pgvector", "Qdrant"],
+      "keyTechniques": ["HNSW indexing", "Similarity search", "Approximate nearest neighbor", "Metadata filtering", "Batch operations"],
       "courseId": "rag-applications",
       "links": []
     },
@@ -82,7 +92,9 @@
       "column": "orchestration",
       "description": "Retrieval-Augmented Generation - connecting LLMs to external data.",
       "details": "RAG is a compound element combining Embeddings (Em) + Vector DB (Vx) + LLM (Lg). It grounds model responses in real data.",
-      "examples": ["Document Q&A", "Enterprise Search", "Knowledge Bases"],
+      "fullExplanation": "Retrieval-Augmented Generation (RAG) is a powerful architecture that combines information retrieval with language generation. Instead of relying solely on an LLM's training data (which becomes stale), RAG systems retrieve relevant external documents before generating responses. The architecture: (1) Embed user query using same model as documents, (2) Search vector database for semantically similar documents, (3) Pass top-k results as context to the LLM, (4) LLM generates response grounded in retrieved context. Why RAG is transformational: (1) Knowledge currency—access up-to-date information without retraining, (2) Reduced hallucination—LLM grounds answers in factual sources, (3) Transparency—can cite sources for claims, (4) Domain specificity—organize private/internal documents for specialized knowledge. Common RAG patterns: document Q&A systems, enterprise search, customer support, knowledge base retrieval, research assistance. Challenges: retrieval quality (finding truly relevant documents), context window limits, ranking ambiguity. RAG has become the most practical way to build AI systems that reason over custom knowledge bases.",
+      "examples": ["Document Q&A", "Enterprise Search", "Knowledge Bases", "Customer Support", "Research Assistant"],
+      "keyTechniques": ["Semantic search", "Context window management", "Ranking/re-ranking", "Chunk size optimization", "Metadata filtering"],
       "courseId": "rag-applications",
       "links": []
     },
@@ -93,7 +105,9 @@
       "column": "validation",
       "description": "Filters and constraints to ensure safe AI outputs.",
       "details": "Guardrails prevent harmful, off-topic, or policy-violating outputs. They act as safety nets around LLM responses.",
-      "examples": ["NVIDIA NeMo Guardrails", "Guardrails AI", "Content Filters"],
+      "fullExplanation": "Guardrails are validation layers that filter, validate, or modify LLM inputs and outputs to ensure safety, compliance, and quality. They act as policy enforcement mechanisms. Input guardrails prevent prompt injection and enforce constraints on what the model should process. Output guardrails validate that responses meet quality standards and don't violate policies. Common guardrail types: (1) Content filtering—block toxic/harmful content, (2) Policy enforcement—ensure compliance with organizational rules, (3) Format validation—enforce structured output (JSON, specific fields), (4) Hallucination detection—catch factual inconsistencies, (5) PII redaction—remove sensitive information. Guardrails can be rule-based (regex patterns, keyword lists) or LLM-based (using another model to evaluate safety). Tools like NVIDIA NeMo Guardrails or Guardrails AI provide frameworks for implementing them. Without guardrails, LLMs can be exploited or produce unreliable outputs. In production systems, guardrails are non-negotiable for risk management.",
+      "examples": ["NVIDIA NeMo Guardrails", "Guardrails AI", "Content filters", "PII redaction", "Output validation"],
+      "keyTechniques": ["Content filtering", "Prompt injection prevention", "Output validation", "PII detection", "Format enforcement"],
       "courseId": "ai-safety-guardrails",
       "links": []
     },
@@ -104,7 +118,9 @@
       "column": "models",
       "description": "Models that process multiple input types (text, image, audio).",
       "details": "Multi-modal models can understand and generate across modalities - analyzing images, transcribing audio, or combining text with visuals.",
-      "examples": ["GPT-4V", "Gemini Pro Vision", "Claude 3 Vision"],
+      "fullExplanation": "Multi-modal models are foundation models that can process and generate content across multiple modalities—typically text, images, audio, and video. Unlike earlier single-modality models, they learn shared representations that bridge across types of data. For example, they understand that a photo of a dog and the word 'dog' refer to the same concept. Capabilities: (1) Image understanding—analyze images, answer questions about them, describe visual content, (2) Image generation—create images from text descriptions, (3) Audio processing—transcribe speech, understand audio context, (4) Cross-modal reasoning—connect concepts across modalities. Examples include GPT-4 with Vision (GPT-4V), Gemini Pro Vision (can process documents, images, videos), and Claude 3 with vision capabilities. Multi-modal models enable new applications: document understanding (PDFs with text+images), video analysis, accessibility tools, richer user experiences. The challenge: training on diverse, high-quality multi-modal data at scale. As multi-modal capabilities improve, they're becoming the standard for foundation models rather than an add-on.",
+      "examples": ["GPT-4V (Vision)", "Gemini Pro Vision", "Claude 3 Vision", "LLaVA", "Flamingo"],
+      "keyTechniques": ["Cross-modal embeddings", "Vision encoders", "Audio processing", "Multi-modal fusion", "Instruction tuning"],
       "courseId": "multimodal-ai",
       "links": []
     },
@@ -115,7 +131,9 @@
       "column": "reactive",
       "description": "Autonomous systems with think-act-observe loops.",
       "details": "Agents can plan, use tools, and iterate to complete complex tasks. They represent the highest level of LLM autonomy.",
-      "examples": ["AutoGPT", "LangGraph Agents", "CrewAI", "OpenAI Assistants"],
+      "fullExplanation": "AI agents are autonomous systems that combine LLMs with the ability to perceive, plan, and act in an environment. Unlike chatbots that respond to single queries, agents maintain state, reason about goals, and execute multi-step plans. The core loop (ReAct pattern): (1) Think—LLM analyzes the task and decides what action to take, (2) Act—agent executes the chosen action (call API, run code, search database), (3) Observe—agent sees the result and incorporates it into context, (4) Repeat until goal is achieved. Key capabilities: (1) Tool use—access external functions and APIs, (2) Planning—decompose complex tasks into steps, (3) Adaptation—modify plan based on feedback, (4) Memory—maintain context across interactions. Agent frameworks: AutoGPT, CrewAI (specialized agents working together), LangGraph (state machine approach), OpenAI Assistants (stateful agents). Challenges: reliability (agents can get stuck in loops), cost (multiple LLM calls), control (hard to predict agent behavior). Agents represent the frontier of AI—moving from passive question-answering to active problem-solving.",
+      "examples": ["AutoGPT", "LangGraph Agents", "CrewAI", "OpenAI Assistants", "ReAct loops"],
+      "keyTechniques": ["ReAct pattern", "Tool use", "Planning", "State management", "Memory"],
       "courseId": "agentic-ai",
       "links": []
     },
@@ -126,7 +144,9 @@
       "column": "retrieval",
       "description": "Adapting models to specific domains or tasks.",
       "details": "Fine-tuning embeds knowledge directly into model weights. Unlike RAG (runtime retrieval), this is compile-time memory.",
-      "examples": ["LoRA", "QLoRA", "PEFT", "Full Fine-Tuning"],
+      "fullExplanation": "Fine-tuning is the process of adapting a pre-trained model to a specific domain or task by training it on task-specific data. Unlike RAG which retrieves context at runtime, fine-tuning bakes knowledge directly into model weights. The process: (1) Start with a pre-trained foundation model, (2) Prepare task-specific training data (can be small—hundreds to thousands of examples), (3) Continue training on this data with learning rates lower than initial training, (4) Result: a model optimized for your specific use case. Approaches: (1) Full fine-tuning—update all weights (expensive), (2) LoRA (Low-Rank Adaptation)—update small adapter layers (efficient), (3) QLoRA—combine LoRA with quantization for GPUs with limited memory. When to use: (1) Domain specialization—legal docs, medical, finance, (2) Style adaptation—matching tone/voice, (3) Tool grounding—making models better at function calling, (4) Cost reduction—smaller fine-tuned models can replace expensive APIs. Trade-off: requires quality training data and careful tuning, but results in ownership of the model and potential cost savings.",
+      "examples": ["LoRA", "QLoRA", "PEFT", "Full Fine-Tuning", "Instruction tuning"],
+      "keyTechniques": ["LoRA/QLoRA", "Low-rank adaptation", "Gradient accumulation", "Learning rate scheduling", "Evaluation metrics"],
       "courseId": "llm-finetuning",
       "links": []
     },
@@ -137,7 +157,9 @@
       "column": "orchestration",
       "description": "Libraries for building and deploying AI applications.",
       "details": "Frameworks provide abstractions for chaining prompts, managing memory, and orchestrating complex AI workflows.",
-      "examples": ["LangChain", "LlamaIndex", "Semantic Kernel", "Haystack"],
+      "fullExplanation": "AI frameworks are software libraries that abstract common patterns in building LLM applications. Instead of writing infrastructure code from scratch, frameworks provide ready-made components. Key responsibilities: (1) Prompt management—templating, version control, (2) Memory—maintaining conversation history, retrieval, (3) Tool/agent orchestration—coordinating function calls and workflows, (4) Integration—connecting to LLM APIs, databases, APIs, (5) Observability—logging, monitoring, debugging. Major frameworks: LangChain (comprehensive, Pythonic), LlamaIndex (specialized for retrieval/indexing), Semantic Kernel (Microsoft, integrations), Haystack (production-focused). Framework choice matters: (1) LangChain—best for agent exploration, broad ecosystem, (2) LlamaIndex—best for RAG, optimized retrieval, (3) Semantic Kernel—best for enterprise, integration with Microsoft tools. Most modern AI applications use frameworks—they accelerate development by 10x and prevent reinventing wheels. However, frameworks abstract away important details; understanding the underlying patterns matters.",
+      "examples": ["LangChain", "LlamaIndex", "Semantic Kernel", "Haystack", "PromptFlow"],
+      "keyTechniques": ["Chains", "Agents", "Memory management", "Tool integration", "Prompt templating"],
       "courseId": "agentic-ai",
       "links": []
     },
@@ -148,7 +170,9 @@
       "column": "validation",
       "description": "Adversarial testing to find vulnerabilities.",
       "details": "Red teaming involves deliberately trying to break AI systems - finding jailbreaks, biases, and failure modes before deployment.",
-      "examples": ["Prompt Injection Testing", "Bias Audits", "Safety Benchmarks"],
+      "fullExplanation": "Red teaming is adversarial testing where security specialists try to break AI systems and find vulnerabilities before users do. The name comes from military terminology (red team = simulated adversaries). What red teamers test for: (1) Prompt injection—crafting inputs that override system behavior, (2) Bias and fairness—identifying discriminatory outputs, (3) Hallucination—finding cases where models make up facts, (4) Safety violations—pushing models to generate harmful content, (5) Information leakage—extracting training data or system details. Red teaming methods: manual testing, automated attacks, crowdsourcing (gathering diverse attempts). Why it matters: adversarial examples often uncover unexpected failure modes that testing alone misses. Every major AI company runs red teaming before release—finding vulnerabilities is cheaper than managing incidents. Red teaming is becoming professionalized; some organizations hire dedicated security teams. Challenge: red teamers need both AI expertise and security mindset; gaps between attackers and defenders constantly shift.",
+      "examples": ["Prompt Injection Testing", "Bias Audits", "Safety Benchmarks", "Adversarial examples", "Jailbreak attempts"],
+      "keyTechniques": ["Adversarial prompting", "Bias detection", "Robustness testing", "Failure mode analysis", "Fuzzing"],
       "courseId": "ai-safety-guardrails",
       "links": []
     },
@@ -159,7 +183,9 @@
       "column": "models",
       "description": "Efficient, distilled models for edge deployment.",
       "details": "Small Language Models (SLMs) trade some capability for efficiency - running on devices, lower latency, lower cost.",
-      "examples": ["Phi-3", "Gemma", "Mistral 7B", "Llama 3 8B"],
+      "fullExplanation": "Small Language Models (SLMs) are purpose-built models with fewer parameters (2B-40B) optimized for efficiency. They trade some general-purpose capability for speed, cost, and deployability. Key advantages: (1) Speed—inference 10-100x faster than large models, (2) Cost—lower API costs and reduced compute infrastructure needs, (3) Privacy—can run on-device without sending data to cloud, (4) Latency—suitable for real-time applications. Recent breakthroughs: models like Phi-3 (3.8B parameters) approach larger model performance through instruction tuning and synthetic data. When to choose SLMs: (1) Edge deployment—phones, IoT, embedded systems, (2) Cost-sensitive—high-volume low-margin applications, (3) Latency requirements—real-time translation, live chat, (4) Privacy—handling sensitive information locally. Trade-off: smaller models struggle with complex reasoning, long-context understanding, and novel tasks. Strategy: use SLMs for specific tasks they're fine-tuned for, larger models for complex reasoning. The convergence: as SLMs improve, cost/latency advantages push them toward mainstream use.",
+      "examples": ["Phi-3", "Gemma", "Mistral 7B", "Llama 3 8B", "TinyLlama"],
+      "keyTechniques": ["Model distillation", "Quantization", "Pruning", "Knowledge distillation", "Instruction tuning"],
       "courseId": "small-language-models",
       "links": []
     },
@@ -170,7 +196,9 @@
       "column": "reactive",
       "description": "Multiple AI agents collaborating on tasks.",
       "details": "Multi-agent systems have specialized agents working together - one for research, one for coding, one for review.",
-      "examples": ["CrewAI", "AutoGen", "ChatDev", "MetaGPT"],
+      "fullExplanation": "Multi-agent systems extend single-agent autonomy to multiple specialized agents collaborating toward shared goals. Instead of one agent trying to do everything, each agent has a role: researcher (gathers info), coder (writes code), reviewer (checks quality), executor (runs tasks). Coordination happens through: (1) Message passing—agents communicate directly, (2) Shared tools—agents can use same functions, (3) Hierarchical control—a manager agent orchestrates others. Benefits: (1) Specialization—agents become better at specific roles, (2) Parallelization—agents work simultaneously on different tasks, (3) Reliability—another agent can catch mistakes, (4) Complexity—handle larger problems requiring multiple perspectives. Frameworks: CrewAI (specialized crews for different domains), AutoGen (flexible agent interactions), ChatDev (software development teams), MetaGPT (structured multi-agent collaboration). Challenges: coordination complexity, cost (multiple agents = multiple LLM calls), emergent behavior (unpredictable interactions). Multi-agent systems are emerging as the model for complex problem-solving; they mirror human team dynamics in software form.",
+      "examples": ["CrewAI", "AutoGen", "ChatDev", "MetaGPT", "Specialized agent teams"],
+      "keyTechniques": ["Role specialization", "Message passing", "Hierarchical control", "Tool sharing", "State synchronization"],
       "courseId": "agentic-ai",
       "links": []
     },
@@ -181,7 +209,9 @@
       "column": "retrieval",
       "description": "AI-generated data used to train other AI.",
       "details": "Synthetic data can augment training sets, create edge cases, or enable training where real data is scarce or private.",
-      "examples": ["Distillation", "Data Augmentation", "Simulation"],
+      "fullExplanation": "Synthetic data is artificially generated data used to train machine learning models. A Large Language Model can generate training examples at scale, enabling data augmentation and addressing data scarcity. Methods: (1) Data augmentation—take real examples and generate variations (rephrase sentences, change numbers), (2) Edge case generation—create examples of failure modes to improve robustness, (3) Privacy-preserving training—generate synthetic data instead of using sensitive real data, (4) Distillation—use a large model to label data for training a smaller model. Benefits: (1) Scale—generate unlimited training examples, (2) Cost—cheaper than manual data collection and annotation, (3) Privacy—train models without exposing real data, (4) Quality—humans can filter synthetic data before use. Challenges: (1) Data quality—synthetic data may have distributional differences from real data, (2) Diversity—models may generate repetitive examples, (3) Validation—hard to assess if synthetic data is 'good enough'. Synthetic data is becoming critical as model scale increases and real labeled data becomes bottleneck. Early studies show models trained partly on synthetic data can match or exceed those trained on real data alone.",
+      "examples": ["Distillation", "Data Augmentation", "Simulation", "Privacy-preserving training", "Edge case generation"],
+      "keyTechniques": ["Prompt engineering for data gen", "Quality filtering", "Diversity sampling", "Distribution matching", "Annotation"],
       "courseId": "synthetic-data",
       "links": []
     },
@@ -192,7 +222,9 @@
       "column": "validation",
       "description": "Understanding how and why models make decisions.",
       "details": "Interpretability research aims to open the 'black box' - understanding attention patterns, feature attribution, and reasoning.",
-      "examples": ["Mechanistic Interpretability", "SHAP", "Attention Visualization"],
+      "fullExplanation": "Interpretability (also called explainability) is the field studying how to understand AI model decisions. As AI systems make high-stakes decisions (hiring, healthcare, criminal justice), understanding 'why' is crucial for trust, debugging, and compliance. Approaches: (1) Attention visualization—showing which input tokens the model attends to, (2) Gradient-based methods—computing input importance via gradients, (3) SHAP—game-theoretic approach to feature importance, (4) Mechanistic interpretability—reverse-engineering how models work internally, (5) Probing—testing whether models have learned specific concepts. Why it matters: (1) Trust—users need to understand AI reasoning, (2) Debugging—identify model failures, (3) Compliance—regulatory requirements demand explainability, (4) Safety—ensure models don't rely on spurious correlations. Challenges: different methods give different explanations; no gold-standard 'correctness' metric; high-dimensional models are inherently hard to interpret. State-of-art: SHAP, attention visualization, and probing are practical; mechanistic interpretability is frontier research. As AI gets more powerful, interpretability becomes more critical.",
+      "examples": ["Mechanistic Interpretability", "SHAP", "Attention Visualization", "Gradient methods", "Feature attribution"],
+      "keyTechniques": ["Attention heads", "Gradient analysis", "SHAP values", "Activation patterns", "Ablation studies"],
       "courseId": "interpretability",
       "links": []
     },
@@ -203,7 +235,9 @@
       "column": "models",
       "description": "Models that reason and deliberate before responding.",
       "details": "Thinking models (like o1) spend compute on reasoning before generating output, enabling better problem-solving.",
-      "examples": ["OpenAI o1", "o3", "DeepSeek R1", "Chain-of-Thought"],
+      "fullExplanation": "Thinking models (exemplified by OpenAI's o1 and o3) represent a paradigm shift: instead of generating answers directly, they spend compute time reasoning through problems step-by-step before responding. The insight: humans think through hard problems; models should too. How they work: (1) Model reasons internally (not exposed to user), (2) After deliberation, generates final response, (3) User only sees the answer, not the reasoning process. Benefits: (1) Better accuracy—reasoning improves problem-solving on complex tasks, (2) Fewer errors—stepping through logic catches mistakes, (3) Robustness—less susceptible to adversarial prompts. Trade-offs: (1) Latency—reasoning takes time (minutes for hard problems), (2) Cost—reasoning computation is expensive, (3) Limited transparency—internal reasoning not visible. Best for: (1) Complex math, physics, coding—where stepping through logic helps, (2) High-accuracy requirements—domain where errors are costly. Not suitable for: (1) Real-time applications—reasoning latency unacceptable, (2) Cost-sensitive—compute cost too high. Thinking models represent the future of capability; they show that scaling compute-at-inference-time, not just at training, improves performance.",
+      "examples": ["OpenAI o1", "o3", "DeepSeek R1", "Extended Thinking", "Process Reward Models"],
+      "keyTechniques": ["Internal reasoning", "Step-by-step deliberation", "Process rewards", "Verification", "Self-critique"],
       "courseId": "reasoning-models",
       "links": []
     }
@@ -218,7 +252,10 @@
       "description": "Embeddings encode data, Vector DB stores it, LLM generates answers.",
       "level": "intermediate",
       "learnPath": ["rag-applications"],
-      "howToBuild": "1. Set up embeddings API (OpenAI/local) 2. Create vector DB (pgvector/Chroma) 3. Ingest documents → chunks → embeddings 4. Query: embed question → find similar → pass to LLM"
+      "howToBuild": "1. SETUP EMBEDDINGS: Choose API (OpenAI text-embedding-3-large) or local model (Sentence Transformers). 2. PREPARE DATA: Collect documents → split into chunks (500-1000 chars with overlap). 3. VECTORIZE: Embed each chunk, get vector (1536-dim). 4. STORE: Insert vectors+metadata into vector DB (Pinecone/Chroma). 5. QUERY: User question → embed with same model → similarity search → retrieve top-k chunks. 6. AUGMENT: Pass retrieved chunks as context to LLM prompt. 7. GENERATE: LLM answers based on context. Example workflow: User asks 'How to use RAG?' → embed question → find similar chunks in DB → retrieve documents about RAG → pass as context → LLM writes answer grounded in your docs.",
+      "architecture": "User Query → Embedding Model → Vector DB → Retrieve Context → LLM + Context → Answer",
+      "challenges": ["Chunk size affects retrieval quality", "Embedding model must match training domain", "Vector DB scale affects latency", "Semantic gaps between query and docs"],
+      "bestPractices": ["Use same embedding model throughout", "Add metadata for filtering", "Implement re-ranking for top results", "Monitor retrieval quality metrics", "Handle context window limits"]
     },
     {
       "id": "agent-formula",
@@ -229,7 +266,10 @@
       "description": "Prompts guide the LLM, Function Calling enables actions.",
       "level": "intermediate",
       "learnPath": ["prompt-engineering", "agentic-ai"],
-      "howToBuild": "1. Design system prompt with agent persona 2. Define tools/functions with JSON schemas 3. Implement ReAct loop: Think → Act → Observe 4. Add memory for conversation context"
+      "howToBuild": "1. DESIGN SYSTEM PROMPT: Define agent role, capabilities, constraints. Example: 'You are a data analyst. You can query databases and generate reports.' 2. DEFINE TOOLS: Create JSON schemas for available functions (search_database, generate_chart, send_email). Include parameter types and descriptions. 3. IMPLEMENT REACT LOOP: Think (LLM decides next action) → Act (call tool) → Observe (get result) → repeat until goal met. 4. ADD MEMORY: Store conversation history to maintain context across turns. 5. ERROR HANDLING: Handle tool failures, retry logic, fallback behaviors. Example: User says 'Analyze sales for Q4' → Agent thinks 'Need data' → Calls search_database('Q4 sales') → Gets results → Generates analysis → Returns to user.",
+      "architecture": "Prompt → LLM Decision → Function Call → Execute → Observe → LLM Processing → Output",
+      "challenges": ["Agents can get stuck in loops", "Tool hallucination (invoking non-existent tools)", "Cost of multiple LLM calls", "Unpredictable behavior at scale"],
+      "bestPractices": ["Start with simple agents", "Test tools independently", "Log all function calls", "Set iteration limits", "Monitor token usage"]
     },
     {
       "id": "multiagent-formula",
@@ -240,7 +280,10 @@
       "description": "Multiple Agents orchestrated by Frameworks with Guardrails.",
       "level": "advanced",
       "learnPath": ["agentic-ai", "ai-safety-guardrails"],
-      "howToBuild": "1. Define agent roles (researcher, coder, reviewer) 2. Use CrewAI/AutoGen for orchestration 3. Add guardrails for each agent 4. Define communication protocols between agents"
+      "howToBuild": "1. DEFINE AGENT ROLES: Create specialized agents with distinct purposes (researcher gathers info, coder writes code, reviewer checks quality, executor runs tasks). 2. SET UP FRAMEWORK: Use CrewAI or AutoGen for orchestration. Define agent capabilities, tools, and interaction protocols. 3. IMPLEMENT COMMUNICATION: Agents pass messages—researcher → coder, coder → reviewer, reviewer → executor. Define message format. 4. ADD GUARDRAILS: Validate each agent's outputs (no harmful content, follows format, respects constraints). 5. MANAGE STATE: Track what each agent has done, prevent duplicate work, maintain shared context. Example workflow: Task 'Build API' → Researcher gathers requirements → Coder writes code → Reviewer audits → Executor deploys. Each agent specializes; human defines interactions.",
+      "architecture": "Task → Agent Manager → Specialized Agents (parallel/sequential) → Guardrails → Aggregator → Output",
+      "challenges": ["Coordination complexity grows exponentially", "Cost multiplies with number of agents", "Emergent behaviors hard to predict", "Deadlocks between agents possible"],
+      "bestPractices": ["Start with 2-3 agents", "Define clear responsibilities", "Add logging between agents", "Test agent interactions", "Monitor cost/latency", "Use human-in-the-loop for critical decisions"]
     },
     {
       "id": "safe-rag",
@@ -251,7 +294,10 @@
       "description": "RAG system with Guardrails and Red Teaming for production.",
       "level": "advanced",
       "learnPath": ["rag-applications", "ai-safety-guardrails", "llm-evaluation"],
-      "howToBuild": "1. Build RAG pipeline 2. Add input/output guardrails (NeMo/Guardrails AI) 3. Red team for prompt injection 4. Monitor with evaluation metrics 5. Add fallback responses"
+      "howToBuild": "1. BUILD RAG PIPELINE: Set up retrieval, embeddings, vector DB as baseline system. 2. ADD INPUT GUARDRAILS: Validate user queries—reject prompt injections, enforce content policies, sanitize inputs. Tools: NeMo Guardrails, Guardrails AI. 3. ADD OUTPUT GUARDRAILS: Validate LLM responses—check factuality, ensure sources cited, block harmful content. 4. RED TEAM: Adversarially test—try prompt injections, jailbreaks, semantic attacks. Document vulnerabilities. 5. IMPLEMENT MONITORING: Log all queries/responses, track failures, measure performance metrics. 6. ADD FALLBACKS: If RAG fails to retrieve relevant docs, have fallback response. 7. HUMAN REVIEW: For high-stakes queries, implement human-in-the-loop. 8. VERSION CONTROL: Track changes to prompts, guardrails, models. Example: User query → Input guard (safe?) → RAG retrieval → Output guard (factual?) → Monitor → Response.",
+      "architecture": "Input Guard → RAG Pipeline → Output Guard → Monitor → Fallback/Response",
+      "challenges": ["Guardrails can block legitimate queries", "Red teamers can always find new attacks", "Monitoring overhead at scale", "Balancing safety with usability"],
+      "bestPractices": ["Test guardrails don't over-block", "Iterate on red teaming findings", "Use evaluation benchmarks", "Monitor false positives", "Document all safety measures", "Have incident response plan"]
     },
     {
       "id": "agentic-rag",
@@ -262,7 +308,10 @@
       "description": "Agent-driven retrieval that decides when and what to search.",
       "level": "advanced",
       "learnPath": ["rag-applications", "agentic-ai"],
-      "howToBuild": "1. Create RAG as a tool 2. Agent decides: answer directly OR search 3. Agent can refine queries 4. Use LangGraph for state management 5. Add routing logic"
+      "howToBuild": "1. CREATE RAG TOOL: Package standard RAG (embed, retrieve, augment) as a callable function with inputs (query, retrieval_count, filters). 2. DESIGN AGENT LOGIC: Give agent decision-making power: 'Do I have enough information to answer directly, or should I search the knowledge base?' 3. IMPLEMENT ROUTING: Agent can pursue multiple strategies—answer from training data, search KB, combine both, or admit uncertainty. 4. ENABLE REFINEMENT: If first search returns poor results, agent can refine query and retry. 5. USE STATE MACHINE: LangGraph enables clean state transitions (think → decide → retrieve → process → respond). 6. MULTI-QUERY: Agent can issue multiple queries in parallel. Example: User asks 'Compare our Q3 vs Q4 sales' → Agent decides needs search → Issues query 'Q3 sales data' and 'Q4 sales data' in parallel → Retrieves both → Compares → Answers.",
+      "architecture": "Agent → Decision Logic → RAG Tool (if needed) → Query Refinement → LLM → Response",
+      "challenges": ["Added latency when agent decides to search", "Increased cost (multiple retrievals per query)", "Agent may retrieve irrelevant docs", "Complex error handling"],
+      "bestPractices": ["Set search thresholds clearly", "Log agent decisions for analysis", "Cache common queries", "Use re-ranking for retrieval", "Monitor when agent searches vs answers", "Test routing logic extensively"]
     },
     {
       "id": "multimodal-rag",
@@ -273,7 +322,10 @@
       "description": "RAG with images, PDFs, and documents using vision models.",
       "level": "advanced",
       "learnPath": ["multimodal-ai", "rag-applications"],
-      "howToBuild": "1. Extract text + images from PDFs 2. Use CLIP/vision model for image embeddings 3. Store both text and image vectors 4. Query with multimodal model (GPT-4V) 5. Return relevant images + text"
+      "howToBuild": "1. EXTRACT FROM PDFS: Use document parsers (pdfplumber, PyPDF2) to extract text AND images from PDFs. Maintain position mapping. 2. SEPARATE MODALITIES: Keep text and images as separate elements with linking metadata. 3. CREATE TEXT EMBEDDINGS: Embed text chunks with standard embeddings model (text-embedding-3). 4. CREATE IMAGE EMBEDDINGS: Use CLIP or vision encoder to embed images. Store images and their embeddings. 5. UNIFIED VECTOR DB: Store both text and image vectors in same DB with type metadata. 6. MULTI-MODAL QUERY: Accept text queries → embed with text encoder. Also accept image queries → embed with CLIP encoder. 7. RETRIEVE BOTH: Find similar text chunks AND similar images. 8. MULTIMODAL LLM: Pass retrieved text + images to vision-capable model (GPT-4V, Gemini). 9. GENERATE: Model generates response considering both text and visual content. Example: User uploads PDF with charts → Extract text and images → Query 'Sales trend' → Find relevant text docs AND chart images → GPT-4V analyzes both → Returns insights.",
+      "architecture": "PDF Input → Extract Text + Images → Parallel Embedding (Text/Image) → Unified Vector DB → Multimodal Query → Retrieve → GPT-4V → Response",
+      "challenges": ["Image quality and resolution", "Embedding space alignment (text vs image)", "Storage overhead for images", "Retrieval ranking when mixing modalities"],
+      "bestPractices": ["Use high-quality vision encoders", "Store image metadata (source page, position)", "Implement reranking for mixed results", "Consider image compression for storage", "Test cross-modal queries", "Monitor image retrieval quality"]
     },
     {
       "id": "finetuned-agent",
@@ -284,7 +336,10 @@
       "description": "Fine-tuned model with function calling for domain-specific agents.",
       "level": "advanced",
       "learnPath": ["llm-finetuning", "agentic-ai", "prompt-engineering"],
-      "howToBuild": "1. Collect domain-specific data 2. Fine-tune base model (LoRA/QLoRA) 3. Train on function-calling format 4. Define domain tools 5. Deploy with specialized prompts"
+      "howToBuild": "1. COLLECT DOMAIN DATA: Gather 500-2000 examples of agent behavior in your domain. Format as function-calling interactions. 2. PREPARE TRAINING DATA: Each example: input → agent thinks → function calls → results → answer. 3. FINE-TUNE BASE MODEL: Use LoRA/QLoRA on base model (Llama-3-8B, Mistral-7B). Optimize for function-calling format. 4. DEFINE DOMAIN TOOLS: Create specialized tool set for domain (medical diagnosis tools, code review tools, financial analysis tools). 5. DESIGN SYSTEM PROMPT: Write domain-specific instructions reflecting your organization's practices. 6. EVALUATE PERFORMANCE: Test on held-out examples, measure function-calling accuracy, answer quality. 7. DEPLOY: Run on cheaper inference (ollama/vLLM) than APIs, lower latency, complete privacy. Example: Healthcare domain → fine-tune on patient interaction examples → train to use medical tools → deploy specialized agent that uses correct terminology and tools.",
+      "architecture": "Domain Data → Fine-tune (LoRA) → Specialized Model + Tools → System Prompt → Agent",
+      "challenges": ["Requires high-quality domain training data", "Fine-tuning adds dev complexity", "Deployment infrastructure needed", "Harder to debug than API models"],
+      "bestPractices": ["Start small (100 examples)", "Use established base models", "Implement comprehensive testing", "Monitor inference quality", "Keep domain tools documented", "Version control training data"]
     },
     {
       "id": "edge-ai",
@@ -295,7 +350,10 @@
       "description": "Small models fine-tuned for efficient on-device deployment.",
       "level": "advanced",
       "learnPath": ["small-language-models", "llm-finetuning"],
-      "howToBuild": "1. Choose small base (Phi-3, Gemma, Llama-3-8B) 2. Quantize to 4-bit 3. Fine-tune for specific task 4. Deploy with Ollama/llama.cpp 5. Optimize for latency"
+      "howToBuild": "1. CHOOSE BASE: Select small model optimized for your task (Phi-3 for general, Gemma for efficiency, Mistral-7B for capability). 2. QUANTIZE: Convert to 4-bit quantization to fit memory (2B model → ~1GB). Use tools like GPTQ or GGUF. 3. FINE-TUNE: Use QLoRA to fine-tune on task-specific data without blowing up memory. 4. PACKAGE: Export quantized + fine-tuned model. 5. OPTIMIZE: Use inference frameworks like ollama (Mac/Linux), llama.cpp (cross-platform), MLX (Apple Silicon). 6. DEPLOY: Run on device—phone, edge server, embedded systems. 7. TEST LATENCY: Measure inference speed. Target <100ms for real-time apps. 8. MONITOR: Track accuracy, latency, memory usage on device. Example: Mobile app → use Phi-3 quantized → fine-tuned for customer support → inference in 50ms on phone → no data leaves device.",
+      "architecture": "Base Model → Quantization → Fine-tuning → Optimization → Device Deployment",
+      "challenges": ["Model degradation from quantization", "Limited parameter count reduces capability", "Device memory constraints", "Keeping models updated"],
+      "bestPractices": ["Benchmark quantization quality", "Start with well-optimized base models", "Validate on target devices", "Monitor inference latency", "Plan for model updates", "Test across device types"]
     },
     {
       "id": "reasoning-chain",
@@ -306,7 +364,10 @@
       "description": "Thinking models with structured prompts and safety guardrails.",
       "level": "intermediate",
       "learnPath": ["reasoning-models", "prompt-engineering", "ai-safety-guardrails"],
-      "howToBuild": "1. Use o1/o3 or add CoT prompting 2. Structure prompts for step-by-step 3. Validate reasoning steps 4. Add output guardrails 5. Monitor for reasoning errors"
+      "howToBuild": "1. CHOOSE THINKING MODEL: Use o1 or o3 for complex reasoning, or add CoT prompting to standard models. 2. STRUCTURE PROMPTS: Format prompts to encourage step-by-step thinking. 'Let's think through this step-by-step:' 3. DEFINE VALIDATION: Add rules for what constitutes valid reasoning (logical consistency, factual grounding, safety). 4. ADD GUARDRAILS: Before reasoning starts → validate input is safe. After reasoning → check output respects constraints. 5. IMPLEMENT MONITORING: Log reasoning steps, track decision quality, measure accuracy. 6. SET TIMEOUTS: Thinking models can deliberate indefinitely. Set maximum reasoning time. 7. TEST EXTENSIVELY: Verify model doesn't get stuck in circular reasoning. 8. COST MANAGEMENT: Thinking compute is expensive—reserve for high-value queries. Example: Complex math problem → input guard (safe?) → model reasons internally → guardrail validates reasoning → return answer.",
+      "architecture": "Input Guard → Structured Prompt → Thinking/Reasoning → Validation → Output Guard → Response",
+      "challenges": ["Reasoning latency (minutes for hard problems)", "Cost of reasoning computation", "Unpredictable reasoning depth", "Hard to debug internal reasoning"],
+      "bestPractices": ["Start with simple problems", "Monitor reasoning latency", "Set explicit iteration limits", "Validate reasoning quality", "Use for high-value queries only", "Have fallback for timeout"]
     },
     {
       "id": "synthetic-training",
@@ -317,7 +378,10 @@
       "description": "Use LLMs to generate synthetic data for fine-tuning.",
       "level": "intermediate",
       "learnPath": ["synthetic-data", "llm-finetuning"],
-      "howToBuild": "1. Define task format 2. Use GPT-4/Claude to generate examples 3. Quality filter with LLM 4. Format as training data 5. Fine-tune smaller model"
+      "howToBuild": "1. DEFINE TASK: Specify exactly what you want to generate (e.g., 'Customer support Q&A pairs'). 2. DESIGN TEMPLATE: Create examples showing desired format. Include 5-10 seed examples. 3. GENERATE AT SCALE: Use GPT-4/Claude to generate 1000+ examples from templates. Batch requests to reduce cost. 4. QUALITY FILTER: LLM evaluates synthetic examples: are they valid? diverse? on-topic? Remove low-quality examples. 5. HUMAN VALIDATION: Sample 5-10% and have humans verify quality. Measure agreement. 6. FORMAT FOR TRAINING: Convert approved examples to training format (prompt → completion pairs). 7. FINE-TUNE SMALLER MODEL: Train Mistral-7B or Phi-3 on synthetic data. 8. COMPARE: Benchmark fine-tuned model vs base model on real test set. Often matches larger models. Example: Want domain Q&A → describe format → GPT-4 generates 2000 examples → human validates 100 → fine-tune Phi-3 → 80% accuracy on real questions.",
+      "architecture": "Task Definition → Seed Examples → Generate (GPT-4) → Filter → Validate → Training Data → Fine-tune → Evaluate",
+      "challenges": ["Synthetic data quality varies", "Distribution mismatch vs real data", "Cost of generating at scale", "Time to validate quality"],
+      "bestPractices": ["Start with small pilot (100 examples)", "Use strong generator (GPT-4, Claude)", "Implement multi-stage filtering", "Have humans validate sample", "Benchmark vs real data", "Document generation process"]
     },
     {
       "id": "safe-agent",
@@ -328,7 +392,10 @@
       "description": "Agents with guardrails and interpretability for safe deployment.",
       "level": "advanced",
       "learnPath": ["agentic-ai", "ai-safety-guardrails", "interpretability"],
-      "howToBuild": "1. Build agent with ReAct 2. Add input/output guardrails 3. Log all decisions for audit 4. Add SHAP/attention viz 5. Human-in-the-loop for critical actions"
+      "howToBuild": "1. BUILD AGENT: Implement ReAct agent with tools, memory, planning. 2. ADD INPUT GUARDRAILS: Validate user requests before agent sees them. Reject harmful/unsafe inputs. 3. ADD OUTPUT GUARDRAILS: Validate agent's tool calls—are they calling appropriate functions? Are parameters reasonable? 4. ADD DECISION LOGGING: Log every decision the agent makes: what it thought, what tools it called, why. 5. IMPLEMENT INTERPRETABILITY: Use SHAP or attention analysis to explain agent's top decisions. 'Why did agent choose tool X?' 6. HUMAN-IN-THE-LOOP: For high-stakes actions (financial transactions, sensitive data access), require human approval. 7. MONITORING: Track agent behavior—detect anomalies, distribution shifts, failures. 8. ROLLBACK: If agent misbehaves, rollback to previous version. Example: AI recruiter agent → input guard (don't process bias-related prompts) → agent evaluates candidates → guardrail (don't call delete_candidate without approval) → human reviews → interpretability shows reasoning → logs all decisions.",
+      "architecture": "Input Guard → Agent → Tool Call Guard → Decision Logger → Interpretability → Human Review → Monitor",
+      "challenges": ["Guardrails can over-block", "Interpretability adds overhead", "Human review bottleneck", "Trust vs autonomy trade-off"],
+      "bestPractices": ["Start with simple guardrails", "Add interpretability from day 1", "Use human review for 10% of actions", "Gradually reduce human review as confidence grows", "Monitor false positive/negatives", "Document decision criteria"]
     },
     {
       "id": "chatbot",
@@ -339,7 +406,10 @@
       "description": "Simple prompt-based LLM chat application.",
       "level": "beginner",
       "learnPath": ["prompt-engineering", "genai-applications"],
-      "howToBuild": "1. Choose API (OpenAI/Anthropic) 2. Design system prompt 3. Maintain conversation history 4. Add basic UI (Gradio/Streamlit) 5. Deploy to cloud"
+      "howToBuild": "1. CHOOSE LLM: Pick API (OpenAI GPT-4/Claude via Anthropic) or self-hosted (ollama with Llama-3). 2. DESIGN SYSTEM PROMPT: Write personality/behavior instructions. 'You are a helpful customer support bot. Be concise and professional.' 3. MANAGE HISTORY: Keep conversation history (last 10 turns) to provide context. 4. BUILD UI: Simple interface with input field + message display. Use Gradio (Python, 20 lines) or Streamlit (easy deployment). 5. IMPLEMENTATION: On user message → format as prompt with history → call LLM → stream response → update UI. 6. ERROR HANDLING: Catch API errors, rate limits, timeouts. Show user-friendly messages. 7. DEPLOY: Streamlit Cloud (free), Hugging Face Spaces, cloud function. 8. COST OPTIMIZATION: Cache identical queries, implement rate limiting. Example: User says 'Hello' → format prompt 'You are helpful bot. History: [empty]. User: Hello' → GPT-4 responds → show response → add to history.",
+      "architecture": "User Input → Format Prompt with History → LLM → Stream Response → Update UI",
+      "challenges": ["Managing token limits", "API costs scaling with usage", "Cold starts add latency", "Ensuring consistent tone"],
+      "bestPractices": ["Test system prompt variations", "Implement token counting", "Cache system prompts", "Monitor API usage/cost", "Use streaming for better UX", "Add conversation reset button"]
     }
   ]
 }

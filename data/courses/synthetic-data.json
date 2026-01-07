@@ -1,10 +1,15 @@
 {
   "id": "synthetic-data",
   "title": "Synthetic Data Generation",
-  "description": "Create high-quality training data using AI - from distillation to augmentation to simulation",
+  "description": "Create high-quality training data using AI - from distillation to augmentation to simulation. Synthetic data is artificially generated information that mimics real-world data, enabling organizations to train AI models without the constraints of collecting, labeling, and privacy concerns of real data.",
   "icon": "🧬",
   "level": "intermediate",
   "duration": "3 weeks",
+  "validationSources": [
+    "https://www.ibm.com/topics/synthetic-data",
+    "https://www.ibm.com/think/topics/synthetic-data",
+    "https://www.ibm.com/topics/data-augmentation"
+  ],
   "prerequisites": ["Understanding of what LLMs are (ChatGPT, Claude)", "Python basics (can read and modify code)", "OpenAI API access (for generating data)"],
   "prerequisitesClarification": "You should know how to prompt an LLM. No ML math required. Get an OpenAI API key at platform.openai.com.",
   "whatYouNeed": [
@@ -238,6 +243,185 @@
               "Monitor diversity metrics during training",
               "Decontaminate against benchmark data",
               "Build a complete QA pipeline for production use"
+            ]
+          }
+        },
+        {
+          "id": "synthetic-data-quiz",
+          "title": "Synthetic Data Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is synthetic data?",
+              "options": [
+                "Data that is collected from real users",
+                "Artificially generated data that mimics real-world data patterns",
+                "Data that has been compressed",
+                "Data stored in synthetic materials"
+              ],
+              "correct": 1,
+              "explanation": "Synthetic data is artificially generated information that mimics the statistical properties and patterns of real-world data without containing actual real data."
+            },
+            {
+              "question": "According to IBM, what is a key benefit of synthetic data?",
+              "options": [
+                "It is always more accurate than real data",
+                "It enables AI development while addressing privacy, cost, and data scarcity challenges",
+                "It eliminates the need for any real data",
+                "It runs faster than real data"
+              ],
+              "correct": 1,
+              "explanation": "Synthetic data helps organizations overcome challenges related to data privacy, collection costs, rare edge cases, and data scarcity while enabling effective AI model training."
+            },
+            {
+              "question": "What is model distillation?",
+              "options": [
+                "Making a model smaller through compression",
+                "Using a large 'teacher' model to generate training data for a smaller 'student' model",
+                "Purifying the model's weights",
+                "Removing noise from model outputs"
+              ],
+              "correct": 1,
+              "explanation": "Model distillation uses a large, capable teacher model to generate outputs that train a smaller student model, transferring knowledge efficiently."
+            },
+            {
+              "question": "What is 'model collapse' in the context of synthetic data?",
+              "options": [
+                "When a model runs out of memory",
+                "When training on AI-generated data causes models to degrade and lose diversity",
+                "When a model stops responding",
+                "When a model becomes too large"
+              ],
+              "correct": 1,
+              "explanation": "Model collapse occurs when repeatedly training on AI-generated data causes the model to lose diversity, produce repetitive outputs, and degrade in quality."
+            },
+            {
+              "question": "What is data augmentation?",
+              "options": [
+                "Deleting data to make models smaller",
+                "Expanding datasets by creating variations of existing examples",
+                "Encrypting data for security",
+                "Compressing data for storage"
+              ],
+              "correct": 1,
+              "explanation": "Data augmentation expands training datasets by creating variations of existing examples through techniques like paraphrasing, translation, or transformation."
+            },
+            {
+              "question": "Why is quality filtering important for synthetic data?",
+              "options": [
+                "To make generation faster",
+                "To ensure only high-quality examples are used for training, preventing 'garbage in, garbage out'",
+                "To reduce storage costs",
+                "To protect copyright"
+              ],
+              "correct": 1,
+              "explanation": "Quality filtering ensures synthetic datasets contain only high-quality examples, as training on low-quality generated data degrades model performance."
+            },
+            {
+              "question": "What is LLM-as-judge in synthetic data generation?",
+              "options": [
+                "A legal framework for AI",
+                "Using an LLM to score and evaluate the quality of generated synthetic examples",
+                "An AI competition format",
+                "A debugging technique"
+              ],
+              "correct": 1,
+              "explanation": "LLM-as-judge uses a capable language model to evaluate and score synthetic examples based on quality criteria, helping filter out low-quality generated data."
+            },
+            {
+              "question": "What is decontamination in the context of synthetic data?",
+              "options": [
+                "Removing viruses from data",
+                "Ensuring synthetic data doesn't contain examples too similar to benchmark test sets",
+                "Cleaning typos from data",
+                "Removing personal information"
+              ],
+              "correct": 1,
+              "explanation": "Decontamination removes synthetic examples that are too similar to benchmark test sets, preventing false inflation of evaluation scores."
+            },
+            {
+              "question": "What is the Alpaca dataset famous for?",
+              "options": [
+                "Being the largest dataset ever created",
+                "Demonstrating that synthetic instruction data can effectively fine-tune LLMs",
+                "Being completely hand-labeled",
+                "Only working with image models"
+              ],
+              "correct": 1,
+              "explanation": "The Alpaca dataset from Stanford demonstrated that synthetically generated instruction-following data could be used to effectively fine-tune open-source LLMs."
+            },
+            {
+              "question": "What is preference data used for in synthetic data generation?",
+              "options": [
+                "Storing user preferences",
+                "Training models to distinguish between better and worse responses using chosen/rejected pairs",
+                "Tracking which models are preferred",
+                "Configuring model settings"
+              ],
+              "correct": 1,
+              "explanation": "Preference data with chosen/rejected pairs is used for techniques like DPO (Direct Preference Optimization) to train models to generate better responses."
+            },
+            {
+              "question": "According to IBM, what are the three levels of synthesis for synthetic data?",
+              "options": [
+                "Low, Medium, High quality",
+                "Fully synthetic, Partially synthetic, Hybrid",
+                "Raw, Processed, Refined",
+                "Simple, Complex, Advanced"
+              ],
+              "correct": 1,
+              "explanation": "IBM categorizes synthetic data by synthesis level: Fully synthetic (entirely new data), Partially synthetic (real data with sensitive portions replaced), and Hybrid (real records paired with synthetic counterparts)."
+            },
+            {
+              "question": "Which generation technique uses a generator and discriminator network that train adversarially?",
+              "options": [
+                "Variational Autoencoders (VAEs)",
+                "Transformer models",
+                "Generative Adversarial Networks (GANs)",
+                "Statistical methods"
+              ],
+              "correct": 2,
+              "explanation": "GANs involve two neural networks: a generator that creates synthetic data and a discriminator that distinguishes real from artificial data. They train iteratively until the discriminator cannot tell them apart."
+            },
+            {
+              "question": "What is a key challenge with synthetic data according to IBM regarding accuracy and privacy?",
+              "options": [
+                "They are completely unrelated concerns",
+                "Privacy always improves accuracy",
+                "There is an inherent trade-off - prioritizing one may reduce the other",
+                "Accuracy eliminates privacy needs"
+              ],
+              "correct": 2,
+              "explanation": "During synthetic data generation, prioritizing accuracy might mean retaining more personal data, while prioritizing privacy might reduce accuracy. Finding the right balance for specific use cases is essential."
+            },
+            {
+              "question": "Which synthetic data generation technique models individual entities (agents) interacting in a virtual environment?",
+              "options": [
+                "Transformer models",
+                "Agent-based modeling",
+                "Variational Autoencoders",
+                "Distribution-based sampling"
+              ],
+              "correct": 1,
+              "explanation": "Agent-based modeling simulates complex systems where individual agents operate based on predefined rules, interacting with their environment and other agents to produce synthetic data. It's used in epidemiology and traffic simulation."
+            }
+          ],
+          "references": {
+            "lessonRefs": [
+              "what-is-synthetic-data",
+              "why-synthetic-data",
+              "avoiding-pitfalls"
+            ],
+            "externalRefs": [
+              {
+                "title": "IBM Synthetic Data",
+                "url": "https://www.ibm.com/topics/synthetic-data"
+              },
+              {
+                "title": "Alpaca Dataset",
+                "url": "https://github.com/tatsu-lab/stanford_alpaca"
+              }
             ]
           }
         }

@@ -1,10 +1,15 @@
 {
   "id": "llm-finetuning",
   "title": "LLM Fine-tuning Mastery",
-  "description": "Customize large language models for your specific use cases",
-  "icon": "\ud83c\udfaf",
+  "description": "Master the art of fine-tuning large language models to customize them for your specific use cases. Fine-tuning is the process of taking a pre-trained foundation model and adapting it for specialized tasks, domains, or organizational requirements through continued training on curated datasets.",
+  "icon": "🎯",
   "level": "advanced",
   "duration": "6 weeks",
+  "validationSources": [
+    "https://www.ibm.com/topics/fine-tuning",
+    "https://www.ibm.com/think/topics/fine-tuning-large-language-models",
+    "https://www.ibm.com/topics/foundation-models"
+  ],
   "prerequisites": [
     "Deep learning fundamentals",
     "PyTorch experience",
@@ -79,11 +84,11 @@
           "title": "When and Why to Fine-tune",
           "duration": "30 min",
           "content": {
-            "overview": "Fine-tuning adapts a pre-trained LLM to your specific domain or task. But it's not always the right choice\u2014understanding when to fine-tune versus when to use prompt engineering or RAG is crucial for efficient development.",
+            "overview": "Fine-tuning adapts a pre-trained LLM to your specific domain or task. But it's not always the right choice—understanding when to fine-tune versus when to use prompt engineering or RAG is crucial for efficient development.",
             "sections": [
               {
                 "title": "The Fine-tuning Decision Framework",
-                "content": "Consider fine-tuning when:\n\n**\u2705 Good candidates for fine-tuning**:\n- Need consistent output format/style across many queries\n- Domain-specific terminology or jargon\n- Task requires behavior change (not just knowledge)\n- High-volume production with cost constraints\n- Privacy: Can't send data to external API\n\n**\u274c Consider alternatives first**:\n- Need up-to-date information \u2192 **RAG**\n- Want to add knowledge \u2192 **RAG**\n- One-off customization \u2192 **Prompt engineering**\n- Complex multi-step reasoning \u2192 **Agent systems**\n\n**Cost comparison** (rough estimates):\n| Approach | Setup Cost | Per-query Cost | Flexibility |\n|----------|------------|----------------|-------------|\n| Prompt Engineering | Low | Higher (more tokens) | High |\n| RAG | Medium | Medium | High |\n| Fine-tuning | High | Lower | Low |",
+                "content": "Consider fine-tuning when:\n\n**✅ Good candidates for fine-tuning**:\n- Need consistent output format/style across many queries\n- Domain-specific terminology or jargon\n- Task requires behavior change (not just knowledge)\n- High-volume production with cost constraints\n- Privacy: Can't send data to external API\n\n**❌ Consider alternatives first**:\n- Need up-to-date information → **RAG**\n- Want to add knowledge → **RAG**\n- One-off customization → **Prompt engineering**\n- Complex multi-step reasoning → **Agent systems**\n\n**Cost comparison** (rough estimates):\n| Approach | Setup Cost | Per-query Cost | Flexibility |\n|----------|------------|----------------|-------------|\n| Prompt Engineering | Low | Higher (more tokens) | High |\n| RAG | Medium | Medium | High |\n| Fine-tuning | High | Lower | Low |",
                 "code": "# Decision tree implementation\ndef should_finetune(requirements: dict) -> str:\n    \"\"\"\n    Simple decision framework for fine-tuning.\n    \n    requirements = {\n        'need_current_info': bool,\n        'consistent_format': bool,\n        'domain_specific': bool,\n        'high_volume': bool,\n        'privacy_required': bool,\n        'behavior_change': bool\n    }\n    \"\"\"\n    # RAG is better for knowledge needs\n    if requirements.get('need_current_info'):\n        return \"Use RAG - fine-tuning can't provide current information\"\n    \n    # Strong indicators for fine-tuning\n    finetune_score = sum([\n        requirements.get('consistent_format', False) * 2,\n        requirements.get('domain_specific', False) * 1.5,\n        requirements.get('high_volume', False) * 2,\n        requirements.get('privacy_required', False) * 2,\n        requirements.get('behavior_change', False) * 2\n    ])\n    \n    if finetune_score >= 5:\n        return \"Fine-tuning recommended\"\n    elif finetune_score >= 3:\n        return \"Consider fine-tuning, but start with prompting\"\n    else:\n        return \"Start with prompt engineering or RAG\"\n\n# Example usage\nreqs = {\n    'need_current_info': False,\n    'consistent_format': True,\n    'domain_specific': True,\n    'high_volume': True,\n    'privacy_required': False,\n    'behavior_change': True\n}\n\nprint(should_finetune(reqs))  # \"Fine-tuning recommended\""
               },
               {
@@ -175,6 +180,83 @@
               }
             ]
           }
+        },
+        {
+          "id": "rlhf-alignment",
+          "title": "RLHF and Alignment Methods",
+          "duration": "50 min",
+          "content": {
+            "overview": "Understanding how models are aligned with human preferences is essential for advanced fine-tuning. This lesson covers RLHF (the original alignment technique), its successor DPO, and other modern alignment methods used in production.",
+            "sections": [
+              {
+                "title": "RLHF: The Original Alignment Technique",
+                "content": "**RLHF (Reinforcement Learning from Human Feedback)** is how ChatGPT was made helpful and safe. It's a 3-step process:\n\n**Step 1: Supervised Fine-Tuning (SFT)**\n- Train on human-written responses\n- Model learns basic instruction following\n\n**Step 2: Reward Model Training**\n- Collect human comparisons (which response is better?)\n- Train a reward model to predict human preferences\n\n**Step 3: PPO Optimization**\n- Use reinforcement learning (PPO algorithm)\n- Optimize policy to maximize reward model scores\n- Add KL penalty to prevent straying from SFT model\n\n**Why it's complex:**\n- Requires training 3 separate models\n- RL is unstable and hyperparameter-sensitive\n- Expensive in compute and human annotation\n\nThis is why DPO was developed as a simpler alternative.",
+                "diagram": {
+                  "title": "RLHF Pipeline",
+                  "code": "flowchart LR\n    subgraph Step1[\"Step 1: SFT\"]\n        D1[Demonstration Data] --> SFT[SFT Model]\n    end\n    \n    subgraph Step2[\"Step 2: Reward Model\"]\n        P1[Preference Data] --> RM[Reward Model]\n    end\n    \n    subgraph Step3[\"Step 3: RL\"]\n        SFT --> PPO[PPO Training]\n        RM --> PPO\n        PPO --> ALIGNED[Aligned Model]\n    end"
+                }
+              },
+              {
+                "title": "DPO: Direct Preference Optimization",
+                "content": "**DPO** eliminates the reward model and RL entirely:\n\n**Key insight**: The optimal policy can be derived directly from preferences without explicitly training a reward model.\n\n**The DPO loss:**\n$$\\mathcal{L}_{DPO} = -\\log\\sigma\\left(\\beta \\log\\frac{\\pi_\\theta(y_w|x)}{\\pi_{ref}(y_w|x)} - \\beta \\log\\frac{\\pi_\\theta(y_l|x)}{\\pi_{ref}(y_l|x)}\\right)$$\n\nWhere:\n- $y_w$ = preferred (winning) response\n- $y_l$ = rejected (losing) response\n- $\\pi_\\theta$ = model being trained\n- $\\pi_{ref}$ = reference model (frozen SFT)\n- $\\beta$ = temperature controlling deviation from reference\n\n**Benefits over RLHF:**\n- No reward model needed\n- No RL instability\n- Simple classification loss\n- Faster, cheaper training\n- Often equal or better results",
+                "code": "from trl import DPOConfig, DPOTrainer\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\nfrom datasets import load_dataset\n\n# Load SFT model as base\nmodel = AutoModelForCausalLM.from_pretrained(\"your-sft-model\")\ntokenizer = AutoTokenizer.from_pretrained(\"your-sft-model\")\n\n# Preference dataset: each example has chosen and rejected\n# Format: {\"prompt\": \"...\", \"chosen\": \"...\", \"rejected\": \"...\"}\ndataset = load_dataset(\"trl-lib/ultrafeedback_binarized\", split=\"train\")\n\n# DPO training\ntraining_args = DPOConfig(\n    output_dir=\"./dpo-model\",\n    beta=0.1,                    # KL penalty strength\n    loss_type=\"sigmoid\",         # Standard DPO loss\n    learning_rate=5e-7,          # Lower than SFT\n    num_train_epochs=1,\n    per_device_train_batch_size=4,\n    gradient_accumulation_steps=4,\n    bf16=True,\n    logging_steps=10,\n)\n\ntrainer = DPOTrainer(\n    model=model,\n    args=training_args,\n    train_dataset=dataset,\n    processing_class=tokenizer,\n)\n\ntrainer.train()"
+              },
+              {
+                "title": "Beyond DPO: Modern Alignment Variants",
+                "content": "The TRL library supports many DPO variants:\n\n**IPO (Identity Preference Optimization)**\n- Addresses DPO overfitting issues\n- Averages log-likelihoods instead of summing\n- Better theoretical grounding\n\n**KTO (Kahneman-Tversky Optimization)**\n- Works with binary labels (good/bad) instead of pairs\n- More efficient data usage\n- Based on prospect theory\n\n**ORPO (Odds Ratio Preference Optimization)**\n- Combines SFT and preference alignment in one step\n- Simpler pipeline\n- No reference model needed\n\n**Which to choose?**\n- DPO: Default, well-tested, great results\n- IPO: If DPO overfits\n- KTO: If you only have thumbs up/down data\n- ORPO: If you want single-stage training",
+                "code": "from trl import DPOConfig\n\n# Different loss types in TRL\n\n# Standard DPO\ndpo_config = DPOConfig(\n    loss_type=\"sigmoid\",\n    beta=0.1\n)\n\n# IPO - often more stable\nipo_config = DPOConfig(\n    loss_type=\"ipo\",\n    beta=0.1  # Acts as regularization parameter τ\n)\n\n# Robust DPO - handles noisy labels\nrobust_config = DPOConfig(\n    loss_type=\"robust\",\n    label_smoothing=0.1  # Assume 10% label noise\n)\n\n# For KTO, use dedicated KTOTrainer\nfrom trl import KTOConfig, KTOTrainer\n\nkto_config = KTOConfig(\n    output_dir=\"./kto-model\",\n    desirable_weight=1.0,\n    undesirable_weight=1.0,\n)\n\n# ORPO - single-stage alignment\nfrom trl import ORPOConfig, ORPOTrainer\n\norpo_config = ORPOConfig(\n    output_dir=\"./orpo-model\",\n    beta=0.1,  # Controls preference vs SFT balance\n)"
+              },
+              {
+                "title": "The Alignment Tax and Constitutional AI",
+                "content": "**Alignment Tax**: The observation that RLHF/alignment can sometimes reduce raw capability.\n\n- Aligned models may be more conservative\n- May refuse valid requests (over-refusal)\n- Trade-off between safety and helpfulness\n\n**Mitigations:**\n- Careful reward model training\n- Balance safety and helpfulness in preferences\n- Use DPO with appropriate β (lower = more deviation allowed)\n\n**Constitutional AI (Anthropic)**\nInstead of human feedback, use AI feedback:\n1. Generate responses\n2. Ask AI to critique based on principles (constitution)\n3. Have AI revise responses\n4. Train on AI-improved responses\n\n**Benefits:**\n- Scales better than human annotation\n- Consistent application of principles\n- Can encode complex rules",
+                "code": "# Constitutional AI-style self-improvement\nfrom openai import OpenAI\n\nclient = OpenAI()\n\nCONSTITUTION = \"\"\"\nPrinciples:\n1. Be helpful, harmless, and honest\n2. Avoid giving advice that could cause harm\n3. Respect user privacy\n4. Acknowledge uncertainty\n5. Be concise but complete\n\"\"\"\n\ndef generate_and_critique(prompt: str) -> dict:\n    \"\"\"Constitutional AI: Generate, critique, revise.\"\"\"\n    \n    # Step 1: Initial generation\n    initial = client.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\"role\": \"user\", \"content\": prompt}]\n    ).choices[0].message.content\n    \n    # Step 2: Critique based on constitution\n    critique_prompt = f\"\"\"\n    Review this response against these principles:\n    {CONSTITUTION}\n    \n    Response: {initial}\n    \n    List any violations and suggest improvements.\n    \"\"\"\n    \n    critique = client.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\"role\": \"user\", \"content\": critique_prompt}]\n    ).choices[0].message.content\n    \n    # Step 3: Revise based on critique\n    revise_prompt = f\"\"\"\n    Original response: {initial}\n    Critique: {critique}\n    \n    Provide an improved response that addresses the critique.\n    \"\"\"\n    \n    revised = client.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\"role\": \"user\", \"content\": revise_prompt}]\n    ).choices[0].message.content\n    \n    return {\n        \"prompt\": prompt,\n        \"initial\": initial,\n        \"critique\": critique,\n        \"revised\": revised  # Use as training data\n    }"
+              },
+              {
+                "title": "RFT: Reinforcement Fine-tuning",
+                "content": "**OpenAI's RFT** is designed for reasoning models (o1, o3, o4-mini):\n\n**How it works:**\n1. Model generates response with chain-of-thought\n2. Expert grader evaluates the response\n3. Good reasoning chains are reinforced\n4. Bad reasoning chains are discouraged\n\n**When to use RFT:**\n- Complex domain-specific reasoning\n- Tasks requiring multi-step thinking\n- When you have expert graders available\n\n**Key difference from DPO:**\n- DPO works on final outputs\n- RFT reinforces the thinking process\n- Better for tasks where reasoning matters",
+                "code": "# RFT conceptual example (OpenAI API handles this internally)\n# This shows the grading flow you'd set up\n\nfrom openai import OpenAI\n\nclient = OpenAI()\n\n# Training data format for RFT\nrft_training_example = {\n    \"messages\": [\n        {\n            \"role\": \"user\",\n            \"content\": \"Given patient symptoms X, Y, Z and history A, B, what is the most likely diagnosis?\"\n        }\n    ],\n    \"grader\": {\n        # Grader evaluates the reasoning chain and final answer\n        # This requires domain expert graders\n        \"model\": \"your-expert-grader\",\n        \"criteria\": [\n            \"Correct final diagnosis\",\n            \"Sound reasoning steps\",\n            \"Consideration of differential diagnoses\",\n            \"Appropriate follow-up recommendations\"\n        ]\n    }\n}\n\n# RFT is available via OpenAI's fine-tuning API\n# for reasoning models like o4-mini\njob = client.fine_tuning.jobs.create(\n    training_file=\"file-xxx\",\n    model=\"o4-mini-2025-04-16\",\n    method={\n        \"type\": \"reinforcement\",\n        \"grader\": {\n            \"type\": \"model\",\n            \"model\": \"gpt-4o\",\n            \"prompt\": \"Grade this medical diagnosis reasoning...\"\n        }\n    }\n)"
+              }
+            ],
+            "keyTakeaways": [
+              "RLHF is the original 3-step alignment (SFT → Reward Model → RL) - complex but powerful",
+              "DPO simplifies RLHF to a single classification loss - no reward model or RL needed",
+              "Modern variants (IPO, KTO, ORPO) address specific DPO limitations",
+              "Constitutional AI uses AI feedback instead of human feedback for scalable alignment",
+              "RFT reinforces reasoning chains, not just final outputs"
+            ],
+            "exercises": [
+              {
+                "title": "Preference Dataset Creation",
+                "description": "Create a preference dataset with 50 examples for a customer support use case, including chosen and rejected responses."
+              },
+              {
+                "title": "DPO vs IPO Comparison",
+                "description": "Train the same model with DPO and IPO loss, compare training curves and final evaluation metrics."
+              }
+            ],
+            "sources": [
+              {
+                "title": "DPO Paper - Direct Preference Optimization",
+                "url": "https://arxiv.org/abs/2305.18290"
+              },
+              {
+                "title": "TRL DPO Trainer Documentation",
+                "url": "https://huggingface.co/docs/trl/main/en/dpo_trainer"
+              },
+              {
+                "title": "Constitutional AI Paper",
+                "url": "https://arxiv.org/abs/2212.08073"
+              },
+              {
+                "title": "OpenAI Reinforcement Fine-tuning",
+                "url": "https://platform.openai.com/docs/guides/reinforcement-fine-tuning"
+              },
+              {
+                "title": "KTO Paper - Kahneman-Tversky Optimization",
+                "url": "https://arxiv.org/abs/2402.01306"
+              }
+            ]
+          }
         }
       ]
     },
@@ -187,16 +269,16 @@
           "title": "Understanding LoRA",
           "duration": "45 min",
           "content": {
-            "overview": "Low-Rank Adaptation (LoRA) is a parameter-efficient fine-tuning method that adds small trainable matrices to frozen model weights. Instead of updating millions of parameters, LoRA updates thousands\u2014dramatically reducing memory and compute requirements.",
+            "overview": "Low-Rank Adaptation (LoRA) is a parameter-efficient fine-tuning method that adds small trainable matrices to frozen model weights. Instead of updating millions of parameters, LoRA updates thousands—dramatically reducing memory and compute requirements.",
             "sections": [
               {
                 "title": "The LoRA Intuition",
-                "content": "**Key insight**: Weight updates during fine-tuning have low intrinsic rank.\n\nInstead of updating $W$ directly:\n$$W' = W + \\Delta W$$\n\nLoRA decomposes the update as:\n$$W' = W + BA$$\n\nWhere:\n- $W$ is frozen (original weights): $d \\times k$\n- $B$ is trainable: $d \\times r$\n- $A$ is trainable: $r \\times k$\n- $r$ is the rank (typically 8-64)\n\n**Parameter reduction**:\n- Full update: $d \\times k$ parameters\n- LoRA: $r \\times (d + k)$ parameters\n- For $d=k=4096$, $r=16$: 16M \u2192 131K (99.2% reduction!)",
+                "content": "**Key insight**: Weight updates during fine-tuning have low intrinsic rank.\n\nInstead of updating $W$ directly:\n$$W' = W + \\Delta W$$\n\nLoRA decomposes the update as:\n$$W' = W + BA$$\n\nWhere:\n- $W$ is frozen (original weights): $d \\times k$\n- $B$ is trainable: $d \\times r$\n- $A$ is trainable: $r \\times k$\n- $r$ is the rank (typically 8-64)\n\n**Parameter reduction**:\n- Full update: $d \\times k$ parameters\n- LoRA: $r \\times (d + k)$ parameters\n- For $d=k=4096$, $r=16$: 16M → 131K (99.2% reduction!)",
                 "code": "import torch\nimport torch.nn as nn\nimport math\n\nclass LoRALayer(nn.Module):\n    \"\"\"LoRA adapter for a linear layer.\"\"\"\n    \n    def __init__(\n        self, \n        in_features: int, \n        out_features: int, \n        rank: int = 8,\n        alpha: float = 16,\n        dropout: float = 0.0\n    ):\n        super().__init__()\n        \n        self.rank = rank\n        self.alpha = alpha\n        self.scaling = alpha / rank\n        \n        # LoRA matrices\n        self.lora_A = nn.Parameter(torch.zeros(in_features, rank))\n        self.lora_B = nn.Parameter(torch.zeros(rank, out_features))\n        \n        # Initialize A with kaiming, B with zeros\n        nn.init.kaiming_uniform_(self.lora_A, a=math.sqrt(5))\n        nn.init.zeros_(self.lora_B)\n        \n        self.dropout = nn.Dropout(dropout) if dropout > 0 else nn.Identity()\n    \n    def forward(self, x: torch.Tensor) -> torch.Tensor:\n        # x @ A @ B * scaling\n        return self.dropout(x) @ self.lora_A @ self.lora_B * self.scaling\n\nclass LinearWithLoRA(nn.Module):\n    \"\"\"Linear layer with LoRA adapter.\"\"\"\n    \n    def __init__(self, linear: nn.Linear, rank: int = 8, alpha: float = 16):\n        super().__init__()\n        \n        self.linear = linear\n        self.linear.weight.requires_grad = False  # Freeze original\n        if linear.bias is not None:\n            self.linear.bias.requires_grad = False\n        \n        self.lora = LoRALayer(\n            linear.in_features,\n            linear.out_features,\n            rank=rank,\n            alpha=alpha\n        )\n    \n    def forward(self, x: torch.Tensor) -> torch.Tensor:\n        # Original output + LoRA output\n        return self.linear(x) + self.lora(x)\n\n# Example usage\noriginal_linear = nn.Linear(4096, 4096)\nlora_linear = LinearWithLoRA(original_linear, rank=16)\n\n# Count parameters\ntotal = sum(p.numel() for p in lora_linear.parameters())\ntrainable = sum(p.numel() for p in lora_linear.parameters() if p.requires_grad)\nprint(f\"Total: {total:,}, Trainable: {trainable:,}\")  \n# Total: 16,908,288, Trainable: 131,072"
               },
               {
                 "title": "LoRA Hyperparameters",
-                "content": "**Rank (r)**: Controls capacity of adaptation\n- Higher rank = more parameters, more expressive\n- Common values: 8, 16, 32, 64\n- Start with 8-16, increase if underfitting\n\n**Alpha (\u03b1)**: Scaling factor\n- Controls strength of LoRA updates\n- Effective learning rate: \u03b1/r\n- Common: \u03b1 = 2\u00d7r or \u03b1 = r\n\n**Target modules**: Which layers to adapt\n- Attention: q_proj, k_proj, v_proj, o_proj\n- MLP: gate_proj, up_proj, down_proj\n- Start with attention, add MLP if needed",
+                "content": "**Rank (r)**: Controls capacity of adaptation\n- Higher rank = more parameters, more expressive\n- Common values: 8, 16, 32, 64\n- Start with 8-16, increase if underfitting\n\n**Alpha (α)**: Scaling factor\n- Controls strength of LoRA updates\n- Effective learning rate: α/r\n- Common: α = 2×r or α = r\n\n**Target modules**: Which layers to adapt\n- Attention: q_proj, k_proj, v_proj, o_proj\n- MLP: gate_proj, up_proj, down_proj\n- Start with attention, add MLP if needed",
                 "code": "from peft import LoraConfig, get_peft_model, TaskType\nfrom transformers import AutoModelForCausalLM\n\n# LoRA configuration\nlora_config = LoraConfig(\n    r=16,                          # Rank\n    lora_alpha=32,                  # Alpha (scaling = alpha/r = 2)\n    target_modules=[               # Which modules to adapt\n        \"q_proj\",\n        \"k_proj\", \n        \"v_proj\",\n        \"o_proj\",\n        \"gate_proj\",\n        \"up_proj\",\n        \"down_proj\"\n    ],\n    lora_dropout=0.05,             # Dropout for regularization\n    bias=\"none\",                   # Don't train biases\n    task_type=TaskType.CAUSAL_LM   # Task type for model\n)\n\n# Apply LoRA to model\nmodel = AutoModelForCausalLM.from_pretrained(\n    \"meta-llama/Llama-2-7b-hf\",\n    torch_dtype=torch.float16,\n    device_map=\"auto\"\n)\n\nmodel = get_peft_model(model, lora_config)\nmodel.print_trainable_parameters()\n# trainable params: 4,194,304 || all params: 6,742,609,920 || trainable%: 0.0622"
               },
               {
@@ -498,8 +580,8 @@
                 "When you have a very small budget and no GPU",
                 "When you need to cite sources accurately"
               ],
-              "correctAnswer": 1,
-              "explanation": "Fine-tuning is best for adapting behavior, style, and format. RAG is better for injecting new knowledge or retrieving specific facts."
+              "explanation": "Fine-tuning is best for adapting behavior, style, and format. RAG is better for injecting new knowledge or retrieving specific facts.",
+              "correct": 1
             },
             {
               "id": "lora-mechanism",
@@ -510,8 +592,8 @@
                 "It uses lower precision (8-bit) for all calculations",
                 "It reduces the context window size"
               ],
-              "correctAnswer": 1,
-              "explanation": "LoRA freezes the massive pre-trained weights and injects trainable low-rank matrices, significantly reducing the number of trainable parameters and memory footprint."
+              "explanation": "LoRA freezes the massive pre-trained weights and injects trainable low-rank matrices, significantly reducing the number of trainable parameters and memory footprint.",
+              "correct": 1
             },
             {
               "id": "dataset-quality",
@@ -522,8 +604,8 @@
                 "Length (having very long prompts)",
                 "Complexity (having only difficult math problems)"
               ],
-              "correctAnswer": 1,
-              "explanation": "A small, high-quality dataset (e.g., 1,000 excellent examples) often outperforms a large, noisy dataset. 'Garbage in, garbage out' applies strongly to fine-tuning."
+              "explanation": "A small, high-quality dataset (e.g., 1,000 excellent examples) often outperforms a large, noisy dataset. 'Garbage in, garbage out' applies strongly to fine-tuning.",
+              "correct": 1
             },
             {
               "id": "catastrophic-forgetting",
@@ -534,8 +616,8 @@
                 "When the training data is lost due to disk failure",
                 "When the model refuses to answer questions"
               ],
-              "correctAnswer": 1,
-              "explanation": "Catastrophic forgetting occurs when a model forgets its general pre-training knowledge while over-optimizing for the specific fine-tuning task."
+              "explanation": "Catastrophic forgetting occurs when a model forgets its general pre-training knowledge while over-optimizing for the specific fine-tuning task.",
+              "correct": 1
             },
             {
               "id": "qlora-advantage",
@@ -546,10 +628,135 @@
                 "It eliminates the need for a GPU entirely",
                 "It produces higher accuracy models"
               ],
-              "correctAnswer": 1,
-              "explanation": "QLoRA combines 4-bit quantization of the frozen base model with LoRA, drastically reducing VRAM requirements (e.g., fine-tuning a 65B model on a single 48GB GPU)."
+              "explanation": "QLoRA combines 4-bit quantization of the frozen base model with LoRA, drastically reducing VRAM requirements (e.g., fine-tuning a 65B model on a single 48GB GPU).",
+              "correct": 1
+            },
+            {
+              "id": "instruction-tuning",
+              "question": "What is instruction tuning in the context of LLM fine-tuning?",
+              "options": [
+                "Teaching the model to follow a specific programming language syntax",
+                "Training the model on instruction-response pairs to improve its ability to follow user instructions",
+                "Removing all instructions from the training data",
+                "Converting the model to a different architecture"
+              ],
+              "explanation": "Instruction tuning trains the model on curated instruction-response pairs, teaching it to better understand and follow user instructions across diverse tasks.",
+              "correct": 1
+            },
+            {
+              "id": "rank-in-lora",
+              "question": "In LoRA, what does the 'rank' (r) parameter control?",
+              "options": [
+                "The priority of the adapter over the base model",
+                "The number of trainable parameters via the dimensionality of the low-rank matrices",
+                "The training speed multiplier",
+                "The output token limit"
+              ],
+              "explanation": "The rank parameter determines the dimensionality of the low-rank matrices. Lower rank means fewer trainable parameters but potentially less expressive power; higher rank adds more parameters and capacity.",
+              "correct": 1
+            },
+            {
+              "id": "sft-vs-dpo",
+              "question": "What is the key difference between SFT (Supervised Fine-Tuning) and DPO (Direct Preference Optimization)?",
+              "options": [
+                "SFT requires GPU while DPO runs on CPU",
+                "SFT trains on instruction-output pairs, while DPO trains on preference pairs (chosen vs rejected)",
+                "DPO is only for image models",
+                "SFT is newer than DPO"
+              ],
+              "explanation": "SFT trains on examples of correct behavior, while DPO uses preference data to learn which responses are better than others, enabling alignment with human preferences.",
+              "correct": 1
+            },
+            {
+              "id": "foundation-model-adaptation",
+              "question": "According to IBM, what is a key benefit of fine-tuning foundation models?",
+              "options": [
+                "It completely replaces the original model's knowledge",
+                "It allows organizations to specialize pre-trained models for specific tasks without training from scratch",
+                "It eliminates the need for any training data",
+                "It makes the model smaller automatically"
+              ],
+              "explanation": "Fine-tuning allows organizations to leverage the broad knowledge of foundation models while adapting them for specialized tasks, domains, or enterprise requirements efficiently.",
+              "correct": 1
+            },
+            {
+              "id": "training-data-format",
+              "question": "What is the Alpaca format commonly used for in LLM fine-tuning?",
+              "options": [
+                "Storing model weights",
+                "Structuring instruction-tuning datasets with instruction, input, and output fields",
+                "Compressing training data",
+                "Evaluating model performance"
+              ],
+              "explanation": "The Alpaca format is a popular structure for instruction-tuning datasets, organizing examples into instruction, optional input, and expected output fields for training.",
+              "correct": 1
+            },
+            {
+              "id": "rlhf-steps",
+              "question": "What are the three main steps of RLHF (Reinforcement Learning from Human Feedback)?",
+              "options": [
+                "Pre-training, fine-tuning, evaluation",
+                "SFT, reward model training, PPO optimization",
+                "Data collection, tokenization, embedding",
+                "Prompting, retrieval, generation"
+              ],
+              "explanation": "RLHF involves three steps: Supervised Fine-Tuning (SFT) on demonstrations, training a reward model on human preferences, and PPO optimization to maximize the reward while staying close to the SFT model.",
+              "correct": 1
+            },
+            {
+              "id": "dpo-advantage",
+              "question": "What is the main advantage of DPO over traditional RLHF?",
+              "options": [
+                "DPO uses more training data",
+                "DPO eliminates the need for a reward model and RL, using a simple classification loss instead",
+                "DPO is only for image models",
+                "DPO requires more computational resources"
+              ],
+              "explanation": "DPO's key innovation is deriving the optimal policy directly from preferences without explicitly training a reward model or using unstable RL algorithms, making it simpler, faster, and more stable.",
+              "correct": 1
+            },
+            {
+              "id": "constitutional-ai",
+              "question": "What is Constitutional AI?",
+              "options": [
+                "A legal framework for AI regulations",
+                "An alignment approach using AI feedback based on principles instead of human feedback",
+                "A type of model architecture",
+                "A dataset for training language models"
+              ],
+              "explanation": "Constitutional AI (from Anthropic) uses AI feedback instead of human feedback to evaluate and improve responses based on a set of principles (constitution), enabling more scalable alignment.",
+              "correct": 1
+            },
+            {
+              "id": "alignment-tax",
+              "question": "What is the 'alignment tax' in the context of LLM fine-tuning?",
+              "options": [
+                "A government fee for training AI models",
+                "The observation that alignment can sometimes reduce raw model capability",
+                "The cost of human annotation",
+                "The computational overhead of RLHF"
+              ],
+              "explanation": "The alignment tax refers to the trade-off where making models safer and more aligned may sometimes reduce their raw capabilities, make them more conservative, or lead to over-refusal of valid requests.",
+              "correct": 1
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "when-to-fine-tune",
+              "lora-qlora",
+              "data-preparation"
+            ],
+            "externalRefs": [
+              {
+                "title": "Hugging Face PEFT",
+                "url": "https://huggingface.co/docs/peft"
+              },
+              {
+                "title": "Unsloth (Fast Fine-tuning)",
+                "url": "https://github.com/unslothai/unsloth"
+              }
+            ]
+          }
         }
       ]
     }

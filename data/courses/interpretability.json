@@ -1,10 +1,15 @@
 {
   "id": "interpretability",
   "title": "AI Interpretability & Explainability",
-  "description": "Deep dive into understanding how AI models make decisions - from SHAP/LIME to mechanistic interpretability",
+  "description": "Deep dive into understanding how AI models make decisions - from SHAP/LIME to mechanistic interpretability. Explainable AI (XAI) encompasses techniques that make AI decision-making transparent and understandable to humans, essential for trust, debugging, and regulatory compliance.",
   "icon": "🔍",
   "level": "advanced",
   "duration": "3 weeks",
+  "validationSources": [
+    "https://www.ibm.com/topics/explainable-ai",
+    "https://www.ibm.com/think/topics/explainability",
+    "https://www.ibm.com/topics/ai-transparency"
+  ],
   "prerequisites": ["Used or built ML models (any level)", "Basic Python", "Curiosity about how AI works inside"],
   "prerequisitesClarification": "This course is for anyone who has used AI and wondered 'why did it say that?' No deep learning math required - we explain concepts intuitively.",
   "whatYouNeed": [
@@ -287,6 +292,185 @@
               "Ablation studies reveal component importance",
               "Induction heads are a well-documented circuit",
               "Circuit analysis reveals learned algorithms"
+            ]
+          }
+        },
+        {
+          "id": "interpretability-quiz",
+          "title": "AI Interpretability Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is Explainable AI (XAI)?",
+              "options": [
+                "AI that can only answer simple questions",
+                "Techniques that make AI decision-making transparent and understandable to humans",
+                "AI that explains other software",
+                "A type of debugging tool"
+              ],
+              "correct": 1,
+              "explanation": "Explainable AI encompasses techniques and methods that make AI system decisions transparent, interpretable, and understandable to humans."
+            },
+            {
+              "question": "According to IBM, why is AI explainability important?",
+              "options": [
+                "It makes AI run faster",
+                "It enables trust, debugging, fairness verification, and regulatory compliance",
+                "It reduces model size",
+                "It eliminates the need for testing"
+              ],
+              "correct": 1,
+              "explanation": "AI explainability is essential for building trust, identifying and fixing errors, ensuring fairness, and meeting regulatory requirements like GDPR and the EU AI Act."
+            },
+            {
+              "question": "What does SHAP stand for and what does it do?",
+              "options": [
+                "Simple Heuristic Analysis Program - compresses models",
+                "SHapley Additive exPlanations - calculates feature contributions to predictions",
+                "Secure Hash Authentication Protocol - encrypts models",
+                "Statistical Hypothesis Analysis Procedure - tests accuracy"
+              ],
+              "correct": 1,
+              "explanation": "SHAP uses Shapley values from game theory to fairly attribute the contribution of each feature to a model's prediction."
+            },
+            {
+              "question": "What is LIME used for?",
+              "options": [
+                "Adding color to visualizations",
+                "Creating local, interpretable explanations for individual predictions",
+                "Compressing model weights",
+                "Training neural networks"
+              ],
+              "correct": 1,
+              "explanation": "LIME (Local Interpretable Model-agnostic Explanations) creates simple, interpretable explanations for individual predictions by approximating the model locally."
+            },
+            {
+              "question": "What is the difference between global and local interpretability?",
+              "options": [
+                "Global works worldwide, local works locally",
+                "Global explains overall model behavior, local explains specific predictions",
+                "Global is more accurate than local",
+                "Local is faster than global"
+              ],
+              "correct": 1,
+              "explanation": "Global interpretability explains how the model works overall (which features matter most), while local interpretability explains why a specific prediction was made."
+            },
+            {
+              "question": "What is mechanistic interpretability?",
+              "options": [
+                "Understanding how physical machines work",
+                "Reverse-engineering neural networks to understand internal computations and representations",
+                "Mechanical testing of AI hardware",
+                "Building AI from mechanical parts"
+              ],
+              "correct": 1,
+              "explanation": "Mechanistic interpretability aims to understand what computations neural networks perform internally by analyzing neurons, circuits, and information flow."
+            },
+            {
+              "question": "What is a probing classifier used for?",
+              "options": [
+                "Finding bugs in code",
+                "Testing what information is encoded in a model's hidden representations",
+                "Measuring model speed",
+                "Compressing model weights"
+              ],
+              "correct": 1,
+              "explanation": "Probing classifiers are trained on model hidden states to test what information (like sentiment, grammar, facts) is encoded in those representations."
+            },
+            {
+              "question": "What is activation patching?",
+              "options": [
+                "Fixing broken model weights",
+                "Swapping activations between runs to identify causally important components",
+                "Patching security vulnerabilities",
+                "Updating model versions"
+              ],
+              "correct": 1,
+              "explanation": "Activation patching swaps internal activations between different model runs to identify which components are causally important for specific behaviors."
+            },
+            {
+              "question": "What is an induction head in transformer models?",
+              "options": [
+                "A head that induces errors",
+                "An attention head that copies patterns from earlier in the context",
+                "The first layer of the model",
+                "A component that generates new tokens"
+              ],
+              "correct": 1,
+              "explanation": "Induction heads are attention heads that learn to copy tokens that previously followed the current token, enabling in-context learning patterns."
+            },
+            {
+              "question": "Why is the 'black box' nature of neural networks a problem?",
+              "options": [
+                "Black boxes are more expensive",
+                "It makes debugging, trust, fairness verification, and regulatory compliance difficult",
+                "Black boxes run slower",
+                "Black boxes use more memory"
+              ],
+              "correct": 1,
+              "explanation": "When we can't understand why a model makes decisions, it's harder to debug errors, verify fairness, build user trust, and comply with regulations requiring explanations."
+            },
+            {
+              "question": "According to IBM, what is the key difference between AI explainability and AI interpretability?",
+              "options": [
+                "They are exactly the same concept",
+                "Interpretability is how well humans can predict outputs; explainability goes further to explain how the AI arrived at results",
+                "Explainability is cheaper than interpretability",
+                "Interpretability only works for images"
+              ],
+              "correct": 1,
+              "explanation": "IBM defines interpretability as the success rate for predicting AI outputs, while explainability goes a step further and examines HOW the AI model arrived at the result."
+            },
+            {
+              "question": "What is DeepLIFT (Deep Learning Important FeaTures)?",
+              "options": [
+                "A model compression technique",
+                "An XAI technique that compares neuron activations to reference activations to show traceable links and dependencies",
+                "A training algorithm",
+                "A data augmentation method"
+              ],
+              "correct": 1,
+              "explanation": "DeepLIFT compares the activation of each neuron to its reference activation, showing traceable links between activated neurons and their dependencies for explanation."
+            },
+            {
+              "question": "Which regulations and frameworks address AI transparency and explainability?",
+              "options": [
+                "Only internal company policies",
+                "EU AI Act, GDPR's right to explanation, Blueprint for AI Bill of Rights, Hiroshima AI Process",
+                "There are no AI regulations",
+                "Only healthcare regulations"
+              ],
+              "correct": 1,
+              "explanation": "Multiple frameworks address AI transparency including the EU AI Act (risk-based regulation), GDPR (right to explanation), the Blueprint for AI Bill of Rights, and the G7 Hiroshima AI Process."
+            },
+            {
+              "question": "What are the 'Five Considerations for Explainable AI' according to IBM?",
+              "options": [
+                "Speed, cost, accuracy, size, color",
+                "Fairness/debiasing, model drift mitigation, risk management, lifecycle automation, multicloud-readiness",
+                "Training, testing, deployment, monitoring, deletion",
+                "Input, processing, output, storage, network"
+              ],
+              "correct": 1,
+              "explanation": "IBM identifies five key considerations: fairness and debiasing, model drift mitigation, model risk management, lifecycle automation, and multicloud-readiness for XAI deployment."
+            }
+          ],
+          "references": {
+            "lessonRefs": [
+              "what-is-interpretability",
+              "why-interpretability",
+              "intro-mechanistic"
+            ],
+            "externalRefs": [
+              {
+                "title": "IBM Explainable AI",
+                "url": "https://www.ibm.com/topics/explainable-ai"
+              },
+              {
+                "title": "SHAP Documentation",
+                "url": "https://shap.readthedocs.io/"
+              }
             ]
           }
         }

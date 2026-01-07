@@ -1,10 +1,15 @@
 {
   "id": "ai-safety-guardrails",
   "title": "AI Safety & Guardrails",
-  "description": "Build robust, safe AI systems with guardrails, red teaming, and defense against prompt injection",
+  "description": "Build robust, safe AI systems with guardrails, red teaming, and defense against prompt injection. AI guardrails are safeguards and control mechanisms that help ensure AI systems operate within intended boundaries, preventing harmful outputs and maintaining alignment with organizational policies.",
   "icon": "🛡️",
   "level": "intermediate",
   "duration": "3 weeks",
+  "validationSources": [
+    "https://www.ibm.com/topics/ai-guardrails",
+    "https://www.ibm.com/topics/ai-safety",
+    "https://www.ibm.com/topics/prompt-injection"
+  ],
   "prerequisites": ["Used AI chatbots (ChatGPT, Claude)", "Basic Python programming", "Built or used an AI-powered app"],
   "prerequisitesClarification": "If you've integrated an LLM API into an app or used ChatGPT for work, you're ready. We'll explain all security concepts from scratch.",
   "whatYouNeed": [
@@ -259,6 +264,38 @@
             "overview": "Combine all safety techniques into a production-ready system with monitoring, logging, and incident response.",
             "sections": [
               {
+                "title": "Enterprise Guardrail Framework",
+                "content": "IBM's enterprise guardrail framework identifies four layers that span the entire AI lifecycle:\n\n**1. Data Guardrails**\n- Clean and validate training data\n- Remove bias and sensitive information\n- Enforce data privacy rules\n- Ensure trustworthy inputs to models\n\n**2. Model Guardrails**\n- Fine-tuning and validation controls\n- Continuous performance monitoring\n- Metrics: latency, toxicity, accuracy, robustness\n- Detect model drift and degradation\n\n**3. Application Guardrails**\n- API-level policy enforcement\n- Input/output filtering in applications\n- Workflow-specific restrictions\n- Python libraries for embedded safeguards\n\n**4. Infrastructure Guardrails**\n- Access controls and authentication\n- Encryption at rest and in transit\n- Network segmentation\n- Zero trust architecture\n- Logging and audit trails\n\n**AI Governance** acts as a 'zeroth' guardrail, aligning all layers with responsible AI principles.",
+                "diagram": {
+                  "title": "Enterprise Guardrail Layers",
+                  "code": "flowchart TB\n    subgraph Gov[\"AI Governance (Zeroth Layer)\"]\n        direction LR\n        P[Policies] --> S[Standards] --> M[Monitoring]\n    end\n    \n    subgraph Layers[\"Guardrail Layers\"]\n        D[\"Data Guardrails\\n• Training data validation\\n• Bias removal\\n• Privacy rules\"] --> Model[\"Model Guardrails\\n• Fine-tuning controls\\n• Toxicity metrics\\n• Drift detection\"]\n        Model --> App[\"Application Guardrails\\n• API enforcement\\n• I/O filtering\\n• Workflow controls\"]\n        App --> Infra[\"Infrastructure Guardrails\\n• Access control\\n• Encryption\\n• Zero trust\"]\n    end\n    \n    Gov --> Layers\n    \n    style Gov fill:#f0f9ff\n    style D fill:#dcfce7\n    style Model fill:#fef3c7\n    style App fill:#fce7f3\n    style Infra fill:#e0e7ff"
+                }
+              },
+              {
+                "title": "HAP Filtering (Hate, Abuse, Profanity)",
+                "content": "HAP filtering is an industry-standard approach for detecting harmful language:\n\n**How HAP Filtering Works:**\n1. Classification model scans text sentence-by-sentence\n2. Each sentence scored for hate, abuse, and profanity\n3. Scores compared against configurable thresholds\n4. Flagged content blocked or replaced with notice\n\n**Filter Types:**\n- **Harmful Language Filters**: Hate speech, abusive language, profanity\n- **PII Filters**: Phone numbers, emails, account numbers, SSNs\n- **Advanced Safety Filters**: Jailbreaks, bias, hallucinations, violence\n\n**Threshold Tuning:**\n- Lower thresholds = More aggressive filtering (may over-flag safe content)\n- Higher thresholds = Less filtering (may miss some harmful content)\n- Balance based on use case risk tolerance",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from dataclasses import dataclass\nfrom enum import Enum\nfrom typing import List, Dict, Tuple\nimport re\n\nclass HAPCategory(Enum):\n    HATE = \"hate_speech\"\n    ABUSE = \"abusive_language\"\n    PROFANITY = \"profanity\"\n    VIOLENCE = \"violence\"\n    BIAS = \"bias\"\n    PII = \"personal_info\"\n\n@dataclass\nclass HAPResult:\n    sentence: str\n    category: HAPCategory\n    score: float\n    flagged: bool\n\nclass HAPFilter:\n    \"\"\"Hate, Abuse, Profanity filter with configurable thresholds.\"\"\"\n    \n    def __init__(self, classifier_model, thresholds: Dict[str, float] = None):\n        self.classifier = classifier_model\n        # Default thresholds (0.0 = block nothing, 1.0 = block everything flagged)\n        self.thresholds = thresholds or {\n            \"hate_speech\": 0.7,\n            \"abusive_language\": 0.6,\n            \"profanity\": 0.8,\n            \"violence\": 0.5,\n            \"bias\": 0.7,\n            \"personal_info\": 0.3  # Lower = more sensitive for PII\n        }\n    \n    def split_sentences(self, text: str) -> List[str]:\n        \"\"\"Split text into sentences for per-sentence analysis.\"\"\"\n        # Simple sentence splitting\n        sentences = re.split(r'(?<=[.!?])\\s+', text)\n        return [s.strip() for s in sentences if s.strip()]\n    \n    def classify_sentence(self, sentence: str) -> List[HAPResult]:\n        \"\"\"Classify a single sentence for HAP categories.\"\"\"\n        results = []\n        \n        # Get scores from classifier (mock implementation)\n        scores = self.classifier.predict(sentence)\n        \n        for category in HAPCategory:\n            score = scores.get(category.value, 0.0)\n            threshold = self.thresholds.get(category.value, 0.5)\n            \n            if score > 0:  # Only include non-zero scores\n                results.append(HAPResult(\n                    sentence=sentence,\n                    category=category,\n                    score=score,\n                    flagged=score >= threshold\n                ))\n        \n        return results\n    \n    def filter_text(self, text: str, replace: bool = True) -> Tuple[str, List[HAPResult]]:\n        \"\"\"Filter text, optionally replacing flagged content.\"\"\"\n        sentences = self.split_sentences(text)\n        all_results = []\n        filtered_sentences = []\n        \n        for sentence in sentences:\n            results = self.classify_sentence(sentence)\n            all_results.extend(results)\n            \n            flagged = any(r.flagged for r in results)\n            \n            if flagged and replace:\n                # Get highest-scoring category for replacement message\n                worst = max([r for r in results if r.flagged], key=lambda x: x.score)\n                filtered_sentences.append(\n                    f\"[Content removed: {worst.category.value} detected]\"\n                )\n            else:\n                filtered_sentences.append(sentence)\n        \n        return \" \".join(filtered_sentences), all_results\n    \n    def set_sensitivity(self, level: str):\n        \"\"\"Preset sensitivity levels.\"\"\"\n        if level == \"high\":  # Stricter filtering\n            self.thresholds = {k: v * 0.7 for k, v in self.thresholds.items()}\n        elif level == \"low\":  # Looser filtering\n            self.thresholds = {k: min(v * 1.3, 0.95) for k, v in self.thresholds.items()}\n        # \"medium\" keeps defaults\n\n# Usage example\n# hap_filter = HAPFilter(classifier_model)\n# safe_text, flags = hap_filter.filter_text(user_input)\n# if any(f.flagged for f in flags):\n#     log_violation(flags)"
+                }
+              },
+              {
+                "title": "Shadow AI and Governance Gaps",
+                "content": "**What is Shadow AI?**\nThe use of AI tools without formal organizational approval or oversight.\n\n**Risks (IBM Data):**\n- Shadow AI adds average of $670,000 to data breach costs\n- Unsanctioned tools leaking customer PII\n- No guardrails on informal AI usage\n- Compliance violations from untracked usage\n\n**Detection and Prevention:**\n1. Network monitoring for AI API calls\n2. Endpoint detection for AI tool installations\n3. Clear AI usage policies\n4. Approved AI tool catalogs\n5. Easy access to sanctioned alternatives\n\n**Governance Approach:**\n- Don't just block—provide safe alternatives\n- Create AI Centers of Excellence\n- Train employees on responsible AI use\n- Monitor and redirect rather than punish",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from dataclasses import dataclass\nfrom datetime import datetime\nfrom typing import List, Optional\nimport re\n\n@dataclass\nclass AIUsageEvent:\n    timestamp: datetime\n    user_id: str\n    tool_name: str\n    endpoint: str\n    is_approved: bool\n    data_sensitivity: str  # low, medium, high, pii\n\nclass ShadowAIMonitor:\n    \"\"\"Monitor for unsanctioned AI tool usage.\"\"\"\n    \n    def __init__(self):\n        self.approved_endpoints = [\n            \"api.openai.com\",\n            \"api.anthropic.com\",\n            \"internal-ai.company.com\"\n        ]\n        self.ai_patterns = [\n            r\"api\\.openai\\.com\",\n            r\"api\\.anthropic\\.com\",\n            r\"api\\.cohere\\.ai\",\n            r\".*\\.replicate\\.com\",\n            r\"api\\.together\\.xyz\",\n            r\".*huggingface.*\"\n        ]\n        self.violations: List[AIUsageEvent] = []\n    \n    def check_request(self, user_id: str, endpoint: str, payload: str) -> AIUsageEvent:\n        \"\"\"Check if request is to approved AI service.\"\"\"\n        is_ai = any(re.match(p, endpoint) for p in self.ai_patterns)\n        is_approved = endpoint in self.approved_endpoints\n        \n        # Check for PII in payload\n        sensitivity = self._assess_sensitivity(payload)\n        \n        event = AIUsageEvent(\n            timestamp=datetime.now(),\n            user_id=user_id,\n            tool_name=self._identify_tool(endpoint),\n            endpoint=endpoint,\n            is_approved=is_approved,\n            data_sensitivity=sensitivity\n        )\n        \n        if is_ai and not is_approved:\n            self.violations.append(event)\n            self._alert_shadow_ai(event)\n        \n        return event\n    \n    def _assess_sensitivity(self, payload: str) -> str:\n        pii_patterns = {\n            \"ssn\": r\"\\d{3}-\\d{2}-\\d{4}\",\n            \"email\": r\"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\",\n            \"phone\": r\"\\d{3}[-.]?\\d{3}[-.]?\\d{4}\"\n        }\n        \n        for pii_type, pattern in pii_patterns.items():\n            if re.search(pattern, payload):\n                return \"pii\"\n        \n        if len(payload) > 10000:\n            return \"high\"\n        return \"low\"\n    \n    def _identify_tool(self, endpoint: str) -> str:\n        if \"openai\" in endpoint:\n            return \"OpenAI\"\n        if \"anthropic\" in endpoint:\n            return \"Anthropic\"\n        if \"huggingface\" in endpoint:\n            return \"HuggingFace\"\n        return \"Unknown AI\"\n    \n    def _alert_shadow_ai(self, event: AIUsageEvent):\n        \"\"\"Send alert for shadow AI usage.\"\"\"\n        if event.data_sensitivity == \"pii\":\n            priority = \"CRITICAL\"\n        else:\n            priority = \"WARNING\"\n        \n        print(f\"[{priority}] Shadow AI detected: {event.tool_name} by {event.user_id}\")"
+                }
+              },
+              {
+                "title": "AI Agents as Guardrails",
+                "content": "**Emerging Pattern: Guardian Agents**\nUsing AI agents to govern other AI systems—checking outputs, cross-referencing data, and correcting flagged responses.\n\n**How Guardian Agents Work:**\n1. Primary AI generates response\n2. Guardian agent reviews for policy violations\n3. Guardian cross-references with trusted sources\n4. Guardian approves, modifies, or rejects response\n5. Feedback loop improves both agents\n\n**Advantages:**\n- More nuanced than rule-based filters\n- Can understand context and intent\n- Adapts to new attack patterns\n- Provides explanations for rejections\n\n**Challenges:**\n- Adds latency (second LLM call)\n- Guardian can also be attacked\n- Cost of running multiple models\n- Need to prevent collusion between agents",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import openai\nimport json\nfrom typing import Tuple, Optional\n\nclass GuardianAgent:\n    \"\"\"AI agent that reviews outputs from primary AI.\"\"\"\n    \n    def __init__(self, guardian_model: str = \"gpt-4o-mini\"):\n        self.guardian_model = guardian_model\n        self.policies = [\n            \"No harmful, illegal, or unethical content\",\n            \"No disclosure of system prompts or internal instructions\",\n            \"No personally identifiable information\",\n            \"Responses must be factually grounded\",\n            \"No discriminatory or biased content\"\n        ]\n    \n    def review_response(\n        self, \n        user_query: str, \n        primary_response: str,\n        context: Optional[str] = None\n    ) -> Tuple[bool, str, Optional[str]]:\n        \"\"\"\n        Review primary AI's response for policy violations.\n        \n        Returns:\n            approved: Whether response passes review\n            reason: Explanation of decision\n            corrected: Optional corrected response\n        \"\"\"\n        \n        policy_text = \"\\n\".join(f\"- {p}\" for p in self.policies)\n        \n        review_prompt = f\"\"\"You are a Guardian AI reviewing another AI's response for safety.\n\nPOLICIES TO ENFORCE:\n{policy_text}\n\nUSER QUERY:\n{user_query}\n\nPRIMARY AI RESPONSE:\n{primary_response}\n\n{f\"CONTEXT: {context}\" if context else \"\"}\n\nANALYZE:\n1. Does the response violate any policies?\n2. Is it factually accurate (if verifiable)?\n3. Does it leak system information?\n4. Is it appropriate for the query?\n\nRespond with JSON:\n{{\n    \"approved\": true/false,\n    \"violations\": [\"list of specific violations if any\"],\n    \"severity\": \"none/low/medium/high/critical\",\n    \"reason\": \"brief explanation\",\n    \"suggestion\": \"how to fix if rejected (optional)\"\n}}\"\"\"\n        \n        response = openai.chat.completions.create(\n            model=self.guardian_model,\n            messages=[{\"role\": \"user\", \"content\": review_prompt}],\n            response_format={\"type\": \"json_object\"}\n        )\n        \n        result = json.loads(response.choices[0].message.content)\n        \n        corrected = None\n        if not result[\"approved\"] and result.get(\"suggestion\"):\n            # Optionally generate corrected response\n            corrected = self._generate_correction(\n                user_query, primary_response, result[\"suggestion\"]\n            )\n        \n        return result[\"approved\"], result[\"reason\"], corrected\n    \n    def _generate_correction(self, query: str, original: str, suggestion: str) -> str:\n        \"\"\"Generate corrected response based on guardian's suggestion.\"\"\"\n        correction_prompt = f\"\"\"Rewrite this AI response to fix the identified issue.\n\nOriginal query: {query}\nOriginal response: {original}\nIssue to fix: {suggestion}\n\nProvide a corrected response that addresses the user's query safely.\"\"\"\n        \n        response = openai.chat.completions.create(\n            model=self.guardian_model,\n            messages=[{\"role\": \"user\", \"content\": correction_prompt}]\n        )\n        \n        return response.choices[0].message.content\n\nclass GuardedAI:\n    \"\"\"Primary AI with guardian agent oversight.\"\"\"\n    \n    def __init__(self, primary_model: str = \"gpt-4o\"):\n        self.primary_model = primary_model\n        self.guardian = GuardianAgent()\n    \n    def chat(self, user_message: str, system_prompt: str = None) -> str:\n        # Step 1: Get primary response\n        messages = []\n        if system_prompt:\n            messages.append({\"role\": \"system\", \"content\": system_prompt})\n        messages.append({\"role\": \"user\", \"content\": user_message})\n        \n        primary = openai.chat.completions.create(\n            model=self.primary_model,\n            messages=messages\n        )\n        primary_response = primary.choices[0].message.content\n        \n        # Step 2: Guardian review\n        approved, reason, corrected = self.guardian.review_response(\n            user_message, primary_response\n        )\n        \n        if approved:\n            return primary_response\n        elif corrected:\n            return corrected\n        else:\n            return \"I apologize, but I cannot provide that response. \" + reason\n\n# Usage\n# guarded_ai = GuardedAI()\n# response = guarded_ai.chat(\"Tell me about AI safety\")"
+                }
+              },
+              {
                 "title": "Defense in Depth Architecture",
                 "content": "Layer multiple defenses:",
                 "diagram": {
@@ -287,6 +324,185 @@
               "Log all violations for analysis and improvement",
               "Set up alerts for repeated attacks",
               "Monitor safety metrics in production dashboards"
+            ]
+          }
+        },
+        {
+          "id": "safety-quiz",
+          "title": "AI Safety & Guardrails Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is prompt injection?",
+              "options": [
+                "A method to speed up AI responses",
+                "A type of attack where malicious instructions are inserted into user input to manipulate AI behavior",
+                "A technique for compressing prompts",
+                "A way to inject code into the model's weights"
+              ],
+              "correct": 1,
+              "explanation": "Prompt injection is an attack where users craft inputs containing malicious instructions that attempt to override the AI's intended behavior or system instructions."
+            },
+            {
+              "question": "According to IBM, what are AI guardrails?",
+              "options": [
+                "Physical barriers around AI data centers",
+                "Safeguards and control mechanisms that ensure AI operates within intended boundaries",
+                "Marketing guidelines for AI products",
+                "The metal frames that hold GPUs"
+              ],
+              "correct": 1,
+              "explanation": "AI guardrails are safeguards, policies, and control mechanisms designed to ensure AI systems operate safely within their intended scope and don't produce harmful outputs."
+            },
+            {
+              "question": "What is the primary purpose of an input guardrail?",
+              "options": [
+                "To make inputs shorter",
+                "To check and filter user inputs before they reach the AI model",
+                "To format inputs for display",
+                "To translate inputs to English"
+              ],
+              "correct": 1,
+              "explanation": "Input guardrails validate, filter, and sanitize user inputs before they reach the AI model, blocking malicious content, prompt injections, and policy violations."
+            },
+            {
+              "question": "What is jailbreaking in the context of AI safety?",
+              "options": [
+                "Breaking the AI model out of its server",
+                "Techniques to bypass an AI's safety training and content policies",
+                "Removing the AI from a container",
+                "Upgrading the AI to a newer version"
+              ],
+              "correct": 1,
+              "explanation": "Jailbreaking refers to various techniques users employ to bypass an AI's safety training and content policies, often through roleplay scenarios, hypothetical framing, or authority claims."
+            },
+            {
+              "question": "What is red teaming in AI safety?",
+              "options": [
+                "Using red-colored servers",
+                "Proactively attacking your AI system to find vulnerabilities before malicious actors do",
+                "A type of model training",
+                "The team that manages production deployments"
+              ],
+              "correct": 1,
+              "explanation": "Red teaming involves deliberately attempting to break or bypass your AI's safety measures to identify vulnerabilities, allowing you to fix them before they're exploited."
+            },
+            {
+              "question": "What is an output guardrail?",
+              "options": [
+                "A limit on how many characters the AI can output",
+                "A check that filters AI responses before they reach the user",
+                "A formatting template for outputs",
+                "A caching layer for responses"
+              ],
+              "correct": 1,
+              "explanation": "Output guardrails check AI-generated responses for harmful content, PII leakage, policy violations, or system prompt disclosure before the response is delivered to users."
+            },
+            {
+              "question": "Why is 'defense in depth' important for AI safety?",
+              "options": [
+                "It makes the system run faster",
+                "Multiple layers of protection ensure that if one defense fails, others can still catch threats",
+                "It reduces costs",
+                "It simplifies the codebase"
+              ],
+              "correct": 1,
+              "explanation": "Defense in depth uses multiple overlapping safety measures so that if one layer is bypassed, subsequent layers can still catch and mitigate the threat."
+            },
+            {
+              "question": "What is PII detection in AI guardrails?",
+              "options": [
+                "Detecting personal information like SSNs, emails, and phone numbers",
+                "Detecting performance issues",
+                "Detecting programming errors",
+                "Detecting public information"
+              ],
+              "correct": 0,
+              "explanation": "PII (Personally Identifiable Information) detection identifies sensitive personal data in inputs or outputs to prevent privacy violations and data leakage."
+            },
+            {
+              "question": "What is the OWASP LLM Top 10?",
+              "options": [
+                "The top 10 largest language models",
+                "A list of the 10 most critical security risks for LLM applications",
+                "The 10 best practices for LLM training",
+                "The 10 fastest LLM inference engines"
+              ],
+              "correct": 1,
+              "explanation": "The OWASP LLM Top 10 is an industry-standard list of the most critical security risks facing LLM applications, including prompt injection, data leakage, and excessive agency."
+            },
+            {
+              "question": "What are the four types of enterprise AI guardrails according to IBM?",
+              "options": [
+                "Input, Output, System, User",
+                "Data, Model, Application, Infrastructure",
+                "Training, Testing, Deployment, Monitoring",
+                "Code, API, Database, Network"
+              ],
+              "correct": 1,
+              "explanation": "IBM identifies four layers of enterprise guardrails: Data guardrails (training data validation), Model guardrails (fine-tuning and metrics), Application guardrails (API-level controls), and Infrastructure guardrails (access controls, encryption, zero trust)."
+            },
+            {
+              "question": "What is HAP filtering in AI safety?",
+              "options": [
+                "High Availability Protection for AI systems",
+                "Hate, Abuse, and Profanity detection and filtering system",
+                "Hardware Acceleration Protocol for faster inference",
+                "Human-AI Partnership filtering"
+              ],
+              "correct": 1,
+              "explanation": "HAP (Hate, Abuse, Profanity) filtering uses classification models to detect and filter harmful language from AI inputs and outputs, scanning text sentence-by-sentence against configurable thresholds."
+            },
+            {
+              "question": "What is Shadow AI and why is it a risk?",
+              "options": [
+                "AI that works in dark mode",
+                "Unsanctioned AI tools used without organizational approval, which can leak data and violate compliance",
+                "AI backup systems",
+                "AI that copies other AI systems"
+              ],
+              "correct": 1,
+              "explanation": "Shadow AI refers to AI tools used without formal approval or oversight. According to IBM, it adds an average of $670,000 to data breach costs due to risks like unsanctioned tools leaking customer PII."
+            },
+            {
+              "question": "What are 'Guardian Agents' in emerging AI safety patterns?",
+              "options": [
+                "Human security guards for data centers",
+                "AI agents that review and govern outputs from other AI systems",
+                "Antivirus software for AI",
+                "Legal teams that review AI products"
+              ],
+              "correct": 1,
+              "explanation": "Guardian Agents are AI systems that review other AI's outputs for policy violations, cross-reference with trusted sources, and can approve, modify, or reject responses—providing more nuanced oversight than rule-based filters."
+            },
+            {
+              "question": "What should you do when a safety guardrail blocks a response?",
+              "options": [
+                "Ignore the block and show the response anyway",
+                "Log the violation, provide a safe fallback response, and alert if patterns emerge",
+                "Shut down the entire system",
+                "Email the user directly"
+              ],
+              "correct": 1,
+              "explanation": "When guardrails block content, best practice is to log the violation for analysis, return a safe fallback message, and set up alerting for repeated violations or attack patterns."
+            }
+          ],
+          "references": {
+            "lessonRefs": [
+              "ai-risks-intro",
+              "why-guardrails",
+              "red-teaming"
+            ],
+            "externalRefs": [
+              {
+                "title": "OWASP LLM Top 10",
+                "url": "https://genai.owasp.org/llm-top-10/"
+              },
+              {
+                "title": "IBM AI Guardrails",
+                "url": "https://www.ibm.com/topics/ai-guardrails"
+              }
             ]
           }
         }

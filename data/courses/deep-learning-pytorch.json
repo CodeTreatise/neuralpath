@@ -5,7 +5,19 @@
   "icon": "🔥",
   "level": "intermediate",
   "duration": "8 weeks",
-  "prerequisites": ["Python proficiency", "NumPy basics", "ML fundamentals"],
+  "validationSources": [
+    "https://www.ibm.com/topics/deep-learning",
+    "https://www.ibm.com/topics/neural-networks",
+    "https://www.ibm.com/topics/backpropagation",
+    "https://www.ibm.com/topics/gradient-descent",
+    "https://www.ibm.com/topics/convolutional-neural-networks",
+    "https://www.ibm.com/topics/recurrent-neural-networks"
+  ],
+  "prerequisites": [
+    "Python proficiency",
+    "NumPy basics",
+    "ML fundamentals"
+  ],
   "learningOutcomes": [
     "Understand neural network fundamentals and backpropagation",
     "Build and train models using PyTorch",
@@ -22,7 +34,7 @@
           "title": "From Perceptrons to Multilayer Networks",
           "duration": "45 min",
           "content": {
-            "overview": "Neural networks are computational models inspired by the brain. Starting from a single perceptron, we build up to multilayer networks capable of learning complex patterns. Understanding these fundamentals is essential for all deep learning.",
+            "overview": "Neural networks are computational models inspired by the brain. Starting from a single perceptron, we build up to multilayer networks capable of learning complex patterns. Understanding these fundamentals is essential for all deep learning.\n\n**Industry Definition**: Deep learning is a subset of machine learning driven by multilayered neural networks (at least 4 hidden layers) whose design is inspired by the structure of the human brain. Deep neural networks are universal approximators—it has been proven that for any function, there exists a neural network arrangement that can reproduce it. The power of deep learning comes from its ability to learn hierarchical representations, with earlier layers identifying broader patterns and deeper layers identifying more granular patterns.",
             "sections": [
               {
                 "title": "The Perceptron",
@@ -31,7 +43,7 @@
               },
               {
                 "title": "Multilayer Perceptron (MLP)",
-                "content": "Adding hidden layers enables learning non-linear patterns:\n\n**Architecture**:\n- Input layer: Receives features\n- Hidden layers: Learn intermediate representations\n- Output layer: Produces predictions\n\n**Key insight**: Each hidden neuron learns a different \"feature detector.\" Together, they can approximate any continuous function (Universal Approximation Theorem).",
+                "content": "Adding hidden layers enables learning non-linear patterns:\n\n**Architecture**:\n- Input layer: Receives features\n- Hidden layers: Learn intermediate representations (where most 'learning' occurs)\n- Output layer: Produces predictions\n\n**Industry Standards**:\n- **Weights**: Control how strongly each input feature influences decisions—adjusted during training via backpropagation\n- **Biases**: Built-in values that shift the decision threshold, allowing neurons to activate even with weak inputs\n- **Parameters**: Total count of weights + biases (e.g., an 8B parameter LLM has 8 billion weighted connections)\n\n**Key insight**: Each hidden neuron learns a different 'feature detector.' Together, they can approximate any continuous function (Universal Approximation Theorem).",
                 "diagram": {
                   "title": "MLP Architecture",
                   "code": "flowchart LR\n    subgraph Input[\"Input Layer\"]\n        I1((x₁))\n        I2((x₂))\n        I3((x₃))\n    end\n    \n    subgraph Hidden[\"Hidden Layer\"]\n        H1((h₁))\n        H2((h₂))\n        H3((h₃))\n        H4((h₄))\n    end\n    \n    subgraph Output[\"Output Layer\"]\n        O1((ŷ₁))\n        O2((ŷ₂))\n    end\n    \n    I1 --> H1 & H2 & H3 & H4\n    I2 --> H1 & H2 & H3 & H4\n    I3 --> H1 & H2 & H3 & H4\n    H1 & H2 & H3 & H4 --> O1\n    H1 & H2 & H3 & H4 --> O2"
@@ -40,7 +52,7 @@
               },
               {
                 "title": "Activation Functions",
-                "content": "Activation functions introduce non-linearity. Without them, any network collapses to a linear transformation.\n\n**Common activations**:\n\n| Function | Formula | Range | Use Case |\n|----------|---------|-------|----------|\n| ReLU | max(0, x) | [0, ∞) | Hidden layers (default) |\n| Sigmoid | 1/(1+e^-x) | (0, 1) | Binary output |\n| Tanh | (e^x - e^-x)/(e^x + e^-x) | (-1, 1) | Hidden (centered) |\n| Softmax | e^xi / Σe^xj | (0, 1) | Multi-class output |\n| GELU | x·Φ(x) | (-∞, ∞) | Transformers |",
+                "content": "Activation functions introduce non-linearity. Without them, any network collapses to a linear transformation—this is what distinguishes deep neural networks from linear regression models.\n\n**Industry Terminology**: The activation function is a mathematical operation applied to the output of each neuron. It controls the magnitude of output, keeping values within a specified range, which helps prevent exploding values during forward and backward passes.\n\n**Common activations**:\n\n| Function | Formula | Range | Use Case |\n|----------|---------|-------|----------|\n| ReLU | max(0, x) | [0, ∞) | Hidden layers (default) |\n| Sigmoid | 1/(1+e^-x) | (0, 1) | Binary output |\n| Tanh | (e^x - e^-x)/(e^x + e^-x) | (-1, 1) | Hidden (centered, better gradient flow) |\n| Softmax | e^xi / Σe^xj | (0, 1) | Multi-class output (probabilities) |\n| GELU | x·Φ(x) | (-∞, ∞) | Transformers |",
                 "code": "import numpy as np\nimport matplotlib.pyplot as plt\n\ndef relu(x):\n    return np.maximum(0, x)\n\ndef sigmoid(x):\n    return 1 / (1 + np.exp(-np.clip(x, -500, 500)))\n\ndef tanh(x):\n    return np.tanh(x)\n\ndef gelu(x):\n    return 0.5 * x * (1 + np.tanh(np.sqrt(2/np.pi) * (x + 0.044715 * x**3)))\n\ndef leaky_relu(x, alpha=0.01):\n    return np.where(x > 0, x, alpha * x)\n\n# Plot activations\nx = np.linspace(-5, 5, 100)\n\nplt.figure(figsize=(12, 4))\nfor i, (name, func) in enumerate([\n    ('ReLU', relu), \n    ('Sigmoid', sigmoid), \n    ('GELU', gelu)\n], 1):\n    plt.subplot(1, 3, i)\n    plt.plot(x, func(x))\n    plt.title(name)\n    plt.grid(True)\n    plt.axhline(y=0, color='k', linestyle='-', linewidth=0.5)\n    plt.axvline(x=0, color='k', linestyle='-', linewidth=0.5)\nplt.tight_layout()\nplt.show()"
               }
             ],
@@ -60,8 +72,23 @@
               }
             ],
             "sources": [
-              {"title": "Deep Learning Book - Ch. 6", "author": "Goodfellow et al.", "url": "https://www.deeplearningbook.org/contents/mlp.html"},
-              {"title": "Universal Approximation Theorem", "url": "https://en.wikipedia.org/wiki/Universal_approximation_theorem"}
+              {
+                "title": "Deep Learning Book - Ch. 6",
+                "author": "Goodfellow et al.",
+                "url": "https://www.deeplearningbook.org/contents/mlp.html"
+              },
+              {
+                "title": "Universal Approximation Theorem",
+                "url": "https://en.wikipedia.org/wiki/Universal_approximation_theorem"
+              },
+              {
+                "title": "IBM: What is Deep Learning?",
+                "url": "https://www.ibm.com/topics/deep-learning"
+              },
+              {
+                "title": "IBM: What is a Neural Network?",
+                "url": "https://www.ibm.com/topics/neural-networks"
+              }
             ]
           }
         },
@@ -70,11 +97,11 @@
           "title": "Backpropagation and Gradient Descent",
           "duration": "60 min",
           "content": {
-            "overview": "Backpropagation is the algorithm that makes neural networks trainable. It efficiently computes gradients of the loss with respect to all weights using the chain rule. Combined with gradient descent, it enables learning from data.",
+            "overview": "Backpropagation is the algorithm that makes neural networks trainable. It efficiently computes gradients of the loss with respect to all weights using the chain rule. Combined with gradient descent, it enables learning from data.\n\n**Industry Definition**: Backpropagation (backward propagation of error) is an elegant method to calculate how changes to any individual weight or bias will affect the accuracy of model predictions. It entails a single end-to-end backwards pass through the network, using the chain rule of calculus to compute the 'gradient' of the loss function—a vector of partial derivatives for every equation in the network. Remarkably efficient: while a naive approach to compute gradients for 1 million weights would require 1,000,001 forward passes, backpropagation achieves the same in just 2 passes (1 forward + 1 backward).",
             "sections": [
               {
                 "title": "The Gradient Descent Algorithm",
-                "content": "Gradient descent minimizes a loss function by iteratively moving in the direction of steepest descent:\n\n$$w_{t+1} = w_t - \\eta \\nabla L(w_t)$$\n\nWhere:\n- $w$ are the weights\n- $\\eta$ is the learning rate\n- $\\nabla L$ is the gradient of the loss\n\n**Variants**:\n- **Batch GD**: Use full dataset for each update\n- **Stochastic GD (SGD)**: Use single sample\n- **Mini-batch GD**: Use small batch (most common)",
+                "content": "Gradient descent minimizes a loss function by iteratively moving in the direction of steepest descent:\n\n$$w_{t+1} = w_t - \\eta \\nabla L(w_t)$$\n\nWhere:\n- $w$ are the weights\n- $\\eta$ is the learning rate (step size)\n- $\\nabla L$ is the gradient of the loss\n\n**Industry Standards**:\n- **Learning Rate**: Size of steps taken to reach minimum. High = faster but risks overshooting; Low = precise but slow\n- **Cost/Loss Function**: Measures difference between predicted and actual output. Loss = single example; Cost = average across training set\n- **Point of Convergence**: When slope of cost function is at/near zero—model stops learning\n\n**Three Types of Gradient Descent**:\n- **Batch GD**: Use full dataset for each update (stable but memory-intensive)\n- **Stochastic GD (SGD)**: Use single sample per update (fast but noisy)\n- **Mini-batch GD**: Use small batches—best balance of efficiency and stability (most common)",
                 "code": "import numpy as np\n\ndef gradient_descent(\n    f, \n    grad_f, \n    x0, \n    learning_rate=0.01, \n    n_iterations=100\n):\n    \"\"\"Minimize f starting from x0.\"\"\"\n    x = x0.copy()\n    history = [x.copy()]\n    \n    for _ in range(n_iterations):\n        gradient = grad_f(x)\n        x = x - learning_rate * gradient\n        history.append(x.copy())\n    \n    return x, history\n\n# Example: Minimize f(x) = x^2\nf = lambda x: x**2\ngrad_f = lambda x: 2*x\n\nx_min, history = gradient_descent(f, grad_f, np.array([5.0]), learning_rate=0.1)\nprint(f\"Minimum at x = {x_min[0]:.4f}\")  # ~0"
               },
               {
@@ -84,7 +111,7 @@
               },
               {
                 "title": "Loss Functions",
-                "content": "The loss function measures how wrong predictions are:\n\n**Cross-Entropy Loss** (classification):\n$$L = -\\frac{1}{N} \\sum_{i=1}^{N} \\sum_{c=1}^{C} y_{ic} \\log(\\hat{y}_{ic})$$\n\n**Mean Squared Error** (regression):\n$$L = \\frac{1}{N} \\sum_{i=1}^{N} (y_i - \\hat{y}_i)^2$$\n\nThe choice of loss affects training dynamics and what the model optimizes for.",
+                "content": "The loss function measures how wrong predictions are:\n\n**Cross-Entropy Loss** (classification):\n$$L = -\\frac{1}{N} \\sum_{i=1}^{N} \\sum_{c=1}^{C} y_{ic} \\log(\\hat{y}_{ic})$$\n\n**Mean Squared Error** (regression):\n$$L = \\frac{1}{N} \\sum_{i=1}^{N} (y_i - \\hat{y}_i)^2$$\n\n**Industry Terminology**:\n- **Ground Truth**: The correct/desired output for a given input (from labeled data or original sample in self-supervised learning)\n- **Loss vs Cost vs Error Function**: Generally interchangeable. Loss = error for one example; Cost = average error across training set\n- **Objective Function**: Broader term for any evaluation function to minimize or maximize\n\nThe choice of loss affects training dynamics and what the model optimizes for.",
                 "code": "import numpy as np\n\ndef cross_entropy_loss(y_pred, y_true):\n    \"\"\"Cross-entropy for classification.\n    \n    y_pred: (N, C) probabilities\n    y_true: (N,) class indices\n    \"\"\"\n    n_samples = len(y_true)\n    # Clip to avoid log(0)\n    y_pred = np.clip(y_pred, 1e-15, 1 - 1e-15)\n    # Select probabilities for correct classes\n    correct_probs = y_pred[range(n_samples), y_true]\n    # Negative log likelihood\n    loss = -np.mean(np.log(correct_probs))\n    return loss\n\ndef mse_loss(y_pred, y_true):\n    \"\"\"Mean Squared Error for regression.\"\"\"\n    return np.mean((y_pred - y_true) ** 2)\n\ndef binary_cross_entropy(y_pred, y_true):\n    \"\"\"Binary cross-entropy.\"\"\"\n    y_pred = np.clip(y_pred, 1e-15, 1 - 1e-15)\n    return -np.mean(\n        y_true * np.log(y_pred) + \n        (1 - y_true) * np.log(1 - y_pred)\n    )\n\n# Example\ny_pred = np.array([[0.9, 0.1], [0.2, 0.8], [0.6, 0.4]])\ny_true = np.array([0, 1, 0])\n\nloss = cross_entropy_loss(y_pred, y_true)\nprint(f\"Cross-entropy loss: {loss:.4f}\")  # ~0.27"
               }
             ],
@@ -104,8 +131,22 @@
               }
             ],
             "sources": [
-              {"title": "Calculus on Computational Graphs: Backpropagation", "url": "https://colah.github.io/posts/2015-08-Backprop/"},
-              {"title": "CS231n Backpropagation", "url": "https://cs231n.github.io/optimization-2/"}
+              {
+                "title": "Calculus on Computational Graphs: Backpropagation",
+                "url": "https://colah.github.io/posts/2015-08-Backprop/"
+              },
+              {
+                "title": "CS231n Backpropagation",
+                "url": "https://cs231n.github.io/optimization-2/"
+              },
+              {
+                "title": "IBM: What is Backpropagation?",
+                "url": "https://www.ibm.com/topics/backpropagation"
+              },
+              {
+                "title": "IBM: What is Gradient Descent?",
+                "url": "https://www.ibm.com/topics/gradient-descent"
+              }
             ]
           }
         }
@@ -158,8 +199,14 @@
               }
             ],
             "sources": [
-              {"title": "PyTorch Tensors Tutorial", "url": "https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html"},
-              {"title": "Autograd Tutorial", "url": "https://pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html"}
+              {
+                "title": "PyTorch Tensors Tutorial",
+                "url": "https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html"
+              },
+              {
+                "title": "Autograd Tutorial",
+                "url": "https://pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html"
+              }
             ]
           }
         },
@@ -206,8 +253,14 @@
               }
             ],
             "sources": [
-              {"title": "PyTorch Training Tutorial", "url": "https://pytorch.org/tutorials/beginner/basics/optimization_tutorial.html"},
-              {"title": "Adam Optimizer Paper", "url": "https://arxiv.org/abs/1412.6980"}
+              {
+                "title": "PyTorch Training Tutorial",
+                "url": "https://pytorch.org/tutorials/beginner/basics/optimization_tutorial.html"
+              },
+              {
+                "title": "Adam Optimizer Paper",
+                "url": "https://arxiv.org/abs/1412.6980"
+              }
             ]
           }
         }
@@ -222,16 +275,16 @@
           "title": "Convolutions and Pooling",
           "duration": "60 min",
           "content": {
-            "overview": "Convolutional Neural Networks (CNNs) are designed for spatial data like images. They use convolution operations to detect local patterns (edges, textures, shapes) and build up hierarchical representations.",
+            "overview": "Convolutional Neural Networks (CNNs) are designed for spatial data like images. They use convolution operations to detect local patterns (edges, textures, shapes) and build up hierarchical representations.\n\n**Industry Definition**: CNNs use three-dimensional data for image classification and object recognition. They have three main layer types: Convolutional (feature detection), Pooling (dimensionality reduction), and Fully-connected (classification). Prior to CNNs, manual time-consuming feature extraction was required. CNNs provide scalable pattern recognition leveraging matrix multiplication. Key hyperparameters: number of filters (output depth), stride (kernel movement distance), and zero-padding (Valid/Same/Full).",
             "sections": [
               {
                 "title": "The Convolution Operation",
-                "content": "A convolution slides a small filter (kernel) over an image, computing dot products at each position:\n\n**Key concepts**:\n- **Kernel**: Small learnable filter (e.g., 3×3)\n- **Stride**: How far to move the kernel each step\n- **Padding**: Adding zeros around the edge\n- **Feature map**: Output of a convolution\n\n**Why convolutions work**:\n- **Local connectivity**: Each output depends on a local region\n- **Parameter sharing**: Same kernel applied everywhere\n- **Translation invariance**: Detects patterns anywhere in image",
+                "content": "A convolution slides a small filter (kernel) over an image, computing dot products at each position:\n\n**Key concepts**:\n- **Kernel/Feature Detector**: Small learnable filter (e.g., 3×3) that represents part of an image pattern\n- **Stride**: Distance (in pixels) the kernel moves—larger stride yields smaller output\n- **Padding**: Adding zeros around edges (Valid = no padding; Same = output equals input size; Full = increases output)\n- **Feature Map/Activation Map**: Output of a convolution (also called 'convolved feature')\n- **Receptive Field**: The local region of input each output depends on\n\n**Why convolutions work (Industry Principles)**:\n- **Local connectivity**: Each output depends on a local region\n- **Parameter sharing**: Same kernel weights applied everywhere (reduces total parameters)\n- **Translation invariance**: Detects patterns anywhere in image\n- **Feature hierarchy**: Later layers see larger portions, combining low-level features into high-level patterns (e.g., edges → wheels → bicycle)",
                 "code": "import torch\nimport torch.nn as nn\n\n# 2D Convolution\nconv = nn.Conv2d(\n    in_channels=3,      # RGB input\n    out_channels=32,    # 32 filters\n    kernel_size=3,      # 3x3 kernel\n    stride=1,           # Move 1 pixel at a time\n    padding=1           # Same size output\n)\n\n# Input: (batch, channels, height, width)\nx = torch.randn(1, 3, 224, 224)\nout = conv(x)\nprint(f\"Output shape: {out.shape}\")  # (1, 32, 224, 224)\n\n# Visualize a learned kernel\nprint(f\"First kernel shape: {conv.weight[0].shape}\")  # (3, 3, 3)\n# This is one 3x3x3 filter that produces one feature map\n\n# Calculate output size:\n# out_size = (in_size + 2*padding - kernel_size) / stride + 1\n# (224 + 2*1 - 3) / 1 + 1 = 224"
               },
               {
                 "title": "Pooling Layers",
-                "content": "Pooling reduces spatial dimensions, providing:\n- **Dimensionality reduction**: Fewer parameters downstream\n- **Translation invariance**: Small shifts don't change output\n- **Larger receptive field**: Each neuron \"sees\" more of the input\n\n**Types**:\n- **Max Pooling**: Take maximum in each region\n- **Average Pooling**: Take average\n- **Global Average Pooling**: Average entire feature map to one value",
+                "content": "Pooling (downsampling) conducts dimensionality reduction, reducing the number of parameters:\n\n**Industry Benefits**:\n- **Dimensionality reduction**: Fewer parameters downstream, reduced complexity\n- **Translation invariance**: Small shifts don't change output\n- **Larger receptive field**: Each neuron 'sees' more of the input\n- **Overfitting prevention**: Reduced parameters limit risk of overfitting\n- **Efficiency**: Improves computational efficiency\n\n**Types**:\n- **Max Pooling**: Select maximum value in each region (most commonly used)\n- **Average Pooling**: Calculate average value in each region\n- **Global Average Pooling**: Average entire feature map to single value (common at network end)",
                 "diagram": {
                   "title": "Max Pooling Operation",
                   "code": "flowchart TB\n    subgraph Input[\"Input (4x4)\"]\n        direction TB\n        R1[\"1  1  2  4\"]\n        R2[\"5  6  7  8\"]\n        R3[\"3  2  1  0\"]\n        R4[\"1  2  3  4\"]\n    end\n    \n    subgraph Output[\"Output (2x2)\"]\n        direction TB\n        O1[\"6  8\"]\n        O2[\"3  4\"]\n    end\n    \n    Input -->|Max Pool 2x2| Output\n    \n    style R1 fill:#fff,stroke:#333\n    style O1 fill:#dbeafe,stroke:#2563eb"
@@ -260,8 +313,18 @@
               }
             ],
             "sources": [
-              {"title": "CS231n CNNs", "url": "https://cs231n.github.io/convolutional-networks/"},
-              {"title": "CNN Explainer", "url": "https://poloclub.github.io/cnn-explainer/"}
+              {
+                "title": "CS231n CNNs",
+                "url": "https://cs231n.github.io/convolutional-networks/"
+              },
+              {
+                "title": "CNN Explainer",
+                "url": "https://poloclub.github.io/cnn-explainer/"
+              },
+              {
+                "title": "IBM: What are Convolutional Neural Networks?",
+                "url": "https://www.ibm.com/topics/convolutional-neural-networks"
+              }
             ]
           }
         }
@@ -276,7 +339,7 @@
           "title": "The Attention Mechanism",
           "duration": "60 min",
           "content": {
-            "overview": "The attention mechanism, introduced in 'Attention Is All You Need' (Vaswani et al., 2017), revolutionized deep learning. It allows models to focus on relevant parts of the input, enabling parallel processing and long-range dependencies.",
+            "overview": "The attention mechanism, introduced in 'Attention Is All You Need' (Vaswani et al., 2017), revolutionized deep learning. It allows models to focus on relevant parts of the input, enabling parallel processing and long-range dependencies.\n\n**Industry Context**: Unlike RNNs which suffer from vanishing gradients and sequential processing limitations, transformers use only attention layers and standard feedforward layers. The self-attention mechanism enables transformers to discern relationships (dependencies) between each part of an input sequence and selectively focus on the most relevant parts. This architecture powers modern LLMs for NLP, and vision transformers (ViTs) for computer vision, though CNNs remain faster for real-time image tasks.",
             "sections": [
               {
                 "title": "Self-Attention",
@@ -310,9 +373,18 @@
               }
             ],
             "sources": [
-              {"title": "Attention Is All You Need", "url": "https://arxiv.org/abs/1706.03762"},
-              {"title": "The Illustrated Transformer", "url": "https://jalammar.github.io/illustrated-transformer/"},
-              {"title": "Andrej Karpathy - Let's build GPT", "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY"}
+              {
+                "title": "Attention Is All You Need",
+                "url": "https://arxiv.org/abs/1706.03762"
+              },
+              {
+                "title": "The Illustrated Transformer",
+                "url": "https://jalammar.github.io/illustrated-transformer/"
+              },
+              {
+                "title": "Andrej Karpathy - Let's build GPT",
+                "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY"
+              }
             ]
           }
         },
@@ -376,8 +448,80 @@
               ],
               "correct": 1,
               "explanation": "In deep networks, gradients can diminish exponentially as they are propagated back through layers (especially with Sigmoid/Tanh), stopping earlier layers from updating."
+            },
+            {
+              "question": "What distinguishes deep learning from traditional machine learning?",
+              "options": [
+                "Use of Python instead of R",
+                "Models with at least 4 hidden layers that can learn hierarchical representations",
+                "Faster training times",
+                "Smaller datasets required"
+              ],
+              "correct": 1,
+              "explanation": "Deep learning refers to training neural networks with at least 4 layers, enabling hierarchical feature learning where earlier layers identify broader patterns and deeper layers identify more granular ones."
+            },
+            {
+              "question": "What are the three main types of layers in a CNN?",
+              "options": [
+                "Input, Hidden, Output",
+                "Convolutional, Pooling, Fully-connected",
+                "Attention, Feedforward, Normalization",
+                "Encoder, Decoder, Classifier"
+              ],
+              "correct": 1,
+              "explanation": "CNNs use Convolutional layers for feature detection, Pooling layers for dimensionality reduction, and Fully-connected layers for final classification."
+            },
+            {
+              "question": "Which gradient descent variant is most commonly used in practice?",
+              "options": [
+                "Batch Gradient Descent",
+                "Stochastic Gradient Descent",
+                "Mini-batch Gradient Descent",
+                "Full-dataset Gradient Descent"
+              ],
+              "correct": 2,
+              "explanation": "Mini-batch GD balances computational efficiency of batch GD with the faster convergence of stochastic GD, making it the standard for training deep networks."
+            },
+            {
+              "question": "What problem did LSTM networks solve compared to standard RNNs?",
+              "options": [
+                "Slower training speed",
+                "The vanishing gradient problem and inability to learn long-term dependencies",
+                "Too many parameters",
+                "Lack of non-linearity"
+              ],
+              "correct": 1,
+              "explanation": "LSTM networks introduced gates (forget, input, output) that control information flow, enabling learning of long-term dependencies that standard RNNs cannot capture."
+            },
+            {
+              "question": "What is the key innovation of the Transformer architecture over RNNs?",
+              "options": [
+                "Fewer parameters",
+                "Self-attention mechanism enabling parallel processing and long-range dependencies",
+                "Faster sequential processing",
+                "No need for training data"
+              ],
+              "correct": 1,
+              "explanation": "Transformers replace recurrence with self-attention, which can capture relationships between any positions in a sequence simultaneously, enabling parallelization and better long-range dependency modeling."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "neural-network-basics",
+              "backpropagation",
+              "pytorch-tensors"
+            ],
+            "externalRefs": [
+              {
+                "title": "PyTorch Tutorials",
+                "url": "https://pytorch.org/tutorials/"
+              },
+              {
+                "title": "Fast.ai Course",
+                "url": "https://course.fast.ai/"
+              }
+            ]
+          }
         }
       ]
     }

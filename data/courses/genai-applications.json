@@ -1,11 +1,14 @@
 {
   "id": "genai-applications",
   "title": "Generative AI Applications",
-  "icon": "\u2728",
-  "description": "Build practical applications with LLMs, image generation, and multi-modal AI systems.",
+  "icon": "✨",
+  "description": "Build practical applications with LLMs, image generation, and multi-modal AI systems. Generative AI can create original content such as text, images, video, audio or software code in response to user prompts, using deep learning models that simulate human learning and decision-making.",
   "level": "intermediate",
   "duration": "6 weeks",
   "totalLessons": 16,
+  "validationSources": [
+    "https://www.ibm.com/topics/generative-ai"
+  ],
   "prerequisites": [
     "Python Fundamentals",
     "LLM Basics"
@@ -252,7 +255,7 @@
                 "title": "Tools and Agents",
                 "codeExample": {
                   "language": "python",
-                  "code": "from langchain_openai import ChatOpenAI\nfrom langchain.agents import create_openai_functions_agent, AgentExecutor\nfrom langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder\nfrom langchain_core.tools import tool\n\n# Define tools\n@tool\ndef get_weather(location: str) -> str:\n    \"\"\"Get the current weather for a location.\"\"\"\n    # Simulate API call\n    return f'The weather in {location} is sunny, 72\u00b0F'\n\n@tool\ndef search_web(query: str) -> str:\n    \"\"\"Search the web for information.\"\"\"\n    return f'Search results for: {query}...'\n\ntools = [get_weather, search_web]\n\n# Create agent\nllm = ChatOpenAI(model='gpt-4')\nprompt = ChatPromptTemplate.from_messages([\n    ('system', 'You are a helpful assistant with access to tools.'),\n    ('user', '{input}'),\n    MessagesPlaceholder(variable_name='agent_scratchpad')\n])\n\nagent = create_openai_functions_agent(llm, tools, prompt)\nexecutor = AgentExecutor(agent=agent, tools=tools, verbose=True)\n\n# Run agent\nresult = executor.invoke({'input': 'What is the weather in San Francisco?'})"
+                  "code": "from langchain_openai import ChatOpenAI\nfrom langchain.agents import create_openai_functions_agent, AgentExecutor\nfrom langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder\nfrom langchain_core.tools import tool\n\n# Define tools\n@tool\ndef get_weather(location: str) -> str:\n    \"\"\"Get the current weather for a location.\"\"\"\n    # Simulate API call\n    return f'The weather in {location} is sunny, 72°F'\n\n@tool\ndef search_web(query: str) -> str:\n    \"\"\"Search the web for information.\"\"\"\n    return f'Search results for: {query}...'\n\ntools = [get_weather, search_web]\n\n# Create agent\nllm = ChatOpenAI(model='gpt-4')\nprompt = ChatPromptTemplate.from_messages([\n    ('system', 'You are a helpful assistant with access to tools.'),\n    ('user', '{input}'),\n    MessagesPlaceholder(variable_name='agent_scratchpad')\n])\n\nagent = create_openai_functions_agent(llm, tools, prompt)\nexecutor = AgentExecutor(agent=agent, tools=tools, verbose=True)\n\n# Run agent\nresult = executor.invoke({'input': 'What is the weather in San Francisco?'})"
                 }
               }
             ],
@@ -446,7 +449,7 @@
                 "title": "Code Review & Bug Detection",
                 "codeExample": {
                   "language": "python",
-                  "code": "from pydantic import BaseModel\nfrom typing import List\n\nclass CodeIssue(BaseModel):\n    severity: str  # 'critical', 'warning', 'info'\n    line: int\n    description: str\n    suggestion: str\n\nclass CodeReview(BaseModel):\n    issues: List[CodeIssue]\n    overall_quality: int  # 1-10\n    summary: str\n\ndef review_code(code, language='python'):\n    response = client.beta.chat.completions.parse(\n        model='gpt-4o',\n        messages=[\n            {\n                'role': 'system',\n                'content': f\"\"\"You are a senior {language} developer.\n                Review code for:\n                - Security vulnerabilities\n                - Performance issues\n                - Best practice violations\n                - Potential bugs\"\"\"\n            },\n            {'role': 'user', 'content': code}\n        ],\n        response_format=CodeReview\n    )\n    return response.choices[0].message.parsed\n\nreview = review_code(suspicious_code)\nfor issue in review.issues:\n    if issue.severity == 'critical':\n        print(f'\ud83d\udea8 Line {issue.line}: {issue.description}')"
+                  "code": "from pydantic import BaseModel\nfrom typing import List\n\nclass CodeIssue(BaseModel):\n    severity: str  # 'critical', 'warning', 'info'\n    line: int\n    description: str\n    suggestion: str\n\nclass CodeReview(BaseModel):\n    issues: List[CodeIssue]\n    overall_quality: int  # 1-10\n    summary: str\n\ndef review_code(code, language='python'):\n    response = client.beta.chat.completions.parse(\n        model='gpt-4o',\n        messages=[\n            {\n                'role': 'system',\n                'content': f\"\"\"You are a senior {language} developer.\n                Review code for:\n                - Security vulnerabilities\n                - Performance issues\n                - Best practice violations\n                - Potential bugs\"\"\"\n            },\n            {'role': 'user', 'content': code}\n        ],\n        response_format=CodeReview\n    )\n    return response.choices[0].message.parsed\n\nreview = review_code(suspicious_code)\nfor issue in review.issues:\n    if issue.severity == 'critical':\n        print(f'🚨 Line {issue.line}: {issue.description}')"
                 }
               }
             ],
@@ -660,8 +663,80 @@
               ],
               "correct": 1,
               "explanation": "Smaller models are ideal for simple tasks like classification, extraction, or straightforward Q&A where the full capability of larger models isn't needed, saving significant costs."
+            },
+            {
+              "question": "What are the three main phases of generative AI operation?",
+              "options": [
+                "Input, processing, output",
+                "Training, tuning, generation/evaluation",
+                "Design, development, deployment",
+                "Encode, process, decode"
+              ],
+              "correct": 1,
+              "explanation": "Generative AI operates in three phases: Training (creating foundation models), Tuning (tailoring to specific applications via fine-tuning or RLHF), and Generation/Evaluation (producing outputs and continually improving)."
+            },
+            {
+              "question": "What is an AI hallucination?",
+              "options": [
+                "When the AI creates images",
+                "An output that seems plausible but is nonsensical or inaccurate",
+                "A type of training data",
+                "When the model crashes"
+              ],
+              "correct": 1,
+              "explanation": "AI hallucinations are outputs that appear plausible but are factually incorrect or entirely fabricated. They can include fake citations, invented facts, or nonsensical information presented confidently."
+            },
+            {
+              "question": "What distinguishes AI agents from regular generative AI?",
+              "options": [
+                "Agents are faster",
+                "Agents can act autonomously, use tools, and complete tasks without human intervention",
+                "Agents use less memory",
+                "Agents only work with text"
+              ],
+              "correct": 1,
+              "explanation": "AI agents exhibit autonomy and goal-driven behavior. While gen AI creates content, agents use that content to interact with tools, make decisions, and complete multi-step tasks independently."
+            },
+            {
+              "question": "Which generative AI model architecture powers most modern LLMs like GPT and Claude?",
+              "options": [
+                "Variational Autoencoders (VAEs)",
+                "Generative Adversarial Networks (GANs)",
+                "Transformers",
+                "Recurrent Neural Networks (RNNs)"
+              ],
+              "correct": 2,
+              "explanation": "Transformers, documented in the 2017 'Attention is All You Need' paper, are at the core of most modern generative AI tools including ChatGPT, GPT-4, Claude, and BERT."
+            },
+            {
+              "question": "What is the primary benefit of using RAG with generative AI?",
+              "options": [
+                "Faster training",
+                "Smaller model size",
+                "Access to current information beyond training data cutoff",
+                "Lower energy consumption"
+              ],
+              "correct": 2,
+              "explanation": "RAG (Retrieval Augmented Generation) connects models to external knowledge sources, ensuring access to current information and grounding responses in verifiable data."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "llm-apis",
+              "function-calling",
+              "structured-outputs"
+            ],
+            "externalRefs": [
+              {
+                "title": "OpenAI API Docs",
+                "url": "https://platform.openai.com/docs/"
+              },
+              {
+                "title": "Anthropic Claude Docs",
+                "url": "https://docs.anthropic.com/"
+              }
+            ]
+          }
         }
       ]
     }

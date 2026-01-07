@@ -207,9 +207,25 @@ const PeriodicTablePage = {
             <p class="pt-detail-desc">${Helpers.escapeHtml(element.description)}</p>
             <p class="pt-detail-info">${Helpers.escapeHtml(element.details)}</p>
             
+            ${element.fullExplanation ? `
+                <div class="pt-detail-full-explanation">
+                    <h4>📖 Full Explanation</h4>
+                    <p>${Helpers.escapeHtml(element.fullExplanation)}</p>
+                </div>
+            ` : ''}
+            
+            ${element.keyTechniques && element.keyTechniques.length > 0 ? `
+                <div class="pt-detail-techniques">
+                    <h4>🔧 Key Techniques</h4>
+                    <div class="pt-detail-tags">
+                        ${element.keyTechniques.map(tech => `<span class="pt-tag">${Helpers.escapeHtml(tech)}</span>`).join('')}
+                    </div>
+                </div>
+            ` : ''}
+            
             ${element.examples && element.examples.length > 0 ? `
                 <div class="pt-detail-examples">
-                    <h4>Examples</h4>
+                    <h4>💡 Examples</h4>
                     <div class="pt-detail-tags">
                         ${element.examples.map(ex => `<span class="pt-tag">${Helpers.escapeHtml(ex)}</span>`).join('')}
                     </div>
@@ -300,10 +316,35 @@ const PeriodicTablePage = {
                 
                 <p class="pt-recipe-desc">${Helpers.escapeHtml(reaction.description)}</p>
                 
+                ${reaction.architecture ? `
+                    <div class="pt-recipe-architecture">
+                        <h3>🏗️ Architecture</h3>
+                        <p>${Helpers.escapeHtml(reaction.architecture)}</p>
+                    </div>
+                ` : ''}
+                
                 ${steps ? `
                     <div class="pt-recipe-steps">
                         <h3>📋 How to Build</h3>
                         <ol>${steps}</ol>
+                    </div>
+                ` : ''}
+                
+                ${reaction.challenges && reaction.challenges.length > 0 ? `
+                    <div class="pt-recipe-challenges">
+                        <h3>⚠️ Challenges</h3>
+                        <ul>
+                            ${reaction.challenges.map(ch => `<li>${Helpers.escapeHtml(ch)}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+                
+                ${reaction.bestPractices && reaction.bestPractices.length > 0 ? `
+                    <div class="pt-recipe-practices">
+                        <h3>✨ Best Practices</h3>
+                        <ul>
+                            ${reaction.bestPractices.map(bp => `<li>${Helpers.escapeHtml(bp)}</li>`).join('')}
+                        </ul>
                     </div>
                 ` : ''}
                 

@@ -1,10 +1,15 @@
 {
   "id": "small-language-models",
   "title": "Small Language Models",
-  "description": "Master efficient, deployable AI with small language models - from Phi to Gemma to edge deployment",
+  "description": "Master efficient, deployable AI with small language models - from Phi to Gemma to edge deployment. Small Language Models (SLMs) offer a compelling alternative to massive LLMs, enabling faster inference, lower costs, enhanced privacy, and deployment on consumer hardware and edge devices.",
   "icon": "📦",
   "level": "intermediate",
   "duration": "4 weeks",
+  "validationSources": [
+    "https://www.ibm.com/topics/small-language-models",
+    "https://www.ibm.com/think/topics/small-language-models",
+    "https://www.ibm.com/topics/edge-ai"
+  ],
   "prerequisites": ["Basic Python programming (variables, functions, pip install)", "Understanding of what AI chatbots like ChatGPT do"],
   "prerequisitesClarification": "If you can write a Python function and have used ChatGPT or similar AI assistants, you're ready for this course. No machine learning math required.",
   "whatYouNeed": [
@@ -326,6 +331,185 @@
               "Local RAG provides privacy with good quality",
               "Code models like CodeLlama are surprisingly capable",
               "Combine multiple small models for complex pipelines"
+            ]
+          }
+        },
+        {
+          "id": "slm-quiz",
+          "title": "Small Language Models Quiz",
+          "type": "quiz",
+          "duration": "15 min",
+          "questions": [
+            {
+              "question": "What is a Small Language Model (SLM)?",
+              "options": [
+                "A model with less than 100 parameters",
+                "A language model with fewer parameters (typically 1-13B) optimized for efficiency and deployability",
+                "Any model that runs slowly",
+                "A model that only handles short texts"
+              ],
+              "correct": 1,
+              "explanation": "Small Language Models are language models with fewer parameters (typically 1-13 billion) that are optimized for efficiency, enabling faster inference and deployment on limited hardware."
+            },
+            {
+              "question": "What is quantization in the context of LLMs?",
+              "options": [
+                "Increasing the model's accuracy",
+                "Reducing model size by using lower precision numbers (e.g., 4-bit instead of 16-bit)",
+                "Adding more parameters to the model",
+                "Splitting the model across multiple GPUs"
+              ],
+              "correct": 1,
+              "explanation": "Quantization reduces model size and memory requirements by representing weights with fewer bits, enabling larger models to run on smaller hardware with minimal quality loss."
+            },
+            {
+              "question": "What is Ollama used for?",
+              "options": [
+                "Training large language models from scratch",
+                "Running language models locally on your computer",
+                "Hosting models in the cloud",
+                "Creating training datasets"
+              ],
+              "correct": 1,
+              "explanation": "Ollama is a tool for running language models locally on your computer, making it easy to download and use open-source models without cloud dependencies."
+            },
+            {
+              "question": "Why might you choose a small model over a large one?",
+              "options": [
+                "Small models are always more accurate",
+                "For faster inference, lower costs, privacy, and edge deployment",
+                "Small models have more knowledge",
+                "Large models cannot be used commercially"
+              ],
+              "correct": 1,
+              "explanation": "Small models offer advantages in speed, cost, privacy (on-device inference), and the ability to deploy on edge devices and consumer hardware."
+            },
+            {
+              "question": "What does 'GGUF' refer to in the context of small models?",
+              "options": [
+                "A training technique",
+                "A file format for quantized models used by llama.cpp and Ollama",
+                "A type of GPU",
+                "A programming language"
+              ],
+              "correct": 1,
+              "explanation": "GGUF (GPT-Generated Unified Format) is a file format for storing quantized models, commonly used by llama.cpp and Ollama for efficient local inference."
+            },
+            {
+              "question": "What is edge deployment in AI?",
+              "options": [
+                "Deploying models at the edge of the internet",
+                "Running AI models on local devices like phones, IoT, or embedded systems rather than cloud servers",
+                "Deploying models on the newest hardware",
+                "Testing models at the edge of their capabilities"
+              ],
+              "correct": 1,
+              "explanation": "Edge deployment runs AI models directly on local devices (phones, IoT, embedded systems), enabling offline operation, lower latency, and enhanced privacy."
+            },
+            {
+              "question": "What is the typical memory requirement for running a 7B parameter model in 4-bit quantization?",
+              "options": [
+                "About 50GB",
+                "About 4-5GB",
+                "About 500MB",
+                "About 100GB"
+              ],
+              "correct": 1,
+              "explanation": "A 7B parameter model in 4-bit quantization typically requires about 4-5GB of memory, making it runnable on many consumer GPUs and some CPUs."
+            },
+            {
+              "question": "What is speculative decoding?",
+              "options": [
+                "Guessing what the user wants",
+                "Using a smaller draft model to speed up inference of a larger model",
+                "Training multiple models at once",
+                "Predicting future model architectures"
+              ],
+              "correct": 1,
+              "explanation": "Speculative decoding uses a smaller, faster model to generate candidate tokens that are then verified by the larger model, speeding up inference by 2-3x."
+            },
+            {
+              "question": "Which of these is a popular small language model family?",
+              "options": [
+                "GPT-4",
+                "Microsoft Phi",
+                "Claude Opus",
+                "Gemini Ultra"
+              ],
+              "correct": 1,
+              "explanation": "Microsoft Phi (Phi-3, Phi-3 Mini) is a popular family of small language models known for strong performance relative to their size."
+            },
+            {
+              "question": "What is the primary trade-off when using smaller models?",
+              "options": [
+                "Smaller models are more expensive",
+                "Smaller models may have reduced capability on complex reasoning tasks",
+                "Smaller models are slower",
+                "Smaller models require more memory"
+              ],
+              "correct": 1,
+              "explanation": "While smaller models are faster and cheaper, they typically have reduced capability on complex reasoning, broad knowledge tasks, and creative generation compared to larger models."
+            },
+            {
+              "question": "What are the four main model compression techniques for creating SLMs?",
+              "options": [
+                "Training, testing, validation, deployment",
+                "Pruning, quantization, low-rank factorization, and knowledge distillation",
+                "CPU, GPU, TPU, and NPU optimization",
+                "Encoding, decoding, attention, and embedding"
+              ],
+              "correct": 1,
+              "explanation": "IBM identifies four main model compression techniques: pruning (removing less crucial parameters), quantization (reducing precision), low-rank factorization (decomposing weight matrices), and knowledge distillation (transferring knowledge from larger to smaller models)."
+            },
+            {
+              "question": "What is knowledge distillation in the context of SLMs?",
+              "options": [
+                "Removing knowledge from a model",
+                "Transferring learnings from a pretrained 'teacher model' to a smaller 'student model'",
+                "Creating documentation for a model",
+                "Filtering training data"
+              ],
+              "correct": 1,
+              "explanation": "Knowledge distillation involves training a smaller 'student model' to match predictions and mimic reasoning processes of a larger 'teacher model', effectively compressing knowledge into a smaller form."
+            },
+            {
+              "question": "What is the 'hybrid AI pattern' for combining LLMs and SLMs?",
+              "options": [
+                "Using only cloud-based models",
+                "Having smaller models run on-premises while accessing LLMs in the cloud when larger context is needed",
+                "Training models on both text and images",
+                "Using two different programming languages"
+              ],
+              "correct": 1,
+              "explanation": "The hybrid AI pattern uses smaller models running on-premises for efficiency and privacy, with the ability to access larger cloud-based LLMs when more comprehensive data processing is required."
+            },
+            {
+              "question": "According to IBM, what are key limitations of small language models?",
+              "options": [
+                "They are too expensive to deploy",
+                "Bias inheritance, decreased performance on complex tasks, limited generalization, and potential for hallucinations",
+                "They cannot process text",
+                "They only work on mobile devices"
+              ],
+              "correct": 1,
+              "explanation": "IBM notes SLM limitations include: inheriting bias from larger models, less proficiency on complex multi-domain tasks, limited knowledge base for generalization, and the need to validate outputs for factual accuracy."
+            }
+          ],
+          "references": {
+            "lessonRefs": [
+              "what-are-llms",
+              "why-small-models",
+              "optimization-techniques"
+            ],
+            "externalRefs": [
+              {
+                "title": "Ollama",
+                "url": "https://ollama.ai/"
+              },
+              {
+                "title": "IBM Small Language Models",
+                "url": "https://www.ibm.com/topics/small-language-models"
+              }
             ]
           }
         }

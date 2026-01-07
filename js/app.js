@@ -132,6 +132,15 @@ const App = {
             await PeriodicTablePage.render();
         });
         
+        // Learning Paths
+        Router.register('/learning-paths', async () => {
+            await LearningPathsPage.render();
+        });
+        
+        Router.register('/learning-paths/:pathId', async (params) => {
+            await LearningPathsPage.renderPathPage(params.pathId);
+        });
+        
         // 404 handler
         Router.setNotFound(() => {
             const main = document.getElementById('main');

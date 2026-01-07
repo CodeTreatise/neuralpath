@@ -6,6 +6,11 @@
   "level": "beginner",
   "duration": "5 weeks",
   "totalLessons": 19,
+  "validationSources": [
+    "https://www.ibm.com/topics/data-science",
+    "https://www.ibm.com/topics/exploratory-data-analysis",
+    "https://www.ibm.com/topics/data-visualization"
+  ],
   "prerequisites": [
     "Basic Python knowledge"
   ],
@@ -33,17 +38,24 @@
             "sections": [
               {
                 "title": "What is Data Science?",
-                "content": "Data science combines statistics, mathematics, programming, and domain expertise to analyze data and solve complex problems. It's the foundation of modern AI applications.",
+                "content": "Data science combines statistics, mathematics, programming, and domain expertise to analyze data and solve complex problems. It's the foundation of modern AI applications.\n\n**Industry Definition**: Data science combines math and statistics, specialized programming, advanced analytics, AI and machine learning with specific subject matter expertise to uncover actionable insights hidden in an organization's data.",
                 "keyPoints": [
                   "Interdisciplinary field combining stats, CS, and domain knowledge",
                   "Focus on extracting actionable insights from data",
                   "Foundation for machine learning and AI",
-                  "Applied in every industry today"
+                  "Applied in every industry today",
+                  "Requires both technical skills and business acumen"
+                ],
+                "sources": [
+                  {
+                    "title": "IBM - What is Data Science?",
+                    "url": "https://www.ibm.com/topics/data-science"
+                  }
                 ]
               },
               {
                 "title": "The Data Science Workflow",
-                "content": "A typical data science project follows these steps: Problem Definition → Data Collection → Data Cleaning → Exploratory Analysis → Modeling → Evaluation → Deployment.",
+                "content": "A typical data science project follows these steps: Problem Definition → Data Collection → Data Cleaning → Exploratory Analysis → Modeling → Evaluation → Deployment.\n\n**Industry Lifecycle (IBM)**:\n1. **Data Ingestion**: Collect raw structured and unstructured data from all relevant sources\n2. **Data Storage & Processing**: Set standards around data storage, cleaning, deduplicating, transforming\n3. **Data Analysis**: Conduct exploratory data analysis, generate hypotheses, build models\n4. **Communicate**: Present insights as reports and visualizations for decision-makers",
                 "codeExample": {
                   "language": "python",
                   "code": "# Typical Data Science Workflow\n\n# 1. Load and explore data\nimport pandas as pd\ndf = pd.read_csv('data.csv')\nprint(df.head())\nprint(df.describe())\n\n# 2. Clean and preprocess\ndf = df.dropna()\ndf['date'] = pd.to_datetime(df['date'])\n\n# 3. Analyze and visualize\nimport matplotlib.pyplot as plt\ndf['sales'].plot(kind='hist')\nplt.show()\n\n# 4. Build models\nfrom sklearn.linear_model import LinearRegression\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)"
@@ -296,6 +308,22 @@
                   "language": "python",
                   "code": "import seaborn as sns\nimport pandas as pd\n\n# Set style\nsns.set_theme(style='whitegrid')\n\n# Distribution plots\nsns.histplot(df['age'], kde=True)\nsns.boxplot(x='category', y='value', data=df)\nsns.violinplot(x='category', y='value', data=df)\n\n# Relationship plots\nsns.scatterplot(x='x', y='y', hue='category', data=df)\nsns.regplot(x='x', y='y', data=df)\nsns.pairplot(df, hue='category')\n\n# Heatmap for correlations\nsns.heatmap(df.corr(), annot=True, cmap='coolwarm')"
                 }
+              },
+              {
+                "title": "Visualization Best Practices",
+                "content": "Industry best practices for effective data visualization:\n\n**Set the Context**: Provide background to ground the audience - how does current performance compare to benchmarks?\n\n**Know Your Audience**: Design for their needs. What are they trying to accomplish? What questions do they care about?\n\n**Choose Effective Visuals**:\n- Scatter plots for relationships between two variables\n- Line charts for time series data\n- Bar charts for comparing categories\n- Histograms for distributions\n\n**Keep it Simple**: Don't add everything just because you can. Be deliberate about additional information to focus user attention.",
+                "keyPoints": [
+                  "Lead with insight, not methodology",
+                  "Eliminate chart junk - focus on data",
+                  "Use colors accessible to color-blind audiences",
+                  "Design for maximum impact with minimum clutter"
+                ],
+                "sources": [
+                  {
+                    "title": "IBM - What is Data Visualization?",
+                    "url": "https://www.ibm.com/topics/data-visualization"
+                  }
+                ]
               }
             ],
             "keyTakeaways": [
@@ -314,6 +342,22 @@
           "content": {
             "overview": "EDA is the critical first step in any data project. It involves understanding the structure, patterns, and anomalies in your data before modeling.",
             "sections": [
+              {
+                "title": "Four Types of EDA",
+                "content": "Industry frameworks classify EDA into four primary types:\n\n| Type | Description | Example |\n|------|-------------|----------|\n| **Univariate Non-graphical** | Summarize single variable statistics | Mean, median, mode, variance |\n| **Univariate Graphical** | Visualize single variable distributions | Histograms, box plots, stem-leaf plots |\n| **Multivariate Non-graphical** | Analyze relationships through statistics | Cross-tabulation, correlation matrices |\n| **Multivariate Graphical** | Visualize relationships between variables | Scatter plots, heat maps, pair plots |",
+                "keyPoints": [
+                  "Univariate: Analyze one variable at a time",
+                  "Multivariate: Examine relationships between variables",
+                  "Graphical methods reveal patterns non-graphical methods miss",
+                  "EDA helps detect outliers and identify data quality issues"
+                ],
+                "sources": [
+                  {
+                    "title": "IBM - What is Exploratory Data Analysis?",
+                    "url": "https://www.ibm.com/topics/exploratory-data-analysis"
+                  }
+                ]
+              },
               {
                 "title": "Initial Data Exploration",
                 "codeExample": {
@@ -713,7 +757,7 @@
           "id": "ds-quiz",
           "title": "Data Science Quiz",
           "type": "quiz",
-          "duration": "15 min",
+          "duration": "20 min",
           "questions": [
             {
               "question": "Which pandas method would you use to combine two DataFrames based on a common column?",
@@ -769,8 +813,90 @@
               ],
               "correct": 1,
               "explanation": "Spearman correlation works with ranked/ordinal data and measures monotonic relationships."
+            },
+            {
+              "question": "According to industry standards, what are the four stages of the data science lifecycle?",
+              "options": [
+                "Collect, Clean, Model, Deploy",
+                "Ingest, Process, Analyze, Communicate",
+                "Define, Explore, Build, Test",
+                "Gather, Transform, Train, Evaluate"
+              ],
+              "correct": 1,
+              "explanation": "IBM defines the data science lifecycle as: Data Ingestion → Data Storage/Processing → Data Analysis → Communicate insights."
+            },
+            {
+              "question": "What are the four types of Exploratory Data Analysis (EDA)?",
+              "options": [
+                "Descriptive, Diagnostic, Predictive, Prescriptive",
+                "Univariate non-graphical, Univariate graphical, Multivariate non-graphical, Multivariate graphical",
+                "Primary, Secondary, Tertiary, Quaternary",
+                "Qualitative, Quantitative, Mixed, Experimental"
+              ],
+              "correct": 1,
+              "explanation": "Industry frameworks classify EDA into four types: univariate non-graphical, univariate graphical, multivariate non-graphical, and multivariate graphical."
+            },
+            {
+              "question": "What is the primary purpose of EDA?",
+              "options": [
+                "To build production-ready models",
+                "To look at data before making assumptions and identify patterns",
+                "To clean all missing values",
+                "To visualize final results for stakeholders"
+              ],
+              "correct": 1,
+              "explanation": "EDA helps determine how best to manipulate data sources, discover patterns, spot anomalies, test hypotheses, and check assumptions before formal modeling."
+            },
+            {
+              "question": "When choosing a visualization type, what should be your primary consideration?",
+              "options": [
+                "Using the most complex chart available",
+                "Matching the visual to the data type and audience needs",
+                "Including as much data as possible",
+                "Using 3D effects for impact"
+              ],
+              "correct": 1,
+              "explanation": "Industry best practice is to choose visuals that assist the audience in understanding your main takeaway. Misalignment of charts and data confuses rather than clarifies."
+            },
+            {
+              "question": "What distinguishes data science from business intelligence (BI)?",
+              "options": [
+                "BI uses more advanced algorithms",
+                "Data science focuses on predictive analytics while BI focuses on descriptive analysis of past data",
+                "They are exactly the same thing",
+                "BI requires more programming skills"
+              ],
+              "correct": 1,
+              "explanation": "Business intelligence focuses more on data from the past with descriptive insights, while data science utilizes descriptive data to determine predictive variables and make forecasts."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "data-cleaning",
+              "eda",
+              "visualization",
+              "statistics",
+              "feature-engineering"
+            ],
+            "externalRefs": [
+              {
+                "title": "Pandas Documentation",
+                "url": "https://pandas.pydata.org/docs/"
+              },
+              {
+                "title": "IBM - What is Data Science?",
+                "url": "https://www.ibm.com/topics/data-science"
+              },
+              {
+                "title": "IBM - Exploratory Data Analysis",
+                "url": "https://www.ibm.com/topics/exploratory-data-analysis"
+              },
+              {
+                "title": "IBM - Data Visualization",
+                "url": "https://www.ibm.com/topics/data-visualization"
+              }
+            ]
+          }
         }
       ]
     }

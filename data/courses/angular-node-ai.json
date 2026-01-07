@@ -396,8 +396,102 @@
               ],
               "correct": 1,
               "explanation": "Zod is a schema declaration and validation library used to strictly define the expected parameters for tools, ensuring the LLM generates valid inputs."
+            },
+            {
+              "question": "What is a 'token' in the context of LLMs?",
+              "options": [
+                "A security credential for API access",
+                "A unit of text (roughly 0.75 words) that LLMs process and charge for",
+                "A type of database record",
+                "An Angular component"
+              ],
+              "correct": 1,
+              "explanation": "Tokens are the basic units LLMs use to process text. They are roughly 0.75 words on average, and API costs are calculated per token (input + output)."
+            },
+            {
+              "question": "What does 'context window' mean for LLMs?",
+              "options": [
+                "The browser window size",
+                "The maximum amount of text (in tokens) an LLM can process in a single request",
+                "A debugging tool",
+                "The Angular component hierarchy"
+              ],
+              "correct": 1,
+              "explanation": "The context window is the LLM's 'RAM limit' - the maximum number of tokens it can consider at once (e.g., 128k tokens for GPT-4 Turbo)."
+            },
+            {
+              "question": "What does 'temperature' control in LLM API calls?",
+              "options": [
+                "Server load balancing",
+                "Randomness/creativity of outputs (0 = deterministic, 1 = creative)",
+                "Response speed",
+                "Token pricing"
+              ],
+              "correct": 1,
+              "explanation": "Temperature controls output randomness. Temperature 0 gives consistent, deterministic responses (good for code), while higher values introduce more variety (good for creative writing)."
+            },
+            {
+              "question": "What is LCEL (LangChain Expression Language)?",
+              "options": [
+                "A query language for databases",
+                "A declarative pipe syntax for composing LLM chains (Prompt → Model → Parser)",
+                "A CSS preprocessor",
+                "An Angular template syntax"
+              ],
+              "correct": 1,
+              "explanation": "LCEL uses the .pipe() method to compose chains declaratively: Prompt Template → LLM Model → Output Parser, making complex AI workflows readable."
+            },
+            {
+              "question": "Why is 'Structured Output' important when integrating LLMs into applications?",
+              "options": [
+                "It makes responses longer",
+                "It ensures LLM outputs conform to a defined schema (JSON) that your code can reliably parse",
+                "It reduces API costs",
+                "It improves model accuracy"
+              ],
+              "correct": 1,
+              "explanation": "LLMs output text, but applications need structured data. Using Zod schemas with withStructuredOutput() guarantees the LLM returns valid, typed JSON your code can process."
+            },
+            {
+              "question": "What is MongoDB Atlas Vector Search used for in AI applications?",
+              "options": [
+                "Traditional SQL queries",
+                "Storing and querying vector embeddings for semantic similarity search (RAG)",
+                "User authentication",
+                "CSS styling"
+              ],
+              "correct": 1,
+              "explanation": "MongoDB Atlas Vector Search enables storing document embeddings and performing semantic similarity searches - essential for building RAG systems that retrieve relevant context."
+            },
+            {
+              "question": "How does RxJS help with AI streaming responses in Angular?",
+              "options": [
+                "It compresses the data",
+                "It provides Observables to handle async token streams and update the UI reactively",
+                "It encrypts the responses",
+                "It caches all responses"
+              ],
+              "correct": 1,
+              "explanation": "RxJS Observables are perfect for handling streaming LLM responses - they emit tokens as they arrive, allowing Angular to reactively update the UI in real-time."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "backend-integration",
+              "streaming-responses",
+              "agent-architecture"
+            ],
+            "externalRefs": [
+              {
+                "title": "Vercel AI SDK",
+                "url": "https://sdk.vercel.ai/docs"
+              },
+              {
+                "title": "OpenAI Node.js SDK",
+                "url": "https://github.com/openai/openai-node"
+              }
+            ]
+          }
         }
       ]
     }

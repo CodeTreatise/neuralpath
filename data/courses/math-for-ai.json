@@ -23,6 +23,20 @@
     "Work with probability distributions and Bayes' theorem",
     "Implement gradient descent from scratch"
   ],
+  "validationSources": [
+    {
+      "source": "IBM Technology",
+      "topics": ["Neural Networks", "Backpropagation", "Gradient Descent", "Vector Embeddings"],
+      "urls": [
+        "https://www.ibm.com/topics/neural-networks",
+        "https://www.ibm.com/topics/backpropagation",
+        "https://www.ibm.com/topics/gradient-descent",
+        "https://www.ibm.com/topics/vector-embedding"
+      ],
+      "verified": true,
+      "date": "2025-01-26"
+    }
+  ],
   "modules": [
     {
       "id": "getting-started",
@@ -74,7 +88,11 @@
           "content": [
             {
               "type": "text",
-              "content": "## What is a Vector? (Plain English First!)\n\n**A vector is just a list of numbers.** That's it!\n\n```\n[1, 2, 3] ← This is a vector\n[age, height, weight] ← So is this\n```\n\nIn math notation, we write it vertically:\n$$\\vec{v} = \\begin{bmatrix} v_1 \\\\ v_2 \\\\ \\vdots \\\\ v_n \\end{bmatrix}$$\n\nBut in code, it's just a list: `[v1, v2, v3, ...]`"
+              "content": "## Tensors: The Family of Data Structures\n\n| Type | Dimensions | Example | In ML |\n|------|-----------|---------|-------|\n| **Scalar** | 0D | `5` | Single value (loss, learning rate) |\n| **Vector** | 1D | `[1, 2, 3]` | Feature list, word embedding |\n| **Matrix** | 2D | `[[1,2], [3,4]]` | Batch of samples, weight matrix |\n| **Tensor** | 3D+ | `[[[...]]]` | Images (H×W×C), video batches |\n\nIn code, we use the term 'tensor' for any of these (PyTorch, TensorFlow)."
+            },
+            {
+              "type": "text",
+              "content": "## What is a Vector? (Plain English First!)\n\n**A vector is just a list of numbers.** That's it!\n\n```\n[1, 2, 3] ← This is a vector\n[age, height, weight] ← So is this\n```\n\nIn math notation, we write it vertically:\n$$\\vec{v} = \\begin{bmatrix} v_1 \\\\ v_2 \\\\ \\vdots \\\\ v_n \\end{bmatrix}$$\n\nBut in code, it's just a list: `[v1, v2, v3, ...]`\n\n**Dimensionality:** A vector with 3 numbers is a 3-dimensional vector. Word embeddings often use 300-768 dimensions!"
             },
             {
               "type": "text",
@@ -92,7 +110,11 @@
             },
             {
               "type": "text",
-              "content": "## When Will You Use This?\n\n- **Dot product**: Attention in transformers, similarity search\n- **Vector addition**: Combining embeddings\n- **Normalization**: Making vectors comparable\n\n**Real example**: When ChatGPT finds relevant context, it uses dot products to compare your question vector with all stored text vectors!"
+              "content": "## Similarity Metrics (How AI Compares Things)\n\n**Euclidean Distance:** Straight-line distance between vectors\n$$d = \\sqrt{\\sum(a_i - b_i)^2}$$\nGood for: Size/magnitude matters (like comparing house prices)\n\n**Cosine Similarity:** Angle between vectors (ignores magnitude)\n$$\\cos(\\theta) = \\frac{a \\cdot b}{||a|| \\cdot ||b||}$$\nGood for: Text similarity (word frequency shouldn't dominate)\n\n**Dot Product:** Raw similarity score\nGood for: Attention mechanisms, fast similarity"
+            },
+            {
+              "type": "text",
+              "content": "## Real-World Vector Applications\n\n| Application | How Vectors Are Used |\n|-------------|---------------------|\n| **Word Embeddings** | Words → 300-dim vectors (Word2Vec, BERT) |\n| **Image Search** | Photos → 512-dim vectors (CLIP) |\n| **Recommendations** | Users & items as vectors, find similar |\n| **RAG Systems** | Documents → vectors, search by meaning |\n\n**Example:** \"king\" - \"man\" + \"woman\" ≈ \"queen\"\nVector math captures semantic relationships!"
             }
           ]
         },
@@ -171,7 +193,11 @@
             },
             {
               "type": "text",
-              "content": "## The Big Picture\n\nA neural network is a series of:\n1. **Linear transformations** (matrix multiply)\n2. **Non-linear activations** (ReLU, sigmoid)\n\n$$\\text{Layer: } f(x) = \\sigma(Wx + b)$$\n\nWithout non-linearity, stacking layers would just be one big matrix multiply. The activation functions let us model complex, non-linear relationships!"
+              "content": "## Common Activation Functions\n\n| Function | Formula | Range | When to Use |\n|----------|---------|-------|-------------|\n| **Sigmoid** | $\\sigma(x) = \\frac{1}{1+e^{-x}}$ | (0, 1) | Binary output, gates |\n| **Tanh** | $\\tanh(x) = \\frac{e^x - e^{-x}}{e^x + e^{-x}}$ | (-1, 1) | Hidden layers (centered) |\n| **ReLU** | $\\max(0, x)$ | [0, ∞) | Default for hidden layers |\n| **Softmax** | $\\frac{e^{x_i}}{\\sum e^{x_j}}$ | (0, 1), sums to 1 | Multi-class output |\n\n**Why ReLU dominates:** Fast to compute, doesn't saturate for positive values, reduces vanishing gradient problem."
+            },
+            {
+              "type": "text",
+              "content": "## The Big Picture\n\nA neural network is a series of:\n1. **Linear transformations** (matrix multiply)\n2. **Non-linear activations** (ReLU, sigmoid)\n\n$$\\text{Layer: } f(x) = \\sigma(Wx + b)$$\n\nWithout non-linearity, stacking layers would just be one big matrix multiply. The activation functions let us model complex, non-linear relationships!\n\n**Each neuron computes:**\n$$z = \\sum_{i=1}^{n} w_i x_i + b \\quad \\text{(weighted sum)}$$\n$$a = \\sigma(z) \\quad \\text{(activation)}$$"
             }
           ]
         },
@@ -235,8 +261,51 @@
               ],
               "correct": 1,
               "explanation": "λ (lambda) is the eigenvalue - the scalar that the eigenvector is multiplied by after the transformation."
+            },
+            {
+              "question": "What is the purpose of normalizing a vector (making it a unit vector)?",
+              "options": [
+                "To make it faster to compute",
+                "To make its magnitude equal to 1 while preserving direction",
+                "To convert it to a matrix",
+                "To calculate its eigenvalue"
+              ],
+              "correct": 1,
+              "explanation": "Normalizing creates a unit vector with magnitude 1. This is essential for cosine similarity calculations and prevents magnitude from affecting comparisons."
+            },
+            {
+              "question": "In a neural network layer y = Wx + b, what is the role of the weight matrix W?",
+              "options": [
+                "It adds bias to the output",
+                "It transforms the input features through linear combination",
+                "It activates the neurons",
+                "It stores the training data"
+              ],
+              "correct": 1,
+              "explanation": "The weight matrix W performs a linear transformation, combining and weighting input features to produce new representations."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "vectors",
+              "matrices",
+              "eigenvalues"
+            ],
+            "externalRefs": [
+              {
+                "title": "IBM: Vector Embeddings",
+                "url": "https://www.ibm.com/topics/vector-embedding"
+              },
+              {
+                "title": "3Blue1Brown Linear Algebra",
+                "url": "https://www.3blue1brown.com/topics/linear-algebra"
+              },
+              {
+                "title": "Khan Academy Linear Algebra",
+                "url": "https://www.khanacademy.org/math/linear-algebra"
+              }
+            ]
+          }
         }
       ]
     },
@@ -258,6 +327,10 @@
             {
               "type": "text",
               "content": "## Why Derivatives Matter for ML\n\nTraining a neural network means finding weights that **minimize the loss function**.\n\nThe derivative tells us:\n- **Which direction** to move (sign of derivative)\n- **How much** to move (magnitude of derivative)\n\n$$w_{new} = w_{old} - \\alpha \\cdot \\frac{\\partial L}{\\partial w}$$\n\nThis is **gradient descent** - the heart of deep learning!"
+            },
+            {
+              "type": "text",
+              "content": "## The Training Loop (How Models Learn)\n\n```\n1. FORWARD PASS: Input flows through network → Prediction\n2. LOSS: Compare prediction to truth → Error number\n3. BACKWARD PASS: Compute gradients via chain rule\n4. UPDATE: Adjust weights opposite to gradient\n5. REPEAT for thousands of batches\n```\n\n**Each step refines the model.** Over time, loss decreases and accuracy improves.\n\nThis loop runs millions of times when training models like GPT!"
             },
             {
               "type": "code",
@@ -304,6 +377,10 @@
               "content": "## Backpropagation = Chain Rule\n\nA neural network is a composition of functions:\n$$\\text{output} = f_3(f_2(f_1(x)))$$\n\nTo find how the loss depends on early weights, we chain the derivatives:\n\n$$\\frac{\\partial L}{\\partial w_1} = \\frac{\\partial L}{\\partial y_3} \\cdot \\frac{\\partial y_3}{\\partial y_2} \\cdot \\frac{\\partial y_2}{\\partial y_1} \\cdot \\frac{\\partial y_1}{\\partial w_1}$$\n\n**This is backpropagation!** We compute gradients layer by layer, from output back to input."
             },
             {
+              "type": "text",
+              "content": "## Why Backpropagation is Brilliant\n\n**The Naive Approach:**\nTo compute gradient for 1 million weights, you'd need 1,000,001 forward passes:\n- 1 baseline pass\n- 1 pass per weight to measure its effect\n\n**Backpropagation:**\nComputes the ENTIRE gradient in just **2 passes**:\n1. One forward pass\n2. One backward pass\n\n**That's why deep learning is possible!** Without backprop, training would be millions of times slower.\n\n*Historical note: Formalized by Rumelhart, Hinton & Williams in 1986*"
+            },
+            {
               "type": "code",
               "language": "python",
               "title": "Backprop Through a Simple Network",
@@ -338,8 +415,62 @@
               ],
               "correct": 1,
               "explanation": "Backpropagation uses the chain rule to compute gradients through composed functions (layers)."
+            },
+            {
+              "question": "What is the purpose of the learning rate in gradient descent?",
+              "options": [
+                "To determine the model architecture",
+                "To control the step size when updating weights",
+                "To calculate the loss function",
+                "To normalize the gradients"
+              ],
+              "correct": 1,
+              "explanation": "The learning rate controls how much we adjust weights in the direction opposite to the gradient. Too high causes instability, too low causes slow learning."
+            },
+            {
+              "question": "What happens if the gradient at a point is zero?",
+              "options": [
+                "The model crashes",
+                "We've found a critical point (minimum, maximum, or saddle point)",
+                "The learning rate becomes infinite",
+                "The model resets to initial weights"
+              ],
+              "correct": 1,
+              "explanation": "A zero gradient indicates a critical point. In optimization, we hope it's a minimum (ideally global), but it could be a maximum or saddle point."
+            },
+            {
+              "question": "Why is the chain rule essential for training deep networks?",
+              "options": [
+                "It encrypts the gradients for security",
+                "It allows gradients to flow backward through composed functions",
+                "It initializes the weights",
+                "It defines the network architecture"
+              ],
+              "correct": 1,
+              "explanation": "Deep networks are compositions of functions. The chain rule lets us compute how changes in early layers affect the final loss by multiplying gradients layer by layer."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "derivatives",
+              "gradients",
+              "chain-rule"
+            ],
+            "externalRefs": [
+              {
+                "title": "IBM: Backpropagation",
+                "url": "https://www.ibm.com/topics/backpropagation"
+              },
+              {
+                "title": "3Blue1Brown Calculus",
+                "url": "https://www.3blue1brown.com/topics/calculus"
+              },
+              {
+                "title": "Calculus for ML",
+                "url": "https://explained.ai/matrix-calculus/"
+              }
+            ]
+          }
         }
       ]
     },
@@ -445,8 +576,58 @@
               ],
               "correct": 1,
               "explanation": "The prior represents our belief about a parameter before observing any data."
+            },
+            {
+              "question": "What is the 68-95-99.7 rule for normal distributions?",
+              "options": [
+                "Percentages of data at different temperatures",
+                "Percentages of data within 1, 2, and 3 standard deviations from the mean",
+                "Probabilities of model failure",
+                "Ratios of training to test data"
+              ],
+              "correct": 1,
+              "explanation": "In a normal distribution, ~68% of data falls within ±1σ, ~95% within ±2σ, and ~99.7% within ±3σ from the mean."
+            },
+            {
+              "question": "What is the softmax function used for in classification?",
+              "options": [
+                "To make the model softer",
+                "To convert logits to a probability distribution summing to 1",
+                "To reduce the learning rate",
+                "To initialize weights"
+              ],
+              "correct": 1,
+              "explanation": "Softmax exponentiates logits and normalizes them, producing a probability distribution where all outputs sum to 1, useful for multi-class classification."
+            },
+            {
+              "question": "What does maximum likelihood estimation (MLE) try to find?",
+              "options": [
+                "The largest dataset",
+                "Parameters that make the observed data most probable",
+                "The maximum number of layers",
+                "The fastest training method"
+              ],
+              "correct": 1,
+              "explanation": "MLE finds parameter values that maximize the likelihood (probability) of observing the training data under the model."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "probability-basics",
+              "distributions",
+              "bayes"
+            ],
+            "externalRefs": [
+              {
+                "title": "StatQuest (YouTube)",
+                "url": "https://www.youtube.com/c/joshstarmer"
+              },
+              {
+                "title": "Seeing Theory",
+                "url": "https://seeing-theory.brown.edu/"
+              }
+            ]
+          }
         }
       ]
     },
@@ -485,7 +666,7 @@
           "content": [
             {
               "type": "text",
-              "content": "## Vanilla Gradient Descent\n\n$$\\theta = \\theta - \\alpha \\nabla L(\\theta)$$\n\n**Problem:** Uses all data for each update (slow for large datasets)"
+              "content": "## Vanilla Gradient Descent\n\n$$\\theta = \\theta - \\alpha \\nabla L(\\theta)$$\n\n**Problem:** Uses all data for each update (slow for large datasets)\n\n**The Learning Rate ($\\alpha$):**\n- Too high: Overshoots the minimum, may diverge\n- Too low: Very slow convergence\n- Just right: Converges efficiently to minimum"
             },
             {
               "type": "text",
@@ -500,6 +681,10 @@
               "language": "python",
               "title": "SGD with Momentum",
               "code": "import numpy as np\n\nclass SGDMomentum:\n    def __init__(self, lr=0.01, momentum=0.9):\n        self.lr = lr\n        self.momentum = momentum\n        self.velocity = None\n    \n    def update(self, params, grads):\n        if self.velocity is None:\n            self.velocity = np.zeros_like(params)\n        \n        self.velocity = self.momentum * self.velocity + grads\n        params = params - self.lr * self.velocity\n        return params\n\n# Example optimization\ndef quadratic(x):\n    return x**2 + 10*np.sin(x)\n\ndef gradient(x):\n    return 2*x + 10*np.cos(x)\n\noptimizer = SGDMomentum(lr=0.1, momentum=0.9)\nx = 5.0\n\nfor i in range(50):\n    grad = gradient(x)\n    x = optimizer.update(x, grad)\n    if i % 10 == 0:\n        print(f\"Step {i}: x={x:.3f}, f(x)={quadratic(x):.3f}\")"
+            },
+            {
+              "type": "text",
+              "content": "## Common Gradient Problems\n\n### Local Minima and Saddle Points\nGradient descent can get stuck at:\n- **Local minima:** Points where gradient is zero but not the global best\n- **Saddle points:** Points that are minimum in one direction, maximum in another\n\n### Vanishing Gradients\nIn deep networks, gradients can become extremely small:\n- Happens with sigmoid/tanh activations\n- Early layers learn very slowly\n- **Solution:** Use ReLU, batch normalization, skip connections\n\n### Exploding Gradients\nGradients can grow exponentially large:\n- Common in recurrent networks (RNNs)\n- Causes unstable training, NaN values\n- **Solution:** Gradient clipping, careful initialization"
             }
           ]
         },
@@ -589,8 +774,55 @@
               ],
               "correct": 1,
               "explanation": "Dropout randomly zeroes out a fraction of neurons during training to prevent overfitting."
+            },
+            {
+              "question": "What advantage does Adam optimizer have over vanilla SGD?",
+              "options": [
+                "It uses no memory",
+                "It adapts learning rates per parameter using momentum and RMSprop",
+                "It guarantees finding the global minimum",
+                "It works without gradients"
+              ],
+              "correct": 1,
+              "explanation": "Adam combines momentum (first moment) and RMSprop (second moment) to adapt learning rates for each parameter, often leading to faster convergence."
+            },
+            {
+              "question": "What is the vanishing gradient problem?",
+              "options": [
+                "Gradients become zero in the output layer",
+                "Gradients become extremely small in early layers, stopping learning",
+                "The model loses all its weights",
+                "The GPU runs out of memory"
+              ],
+              "correct": 1,
+              "explanation": "In deep networks with saturating activations (sigmoid/tanh), gradients can shrink exponentially as they backpropagate, making early layers learn very slowly."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "loss-functions",
+              "gradient-descent",
+              "adam"
+            ],
+            "externalRefs": [
+              {
+                "title": "IBM: Gradient Descent",
+                "url": "https://www.ibm.com/topics/gradient-descent"
+              },
+              {
+                "title": "IBM: Neural Networks",
+                "url": "https://www.ibm.com/topics/neural-networks"
+              },
+              {
+                "title": "Distill Momentum",
+                "url": "https://distill.pub/2017/momentum/"
+              },
+              {
+                "title": "PyTorch Optimizers",
+                "url": "https://pytorch.org/docs/stable/optim.html"
+              }
+            ]
+          }
         }
       ]
     }

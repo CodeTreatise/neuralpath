@@ -1,11 +1,15 @@
 {
   "id": "computer-vision",
   "title": "Computer Vision with PyTorch",
-  "icon": "\ud83d\udc41\ufe0f",
-  "description": "Build vision AI systems from image classification to object detection and beyond.",
+  "icon": "👁️",
+  "description": "Build vision AI systems from image classification to object detection and beyond. Computer vision is a subfield of AI that equips machines with the ability to process, analyze and interpret visual inputs such as images and videos, using machine learning to derive meaningful information.",
   "level": "intermediate",
   "duration": "6 weeks",
   "totalLessons": 18,
+  "validationSources": [
+    "https://www.ibm.com/topics/computer-vision",
+    "https://www.ibm.com/topics/convolutional-neural-networks"
+  ],
   "prerequisites": [
     "Python Fundamentals",
     "Deep Learning Basics"
@@ -30,15 +34,15 @@
           "type": "lesson",
           "duration": "20 min",
           "content": {
-            "overview": "Computer Vision enables machines to interpret and understand visual information from images and videos, powering applications from autonomous vehicles to medical imaging.",
+            "overview": "Computer Vision is a subfield of AI that equips machines with the ability to process, analyze and interpret visual inputs. It can be pictured as the interaction between three broad processes: Recognition (identifying objects, people, places), Reconstruction (deriving 3D characteristics), and Reorganization (inferring relationships between entities).",
             "sections": [
               {
                 "title": "What is Computer Vision?",
-                "content": "Computer vision is a field of AI that trains computers to interpret and understand the visual world. Using digital images and deep learning models, machines can identify and classify objects, and react to what they 'see'.",
+                "content": "Computer vision is a field of AI that trains computers to interpret and understand the visual world. Using digital images and deep learning models, machines can identify and classify objects, and react to what they 'see'.\n\n**The CV Pipeline:**\n1. Data Gathering - collect images/videos from cameras, sensors\n2. Preprocessing - cleaning, enhancement, augmentation\n3. Model Selection - CNNs, Vision Transformers (ViT)\n4. Model Training - feature extraction, backpropagation, optimization",
                 "keyPoints": [
                   "Images are represented as numerical matrices",
-                  "Pixels contain color/intensity information",
-                  "CNNs revolutionized image understanding",
+                  "CNNs are the primary deep learning model for image processing",
+                  "Vision Transformers (ViT) match or exceed CNN performance",
                   "Applications: autonomous driving, medical imaging, security, AR/VR"
                 ]
               },
@@ -51,7 +55,7 @@
               },
               {
                 "title": "Core CV Tasks",
-                "content": "Computer vision encompasses several key tasks:\n\n1. **Image Classification**: What is in this image? (cat, dog, car)\n2. **Object Detection**: Where are objects and what are they?\n3. **Semantic Segmentation**: Classify every pixel\n4. **Instance Segmentation**: Detect and segment individual objects\n5. **Pose Estimation**: Detect human body keypoints\n6. **Image Generation**: Create new images (GANs, Diffusion)",
+                "content": "Computer vision encompasses several key tasks:\n\n**Understanding Tasks:**\n1. **Image Classification**: Categorize images into predefined classes\n2. **Object Detection**: Locate and classify objects with bounding boxes\n3. **Semantic Segmentation**: Classify every pixel by semantic class\n4. **Instance Segmentation**: Separate individual object instances\n5. **Panoptic Segmentation**: Combine semantic + instance segmentation\n\n**Analysis Tasks:**\n6. **Facial Recognition**: Identify individuals from facial features\n7. **Pose Estimation**: Detect body keypoints and gestures\n8. **Object Tracking**: Follow objects across video frames\n9. **OCR**: Extract text from images\n10. **Scene Understanding**: Infer relationships between objects\n\n**Generation Tasks:**\n11. **Image Generation**: Create images (GANs, Diffusion, VAEs)\n12. **Visual Inspection**: Automate defect detection",
                 "diagram": {
                   "title": "Computer Vision Tasks Hierarchy",
                   "code": "flowchart TB\n    subgraph Understanding[\"Image Understanding\"]\n        IC[Image Classification]\n        OD[Object Detection]\n        SS[Semantic Segmentation]\n        IS[Instance Segmentation]\n    end\n    \n    subgraph Analysis[\"Advanced Analysis\"]\n        PE[Pose Estimation]\n        FR[Face Recognition]\n        OCR[Text Recognition]\n    end\n    \n    subgraph Generation[\"Image Generation\"]\n        GAN[GANs]\n        DM[Diffusion Models]\n        SR[Super Resolution]\n    end\n    \n    IC --> OD --> SS --> IS\n    Understanding --> Analysis\n    Understanding --> Generation"
@@ -251,11 +255,11 @@
           "type": "lesson",
           "duration": "35 min",
           "content": {
-            "overview": "CNNs are specialized neural networks designed to process grid-like data such as images. They use convolutional layers to automatically learn spatial hierarchies of features.",
+            "overview": "CNNs are specialized neural networks designed to process grid-like data such as images. They use three main types of layers: convolutional layers (feature extraction), pooling layers (dimensionality reduction), and fully-connected layers (classification). CNNs automatically learn spatial hierarchies of features through the convolution operation.",
             "sections": [
               {
                 "title": "Convolution Operation",
-                "content": "A convolution slides a small matrix (kernel/filter) across the image, computing dot products to create feature maps that detect patterns like edges, textures, and shapes.",
+                "content": "A convolution slides a filter (kernel) across the image. The filter is a 2D array of weights that detects specific patterns. A dot product is calculated between input pixels and filter weights, creating a feature map (activation map). The filter 'convolves' across the entire image to extract features like edges, textures, and shapes.\n\n**Hyperparameters:**\n- **Number of filters**: Affects output depth\n- **Stride**: Distance the kernel moves (larger = smaller output)\n- **Padding**: Zero-padding preserves spatial dimensions",
                 "codeExample": {
                   "language": "python",
                   "code": "import torch\nimport torch.nn as nn\n\n# 2D Convolution layer\nconv = nn.Conv2d(\n    in_channels=3,      # RGB input\n    out_channels=32,    # 32 filters\n    kernel_size=3,      # 3x3 kernel\n    stride=1,           # Step size\n    padding=1           # Preserve spatial size\n)\n\n# Input: (batch, channels, height, width)\nx = torch.randn(1, 3, 224, 224)\nout = conv(x)\nprint(f'Output shape: {out.shape}')  # [1, 32, 224, 224]"
@@ -295,7 +299,7 @@
             "sections": [
               {
                 "title": "Detection Approaches",
-                "content": "Object detection has evolved through several paradigms:\n\n1. **Two-stage detectors**: R-CNN \u2192 Fast R-CNN \u2192 Faster R-CNN\n   - First propose regions, then classify\n   - More accurate, slower\n\n2. **Single-stage detectors**: YOLO, SSD, RetinaNet\n   - Directly predict boxes and classes\n   - Faster, good for real-time\n\n3. **Transformer-based**: DETR, DINO\n   - End-to-end with attention\n   - State-of-the-art accuracy"
+                "content": "Object detection has evolved through several paradigms:\n\n1. **Two-stage detectors**: R-CNN → Fast R-CNN → Faster R-CNN\n   - First propose regions, then classify\n   - More accurate, slower\n\n2. **Single-stage detectors**: YOLO, SSD, RetinaNet\n   - Directly predict boxes and classes\n   - Faster, good for real-time\n\n3. **Transformer-based**: DETR, DINO\n   - End-to-end with attention\n   - State-of-the-art accuracy"
               },
               {
                 "title": "YOLO with Ultralytics",
@@ -394,6 +398,63 @@
           }
         },
         {
+          "id": "3d-vision",
+          "title": "3D Vision & Depth Estimation",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "3D computer vision derives three-dimensional characteristics from 2D images. This includes depth estimation, 3D reconstruction, point cloud processing, and spatial understanding - essential for robotics, AR/VR, and autonomous systems.",
+            "sections": [
+              {
+                "title": "Depth Estimation",
+                "content": "Depth estimation predicts distance from camera to each pixel:\n\n**Approaches:**\n1. **Monocular**: Single image → depth map (learned)\n2. **Stereo**: Two cameras → depth from disparity\n3. **Multi-view**: Multiple images → depth via triangulation\n4. **Sensor-based**: LiDAR, structured light, ToF sensors\n\n**Applications:**\n- Autonomous vehicles (obstacle distance)\n- AR/VR (occlusion, scene placement)\n- Robotics (manipulation, navigation)\n- 3D photography (portrait mode)",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import DPTForDepthEstimation, DPTImageProcessor\nimport torch\nimport numpy as np\nfrom PIL import Image\nimport matplotlib.pyplot as plt\n\n# Load DPT (Dense Prediction Transformer) for depth\nprocessor = DPTImageProcessor.from_pretrained('Intel/dpt-large')\nmodel = DPTForDepthEstimation.from_pretrained('Intel/dpt-large')\n\n# Estimate depth from single image\nimage = Image.open('scene.jpg')\ninputs = processor(images=image, return_tensors='pt')\n\nwith torch.no_grad():\n    outputs = model(**inputs)\n    depth = outputs.predicted_depth\n\n# Normalize for visualization\ndepth_np = depth.squeeze().numpy()\ndepth_normalized = (depth_np - depth_np.min()) / (depth_np.max() - depth_np.min())\n\nplt.figure(figsize=(12, 5))\nplt.subplot(121), plt.imshow(image), plt.title('RGB')\nplt.subplot(122), plt.imshow(depth_normalized, cmap='plasma'), plt.title('Depth')\nplt.colorbar()\nplt.show()\n\n# Metric depth estimation (actual distances in meters)\nfrom transformers import pipeline\ndepth_estimator = pipeline('depth-estimation', model='depth-anything/Depth-Anything-V2-Large')\nresult = depth_estimator(image)"
+                }
+              },
+              {
+                "title": "Point Cloud Processing",
+                "content": "Point clouds are 3D representations from depth sensors:\n\n**Format**: Each point has (x, y, z) coordinates + optional attributes (color, normal)\n\n**Tasks:**\n- Classification (what object is this point cloud?)\n- Segmentation (label each point)\n- Detection (find objects in scene)\n- Registration (align multiple scans)",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import open3d as o3d\nimport numpy as np\n\n# Load point cloud\npcd = o3d.io.read_point_cloud('scene.ply')\nprint(f'Points: {len(pcd.points)}')\n\n# Visualize\no3d.visualization.draw_geometries([pcd])\n\n# Preprocessing\npcd_down = pcd.voxel_down_sample(voxel_size=0.02)  # Downsample\npcd_down.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(\n    radius=0.1, max_nn=30\n))\n\n# Plane segmentation (find floor)\nplane_model, inliers = pcd_down.segment_plane(\n    distance_threshold=0.01,\n    ransac_n=3,\n    num_iterations=1000\n)\nfloor = pcd_down.select_by_index(inliers)\nobjects = pcd_down.select_by_index(inliers, invert=True)\n\n# Clustering objects\nlabels = np.array(objects.cluster_dbscan(eps=0.05, min_points=10))\nprint(f'Found {labels.max() + 1} objects')\n\n# Color by cluster\ncolors = plt.get_cmap('tab20')(labels / (labels.max() + 1))[:, :3]\nobjects.colors = o3d.utility.Vector3dVector(colors)"
+                }
+              },
+              {
+                "title": "3D Object Detection",
+                "content": "Detect and localize objects in 3D space:\n\n**Input types:**\n- Point clouds from LiDAR\n- RGB-D images (RGB + Depth)\n- Multi-view images\n\n**Popular architectures:**\n- PointNet/PointNet++ (direct point processing)\n- VoxelNet (voxel-based)\n- SECOND, CenterPoint (pillar-based)\n- BEVFormer (bird's eye view)",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# PointNet++ for 3D classification (PyTorch Geometric)\nimport torch\nimport torch.nn as nn\nfrom torch_geometric.nn import PointNetConv, global_max_pool\n\nclass PointNetPlusPlus(nn.Module):\n    \"\"\"Simplified PointNet++ for classification.\"\"\"\n    def __init__(self, num_classes):\n        super().__init__()\n        self.sa1 = PointNetConv(local_nn=nn.Sequential(\n            nn.Linear(3, 64), nn.ReLU(), nn.Linear(64, 128)\n        ))\n        self.sa2 = PointNetConv(local_nn=nn.Sequential(\n            nn.Linear(128 + 3, 256), nn.ReLU(), nn.Linear(256, 512)\n        ))\n        self.classifier = nn.Sequential(\n            nn.Linear(512, 256), nn.ReLU(), nn.Dropout(0.5),\n            nn.Linear(256, num_classes)\n        )\n    \n    def forward(self, pos, batch):\n        # Hierarchical point set learning\n        x = self.sa1(None, pos, batch)\n        x = self.sa2(x, pos, batch)\n        x = global_max_pool(x, batch)  # Global feature\n        return self.classifier(x)\n\n# For autonomous driving: use MMDetection3D\n# from mmdet3d.apis import inference_detector, init_model\n# model = init_model(config, checkpoint)\n# result = inference_detector(model, pcd_file)"
+                }
+              },
+              {
+                "title": "Neural Radiance Fields (NeRF)",
+                "content": "NeRF represents 3D scenes as neural networks:\n\n**How it works:**\n1. Input: 3D position (x, y, z) + viewing direction\n2. Output: Color (RGB) + density\n3. Volume rendering creates 2D views\n4. Train by comparing to actual photos\n\n**Applications:**\n- Novel view synthesis\n- 3D asset creation\n- Virtual tours\n- VFX and filmmaking\n\n**Variants:** Instant-NGP (fast), 3D Gaussian Splatting (real-time)",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Using nerfstudio for NeRF training\n# pip install nerfstudio\n\n# Process images\n# ns-process-data images --data ./images --output-dir ./data\n\n# Train NeRF\n# ns-train nerfacto --data ./data\n\n# Export mesh\n# ns-export mesh --load-config outputs/data/nerfacto/config.yml\n\n# For quick experimentation: instant-ngp\nimport pyngp as ngp\n\n# Load trained NeRF\nnerf = ngp.Testbed()\nnerf.load_snapshot('scene.msgpack')\n\n# Render from new viewpoint\ncamera_matrix = np.array([...])  # 4x4 camera pose\nimage = nerf.render(camera_matrix, width=800, height=600)\n\n# 3D Gaussian Splatting - even faster\n# Real-time rendering of NeRF-quality scenes\n# Train: python train.py -s ./data -m ./output\n# Render: python render.py -m ./output --camera_path orbit"
+                }
+              },
+              {
+                "title": "Depth in Vision-Language Models",
+                "content": "Modern VLMs understand 3D spatial relationships:\n\n**Capabilities:**\n- Describe relative positions ('behind', 'on top of')\n- Estimate rough distances\n- Reason about scene geometry\n- Grounding in 3D space",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Using LLaVA for spatial understanding\nfrom transformers import LlavaNextProcessor, LlavaNextForConditionalGeneration\nfrom PIL import Image\n\nprocessor = LlavaNextProcessor.from_pretrained('llava-hf/llava-v1.6-mistral-7b-hf')\nmodel = LlavaNextForConditionalGeneration.from_pretrained(\n    'llava-hf/llava-v1.6-mistral-7b-hf', torch_dtype=torch.float16\n).to('cuda')\n\nimage = Image.open('room.jpg')\nprompt = 'USER: <image>\\nDescribe the spatial arrangement of objects in this room. Which objects are closest to the camera?\\nASSISTANT:'\n\ninputs = processor(images=image, text=prompt, return_tensors='pt').to('cuda')\noutput = model.generate(**inputs, max_new_tokens=200)\nresponse = processor.decode(output[0], skip_special_tokens=True)\nprint(response)\n\n# For precise 3D grounding, use specialized models:\n# - ScanRefer (language to 3D point)\n# - 3D-LLM (language grounded in 3D)\n# - LEO (language-embodied AI)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Monocular depth estimation works from single images using learned priors",
+              "Point clouds are processed with PointNet or voxel-based methods",
+              "NeRF and Gaussian Splatting enable photorealistic novel view synthesis",
+              "3D understanding is crucial for robotics, AR/VR, and autonomous systems"
+            ]
+          }
+        },
+        {
           "id": "vision-transformers",
           "title": "Vision Transformers (ViT)",
           "type": "lesson",
@@ -403,7 +464,7 @@
             "sections": [
               {
                 "title": "How ViT Works",
-                "content": "Vision Transformer (ViT) treats an image as a sequence of patches:\n\n1. **Patch Embedding**: Split image into 16x16 patches \u2192 linear projection\n2. **Position Embedding**: Add learnable position information\n3. **Transformer Encoder**: Self-attention across all patches\n4. **Classification**: CLS token through MLP head\n\nA 224x224 image \u2192 196 patches of 16x16 \u2192 sequence like text!"
+                "content": "Vision Transformer (ViT) treats an image as a sequence of patches:\n\n1. **Patch Embedding**: Split image into 16x16 patches → linear projection\n2. **Position Embedding**: Add learnable position information\n3. **Transformer Encoder**: Self-attention across all patches\n4. **Classification**: CLS token through MLP head\n\nA 224x224 image → 196 patches of 16x16 → sequence like text!"
               },
               {
                 "title": "Using Pre-trained ViT",
@@ -463,7 +524,7 @@
               }
             ],
             "keyTakeaways": [
-              "Face detection \u2192 alignment \u2192 embedding \u2192 matching",
+              "Face detection → alignment → embedding → matching",
               "ArcFace and Facenet produce discriminative embeddings",
               "Cosine similarity measures face similarity",
               "Consider privacy and bias in face recognition systems"
@@ -742,8 +803,113 @@
               ],
               "correct": 2,
               "explanation": "TensorRT optimizes neural network inference through techniques like layer fusion, precision calibration, and kernel auto-tuning for NVIDIA GPUs."
+            },
+            {
+              "question": "What are the three main layer types in a CNN?",
+              "options": [
+                "Input, hidden, output",
+                "Convolutional, pooling, fully-connected",
+                "Encoder, decoder, attention",
+                "Embedding, transformer, head"
+              ],
+              "correct": 1,
+              "explanation": "CNNs consist of convolutional layers (feature extraction), pooling layers (dimensionality reduction), and fully-connected layers (classification based on extracted features)."
+            },
+            {
+              "question": "What is the difference between semantic and instance segmentation?",
+              "options": [
+                "Semantic is faster, instance is slower",
+                "Semantic uses colors, instance uses edges",
+                "Semantic classifies pixels by class, instance separates individual objects",
+                "Semantic works on videos, instance works on images"
+              ],
+              "correct": 2,
+              "explanation": "Semantic segmentation assigns each pixel a class label (all cars = same class), while instance segmentation distinguishes individual objects (car1, car2, car3)."
+            },
+            {
+              "question": "What does a feature map (activation map) represent in a CNN?",
+              "options": [
+                "The original image in a different color space",
+                "The output of a convolution detecting specific patterns",
+                "A map of important pixels",
+                "The weights of the network"
+              ],
+              "correct": 1,
+              "explanation": "A feature map is the output from applying a filter to an image through convolution. Each filter is tuned to detect specific patterns like edges, textures, or shapes."
+            },
+            {
+              "question": "What is the role of data augmentation in computer vision?",
+              "options": [
+                "To compress images for faster training",
+                "To expand dataset diversity and prevent overfitting",
+                "To convert images to grayscale",
+                "To label images automatically"
+              ],
+              "correct": 1,
+              "explanation": "Data augmentation applies transformations (rotation, flipping, color jitter) to training images to expand dataset size and diversity, helping prevent overfitting."
+            },
+            {
+              "question": "What are R-CNN and YOLO primarily used for?",
+              "options": [
+                "Image classification",
+                "Semantic segmentation",
+                "Object detection",
+                "Image generation"
+              ],
+              "correct": 2,
+              "explanation": "R-CNN (region-based CNN) and YOLO (You Only Look Once) are object detection architectures. R-CNN uses two-stage detection, while YOLO performs single-stage detection for real-time speed."
+            },
+            {
+              "question": "What is monocular depth estimation?",
+              "options": [
+                "Using two cameras to measure depth",
+                "Predicting depth from a single image using learned priors",
+                "Using LiDAR sensors for depth measurement",
+                "Measuring depth with structured light"
+              ],
+              "correct": 1,
+              "explanation": "Monocular depth estimation uses a single image to predict depth at each pixel, leveraging learned visual cues like perspective, occlusion, and texture gradients."
+            },
+            {
+              "question": "What is the main advantage of NeRF (Neural Radiance Fields)?",
+              "options": [
+                "Faster training than CNNs",
+                "Rendering photorealistic novel views from any angle",
+                "Better object detection accuracy",
+                "Lower memory requirements"
+              ],
+              "correct": 1,
+              "explanation": "NeRF can synthesize photorealistic new views of a scene from arbitrary camera positions, by learning a continuous 3D representation from 2D images."
+            },
+            {
+              "question": "What is the three R's framework in computer vision?",
+              "options": [
+                "Read, Recognize, Respond",
+                "Recognition, Reconstruction, Reorganization",
+                "Resize, Rotate, Reflect",
+                "Render, Refine, Repeat"
+              ],
+              "correct": 1,
+              "explanation": "The three R's of computer vision are Recognition (identifying objects, people, places), Reconstruction (deriving 3D characteristics), and Reorganization (inferring relationships between entities)."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "cnn-basics",
+              "transfer-learning",
+              "object-detection"
+            ],
+            "externalRefs": [
+              {
+                "title": "PyTorch Vision",
+                "url": "https://pytorch.org/vision/"
+              },
+              {
+                "title": "CS231n Course",
+                "url": "https://cs231n.stanford.edu/"
+              }
+            ]
+          }
         }
       ]
     }

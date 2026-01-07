@@ -2,10 +2,13 @@
   "id": "rag-applications",
   "title": "Building RAG Applications",
   "icon": "🔗",
-  "description": "Build Retrieval-Augmented Generation apps with LangChain and vector databases.",
+  "description": "Build Retrieval-Augmented Generation apps with LangChain and vector databases. RAG is an architecture for optimizing AI performance by connecting models with external knowledge bases, enabling more relevant, accurate responses grounded in authoritative data.",
   "level": "advanced",
   "duration": "4 weeks",
-  "totalLessons": 19,
+  "totalLessons": 20,
+  "validationSources": [
+    "https://www.ibm.com/topics/retrieval-augmented-generation"
+  ],
   "prerequisites": [
     "Python basics (variables, functions, packages)",
     "Understanding of what LLMs are (ChatGPT, Claude)",
@@ -114,11 +117,19 @@
           "type": "lesson",
           "duration": "15 min",
           "content": {
-            "overview": "Retrieval-Augmented Generation (RAG) combines the power of LLMs with external knowledge retrieval to produce accurate, up-to-date responses.",
+            "overview": "Retrieval-Augmented Generation (RAG) is an architecture for optimizing AI performance by connecting LLMs with external knowledge bases. The system retrieves relevant data, augments the prompt with enhanced context, and generates responses grounded in authoritative sources.",
             "sections": [
               {
                 "title": "The Problem RAG Solves",
-                "content": "LLMs have limitations:\n\n**Knowledge Cutoff**: Training data has a date limit\n**Hallucinations**: Can generate plausible but false information\n**No Private Data**: Cannot access your documents\n**Static Knowledge**: Cannot update without retraining\n\nRAG addresses all of these by retrieving relevant context at query time."
+                "content": "LLMs have limitations:\n\n**Knowledge Cutoff**: Training data has a date limit - models lose relevance over time\n**Hallucinations**: Can generate plausible but false information (confabulations)\n**No Private Data**: Cannot access your documents or proprietary information\n**Static Knowledge**: Cannot update without expensive retraining\n\nRAG anchors LLMs in specific knowledge backed by factual, authoritative and current data."
+              },
+              {
+                "title": "RAG Benefits",
+                "content": "**Cost-Efficient Scaling**: Avoid expensive retraining or fine-tuning - just update knowledge base\n\n**Access Current Data**: Connect to real-time data sources, breaking free from knowledge cutoff\n\n**Lower Hallucination Risk**: Ground responses in retrieved, verifiable information\n\n**Increased Trust**: Cite sources so users can verify outputs\n\n**Greater Control**: Developers can adjust knowledge sources without modifying the model\n\n**Data Security**: External data stays separate from model - access can be revoked"
+              },
+              {
+                "title": "RAG Components",
+                "content": "A RAG system has four primary components:\n\n1. **Knowledge Base**: External data repository (documents → embeddings → vectors)\n2. **Retriever**: AI model that searches knowledge base for relevant data\n3. **Integration Layer**: Coordinates processes, engineers augmented prompts\n4. **Generator**: LLM that creates output based on query + retrieved context"
               },
               {
                 "title": "RAG Architecture",
@@ -557,6 +568,61 @@
           }
         },
         {
+          "id": "advanced-rag-paradigms",
+          "title": "Advanced RAG Paradigms",
+          "type": "lesson",
+          "duration": "30 min",
+          "content": {
+            "overview": "Understand the evolution of RAG from naive implementations to advanced paradigms including Self-RAG, Corrective RAG, RAG Fusion, and GraphRAG.",
+            "sections": [
+              {
+                "title": "RAG Evolution: Three Paradigms",
+                "content": "RAG has evolved through three main paradigms:\n\n**1. Naive RAG** (Basic)\n- Simple retrieve → read → generate pipeline\n- Fixed retrieval, no quality checks\n- Works for simple Q&A but has limitations\n\n**2. Advanced RAG** (Enhanced)\n- Pre-retrieval optimization (query rewriting, HyDE)\n- Post-retrieval refinement (reranking, filtering)\n- Better chunking strategies\n\n**3. Modular RAG** (Flexible)\n- Interchangeable components\n- Adaptive retrieval decisions\n- Self-correction mechanisms\n- Can route to different pipelines based on query type"
+              },
+              {
+                "title": "Common Naive RAG Limitations",
+                "content": "**Problems with basic RAG:**\n\n1. **Question ambiguity** - Vague queries lead to irrelevant retrieval\n2. **Low retrieval accuracy** - Retrieved docs may not all be relevant\n3. **Limited knowledge** - Knowledge base may lack needed information\n4. **Context window limits** - Over-retrieving hits capacity limits\n5. **No self-correction** - System can't detect or fix its own errors\n\nAdvanced paradigms address these limitations through adaptive retrieval and self-reflection."
+              },
+              {
+                "title": "Self-Reflective RAG (Self-RAG)",
+                "content": "Self-RAG enables models to dynamically decide when to retrieve and critique their own outputs.\n\n**Key Mechanisms:**\n- **Reflection tokens** - Model decides if retrieval is needed\n- **Critique tokens** - Model assesses response quality\n- **Adaptive retrieval** - Only retrieves when it adds value\n\n**How it works:**\n1. Receive query\n2. Decide: Is retrieval needed? (reflection)\n3. If yes, retrieve and generate\n4. Critique: Is the response grounded and relevant?\n5. If quality is low, retry with different approach",
+                "code": "# Simplified Self-RAG pattern\ndef self_reflective_rag(query: str, retriever, llm):\n    # Step 1: Decide if retrieval is needed\n    needs_retrieval = llm.invoke(\n        f\"Does this query need external knowledge? Query: {query}\\n\"\n        \"Answer YES or NO only.\"\n    ).content.strip().upper() == \"YES\"\n    \n    if needs_retrieval:\n        docs = retriever.get_relevant_documents(query)\n        context = \"\\n\".join([d.page_content for d in docs])\n    else:\n        context = \"Use your general knowledge.\"\n    \n    # Step 2: Generate response\n    response = llm.invoke(\n        f\"Context: {context}\\nQuery: {query}\\nAnswer:\"\n    ).content\n    \n    # Step 3: Self-critique\n    critique = llm.invoke(\n        f\"Rate this response for the query '{query}':\\n\"\n        f\"Response: {response}\\n\"\n        \"Score 0-1 for: relevance, groundedness, completeness. \"\n        \"Return JSON: {{\\\"relevance\\\": X, \\\"grounded\\\": X, \\\"complete\\\": X}}\"\n    )\n    \n    scores = json.loads(critique.content)\n    avg_score = sum(scores.values()) / len(scores)\n    \n    # Step 4: Retry if quality is low\n    if avg_score < 0.6:\n        return self_reflective_rag_with_more_context(query, retriever, llm)\n    \n    return response"
+              },
+              {
+                "title": "Corrective RAG (CRAG)",
+                "content": "CRAG improves accuracy by evaluating retrieved documents and taking corrective actions.\n\n**Key Innovation:**\n- Uses an evaluator to assess document quality\n- Triggers one of three actions based on confidence:\n  - **Correct** - Retrieved docs are relevant, proceed\n  - **Incorrect** - Docs irrelevant, fallback to web search\n  - **Ambiguous** - Partially relevant, combine with web search\n\n**Benefits:**\n- Handles knowledge base gaps gracefully\n- Extends beyond static databases to web\n- Reduces impact of poor retrieval",
+                "code": "# Corrective RAG pattern\nclass CorrectiveRAG:\n    def __init__(self, retriever, llm, web_search):\n        self.retriever = retriever\n        self.llm = llm\n        self.web_search = web_search  # SerpAPI, Tavily, etc.\n    \n    def query(self, question: str) -> str:\n        # Step 1: Retrieve from knowledge base\n        docs = self.retriever.get_relevant_documents(question)\n        \n        # Step 2: Evaluate retrieval quality\n        evaluation = self._evaluate_docs(question, docs)\n        \n        # Step 3: Take corrective action\n        if evaluation == \"CORRECT\":\n            context = self._format_docs(docs)\n        elif evaluation == \"INCORRECT\":\n            # Fallback to web search\n            web_results = self.web_search.run(question)\n            context = self._format_web_results(web_results)\n        else:  # AMBIGUOUS\n            # Combine both sources\n            web_results = self.web_search.run(question)\n            context = self._format_docs(docs) + \"\\n\" + self._format_web_results(web_results)\n        \n        # Step 4: Generate with corrected context\n        return self.llm.invoke(\n            f\"Context: {context}\\nQuestion: {question}\\nAnswer:\"\n        ).content\n    \n    def _evaluate_docs(self, question: str, docs: list) -> str:\n        doc_texts = \"\\n\".join([d.page_content[:200] for d in docs])\n        result = self.llm.invoke(\n            f\"Evaluate if these documents answer the question.\\n\"\n            f\"Question: {question}\\nDocuments: {doc_texts}\\n\"\n            \"Reply: CORRECT (clearly relevant), INCORRECT (not relevant), \"\n            \"or AMBIGUOUS (partially relevant)\"\n        )\n        return result.content.strip().upper()"
+              },
+              {
+                "title": "RAG Fusion",
+                "content": "RAG Fusion improves recall by generating multiple query perspectives and combining results.\n\n**Process:**\n1. Generate multiple derivative queries from user input\n2. Retrieve documents for each query variant\n3. Combine and rerank using Reciprocal Rank Fusion (RRF)\n4. Generate response from fused context\n\n**Why it works:**\n- Different phrasings match different documents\n- Reduces risk of missing relevant content\n- RRF prioritizes docs that appear across multiple queries",
+                "code": "from langchain.retrievers import MultiQueryRetriever\n\n# RAG Fusion with multi-query + RRF\ndef rag_fusion(query: str, retriever, llm, num_variants: int = 3):\n    # Step 1: Generate query variants\n    variants_prompt = f\"\"\"\n    Generate {num_variants} different phrasings of this question.\n    Original: {query}\n    Return as a list: [\"variant1\", \"variant2\", \"variant3\"]\n    \"\"\"\n    variants = json.loads(llm.invoke(variants_prompt).content)\n    all_queries = [query] + variants\n    \n    # Step 2: Retrieve for each query\n    all_docs = {}\n    for q in all_queries:\n        docs = retriever.get_relevant_documents(q)\n        for rank, doc in enumerate(docs):\n            doc_id = hash(doc.page_content)\n            if doc_id not in all_docs:\n                all_docs[doc_id] = {\"doc\": doc, \"ranks\": []}\n            all_docs[doc_id][\"ranks\"].append(rank + 1)\n    \n    # Step 3: Reciprocal Rank Fusion scoring\n    k = 60  # RRF constant\n    for doc_id, data in all_docs.items():\n        data[\"rrf_score\"] = sum(1 / (k + r) for r in data[\"ranks\"])\n    \n    # Step 4: Sort by RRF score and take top results\n    sorted_docs = sorted(\n        all_docs.values(), \n        key=lambda x: x[\"rrf_score\"], \n        reverse=True\n    )[:5]\n    \n    context = \"\\n\".join([d[\"doc\"].page_content for d in sorted_docs])\n    \n    return llm.invoke(f\"Context: {context}\\nQuestion: {query}\\nAnswer:\").content"
+              },
+              {
+                "title": "GraphRAG: Knowledge Graphs for RAG",
+                "content": "GraphRAG enhances retrieval by structuring knowledge as a graph rather than flat chunks.\n\n**Key Concepts:**\n- **Entities** - People, places, concepts extracted from text\n- **Relationships** - Connections between entities\n- **Graph traversal** - Follow relationships to find related context\n\n**Advantages:**\n- Captures relationships between concepts\n- Enables multi-hop reasoning\n- Better for complex queries requiring connected information\n- Reduces redundancy in retrieval",
+                "code": "# GraphRAG concept using Neo4j\nfrom langchain_community.graphs import Neo4jGraph\nfrom langchain.chains import GraphCypherQAChain\n\n# Connect to knowledge graph\ngraph = Neo4jGraph(\n    url=\"bolt://localhost:7687\",\n    username=\"neo4j\",\n    password=\"password\"\n)\n\n# Natural language to graph query\ngraph_qa = GraphCypherQAChain.from_llm(\n    llm=ChatOpenAI(model=\"gpt-4\"),\n    graph=graph,\n    verbose=True\n)\n\n# Query traverses relationships\nresult = graph_qa.invoke(\n    \"Which products were purchased by customers who also bought ProductX?\"\n)\n# LLM generates Cypher: MATCH (c:Customer)-[:BOUGHT]->(p1:Product {name: 'ProductX'})\n#                       MATCH (c)-[:BOUGHT]->(p2:Product) WHERE p2 <> p1\n#                       RETURN DISTINCT p2.name"
+              },
+              {
+                "title": "RAG vs Fine-tuning: When to Use Each",
+                "content": "Understanding when to use RAG, fine-tuning, or both:\n\n**Use RAG when:**\n- Knowledge needs frequent updates\n- You need source citations\n- Data is private/organizational\n- Avoiding retraining costs is important\n- Real-time data access is needed\n\n**Use Fine-tuning when:**\n- Teaching specific output format/style\n- Domain-specific terminology is critical\n- Consistent behavior for a narrow task\n- Performance optimization is key\n\n**Use Both (RAG + Fine-tuning) when:**\n- Fine-tune for domain familiarity and output format\n- RAG for current, factual information\n- Best of both: domain expertise + accurate facts",
+                "diagram": {
+                  "title": "RAG vs Fine-tuning Decision",
+                  "code": "flowchart TD\n    Q[\"Need domain-specific knowledge?\"] -->|Yes| A{\"Frequent updates?\"}\n    A -->|Yes| RAG[\"Use RAG\"]\n    A -->|No| B{\"Need specific output style?\"}\n    B -->|Yes| BOTH[\"RAG + Fine-tuning\"]\n    B -->|No| FT[\"Fine-tuning may suffice\"]\n    Q -->|No| C{\"Need citations?\"}\n    C -->|Yes| RAG\n    C -->|No| BASE[\"Base model may work\"]"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "RAG has evolved from Naive → Advanced → Modular paradigms",
+              "Self-RAG adds reflection and critique for adaptive retrieval",
+              "Corrective RAG evaluates and falls back to web search when needed",
+              "RAG Fusion generates query variants and uses RRF for better recall",
+              "GraphRAG captures entity relationships for complex reasoning",
+              "RAG and fine-tuning serve different purposes and can be combined"
+            ]
+          }
+        },
+        {
           "id": "rag-quiz",
           "title": "RAG Applications Quiz",
           "type": "quiz",
@@ -564,35 +630,154 @@
           "questions": [
             {
               "question": "What is the main purpose of text chunking in RAG?",
-              "options": ["Make files smaller", "Split documents into retrievable units", "Compress data", "Encrypt content"],
+              "options": [
+                "Make files smaller",
+                "Split documents into retrievable units that can be embedded and searched",
+                "Compress data for storage",
+                "Encrypt content for security"
+              ],
               "correct": 1,
               "explanation": "Chunking splits documents into smaller pieces that can be individually embedded and retrieved based on relevance to a query."
             },
             {
-              "question": "Why use hybrid search in RAG?",
-              "options": ["It's faster", "Combines semantic and keyword matching", "Uses less memory", "Requires no embeddings"],
-              "correct": 1,
-              "explanation": "Hybrid search combines semantic (embedding) search with keyword (BM25) search to handle both conceptual queries and exact term matching."
+              "question": "Why is chunk size considered a key hyperparameter in RAG systems?",
+              "options": [
+                "It only affects storage costs",
+                "Larger chunks are always better for accuracy",
+                "Too large loses specificity, too small loses semantic coherence",
+                "It has no impact on retrieval quality"
+              ],
+              "correct": 2,
+              "explanation": "Chunk size balances two concerns: chunks too large become too general and fail to match specific queries, while chunks too small lose semantic coherence and context."
             },
             {
-              "question": "What does a reranker do in RAG?",
-              "options": ["Generates embeddings", "Reorders retrieved results by relevance", "Chunks documents", "Stores vectors"],
+              "question": "What are the four main components of a RAG system?",
+              "options": [
+                "Encoder, decoder, attention, output",
+                "Knowledge base, retriever, integration layer, generator",
+                "Database, API, cache, frontend",
+                "Tokenizer, embedder, classifier, ranker"
+              ],
               "correct": 1,
-              "explanation": "A reranker uses a more powerful model (cross-encoder) to reorder initially retrieved candidates by their actual relevance to the query."
+              "explanation": "A RAG system consists of: knowledge base (external data), retriever (searches for relevant data), integration layer (coordinates and augments prompts), and generator (LLM that creates outputs)."
+            },
+            {
+              "question": "How does RAG differ from fine-tuning?",
+              "options": [
+                "RAG is faster, fine-tuning is more accurate",
+                "RAG queries external data at runtime, fine-tuning trains on domain-specific data",
+                "Fine-tuning is free, RAG is expensive",
+                "They are the same technique with different names"
+              ],
+              "correct": 1,
+              "explanation": "RAG connects a model to external knowledge bases at query time, while fine-tuning trains the model on domain-specific data. RAG is more cost-efficient for knowledge updates; both can be used together."
+            },
+            {
+              "question": "What problem does Self-Reflective RAG (Self-RAG) solve?",
+              "options": [
+                "Faster retrieval speed",
+                "Lower token costs",
+                "Adaptive retrieval decisions and self-critique of response quality",
+                "Better document parsing"
+              ],
+              "correct": 2,
+              "explanation": "Self-RAG uses reflection tokens to decide when retrieval is needed and critique tokens to assess response quality, enabling the model to correct itself when answers are poor."
+            },
+            {
+              "question": "What action does Corrective RAG (CRAG) take when retrieved documents are irrelevant?",
+              "options": [
+                "Returns an error message",
+                "Falls back to web search for additional information",
+                "Asks the user to rephrase the question",
+                "Uses random documents instead"
+              ],
+              "correct": 1,
+              "explanation": "CRAG evaluates retrieved documents and when they're judged irrelevant, it falls back to web search to find better information, extending beyond the static knowledge base."
+            },
+            {
+              "question": "How does RAG Fusion improve retrieval recall?",
+              "options": [
+                "Uses larger embeddings",
+                "Generates multiple query variants and combines results with Reciprocal Rank Fusion",
+                "Increases the number of retrieved documents",
+                "Uses multiple LLMs in parallel"
+              ],
+              "correct": 1,
+              "explanation": "RAG Fusion generates multiple phrasings of the query, retrieves for each, then uses RRF to combine and rank results, reducing the chance of missing relevant content."
+            },
+            {
+              "question": "What advantage does GraphRAG provide over traditional vector-based RAG?",
+              "options": [
+                "Faster similarity search",
+                "Lower storage costs",
+                "Captures entity relationships for multi-hop reasoning",
+                "Works without an LLM"
+              ],
+              "correct": 2,
+              "explanation": "GraphRAG structures knowledge as entities and relationships, enabling traversal of connections between concepts for complex queries requiring related information."
+            },
+            {
+              "question": "Why can RAG models include citations in their responses?",
+              "options": [
+                "All LLMs can cite sources by default",
+                "The retrieved chunks come from identifiable sources that can be referenced",
+                "Citations are generated randomly",
+                "Only fine-tuned models can cite"
+              ],
+              "correct": 1,
+              "explanation": "Since RAG retrieves specific chunks from the knowledge base, the system knows exactly which sources were used and can include them as citations, increasing user trust and verifiability."
             },
             {
               "question": "What is 'faithfulness' in RAG evaluation?",
-              "options": ["Speed of retrieval", "Whether answer is supported by retrieved context", "Number of sources used", "Model temperature"],
+              "options": [
+                "Speed of retrieval",
+                "Whether the generated answer is supported by the retrieved context",
+                "Number of sources used",
+                "Model temperature setting"
+              ],
               "correct": 1,
               "explanation": "Faithfulness measures whether the generated answer is actually supported by and grounded in the retrieved context, avoiding hallucinations."
             },
             {
-              "question": "What is HyDE (Hypothetical Document Embeddings)?",
-              "options": ["A vector database", "Generate hypothetical answer, use its embedding for retrieval", "A caching strategy", "A chunking method"],
+              "question": "Which RAG paradigm represents the most flexible, component-based approach?",
+              "options": [
+                "Naive RAG",
+                "Advanced RAG",
+                "Modular RAG",
+                "Basic RAG"
+              ],
+              "correct": 2,
+              "explanation": "Modular RAG uses interchangeable components, adaptive retrieval decisions, and self-correction mechanisms, allowing routing to different pipelines based on query type."
+            },
+            {
+              "question": "What is the primary benefit of hybrid search (semantic + keyword) in RAG?",
+              "options": [
+                "It's faster than either alone",
+                "Combines conceptual matching with exact term matching for diverse queries",
+                "Uses less memory",
+                "Requires no embeddings"
+              ],
               "correct": 1,
-              "explanation": "HyDE generates a hypothetical answer to the query first, then uses that answer's embedding to find similar real documents, often improving retrieval for complex queries."
+              "explanation": "Hybrid search combines semantic (embedding) search that finds conceptually similar content with keyword (BM25) search that finds exact term matches, handling diverse query types."
             }
-          ]
+          ],
+          "references": {
+            "lessonRefs": [
+              "embeddings",
+              "vector-databases",
+              "chunking-strategies"
+            ],
+            "externalRefs": [
+              {
+                "title": "LlamaIndex Docs",
+                "url": "https://docs.llamaindex.ai/"
+              },
+              {
+                "title": "Pinecone Learning Center",
+                "url": "https://www.pinecone.io/learn/"
+              }
+            ]
+          }
         }
       ]
     }

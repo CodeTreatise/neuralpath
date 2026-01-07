@@ -1,0 +1,378 @@
+{
+  "filterDimensions": {
+    "difficulty": {
+      "name": "Difficulty Level",
+      "icon": "🎯",
+      "description": "Traditional progression model",
+      "options": [
+        { "id": "beginner", "label": "Beginner", "icon": "🌱", "color": "#10b981", "description": "New to the topic, no prerequisites" },
+        { "id": "intermediate", "label": "Intermediate", "icon": "🌿", "color": "#3b82f6", "description": "Basic understanding needed" },
+        { "id": "advanced", "label": "Advanced", "icon": "🌳", "color": "#8b5cf6", "description": "Deep knowledge required" }
+      ]
+    },
+    "prerequisites": {
+      "name": "Prerequisites & Dependencies",
+      "icon": "📋",
+      "description": "What you should know first",
+      "options": [
+        { "id": "none", "label": "No Prerequisites", "description": "Start here", "icon": "✨" },
+        { "id": "foundational", "label": "Foundational Math/CS", "description": "Basic programming & math", "icon": "🧱" },
+        { "id": "intermediate-cs", "label": "Intermediate CS Knowledge", "description": "Algorithms, data structures", "icon": "⚙️" },
+        { "id": "ml-basics", "label": "ML Fundamentals", "description": "Must know ML concepts", "icon": "🤖" },
+        { "id": "deep-learning", "label": "Deep Learning Background", "description": "Neural networks & DL", "icon": "🧠" }
+      ]
+    },
+    "learningStyle": {
+      "name": "Learning Style",
+      "icon": "🎨",
+      "description": "How you learn best",
+      "options": [
+        { "id": "theoretical", "label": "Theory-First", "icon": "📚", "description": "Math & concepts before code" },
+        { "id": "practical", "label": "Hands-On", "icon": "🛠️", "description": "Build as you learn" },
+        { "id": "balanced", "label": "Balanced", "icon": "⚖️", "description": "Mix of theory & practice" },
+        { "id": "project-based", "label": "Project-Based", "icon": "🚀", "description": "Learn by building real projects" },
+        { "id": "interactive", "label": "Interactive", "icon": "🎮", "description": "Quizzes, challenges, gamification" }
+      ]
+    },
+    "domain": {
+      "name": "AI Domain & Focus",
+      "icon": "🔬",
+      "description": "What AI area you're interested in",
+      "options": [
+        { "id": "foundations", "label": "Foundations & Theory", "description": "Math, optimization, basics", "icon": "🧮" },
+        { "id": "nlp", "label": "NLP & Language Models", "description": "LLMs, text processing", "icon": "💬" },
+        { "id": "computer-vision", "label": "Computer Vision", "description": "Images, video processing", "icon": "👁️" },
+        { "id": "ml-classic", "label": "Classic ML", "description": "Regression, classification, clustering", "icon": "📊" },
+        { "id": "deep-learning", "label": "Deep Learning & NNs", "description": "Neural networks, transformers", "icon": "🧠" },
+        { "id": "agents-automation", "label": "Agents & Automation", "description": "Autonomous systems, agents", "icon": "🤖" },
+        { "id": "rag-retrieval", "label": "RAG & Retrieval", "description": "Vector DBs, semantic search", "icon": "🔍" },
+        { "id": "deployment", "label": "Deployment & MLOps", "description": "Production, scaling, ops", "icon": "🚀" },
+        { "id": "safety-ethics", "label": "AI Safety & Ethics", "description": "Safety, bias, fairness", "icon": "⚖️" }
+      ]
+    },
+    "pace": {
+      "name": "Learning Pace",
+      "icon": "⏱️",
+      "description": "How much time you have",
+      "options": [
+        { "id": "quick", "label": "Quick (< 1 week)", "description": "Bite-sized, 2-5 hours", "icon": "⚡" },
+        { "id": "moderate", "label": "Moderate (1-4 weeks)", "description": "Steady, 5-15 hours/week", "icon": "🚶" },
+        { "id": "deep", "label": "Deep Dive (4+ weeks)", "description": "Comprehensive, 15+ hours", "icon": "🏊" }
+      ]
+    },
+    "goal": {
+      "name": "Your Goal",
+      "icon": "🎯",
+      "description": "Why you're learning this",
+      "options": [
+        { "id": "understanding", "label": "Understanding", "description": "Grasp core concepts", "icon": "💡" },
+        { "id": "implementation", "label": "Build Applications", "description": "Create working solutions", "icon": "🔨" },
+        { "id": "career", "label": "Career Development", "description": "Professional skill-building", "icon": "💼" },
+        { "id": "research", "label": "Research & Innovation", "description": "Push boundaries", "icon": "🔭" },
+        { "id": "interview-prep", "label": "Interview Preparation", "description": "Ace tech interviews", "icon": "🎤" }
+      ]
+    },
+    "complexity": {
+      "name": "Problem Complexity",
+      "icon": "🔗",
+      "description": "How interconnected & complex",
+      "options": [
+        { "id": "isolated", "label": "Isolated Concepts", "description": "Single topic focus", "icon": "◆" },
+        { "id": "connected", "label": "Interconnected", "description": "Builds on related topics", "icon": "⬢" },
+        { "id": "systems", "label": "Systems Thinking", "description": "Multiple domains integrated", "icon": "🔀" },
+        { "id": "cutting-edge", "label": "Cutting-Edge", "description": "Frontier research & techniques", "icon": "⚡" }
+      ]
+    },
+    "techStack": {
+      "name": "Technology Stack",
+      "icon": "💻",
+      "description": "Tools and frameworks used",
+      "options": [
+        { "id": "no-code", "label": "No Code", "description": "APIs and UI tools only", "icon": "🎯" },
+        { "id": "python", "label": "Python", "description": "Python-based tools", "icon": "🐍" },
+        { "id": "pytorch", "label": "PyTorch", "description": "Deep learning with PyTorch", "icon": "🔥" },
+        { "id": "tensorflow", "label": "TensorFlow", "description": "TensorFlow & Keras", "icon": "⚡" },
+        { "id": "langchain", "label": "LangChain", "description": "LangChain ecosystem", "icon": "🔗" },
+        { "id": "llama-index", "label": "LlamaIndex", "description": "LlamaIndex & data indexing", "icon": "🦙" },
+        { "id": "huggingface", "label": "Hugging Face", "description": "Transformers & models", "icon": "🤗" },
+        { "id": "cloud", "label": "Cloud Platforms", "description": "AWS, GCP, Azure", "icon": "☁️" }
+      ]
+    },
+    "intensity": {
+      "name": "Content Intensity",
+      "icon": "🔥",
+      "description": "How dense and challenging",
+      "options": [
+        { "id": "gentle", "label": "Gentle Introduction", "description": "Accessible, high-level overview", "icon": "🌤️" },
+        { "id": "moderate", "label": "Moderate Intensity", "description": "Balanced difficulty", "icon": "⛅" },
+        { "id": "rigorous", "label": "Rigorous & Deep", "description": "Technical depth required", "icon": "⛈️" },
+        { "id": "hardcore", "label": "Hardcore/Research", "description": "Advanced mathematics & theory", "icon": "🌪️" }
+      ]
+    },
+    "outcomes": {
+      "name": "Learning Outcomes",
+      "icon": "🏆",
+      "description": "What you'll be able to do",
+      "options": [
+        { "id": "awareness", "label": "Awareness", "description": "Know what it is", "icon": "👀" },
+        { "id": "understand", "label": "Understand", "description": "Grasp how it works", "icon": "🧠" },
+        { "id": "apply", "label": "Apply", "description": "Use it in projects", "icon": "🔧" },
+        { "id": "master", "label": "Master", "description": "Expert-level capability", "icon": "👑" },
+        { "id": "teach", "label": "Teach Others", "description": "Explain and mentor", "icon": "🎓" }
+      ]
+    }
+  },
+  "courseFilters": {
+    "math-for-ai": {
+      "difficulty": "beginner",
+      "prerequisites": "none",
+      "learningStyle": "theoretical",
+      "domain": "foundations",
+      "pace": "deep",
+      "goal": "understanding",
+      "complexity": "isolated",
+      "techStack": "no-code",
+      "intensity": "rigorous",
+      "outcomes": ["understand", "apply"],
+      "recommendedFor": "Anyone wanting to understand the mathematical foundations of AI",
+      "combinationTag": "📚 Theory Mastery",
+      "combinationScore": 0.92,
+      "keywordCombinations": ["foundations", "mathematics", "theoretical", "deep-learning"]
+    },
+    "python-ai": {
+      "difficulty": "beginner",
+      "prerequisites": "none",
+      "learningStyle": "practical",
+      "domain": "foundations",
+      "pace": "moderate",
+      "goal": "implementation",
+      "complexity": "isolated",
+      "techStack": "python",
+      "intensity": "gentle",
+      "outcomes": ["understand", "apply"],
+      "recommendedFor": "Developers new to Python or wanting AI-specific Python skills",
+      "combinationTag": "🛠️ Practical Start",
+      "combinationScore": 0.88,
+      "keywordCombinations": ["programming", "practical", "hands-on", "python-basics"]
+    },
+    "prompt-engineering": {
+      "difficulty": "intermediate",
+      "prerequisites": "foundational",
+      "learningStyle": "practical",
+      "domain": "nlp",
+      "pace": "quick",
+      "goal": "implementation",
+      "complexity": "isolated",
+      "techStack": "no-code",
+      "intensity": "gentle",
+      "outcomes": ["apply", "master"],
+      "recommendedFor": "Anyone using LLMs and wanting to get better results",
+      "combinationTag": "⚡ Quick Wins",
+      "combinationScore": 0.95,
+      "keywordCombinations": ["quick-learning", "practical-skills", "immediate-impact", "no-code"]
+    },
+    "rag-applications": {
+      "difficulty": "advanced",
+      "prerequisites": "ml-basics",
+      "learningStyle": "project-based",
+      "domain": "rag-retrieval",
+      "pace": "moderate",
+      "goal": "implementation",
+      "complexity": "systems",
+      "techStack": "langchain",
+      "intensity": "rigorous",
+      "outcomes": ["apply", "master", "teach"],
+      "recommendedFor": "Developers building production-grade RAG systems",
+      "combinationTag": "🚀 Production Ready",
+      "combinationScore": 0.89,
+      "keywordCombinations": ["production-grade", "systems-thinking", "advanced-implementation", "real-world-projects"]
+    },
+    "ml-fundamentals": {
+      "difficulty": "intermediate",
+      "prerequisites": "foundational",
+      "learningStyle": "balanced",
+      "domain": "ml-classic",
+      "pace": "moderate",
+      "goal": "understanding",
+      "complexity": "connected",
+      "techStack": "python",
+      "intensity": "moderate",
+      "outcomes": ["understand", "apply"],
+      "recommendedFor": "Anyone transitioning from software engineering to ML",
+      "combinationTag": "🎯 Solid Foundation",
+      "combinationScore": 0.87,
+      "keywordCombinations": ["fundamentals", "balanced-approach", "connected-concepts", "classic-ml"]
+    },
+    "deep-learning-pytorch": {
+      "difficulty": "advanced",
+      "prerequisites": "ml-basics",
+      "learningStyle": "practical",
+      "domain": "deep-learning",
+      "pace": "deep",
+      "goal": "implementation",
+      "complexity": "systems",
+      "techStack": "pytorch",
+      "intensity": "rigorous",
+      "outcomes": ["apply", "master"],
+      "recommendedFor": "ML engineers building neural network-based solutions",
+      "combinationTag": "🔥 Deep Expertise",
+      "combinationScore": 0.91,
+      "keywordCombinations": ["advanced-techniques", "hands-on-building", "framework-mastery", "systems-level"]
+    },
+    "agentic-ai": {
+      "difficulty": "advanced",
+      "prerequisites": "ml-basics",
+      "learningStyle": "project-based",
+      "domain": "agents-automation",
+      "pace": "deep",
+      "goal": "implementation",
+      "complexity": "systems",
+      "techStack": "langchain",
+      "intensity": "hardcore",
+      "outcomes": ["master", "teach"],
+      "recommendedFor": "Developers building autonomous AI systems and agents",
+      "combinationTag": "🤖 Autonomous Systems",
+      "combinationScore": 0.93,
+      "keywordCombinations": ["cutting-edge", "systems-integration", "advanced-automation", "frontier-tech"]
+    },
+    "ai-safety-guardrails": {
+      "difficulty": "advanced",
+      "prerequisites": "ml-basics",
+      "learningStyle": "balanced",
+      "domain": "safety-ethics",
+      "pace": "moderate",
+      "goal": "understanding",
+      "complexity": "connected",
+      "techStack": "python",
+      "intensity": "rigorous",
+      "outcomes": ["understand", "apply"],
+      "recommendedFor": "ML engineers concerned with responsible AI deployment",
+      "combinationTag": "⚖️ Responsible AI",
+      "combinationScore": 0.84,
+      "keywordCombinations": ["ethics", "safety-critical", "responsible-deployment", "best-practices"]
+    },
+    "llm-finetuning": {
+      "difficulty": "advanced",
+      "prerequisites": "deep-learning",
+      "learningStyle": "practical",
+      "domain": "nlp",
+      "pace": "deep",
+      "goal": "implementation",
+      "complexity": "systems",
+      "techStack": "pytorch",
+      "intensity": "rigorous",
+      "outcomes": ["apply", "master"],
+      "recommendedFor": "ML engineers specializing in large language models",
+      "combinationTag": "🧠 LLM Specialist",
+      "combinationScore": 0.90,
+      "keywordCombinations": ["specialization", "advanced-nlp", "model-customization", "high-complexity"]
+    }
+  },
+  "combinationProfiles": {
+    "quickWins": {
+      "name": "Quick Wins for Immediate Impact",
+      "icon": "⚡",
+      "description": "Learn practical skills you can use today",
+      "criteria": {
+        "pace": "quick",
+        "learningStyle": ["practical", "hands-on"],
+        "techStack": "no-code",
+        "outcomes": ["apply"]
+      },
+      "courses": ["prompt-engineering"],
+      "duration": "< 1 week",
+      "effort": "2-5 hours"
+    },
+    "solidFoundation": {
+      "name": "Solid Foundation for Beginners",
+      "icon": "🧱",
+      "description": "Build comprehensive fundamentals before advanced work",
+      "criteria": {
+        "difficulty": "beginner",
+        "prerequisites": "none",
+        "complexity": "isolated",
+        "outcomes": ["understand", "apply"]
+      },
+      "courses": ["python-ai", "math-for-ai"],
+      "duration": "8-10 weeks",
+      "effort": "10-15 hours/week"
+    },
+    "productionReady": {
+      "name": "Production-Ready Development",
+      "icon": "🚀",
+      "description": "Build systems that scale and work in production",
+      "criteria": {
+        "difficulty": "advanced",
+        "complexity": "systems",
+        "goal": ["implementation", "career"],
+        "intensity": "rigorous"
+      },
+      "courses": ["rag-applications", "agentic-ai", "deep-learning-pytorch"],
+      "duration": "12-16 weeks",
+      "effort": "15-20 hours/week"
+    },
+    "researchFrontier": {
+      "name": "Research & Innovation Track",
+      "icon": "🔭",
+      "description": "Explore cutting-edge techniques and theory",
+      "criteria": {
+        "difficulty": "advanced",
+        "goal": "research",
+        "complexity": "cutting-edge",
+        "intensity": "hardcore"
+      },
+      "courses": ["agentic-ai", "interpretability", "reasoning-models"],
+      "duration": "16+ weeks",
+      "effort": "20+ hours/week"
+    },
+    "careerAcceleration": {
+      "name": "Career Acceleration Program",
+      "icon": "💼",
+      "description": "Become job-ready for AI engineer roles",
+      "criteria": {
+        "goal": "career",
+        "outcomes": ["apply", "master"],
+        "complexity": ["systems", "connected"],
+        "intensity": ["moderate", "rigorous"]
+      },
+      "courses": ["python-ai", "ml-fundamentals", "deep-learning-pytorch", "prompt-engineering", "rag-applications"],
+      "duration": "20-24 weeks",
+      "effort": "15-20 hours/week"
+    },
+    "practicalApplications": {
+      "name": "Practical AI Applications",
+      "icon": "🔨",
+      "description": "Learn by building real-world AI systems",
+      "criteria": {
+        "learningStyle": "project-based",
+        "goal": "implementation",
+        "complexity": "systems",
+        "outcomes": ["apply", "master"]
+      },
+      "courses": ["prompt-engineering", "rag-applications", "agentic-ai"],
+      "duration": "10-14 weeks",
+      "effort": "12-18 hours/week"
+    }
+  },
+  "smartRecommendations": {
+    "byGoal": {
+      "understanding": ["math-for-ai", "ml-fundamentals", "interpretability"],
+      "implementation": ["python-ai", "prompt-engineering", "rag-applications", "agentic-ai"],
+      "career": ["python-ai", "ml-fundamentals", "deep-learning-pytorch", "prompt-engineering"],
+      "research": ["deep-learning-pytorch", "agentic-ai", "interpretability", "reasoning-models"],
+      "interview-prep": ["ml-fundamentals", "prompt-engineering", "ai-safety-guardrails"]
+    },
+    "byLearningStyle": {
+      "theoretical": ["math-for-ai", "interpretability", "reasoning-models"],
+      "practical": ["python-ai", "prompt-engineering", "rag-applications"],
+      "balanced": ["ml-fundamentals", "deep-learning-pytorch", "nlp-transformers"],
+      "project-based": ["rag-applications", "agentic-ai", "computer-vision"],
+      "interactive": ["prompt-engineering", "python-ai"]
+    },
+    "byTimeAvailable": {
+      "quick": ["prompt-engineering"],
+      "moderate": ["python-ai", "ml-fundamentals", "prompt-engineering"],
+      "deep": ["math-for-ai", "deep-learning-pytorch", "agentic-ai"]
+    }
+  }
+}

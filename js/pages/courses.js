@@ -647,7 +647,7 @@ const CoursesPage = {
     renderLessonContent(lesson) {
         // Handle quiz type
         if (lesson.type === 'quiz' && lesson.questions?.length) {
-            return this.renderQuizContent(lesson.questions);
+            return this.renderQuizContent(lesson.questions, lesson.references);
         }
         
         // Handle project type
@@ -1123,7 +1123,7 @@ const CoursesPage = {
     /**
      * Render quiz content with interactive questions
      */
-    renderQuizContent(questions) {
+    renderQuizContent(questions, references) {
         if (!questions || !questions.length) {
             return '<p>No quiz questions available.</p>';
         }
@@ -1212,8 +1212,72 @@ const CoursesPage = {
                     <p id="quiz-score" style="font-size: 1.25rem; color: var(--color-text-primary);"></p>
                 </div>
             </div>
-        </div>
         `;
+        
+        // Add references section if available
+        if (references && (references.lessonRefs?.length || references.externalRefs?.length)) {
+            html += `
+                <div class="quiz-references" style="
+                    margin-top: var(--space-6);
+                    padding: var(--space-5);
+                    background: var(--color-surface);
+                    border: 1px solid var(--color-border);
+                    border-radius: var(--radius-lg);
+                ">
+                    <h4 style="margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2);">
+                        📚 Learn More
+                    </h4>
+            `;
+            
+            if (references.lessonRefs?.length) {
+                html += `
+                    <div style="margin-bottom: var(--space-4);">
+                        <p style="font-weight: 600; margin-bottom: var(--space-2); color: var(--color-text-secondary);">
+                            Related Lessons:
+                        </p>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+                            ${references.lessonRefs.map(ref => `
+                                <span style="
+                                    display: inline-block;
+                                    padding: var(--space-1) var(--space-3);
+                                    background: var(--color-bg-tertiary);
+                                    border-radius: var(--radius-full);
+                                    font-size: 0.875rem;
+                                    color: var(--color-text-secondary);
+                                ">${ref}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (references.externalRefs?.length) {
+                html += `
+                    <div>
+                        <p style="font-weight: 600; margin-bottom: var(--space-2); color: var(--color-text-secondary);">
+                            External Resources:
+                        </p>
+                        <ul style="margin: 0; padding-left: var(--space-5); color: var(--color-text-secondary);">
+                            ${references.externalRefs.map(ref => `
+                                <li style="margin-bottom: var(--space-1);">
+                                    <a href="${Helpers.escapeHtml(ref.url)}" 
+                                       target="_blank" 
+                                       rel="noopener noreferrer"
+                                       style="color: var(--color-accent); text-decoration: none;"
+                                       onmouseover="this.style.textDecoration='underline'"
+                                       onmouseout="this.style.textDecoration='none'"
+                                    >${Helpers.escapeHtml(ref.title)} ↗</a>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            html += `</div>`;
+        }
+        
+        html += `</div>`;
         
         return html;
     },
