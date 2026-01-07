@@ -6,6 +6,43 @@
     "author": "Martin Keen (IBM Master Inventor)",
     "url": "https://www.youtube.com/watch?v=ESBMgZHzfG0"
   },
+  "analogy": {
+    "title": "Why a Periodic Table?",
+    "introduction": "Just as Mendeleev's periodic table organizes chemical elements by properties and predicts new ones, the AI Periodic Table organizes GenAI components by function and maturity—helping you understand how pieces fit together to build AI systems.",
+    "comparisons": [
+      { "chemistry": "Elements (H, O, C)", "ai": "AI Components (Prompts, LLMs, Embeddings)" },
+      { "chemistry": "Columns = similar chemical behavior", "ai": "Columns = similar function (reactive, retrieval, etc.)" },
+      { "chemistry": "Rows = electron shells/complexity", "ai": "Rows = abstraction levels (primitives → emerging)" },
+      { "chemistry": "Chemical reactions (H₂ + O → H₂O)", "ai": "AI combinations (Em + Vx + Lg → RAG)" },
+      { "chemistry": "Predicted missing elements", "ai": "Helps predict what AI capabilities are missing" }
+    ],
+    "columnExplanations": [
+      { "name": "Reactive", "icon": "🔴", "purpose": "Control, action, autonomy", "think": "The 'do something' column" },
+      { "name": "Retrieval", "icon": "🔵", "purpose": "Memory and storage", "think": "The 'remember things' column" },
+      { "name": "Orchestration", "icon": "🟢", "purpose": "Coordination and flow", "think": "The 'organize everything' column" },
+      { "name": "Validation", "icon": "🟠", "purpose": "Safety and testing", "think": "The 'make it safe' column" },
+      { "name": "Models", "icon": "🟣", "purpose": "The AI models themselves", "think": "The 'brain' column" }
+    ],
+    "rowExplanations": [
+      { "name": "Primitives", "meaning": "Foundational building blocks", "analogy": "Like hydrogen and carbon—can't break down further" },
+      { "name": "Compositions", "meaning": "Combinations of primitives", "analogy": "Like water (H₂O)—molecules built from elements" },
+      { "name": "Deployment", "meaning": "Production-ready elements", "analogy": "Like industrial chemicals—ready for real use" },
+      { "name": "Emerging", "meaning": "Frontier/nascent concepts", "analogy": "Like synthetic elements—experimental, cutting-edge" }
+    ],
+    "keyInsights": [
+      "Learning path: You MUST understand primitives before compositions",
+      "Career path: Junior → Senior → Specialist follows the rows downward",
+      "Stability gradient: Top rows are proven; bottom rows are experimental",
+      "Reactions show dependencies: To build RAG, you need Embeddings + Vector DB + LLM",
+      "Empty cells suggest capabilities that might emerge in the future"
+    ],
+    "howToUse": [
+      "Click any element to see its full explanation and related course",
+      "Study reactions to understand how systems are built from components",
+      "Start with Primitives row, then move down as you learn",
+      "Use the framework to identify gaps in your knowledge"
+    ]
+  },
   "columns": [
     { "id": "reactive", "name": "Reactive", "code": "S1", "description": "Control, action, and autonomy", "color": "#ef4444" },
     { "id": "retrieval", "name": "Retrieval", "code": "S2", "description": "Memory and storage", "color": "#3b82f6" },

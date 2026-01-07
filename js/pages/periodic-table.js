@@ -44,12 +44,97 @@ const PeriodicTablePage = {
                 <header class="pt-header">
                     <div class="pt-title-row">
                         <h1>🧪 ${Helpers.escapeHtml(data.title)}</h1>
-                        <a href="${data.source.url}" target="_blank" rel="noopener" class="pt-source-btn">
-                            📺 Watch Video
-                        </a>
+                        <div class="pt-header-actions">
+                            <button class="pt-about-btn" onclick="PeriodicTablePage.toggleAbout()">
+                                💡 Why a Periodic Table?
+                            </button>
+                            <a href="${data.source.url}" target="_blank" rel="noopener" class="pt-source-btn">
+                                📺 Watch Video
+                            </a>
+                        </div>
                     </div>
                     <p class="pt-subtitle">${Helpers.escapeHtml(data.description)}</p>
                 </header>
+
+                <!-- About/Analogy Section (collapsible) -->
+                <section class="pt-about" id="pt-about">
+                    <div class="pt-about-content">
+                        <h2>${data.analogy?.title || 'Understanding the Framework'}</h2>
+                        <p class="pt-about-intro">${data.analogy?.introduction || ''}</p>
+                        
+                        <!-- Chemistry vs AI Comparison -->
+                        <div class="pt-comparison">
+                            <h3>🔬 The Chemistry Analogy</h3>
+                            <div class="pt-comparison-table">
+                                <div class="pt-comparison-header">
+                                    <span>Chemistry</span>
+                                    <span>→</span>
+                                    <span>AI / GenAI</span>
+                                </div>
+                                ${(data.analogy?.comparisons || []).map(c => `
+                                    <div class="pt-comparison-row">
+                                        <span>${Helpers.escapeHtml(c.chemistry)}</span>
+                                        <span>→</span>
+                                        <span>${Helpers.escapeHtml(c.ai)}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Columns Explained -->
+                        <div class="pt-explain-section">
+                            <h3>📊 The 5 Columns (Functional Groups)</h3>
+                            <div class="pt-explain-grid">
+                                ${(data.analogy?.columnExplanations || []).map(col => `
+                                    <div class="pt-explain-card">
+                                        <span class="pt-explain-icon">${col.icon}</span>
+                                        <strong>${Helpers.escapeHtml(col.name)}</strong>
+                                        <span class="pt-explain-purpose">${Helpers.escapeHtml(col.purpose)}</span>
+                                        <span class="pt-explain-think">${Helpers.escapeHtml(col.think)}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Rows Explained -->
+                        <div class="pt-explain-section">
+                            <h3>📈 The 4 Rows (Maturity Levels)</h3>
+                            <div class="pt-rows-explain">
+                                ${(data.analogy?.rowExplanations || []).map(row => `
+                                    <div class="pt-row-explain-card">
+                                        <strong>${Helpers.escapeHtml(row.name)}</strong>
+                                        <span>${Helpers.escapeHtml(row.meaning)}</span>
+                                        <span class="pt-row-analogy">💡 ${Helpers.escapeHtml(row.analogy)}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Key Insights -->
+                        <div class="pt-explain-section">
+                            <h3>🎯 Key Insights</h3>
+                            <ul class="pt-insights-list">
+                                ${(data.analogy?.keyInsights || []).map(insight => `
+                                    <li>${Helpers.escapeHtml(insight)}</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+
+                        <!-- How to Use -->
+                        <div class="pt-explain-section">
+                            <h3>🚀 How to Use This Table</h3>
+                            <ol class="pt-howto-list">
+                                ${(data.analogy?.howToUse || []).map(step => `
+                                    <li>${Helpers.escapeHtml(step)}</li>
+                                `).join('')}
+                            </ol>
+                        </div>
+
+                        <button class="pt-about-close" onclick="PeriodicTablePage.toggleAbout()">
+                            Got it! Show me the table
+                        </button>
+                    </div>
+                </section>
 
                 <!-- Main Content: Table + Detail Panel -->
                 <div class="pt-main">
@@ -384,5 +469,15 @@ const PeriodicTablePage = {
         
         this.selectedElement = null;
         document.querySelectorAll('.pt-cell').forEach(el => el.classList.remove('selected'));
+    },
+
+    /**
+     * Toggle the About/Analogy section
+     */
+    toggleAbout() {
+        const aboutSection = document.getElementById('pt-about');
+        if (aboutSection) {
+            aboutSection.classList.toggle('expanded');
+        }
     }
 };
