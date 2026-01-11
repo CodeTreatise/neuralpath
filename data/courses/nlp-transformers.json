@@ -758,6 +758,66 @@
           }
         },
         {
+          "id": "llm-alignment",
+          "title": "LLM Alignment: RLHF & DPO",
+          "type": "lesson",
+          "duration": "40 min",
+          "content": {
+            "overview": "Alignment ensures LLMs are helpful, harmless, and honest. RLHF (Reinforcement Learning from Human Feedback) and DPO (Direct Preference Optimization) are the key techniques that transform base models into helpful assistants like ChatGPT and Claude. This is a core topic covered in Stanford's CS224N course on Modern NLP.",
+            "sections": [
+              {
+                "title": "The Alignment Problem",
+                "content": "Base language models are trained to predict next tokens, not to be helpful or safe:\n\n**Problems with base models:**\n- May generate harmful or biased content\n- Don't follow instructions well\n- Can hallucinate confidently\n- Lack the 'assistant' persona\n\n**Solution: Post-training alignment**\n\n1. **Supervised Fine-Tuning (SFT)**: Train on high-quality instruction-response pairs\n2. **Preference Learning**: Learn from human preferences (RLHF or DPO)\n3. **Safety Training**: Additional filtering and red-teaming\n\n**The Three H's of Alignment:**\n- **Helpful**: Follows instructions, provides useful information\n- **Harmless**: Refuses dangerous requests, avoids toxicity\n- **Honest**: Acknowledges uncertainty, doesn't hallucinate",
+                "diagram": {
+                  "title": "LLM Training Pipeline",
+                  "code": "flowchart LR\n    PRE[Pre-training<br/>Next Token Prediction] --> SFT[Supervised Fine-tuning<br/>Instruction Following]\n    SFT --> RLHF[RLHF/DPO<br/>Human Preferences]\n    RLHF --> SAFE[Safety Training<br/>Red-teaming]\n    SAFE --> PROD[Production Model]\n    \n    style PRE fill:#fce7f3,stroke:#db2777\n    style SFT fill:#dbeafe,stroke:#2563eb\n    style RLHF fill:#dcfce7,stroke:#16a34a\n    style SAFE fill:#fef3c7,stroke:#d97706"
+                }
+              },
+              {
+                "title": "RLHF: Reinforcement Learning from Human Feedback",
+                "content": "RLHF trains models using human preferences as the reward signal:\n\n**Step 1: Collect preference data**\n- Generate multiple responses for each prompt\n- Humans rank responses from best to worst\n- Create preference pairs (chosen, rejected)\n\n**Step 2: Train a Reward Model**\n- Learn to predict human preferences\n- Input: prompt + response → Output: scalar score\n- Trained on preference pairs using Bradley-Terry model\n\n**Step 3: Optimize with PPO**\n- Use reward model to score LLM outputs\n- Fine-tune LLM to maximize reward\n- KL penalty prevents straying too far from base model\n\n$$\\text{Objective} = \\mathbb{E}[R(x, y)] - \\beta \\cdot D_{KL}(\\pi_\\theta || \\pi_{ref})$$",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Reward Model Training (simplified)\nimport torch\nimport torch.nn as nn\n\nclass RewardModel(nn.Module):\n    def __init__(self, base_model):\n        super().__init__()\n        self.backbone = base_model\n        self.reward_head = nn.Linear(base_model.config.hidden_size, 1)\n    \n    def forward(self, input_ids, attention_mask):\n        outputs = self.backbone(input_ids, attention_mask=attention_mask)\n        last_hidden = outputs.last_hidden_state[:, -1, :]  # Last token\n        reward = self.reward_head(last_hidden)\n        return reward.squeeze(-1)\n\n# Training on preference pairs\ndef compute_preference_loss(reward_chosen, reward_rejected):\n    \"\"\"Bradley-Terry preference loss.\"\"\"\n    return -torch.log(torch.sigmoid(reward_chosen - reward_rejected)).mean()\n\n# PPO training loop (using trl library)\nfrom trl import PPOTrainer, PPOConfig\nfrom transformers import AutoModelForCausalLMWithValueHead\n\nconfig = PPOConfig(\n    model_name='gpt2',\n    learning_rate=1e-5,\n    batch_size=16,\n    ppo_epochs=4,\n    kl_penalty='kl',  # KL penalty to stay close to reference\n)\n\nmodel = AutoModelForCausalLMWithValueHead.from_pretrained('gpt2')\ntrainer = PPOTrainer(config, model, tokenizer=tokenizer)\n\n# Training step\nfor query, response in generate_responses(prompts):\n    reward = reward_model(query + response)\n    trainer.step([query], [response], [reward])"
+                }
+              },
+              {
+                "title": "DPO: Direct Preference Optimization",
+                "content": "DPO simplifies RLHF by eliminating the separate reward model:\n\n**Key insight:** The optimal policy under RLHF can be expressed directly in terms of preferences, without explicitly learning a reward model.\n\n**DPO Loss:**\n$$\\mathcal{L}_{DPO} = -\\mathbb{E}\\left[\\log \\sigma\\left(\\beta \\log \\frac{\\pi_\\theta(y_w|x)}{\\pi_{ref}(y_w|x)} - \\beta \\log \\frac{\\pi_\\theta(y_l|x)}{\\pi_{ref}(y_l|x)}\\right)\\right]$$\n\nWhere:\n- $y_w$ = preferred (winning) response\n- $y_l$ = rejected (losing) response\n- $\\pi_\\theta$ = policy being trained\n- $\\pi_{ref}$ = reference (SFT) model\n- $\\beta$ = temperature parameter\n\n**Advantages over RLHF:**\n- No separate reward model needed\n- More stable training (no RL)\n- Simpler implementation\n- Often better or equal results",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torch.nn.functional as F\nfrom transformers import AutoModelForCausalLM\n\ndef dpo_loss(policy_model, ref_model, chosen_ids, rejected_ids, beta=0.1):\n    \"\"\"\n    Direct Preference Optimization loss.\n    \n    Args:\n        policy_model: Model being trained\n        ref_model: Reference model (frozen, usually SFT model)\n        chosen_ids: Token IDs for preferred response\n        rejected_ids: Token IDs for rejected response\n        beta: Temperature parameter\n    \"\"\"\n    # Get log probabilities from policy\n    policy_chosen_logps = get_log_probs(policy_model, chosen_ids)\n    policy_rejected_logps = get_log_probs(policy_model, rejected_ids)\n    \n    # Get log probabilities from reference (no grad)\n    with torch.no_grad():\n        ref_chosen_logps = get_log_probs(ref_model, chosen_ids)\n        ref_rejected_logps = get_log_probs(ref_model, rejected_ids)\n    \n    # Compute log ratios\n    chosen_log_ratio = policy_chosen_logps - ref_chosen_logps\n    rejected_log_ratio = policy_rejected_logps - ref_rejected_logps\n    \n    # DPO loss\n    loss = -F.logsigmoid(beta * (chosen_log_ratio - rejected_log_ratio)).mean()\n    \n    return loss\n\ndef get_log_probs(model, input_ids):\n    \"\"\"Get log probabilities for a sequence.\"\"\"\n    outputs = model(input_ids)\n    logits = outputs.logits[:, :-1, :]  # Exclude last token\n    labels = input_ids[:, 1:]  # Shift right\n    \n    log_probs = F.log_softmax(logits, dim=-1)\n    token_log_probs = log_probs.gather(-1, labels.unsqueeze(-1)).squeeze(-1)\n    \n    return token_log_probs.sum(dim=-1)  # Sum over sequence\n\n# Using TRL library\nfrom trl import DPOTrainer, DPOConfig\nfrom transformers import AutoModelForCausalLM\n\nmodel = AutoModelForCausalLM.from_pretrained('meta-llama/Llama-2-7b-hf')\nref_model = AutoModelForCausalLM.from_pretrained('meta-llama/Llama-2-7b-hf')\n\ntrainer = DPOTrainer(\n    model=model,\n    ref_model=ref_model,\n    beta=0.1,\n    train_dataset=preference_dataset,\n    tokenizer=tokenizer,\n)\ntrainer.train()"
+                }
+              },
+              {
+                "title": "Beyond DPO: ORPO, IPO, and More",
+                "content": "The field is rapidly evolving with new alignment techniques:\n\n**ORPO (Odds Ratio Preference Optimization):**\n- Combines SFT and preference learning in one step\n- No need for separate reference model\n- More memory efficient\n\n**IPO (Identity Preference Optimization):**\n- Addresses overfitting issues in DPO\n- Uses identity mapping instead of log-sigmoid\n\n**GRPO (Group Relative Policy Optimization):**\n- Used in DeepSeek-R1 for reasoning models\n- Groups responses and uses relative rankings\n\n**Constitutional AI (CAI):**\n- Model critiques and revises its own outputs\n- Uses 'constitution' of principles\n- Less reliance on human labelers",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# ORPO combines SFT and DPO (simplified)\ndef orpo_loss(model, chosen_ids, rejected_ids, lambda_weight=0.1):\n    \"\"\"\n    ORPO: Odds Ratio Preference Optimization.\n    No reference model needed.\n    \"\"\"\n    # Get log probs\n    chosen_logps = get_log_probs(model, chosen_ids)\n    rejected_logps = get_log_probs(model, rejected_ids)\n    \n    # SFT loss on chosen responses\n    sft_loss = -chosen_logps.mean()\n    \n    # Odds ratio preference loss\n    log_odds = (chosen_logps - rejected_logps) - (\n        torch.log(1 - torch.exp(chosen_logps)) - \n        torch.log(1 - torch.exp(rejected_logps))\n    )\n    preference_loss = -F.logsigmoid(log_odds).mean()\n    \n    return sft_loss + lambda_weight * preference_loss\n\n# Using ORPO in TRL\nfrom trl import ORPOTrainer, ORPOConfig\n\nconfig = ORPOConfig(\n    output_dir='./orpo_output',\n    beta=0.1,\n    learning_rate=1e-5,\n)\n\ntrainer = ORPOTrainer(\n    model=model,\n    args=config,\n    train_dataset=preference_dataset,\n    tokenizer=tokenizer,\n)\ntrainer.train()"
+                }
+              },
+              {
+                "title": "Preference Data Collection",
+                "content": "Quality preference data is crucial for alignment:\n\n**Human Annotation:**\n- Experts rank responses (A > B > C)\n- Focus on helpfulness, harmlessness, honesty\n- Expensive but highest quality\n\n**AI-Assisted Annotation:**\n- Use strong models (GPT-4) to judge weaker models\n- 'Constitutional AI' self-critique\n- Scalable but may inherit biases\n\n**Synthetic Preference Data:**\n- Generate variations with different temperatures\n- Use verifiable tasks (math, code) for automatic labels\n- Rejection sampling: generate many, keep best\n\n**Common Datasets:**\n- Anthropic HH-RLHF\n- OpenAssistant\n- UltraFeedback\n- Nectar",
+                "keyPoints": [
+                  "Preference data quality directly impacts model quality",
+                  "Diverse prompts prevent mode collapse",
+                  "Include safety-critical examples",
+                  "Balance helpfulness vs safety tensions"
+                ]
+              }
+            ],
+            "keyTakeaways": [
+              "RLHF uses reward models + PPO to learn from human preferences",
+              "DPO simplifies RLHF by directly optimizing on preferences",
+              "Alignment happens after pre-training and supervised fine-tuning",
+              "The field is rapidly evolving with ORPO, IPO, GRPO variants",
+              "Quality preference data is as important as the algorithm"
+            ]
+          }
+        },
+        {
           "id": "nlp-deployment",
           "title": "NLP Model Deployment",
           "type": "lesson",

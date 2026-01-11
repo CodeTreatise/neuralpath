@@ -380,6 +380,81 @@
               }
             ]
           }
+        },
+        {
+          "id": "model-context-protocol",
+          "title": "Model Context Protocol (MCP)",
+          "duration": "45 min",
+          "content": {
+            "overview": "MCP is an open standard for connecting AI agents to external tools and data sources. It provides a unified protocol for agent-tool communication, replacing ad-hoc integrations.",
+            "sections": [
+              {
+                "title": "What is MCP?",
+                "content": "**Model Context Protocol (MCP)** is an open standard developed by Anthropic that standardizes how AI agents communicate with external tools, data sources, and services.\n\n**The Problem MCP Solves:**\n- Every AI agent framework has its own tool format\n- Tools built for one framework don't work in others\n- No standard for tool discovery, authentication, or error handling\n- Fragmented ecosystem slows development\n\n**MCP's Solution:**\n- Universal protocol for agent-tool communication\n- Tools work across any MCP-compatible agent\n- Standardized discovery, authentication, and lifecycle\n- Growing ecosystem of pre-built MCP servers\n\n**Key Concepts:**\n- **MCP Host**: The AI agent/application that uses tools\n- **MCP Server**: Exposes tools and resources via the protocol\n- **Transport**: How host and server communicate (stdio, HTTP, SSE)",
+                "diagram": {
+                  "title": "MCP Architecture",
+                  "code": "flowchart LR\n    subgraph Host[MCP Host - AI Agent]\n        LLM[LLM]\n        Client[MCP Client]\n    end\n    \n    subgraph Server1[MCP Server - Files]\n        T1[read_file]\n        T2[write_file]\n        T3[list_dir]\n    end\n    \n    subgraph Server2[MCP Server - Database]\n        T4[query]\n        T5[insert]\n    end\n    \n    subgraph Server3[MCP Server - Web]\n        T6[fetch_url]\n        T7[search]\n    end\n    \n    Client <-->|JSON-RPC| Server1\n    Client <-->|JSON-RPC| Server2\n    Client <-->|JSON-RPC| Server3\n    LLM <--> Client"
+                }
+              },
+              {
+                "title": "MCP Server Basics",
+                "content": "An MCP server exposes tools that agents can discover and use. Here's how to build one:",
+                "code": "# Install: pip install mcp\nfrom mcp.server import Server, NotificationOptions\nfrom mcp.server.models import InitializationOptions\nimport mcp.server.stdio\nimport mcp.types as types\n\n# Create server instance\nserver = Server(\"weather-server\")\n\n# Define a tool\n@server.list_tools()\nasync def handle_list_tools() -> list[types.Tool]:\n    return [\n        types.Tool(\n            name=\"get_weather\",\n            description=\"Get current weather for a city. Returns temperature, conditions, and humidity.\",\n            inputSchema={\n                \"type\": \"object\",\n                \"properties\": {\n                    \"city\": {\n                        \"type\": \"string\",\n                        \"description\": \"City name, e.g., 'San Francisco'\"\n                    },\n                    \"units\": {\n                        \"type\": \"string\",\n                        \"enum\": [\"celsius\", \"fahrenheit\"],\n                        \"default\": \"celsius\"\n                    }\n                },\n                \"required\": [\"city\"]\n            }\n        )\n    ]\n\n# Implement the tool\n@server.call_tool()\nasync def handle_call_tool(\n    name: str, arguments: dict | None\n) -> list[types.TextContent]:\n    if name == \"get_weather\":\n        city = arguments.get(\"city\")\n        units = arguments.get(\"units\", \"celsius\")\n        \n        # Call weather API (simplified)\n        weather = await fetch_weather(city, units)\n        \n        return [\n            types.TextContent(\n                type=\"text\",\n                text=f\"Weather in {city}: {weather['temp']}°, {weather['conditions']}\"\n            )\n        ]\n    raise ValueError(f\"Unknown tool: {name}\")\n\n# Run the server\nasync def main():\n    async with mcp.server.stdio.stdio_server() as (read, write):\n        await server.run(\n            read, write,\n            InitializationOptions(\n                server_name=\"weather-server\",\n                server_version=\"1.0.0\"\n            )\n        )\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())"
+              },
+              {
+                "title": "MCP Resources and Prompts",
+                "content": "MCP servers can expose more than just tools:\n\n**Resources**: Data sources the agent can read (files, database records, API data)\n**Prompts**: Pre-built prompt templates for common tasks\n**Sampling**: Let the server request LLM completions from the host",
+                "code": "from mcp.server import Server\nimport mcp.types as types\n\nserver = Server(\"docs-server\")\n\n# Expose resources (data the agent can read)\n@server.list_resources()\nasync def handle_list_resources() -> list[types.Resource]:\n    return [\n        types.Resource(\n            uri=\"docs://api/reference\",\n            name=\"API Reference\",\n            description=\"Complete API documentation\",\n            mimeType=\"text/markdown\"\n        ),\n        types.Resource(\n            uri=\"docs://guides/quickstart\",\n            name=\"Quickstart Guide\",\n            description=\"Getting started tutorial\",\n            mimeType=\"text/markdown\"\n        )\n    ]\n\n@server.read_resource()\nasync def handle_read_resource(uri: str) -> str:\n    if uri == \"docs://api/reference\":\n        return load_file(\"docs/api-reference.md\")\n    elif uri == \"docs://guides/quickstart\":\n        return load_file(\"docs/quickstart.md\")\n    raise ValueError(f\"Unknown resource: {uri}\")\n\n# Expose prompts (reusable prompt templates)\n@server.list_prompts()\nasync def handle_list_prompts() -> list[types.Prompt]:\n    return [\n        types.Prompt(\n            name=\"analyze_code\",\n            description=\"Analyze code for bugs and improvements\",\n            arguments=[\n                types.PromptArgument(\n                    name=\"code\",\n                    description=\"The code to analyze\",\n                    required=True\n                ),\n                types.PromptArgument(\n                    name=\"language\",\n                    description=\"Programming language\",\n                    required=False\n                )\n            ]\n        )\n    ]\n\n@server.get_prompt()\nasync def handle_get_prompt(\n    name: str, arguments: dict | None\n) -> types.GetPromptResult:\n    if name == \"analyze_code\":\n        code = arguments.get(\"code\", \"\")\n        lang = arguments.get(\"language\", \"unknown\")\n        return types.GetPromptResult(\n            description=\"Code analysis prompt\",\n            messages=[\n                types.PromptMessage(\n                    role=\"user\",\n                    content=types.TextContent(\n                        type=\"text\",\n                        text=f\"Analyze this {lang} code for bugs, security issues, and improvements:\\n\\n```{lang}\\n{code}\\n```\"\n                    )\n                )\n            ]\n        )"
+              },
+              {
+                "title": "Using MCP in Your Agent",
+                "content": "Connect your agent to MCP servers to gain access to their tools:",
+                "code": "from mcp import ClientSession, StdioServerParameters\nfrom mcp.client.stdio import stdio_client\nimport asyncio\n\nclass MCPAgent:\n    def __init__(self):\n        self.sessions = {}  # server_name -> ClientSession\n        self.tools = {}     # tool_name -> (session, tool)\n    \n    async def connect_server(self, name: str, command: str, args: list = None):\n        \"\"\"Connect to an MCP server\"\"\"\n        server_params = StdioServerParameters(\n            command=command,\n            args=args or []\n        )\n        \n        # Create client session\n        read, write = await stdio_client(server_params).__aenter__()\n        session = ClientSession(read, write)\n        await session.initialize()\n        \n        self.sessions[name] = session\n        \n        # Discover tools\n        tools_response = await session.list_tools()\n        for tool in tools_response.tools:\n            self.tools[tool.name] = (session, tool)\n            print(f\"Discovered tool: {tool.name}\")\n    \n    async def call_tool(self, tool_name: str, arguments: dict):\n        \"\"\"Call an MCP tool\"\"\"\n        if tool_name not in self.tools:\n            raise ValueError(f\"Unknown tool: {tool_name}\")\n        \n        session, tool = self.tools[tool_name]\n        result = await session.call_tool(tool_name, arguments)\n        return result.content[0].text\n    \n    def get_tools_for_llm(self):\n        \"\"\"Format tools for LLM function calling\"\"\"\n        return [\n            {\n                \"type\": \"function\",\n                \"function\": {\n                    \"name\": name,\n                    \"description\": tool.description,\n                    \"parameters\": tool.inputSchema\n                }\n            }\n            for name, (_, tool) in self.tools.items()\n        ]\n\n# Usage\nasync def main():\n    agent = MCPAgent()\n    \n    # Connect to multiple MCP servers\n    await agent.connect_server(\n        \"weather\",\n        \"python\",\n        [\"weather_server.py\"]\n    )\n    await agent.connect_server(\n        \"filesystem\",\n        \"npx\",\n        [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/path/to/dir\"]\n    )\n    \n    # Get all tools for LLM\n    tools = agent.get_tools_for_llm()\n    \n    # Use tools based on LLM decisions\n    result = await agent.call_tool(\"get_weather\", {\"city\": \"Tokyo\"})\n    print(result)"
+              },
+              {
+                "title": "MCP Ecosystem",
+                "content": "Growing ecosystem of pre-built MCP servers:\n\n**Official Servers** (by Anthropic):\n- `@modelcontextprotocol/server-filesystem` - File operations\n- `@modelcontextprotocol/server-github` - GitHub API\n- `@modelcontextprotocol/server-postgres` - PostgreSQL queries\n- `@modelcontextprotocol/server-slack` - Slack integration\n- `@modelcontextprotocol/server-memory` - Persistent key-value store\n\n**Community Servers**:\n- Databases: SQLite, MongoDB, Redis\n- APIs: Notion, Linear, Discord, Spotify\n- Dev Tools: Docker, Kubernetes, Git\n- Search: Brave, Google, Exa\n\n**Configuring Claude Desktop with MCP:**\n```json\n// ~/Library/Application Support/Claude/claude_desktop_config.json\n{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/Users/me/projects\"]\n    },\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": {\n        \"GITHUB_TOKEN\": \"your-token\"\n      }\n    }\n  }\n}\n```"
+              },
+              {
+                "title": "MCP vs Function Calling",
+                "content": "| Aspect | Function Calling | MCP |\n|--------|-----------------|-----|\n| Standard | Vendor-specific (OpenAI, Anthropic) | Open protocol |\n| Tool discovery | Manual definition | Automatic via protocol |\n| Portability | Tools locked to one platform | Tools work anywhere |\n| Ecosystem | Build from scratch | Growing community servers |\n| Resources | Not supported | First-class support |\n| Authentication | Custom per tool | Standardized |\n\n**When to use MCP:**\n- Building reusable tools across projects\n- Sharing tools with the community\n- Need standardized resource access\n- Want to use community servers\n\n**When to use Function Calling:**\n- Simple, project-specific tools\n- No need for tool reuse\n- Using vendor-specific features"
+              }
+            ],
+            "keyTakeaways": [
+              "MCP standardizes agent-tool communication across platforms",
+              "MCP servers expose tools, resources, and prompts via JSON-RPC",
+              "Growing ecosystem of pre-built servers (filesystem, GitHub, databases)",
+              "MCP enables portable, reusable tools vs. vendor-locked function calling"
+            ],
+            "exercises": [
+              {
+                "title": "Build an MCP Server",
+                "description": "Create an MCP server that exposes tools for interacting with a TODO list (add, complete, list items)"
+              },
+              {
+                "title": "Multi-Server Agent",
+                "description": "Build an agent that connects to multiple MCP servers and can use their combined capabilities"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Model Context Protocol Specification",
+                "url": "https://modelcontextprotocol.io/"
+              },
+              {
+                "title": "MCP Python SDK",
+                "url": "https://github.com/modelcontextprotocol/python-sdk"
+              },
+              {
+                "title": "MCP Servers Repository",
+                "url": "https://github.com/modelcontextprotocol/servers"
+              },
+              {
+                "title": "Anthropic MCP Announcement",
+                "url": "https://www.anthropic.com/news/model-context-protocol"
+              }
+            ]
+          }
         }
       ]
     },

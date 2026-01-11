@@ -318,6 +318,122 @@
               }
             ]
           }
+        },
+        {
+          "id": "svm-knn",
+          "title": "Support Vector Machines & K-Nearest Neighbors",
+          "duration": "60 min",
+          "content": {
+            "overview": "Support Vector Machines (SVM) and K-Nearest Neighbors (KNN) are two powerful classification algorithms. SVM finds the optimal hyperplane that maximizes the margin between classes, while KNN makes predictions based on the nearest training examples. Both are foundational algorithms covered extensively in Andrew Ng's Machine Learning course.",
+            "sections": [
+              {
+                "title": "Support Vector Machines",
+                "content": "SVM finds the hyperplane that maximizes the margin between classes. The key insight is that only the points closest to the decision boundary (support vectors) matter.\n\n**Key Concepts:**\n- **Margin**: Distance between hyperplane and nearest points\n- **Support Vectors**: Data points that lie on the margin\n- **Soft Margin**: Allows some misclassification (C parameter)\n- **Kernel Trick**: Projects data to higher dimensions for non-linear boundaries\n\n**Popular Kernels:**\n- Linear: K(x, y) = x·y\n- Polynomial: K(x, y) = (γx·y + r)^d\n- RBF (Gaussian): K(x, y) = exp(-γ||x-y||²)",
+                "code": "from sklearn.svm import SVC, SVR\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.pipeline import Pipeline\n\n# SVM requires feature scaling\npipeline = Pipeline([\n    ('scaler', StandardScaler()),\n    ('svm', SVC(kernel='rbf', C=1.0, gamma='scale'))\n])\n\npipeline.fit(X_train, y_train)\naccuracy = pipeline.score(X_test, y_test)\nprint(f\"SVM Accuracy: {accuracy:.4f}\")\n\n# Different kernels\nfor kernel in ['linear', 'poly', 'rbf']:\n    model = Pipeline([\n        ('scaler', StandardScaler()),\n        ('svm', SVC(kernel=kernel))\n    ])\n    model.fit(X_train, y_train)\n    acc = model.score(X_test, y_test)\n    print(f\"{kernel}: {acc:.4f}\")\n\n# Support vectors\nsvm = pipeline.named_steps['svm']\nprint(f\"Number of support vectors: {len(svm.support_vectors_)}\")"
+              },
+              {
+                "title": "K-Nearest Neighbors",
+                "content": "KNN is a simple, instance-based algorithm that makes predictions based on the K closest training examples.\n\n**Algorithm:**\n1. Calculate distance to all training points\n2. Select K nearest neighbors\n3. Classification: Majority vote\n4. Regression: Average of neighbors\n\n**Key Hyperparameters:**\n- **K**: Number of neighbors (odd for binary classification)\n- **Distance metric**: Euclidean, Manhattan, Minkowski\n- **Weights**: Uniform or distance-weighted\n\n**Considerations:**\n- No training phase (lazy learner)\n- Prediction can be slow for large datasets\n- Sensitive to feature scaling\n- Curse of dimensionality in high dimensions",
+                "code": "from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.model_selection import cross_val_score\n\n# KNN also requires feature scaling\nknn_pipeline = Pipeline([\n    ('scaler', StandardScaler()),\n    ('knn', KNeighborsClassifier(n_neighbors=5))\n])\n\nknn_pipeline.fit(X_train, y_train)\nprint(f\"KNN Accuracy: {knn_pipeline.score(X_test, y_test):.4f}\")\n\n# Find optimal K\nk_values = range(1, 21)\nscores = []\n\nfor k in k_values:\n    knn = Pipeline([\n        ('scaler', StandardScaler()),\n        ('knn', KNeighborsClassifier(n_neighbors=k))\n    ])\n    cv_scores = cross_val_score(knn, X, y, cv=5)\n    scores.append(cv_scores.mean())\n\nimport matplotlib.pyplot as plt\nplt.plot(k_values, scores)\nplt.xlabel('K')\nplt.ylabel('CV Accuracy')\nplt.title('Optimal K Selection')\nplt.show()\n\noptimal_k = k_values[np.argmax(scores)]\nprint(f\"Optimal K: {optimal_k}\")"
+              },
+              {
+                "title": "SVM vs KNN Comparison",
+                "content": "When to use each algorithm:\n\n**Use SVM when:**\n- High-dimensional data (text classification)\n- Clear margin of separation exists\n- Need good generalization with limited data\n- Memory is a concern (only stores support vectors)\n\n**Use KNN when:**\n- Low-dimensional data\n- Need a simple baseline\n- No training time needed\n- Data distribution is non-parametric\n\n| Aspect | SVM | KNN |\n|--------|-----|-----|\n| Training | Slow | None (lazy) |\n| Prediction | Fast | Slow |\n| Memory | Support vectors only | All training data |\n| High dimensions | Good | Poor (curse of dimensionality) |\n| Interpretability | Moderate | Easy |",
+                "code": "from sklearn.svm import SVC\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.model_selection import cross_val_score\nimport time\n\nmodels = {\n    'SVM (RBF)': SVC(kernel='rbf'),\n    'SVM (Linear)': SVC(kernel='linear'),\n    'KNN (K=5)': KNeighborsClassifier(n_neighbors=5),\n    'KNN (K=10)': KNeighborsClassifier(n_neighbors=10)\n}\n\nfor name, model in models.items():\n    pipeline = Pipeline([\n        ('scaler', StandardScaler()),\n        ('model', model)\n    ])\n    \n    start = time.time()\n    scores = cross_val_score(pipeline, X, y, cv=5)\n    elapsed = time.time() - start\n    \n    print(f\"{name}: {scores.mean():.4f} (+/- {scores.std()*2:.4f}) [{elapsed:.2f}s]\")"
+              }
+            ],
+            "keyTakeaways": [
+              "SVM maximizes the margin between classes using support vectors",
+              "Kernel trick enables SVM to handle non-linear boundaries",
+              "KNN is a simple lazy learner that uses distance-based voting",
+              "Both algorithms require feature scaling for optimal performance"
+            ],
+            "exercises": [
+              {
+                "title": "Kernel Comparison",
+                "description": "Compare linear, polynomial, and RBF kernels on a non-linearly separable dataset"
+              },
+              {
+                "title": "KNN Optimization",
+                "description": "Find the optimal K and distance metric for a classification problem"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Stanford CS229: Support Vector Machines",
+                "url": "https://cs229.stanford.edu/"
+              },
+              {
+                "title": "Scikit-learn SVM Documentation",
+                "url": "https://scikit-learn.org/stable/modules/svm.html"
+              },
+              {
+                "title": "IBM: What is the k-nearest neighbors algorithm?",
+                "url": "https://www.ibm.com/topics/knn"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "unsupervised-learning",
+      "title": "Unsupervised Learning",
+      "lessons": [
+        {
+          "id": "clustering-pca",
+          "title": "Clustering & Dimensionality Reduction",
+          "duration": "60 min",
+          "content": {
+            "overview": "Unsupervised learning discovers hidden patterns in unlabeled data. Clustering groups similar data points together, while dimensionality reduction (like PCA) reduces the number of features while preserving important information. Both are essential techniques covered in Andrew Ng's Machine Learning Specialization.",
+            "sections": [
+              {
+                "title": "K-Means Clustering",
+                "content": "K-Means partitions data into K clusters by iteratively updating centroids.\n\n**Algorithm:**\n1. Initialize K centroids randomly\n2. Assign each point to nearest centroid\n3. Update centroids to cluster means\n4. Repeat until convergence\n\n**Choosing K:**\n- Elbow method: Plot inertia vs K\n- Silhouette score: Measures cluster cohesion and separation\n\n**Limitations:**\n- Assumes spherical clusters\n- Sensitive to initialization\n- Must specify K in advance",
+                "code": "from sklearn.cluster import KMeans\nfrom sklearn.metrics import silhouette_score\nimport matplotlib.pyplot as plt\n\n# Elbow method\ninertias = []\nK_range = range(2, 11)\n\nfor k in K_range:\n    kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)\n    kmeans.fit(X)\n    inertias.append(kmeans.inertia_)\n\nplt.plot(K_range, inertias, 'bo-')\nplt.xlabel('K')\nplt.ylabel('Inertia')\nplt.title('Elbow Method')\nplt.show()\n\n# Silhouette analysis\nfor k in K_range:\n    kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)\n    labels = kmeans.fit_predict(X)\n    score = silhouette_score(X, labels)\n    print(f\"K={k}: Silhouette Score = {score:.4f}\")\n\n# Final clustering\noptimal_k = 4\nkmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)\nclusters = kmeans.fit_predict(X)\ncentroids = kmeans.cluster_centers_"
+              },
+              {
+                "title": "Principal Component Analysis (PCA)",
+                "content": "PCA reduces dimensionality by projecting data onto orthogonal axes of maximum variance.\n\n**How it works:**\n1. Center the data (subtract mean)\n2. Compute covariance matrix\n3. Find eigenvectors (principal components)\n4. Project data onto top K components\n\n**Use cases:**\n- Visualization (reduce to 2-3D)\n- Noise reduction\n- Preprocessing for ML (reduce curse of dimensionality)\n- Feature extraction",
+                "code": "from sklearn.decomposition import PCA\nfrom sklearn.preprocessing import StandardScaler\nimport matplotlib.pyplot as plt\n\n# Always scale before PCA\nscaler = StandardScaler()\nX_scaled = scaler.fit_transform(X)\n\n# Fit PCA\npca = PCA()\npca.fit(X_scaled)\n\n# Explained variance ratio\nplt.figure(figsize=(10, 5))\nplt.subplot(1, 2, 1)\nplt.bar(range(1, len(pca.explained_variance_ratio_) + 1),\n        pca.explained_variance_ratio_)\nplt.xlabel('Principal Component')\nplt.ylabel('Variance Explained')\n\nplt.subplot(1, 2, 2)\nplt.plot(range(1, len(pca.explained_variance_ratio_) + 1),\n         np.cumsum(pca.explained_variance_ratio_))\nplt.xlabel('Number of Components')\nplt.ylabel('Cumulative Variance Explained')\nplt.axhline(y=0.95, color='r', linestyle='--')\nplt.tight_layout()\nplt.show()\n\n# Reduce to 2D for visualization\npca_2d = PCA(n_components=2)\nX_reduced = pca_2d.fit_transform(X_scaled)\n\nplt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y, cmap='viridis')\nplt.xlabel('PC1')\nplt.ylabel('PC2')\nplt.title('PCA Visualization')\nplt.colorbar()\nplt.show()"
+              },
+              {
+                "title": "Other Clustering & Reduction Techniques",
+                "content": "**Other Clustering Algorithms:**\n- **DBSCAN**: Density-based, finds arbitrary shapes, handles outliers\n- **Hierarchical**: Creates tree of clusters (dendrogram)\n- **Gaussian Mixture Models**: Soft clustering with probabilities\n\n**Other Dimensionality Reduction:**\n- **t-SNE**: Non-linear, great for visualization\n- **UMAP**: Faster than t-SNE, preserves global structure\n- **LDA**: Supervised reduction for classification",
+                "code": "from sklearn.cluster import DBSCAN, AgglomerativeClustering\nfrom sklearn.mixture import GaussianMixture\nfrom sklearn.manifold import TSNE\n\n# DBSCAN - density-based clustering\ndbscan = DBSCAN(eps=0.5, min_samples=5)\ndbscan_labels = dbscan.fit_predict(X_scaled)\nprint(f\"DBSCAN clusters: {len(set(dbscan_labels)) - 1}\")\nprint(f\"Outliers: {sum(dbscan_labels == -1)}\")\n\n# Hierarchical clustering\nhierarchical = AgglomerativeClustering(n_clusters=4)\nhier_labels = hierarchical.fit_predict(X_scaled)\n\n# Gaussian Mixture Models (soft clustering)\ngmm = GaussianMixture(n_components=4, random_state=42)\ngmm_labels = gmm.fit_predict(X_scaled)\ngmm_probs = gmm.predict_proba(X_scaled)  # Probability for each cluster\n\n# t-SNE for visualization\ntsne = TSNE(n_components=2, random_state=42, perplexity=30)\nX_tsne = tsne.fit_transform(X_scaled)\n\nplt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y, cmap='viridis', alpha=0.6)\nplt.title('t-SNE Visualization')\nplt.colorbar()\nplt.show()"
+              }
+            ],
+            "keyTakeaways": [
+              "K-Means partitions data into K clusters based on distance to centroids",
+              "Use elbow method or silhouette score to choose optimal K",
+              "PCA reduces dimensions by projecting onto axes of maximum variance",
+              "t-SNE and UMAP are powerful for visualizing high-dimensional data"
+            ],
+            "exercises": [
+              {
+                "title": "Customer Segmentation",
+                "description": "Use K-Means to segment customers based on purchasing behavior"
+              },
+              {
+                "title": "Dimensionality Reduction Pipeline",
+                "description": "Compare classification accuracy with and without PCA preprocessing"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Stanford CS229: Unsupervised Learning",
+                "url": "https://cs229.stanford.edu/"
+              },
+              {
+                "title": "Scikit-learn Clustering",
+                "url": "https://scikit-learn.org/stable/modules/clustering.html"
+              },
+              {
+                "title": "IBM: What is PCA?",
+                "url": "https://www.ibm.com/topics/principal-component-analysis"
+              }
+            ]
+          }
         }
       ]
     },

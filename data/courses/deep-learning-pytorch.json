@@ -331,6 +331,122 @@
       ]
     },
     {
+      "id": "rnn-lstm",
+      "title": "Recurrent Neural Networks",
+      "lessons": [
+        {
+          "id": "rnn-fundamentals",
+          "title": "RNNs and LSTMs",
+          "duration": "60 min",
+          "content": {
+            "overview": "Recurrent Neural Networks (RNNs) are designed for sequential data where order matters. They maintain a hidden state that captures information from previous time steps. Long Short-Term Memory (LSTM) networks solve the vanishing gradient problem, enabling learning of long-term dependencies.\n\n**Industry Definition**: RNNs process sequences by maintaining internal memory (hidden state) that captures dependencies across time steps. They're foundational for sequence modeling tasks like language modeling, speech recognition, and time series prediction. While largely replaced by Transformers for NLP, understanding RNNs is essential for grasping the evolution of sequence models.",
+            "sections": [
+              {
+                "title": "Basic RNN",
+                "content": "An RNN processes sequences by updating a hidden state at each time step:\n\n$$h_t = \\tanh(W_{xh} x_t + W_{hh} h_{t-1} + b_h)$$\n$$y_t = W_{hy} h_t + b_y$$\n\n**Key properties:**\n- Same weights are shared across all time steps\n- Hidden state h_t carries information from previous inputs\n- Can process sequences of any length\n\n**Limitation:** Vanilla RNNs suffer from vanishing gradients—unable to learn dependencies spanning more than ~10 time steps.",
+                "code": "import torch\nimport torch.nn as nn\n\n# Manual RNN cell\nclass RNNCell(nn.Module):\n    def __init__(self, input_size, hidden_size):\n        super().__init__()\n        self.hidden_size = hidden_size\n        self.Wxh = nn.Linear(input_size, hidden_size)\n        self.Whh = nn.Linear(hidden_size, hidden_size, bias=False)\n    \n    def forward(self, x, h_prev):\n        # x: (batch, input_size)\n        # h_prev: (batch, hidden_size)\n        h_new = torch.tanh(self.Wxh(x) + self.Whh(h_prev))\n        return h_new\n\n# Using PyTorch's RNN\nrnn = nn.RNN(\n    input_size=32,\n    hidden_size=64,\n    num_layers=2,\n    batch_first=True,\n    dropout=0.2\n)\n\n# Input: (batch, seq_len, input_size)\nx = torch.randn(4, 10, 32)  # Batch of 4, 10 time steps\noutput, h_n = rnn(x)\n\nprint(f\"Output: {output.shape}\")  # (4, 10, 64) - all hidden states\nprint(f\"Final hidden: {h_n.shape}\")  # (2, 4, 64) - final state per layer"
+              },
+              {
+                "title": "LSTM Networks",
+                "content": "LSTMs introduce gates to control information flow, solving the vanishing gradient problem:\n\n**Gates:**\n- **Forget gate (f):** What to remove from cell state\n- **Input gate (i):** What new information to add\n- **Output gate (o):** What to output\n- **Cell state (c):** Long-term memory highway\n\n$$f_t = \\sigma(W_f [h_{t-1}, x_t] + b_f)$$\n$$i_t = \\sigma(W_i [h_{t-1}, x_t] + b_i)$$\n$$\\tilde{c}_t = \\tanh(W_c [h_{t-1}, x_t] + b_c)$$\n$$c_t = f_t \\odot c_{t-1} + i_t \\odot \\tilde{c}_t$$\n$$o_t = \\sigma(W_o [h_{t-1}, x_t] + b_o)$$\n$$h_t = o_t \\odot \\tanh(c_t)$$",
+                "code": "import torch.nn as nn\n\n# LSTM\nlstm = nn.LSTM(\n    input_size=32,\n    hidden_size=64,\n    num_layers=2,\n    batch_first=True,\n    dropout=0.2,\n    bidirectional=True  # Process sequence both directions\n)\n\nx = torch.randn(4, 10, 32)\noutput, (h_n, c_n) = lstm(x)\n\nprint(f\"Output: {output.shape}\")  # (4, 10, 128) - bidirectional doubles size\nprint(f\"Hidden: {h_n.shape}\")  # (4, 4, 64) - 2 layers * 2 directions\nprint(f\"Cell: {c_n.shape}\")  # (4, 4, 64)\n\n# GRU - simplified LSTM (2 gates instead of 3)\ngru = nn.GRU(\n    input_size=32,\n    hidden_size=64,\n    num_layers=2,\n    batch_first=True\n)\n\noutput, h_n = gru(x)\nprint(f\"GRU Output: {output.shape}\")  # (4, 10, 64)"
+              },
+              {
+                "title": "Sequence Classification Example",
+                "content": "Using LSTM for sentiment classification:",
+                "code": "import torch\nimport torch.nn as nn\n\nclass SentimentLSTM(nn.Module):\n    def __init__(self, vocab_size, embed_dim, hidden_dim, num_classes):\n        super().__init__()\n        self.embedding = nn.Embedding(vocab_size, embed_dim)\n        self.lstm = nn.LSTM(\n            embed_dim, hidden_dim,\n            num_layers=2,\n            batch_first=True,\n            dropout=0.3,\n            bidirectional=True\n        )\n        self.fc = nn.Linear(hidden_dim * 2, num_classes)  # *2 for bidirectional\n        self.dropout = nn.Dropout(0.5)\n    \n    def forward(self, x):\n        # x: (batch, seq_len)\n        embedded = self.embedding(x)  # (batch, seq_len, embed_dim)\n        \n        output, (h_n, c_n) = self.lstm(embedded)\n        \n        # Use last hidden state from both directions\n        # h_n: (num_layers * num_directions, batch, hidden_dim)\n        hidden = torch.cat((h_n[-2], h_n[-1]), dim=1)  # (batch, hidden_dim * 2)\n        \n        out = self.dropout(hidden)\n        out = self.fc(out)\n        return out\n\nmodel = SentimentLSTM(\n    vocab_size=10000,\n    embed_dim=128,\n    hidden_dim=256,\n    num_classes=2\n)\n\n# Test\nx = torch.randint(0, 10000, (4, 50))  # Batch of 4, 50 tokens\nout = model(x)\nprint(f\"Output: {out.shape}\")  # (4, 2)"
+              }
+            ],
+            "keyTakeaways": [
+              "RNNs maintain hidden state to capture sequence dependencies",
+              "LSTMs use gates to control information flow and solve vanishing gradients",
+              "Bidirectional LSTMs capture context from both directions"
+            ],
+            "exercises": [
+              {
+                "title": "Character-Level Language Model",
+                "description": "Train an LSTM to generate text character by character"
+              },
+              {
+                "title": "Time Series Prediction",
+                "description": "Use LSTM to predict stock prices or weather data"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Understanding LSTM Networks",
+                "url": "https://colah.github.io/posts/2015-08-Understanding-LSTMs/"
+              },
+              {
+                "title": "IBM: What are Recurrent Neural Networks?",
+                "url": "https://www.ibm.com/topics/recurrent-neural-networks"
+              },
+              {
+                "title": "The Unreasonable Effectiveness of RNNs",
+                "url": "https://karpathy.github.io/2015/05/21/rnn-effectiveness/"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "practical-dl",
+      "title": "Practical Deep Learning",
+      "lessons": [
+        {
+          "id": "transfer-learning",
+          "title": "Transfer Learning & Pretrained Models",
+          "duration": "45 min",
+          "content": {
+            "overview": "Transfer learning leverages knowledge from models trained on large datasets to solve new tasks with less data. It's the most practical approach for real-world deep learning, as training from scratch requires massive datasets and compute.\n\n**Industry Standard**: Almost all modern DL applications use transfer learning. Pretrained models (ImageNet for vision, BERT/GPT for NLP) provide strong starting points that can be fine-tuned on domain-specific data.",
+            "sections": [
+              {
+                "title": "Transfer Learning Strategies",
+                "content": "**Feature Extraction**: Freeze pretrained weights, only train new head\n- Use when: Small dataset, similar domain\n- Fast, prevents overfitting\n\n**Fine-tuning**: Unfreeze some/all layers, train with low LR\n- Use when: Larger dataset, different domain\n- Better performance but risk of overfitting\n\n**Progressive Unfreezing**: Gradually unfreeze layers from top to bottom\n- Start with head only, then unfreeze deeper layers\n- Best of both worlds",
+                "code": "import torch\nimport torch.nn as nn\nfrom torchvision import models\n\n# Load pretrained ResNet\nmodel = models.resnet50(weights='IMAGENET1K_V2')\n\n# Strategy 1: Feature Extraction\n# Freeze all layers\nfor param in model.parameters():\n    param.requires_grad = False\n\n# Replace classifier head\nnum_features = model.fc.in_features\nmodel.fc = nn.Sequential(\n    nn.Dropout(0.5),\n    nn.Linear(num_features, 256),\n    nn.ReLU(),\n    nn.Dropout(0.3),\n    nn.Linear(256, 10)  # 10 classes\n)\n\n# Only new layers are trainable\ntrainable = sum(p.numel() for p in model.parameters() if p.requires_grad)\nprint(f\"Trainable params: {trainable:,}\")\n\n# Strategy 2: Fine-tuning (unfreeze last layers)\nfor param in model.layer4.parameters():\n    param.requires_grad = True\n\n# Use different learning rates\noptimizer = torch.optim.Adam([\n    {'params': model.layer4.parameters(), 'lr': 1e-5},\n    {'params': model.fc.parameters(), 'lr': 1e-3}\n])"
+              },
+              {
+                "title": "Pretrained Models for Vision",
+                "content": "Common pretrained models and when to use them:\n\n| Model | Params | Accuracy | Speed | Use Case |\n|-------|--------|----------|-------|----------|\n| ResNet-50 | 25M | Good | Fast | General purpose |\n| EfficientNet-B0 | 5M | Great | Fast | Mobile/efficient |\n| ViT-Base | 86M | Excellent | Slow | High accuracy |\n| ConvNeXt | 89M | Excellent | Medium | Modern CNN |\n\n**Rule of thumb**: Start with ResNet-50 or EfficientNet, upgrade to ViT if you have enough data and compute.",
+                "code": "import torchvision.models as models\n\n# Various pretrained models\nresnet = models.resnet50(weights='IMAGENET1K_V2')\nefficientnet = models.efficientnet_b0(weights='IMAGENET1K_V1')\nvit = models.vit_b_16(weights='IMAGENET1K_V1')\nconvnext = models.convnext_tiny(weights='IMAGENET1K_V1')\n\n# Get classifier for each\nprint(f\"ResNet fc: {resnet.fc.in_features}\")  # 2048\nprint(f\"EfficientNet classifier: {efficientnet.classifier[-1].in_features}\")  # 1280\nprint(f\"ViT head: {vit.heads.head.in_features}\")  # 768\n\n# Replace heads for your task\nresnet.fc = nn.Linear(2048, 10)\nefficientnet.classifier[-1] = nn.Linear(1280, 10)\nvit.heads.head = nn.Linear(768, 10)"
+              },
+              {
+                "title": "Data Augmentation",
+                "content": "Data augmentation artificially increases training data variety, reducing overfitting:\n\n**Common augmentations:**\n- Random crop, flip, rotation\n- Color jitter, normalization\n- Cutout, Mixup, CutMix (advanced)",
+                "code": "from torchvision import transforms\n\n# Training transforms (with augmentation)\ntrain_transforms = transforms.Compose([\n    transforms.RandomResizedCrop(224),\n    transforms.RandomHorizontalFlip(),\n    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),\n    transforms.RandomRotation(15),\n    transforms.ToTensor(),\n    transforms.Normalize(\n        mean=[0.485, 0.456, 0.406],\n        std=[0.229, 0.224, 0.225]\n    )\n])\n\n# Validation transforms (no augmentation)\nval_transforms = transforms.Compose([\n    transforms.Resize(256),\n    transforms.CenterCrop(224),\n    transforms.ToTensor(),\n    transforms.Normalize(\n        mean=[0.485, 0.456, 0.406],\n        std=[0.229, 0.224, 0.225]\n    )\n])\n\n# Advanced: Mixup augmentation\ndef mixup(x, y, alpha=0.2):\n    lam = torch.distributions.Beta(alpha, alpha).sample()\n    batch_size = x.size(0)\n    index = torch.randperm(batch_size)\n    \n    mixed_x = lam * x + (1 - lam) * x[index]\n    y_a, y_b = y, y[index]\n    \n    return mixed_x, y_a, y_b, lam"
+              }
+            ],
+            "keyTakeaways": [
+              "Transfer learning is essential for practical deep learning applications",
+              "Feature extraction is fast and safe; fine-tuning gives better results",
+              "Use different learning rates for pretrained and new layers"
+            ],
+            "exercises": [
+              {
+                "title": "Custom Image Classifier",
+                "description": "Fine-tune ResNet-50 on a custom dataset (e.g., flowers, pets)"
+              },
+              {
+                "title": "Compare Strategies",
+                "description": "Compare feature extraction vs fine-tuning on the same dataset"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Transfer Learning Tutorial",
+                "url": "https://pytorch.org/tutorials/beginner/transfer_learning_tutorial.html"
+              },
+              {
+                "title": "fast.ai: Practical Deep Learning",
+                "url": "https://course.fast.ai/"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "transformers",
       "title": "Transformers",
       "lessons": [
