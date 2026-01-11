@@ -5,12 +5,40 @@
   "icon": "🤖",
   "level": "beginner",
   "duration": "10 weeks",
+  "totalLessons": 12,
   "validationSources": [
     "https://www.ibm.com/topics/machine-learning",
     "https://www.ibm.com/topics/supervised-learning",
     "https://www.ibm.com/topics/unsupervised-learning",
     "https://www.ibm.com/topics/decision-trees",
     "https://www.ibm.com/topics/random-forest"
+  ],
+  "keyThinkers": [
+    {
+      "name": "Vladimir Vapnik & Corinna Cortes",
+      "contribution": "Invented Support Vector Machines (1995) - the kernel trick and maximum margin classifiers",
+      "era": "1990s"
+    },
+    {
+      "name": "Leo Breiman",
+      "contribution": "Created Random Forests (2001) and CART decision trees - ensemble learning pioneer",
+      "era": "1984-2001"
+    },
+    {
+      "name": "Jerome Friedman",
+      "contribution": "Developed Gradient Boosting (1999-2001) - sequential ensemble learning",
+      "era": "1990s-2000s"
+    },
+    {
+      "name": "Arthur Samuel",
+      "contribution": "Coined 'machine learning' (1959) with his checkers-playing program",
+      "era": "1950s"
+    },
+    {
+      "name": "Thomas Cover & Peter Hart",
+      "contribution": "Formalized K-Nearest Neighbors (1967) and proved its error bound",
+      "era": "1967"
+    }
   ],
   "prerequisites": [
     "Python basics",
@@ -20,7 +48,9 @@
     "Understand supervised vs unsupervised learning",
     "Implement core algorithms from scratch",
     "Evaluate and improve model performance",
-    "Apply ML to real-world problems"
+    "Apply ML to real-world problems",
+    "Recognize and avoid common ML pitfalls like data leakage",
+    "Select appropriate algorithms for different problem types"
   ],
   "modules": [
     {
@@ -259,6 +289,10 @@
           "id": "decision-trees",
           "title": "Decision Trees & Random Forests",
           "duration": "75 min",
+          "authorCredits": {
+            "keyContributors": ["Leo Breiman", "Jerome Friedman", "Charles Stone", "Richard Olshen"],
+            "historicalNote": "CART (Classification and Regression Trees) was developed by Breiman, Friedman, Olshen, and Stone in 1984. Breiman later invented Random Forests in 2001. Jerome Friedman developed Gradient Boosting (1999-2001), leading to XGBoost, LightGBM, and CatBoost."
+          },
           "content": {
             "overview": "Decision trees are intuitive models that make predictions by learning decision rules from features. Random Forests combine many trees to create powerful ensemble models that reduce overfitting and improve accuracy.",
             "sections": [
@@ -323,6 +357,10 @@
           "id": "svm-knn",
           "title": "Support Vector Machines & K-Nearest Neighbors",
           "duration": "60 min",
+          "authorCredits": {
+            "keyContributors": ["Vladimir Vapnik", "Corinna Cortes", "Thomas Cover", "Peter Hart"],
+            "historicalNote": "SVM was developed by Vapnik and Cortes at AT&T Bell Labs in 1995, introducing the 'kernel trick' for non-linear classification. KNN was formalized by Cover and Hart in 1967, who proved its asymptotic error rate is at most twice the Bayes optimal rate."
+          },
           "content": {
             "overview": "Support Vector Machines (SVM) and K-Nearest Neighbors (KNN) are two powerful classification algorithms. SVM finds the optimal hyperplane that maximizes the margin between classes, while KNN makes predictions based on the nearest training examples. Both are foundational algorithms covered extensively in Andrew Ng's Machine Learning course.",
             "sections": [
@@ -539,6 +577,62 @@
               {
                 "title": "Scikit-learn Metrics",
                 "url": "https://scikit-learn.org/stable/modules/model_evaluation.html"
+              }
+            ]
+          }
+        },
+        {
+          "id": "ml-pitfalls",
+          "title": "ML Pitfalls & Data Leakage",
+          "duration": "45 min",
+          "content": {
+            "overview": "Understanding common ML mistakes is as important as knowing the algorithms. Data leakage, improper validation, and other pitfalls can lead to models that appear excellent but fail completely in production.",
+            "sections": [
+              {
+                "title": "Data Leakage: The Silent Killer",
+                "content": "**Data leakage** occurs when information from outside the training dataset is used to create the model, leading to overly optimistic performance estimates.\n\n**Common causes:**\n1. **Target leakage**: Features that include information about the target\n2. **Train-test contamination**: Test data information used during training\n3. **Temporal leakage**: Using future data to predict the past\n4. **Preprocessing leakage**: Fitting scalers/encoders on full data before split\n\n**Real-world example:** A hospital model predicted patient outcomes with 99% accuracy—because the target label was derived from a later diagnosis code that wouldn't be available at prediction time.",
+                "code": "# ❌ WRONG: Preprocessing before split (data leakage!)\nfrom sklearn.preprocessing import StandardScaler\n\nscaler = StandardScaler()\nX_scaled = scaler.fit_transform(X)  # Leakage!\n\nX_train, X_test, y_train, y_test = train_test_split(X_scaled, y)\n# Test data influenced the scaler!\n\n# ✅ CORRECT: Split first, then preprocess\nX_train, X_test, y_train, y_test = train_test_split(X, y)\n\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)  # Fit on train only\nX_test_scaled = scaler.transform(X_test)  # Transform test\n\n# ✅ BEST: Use Pipeline to prevent leakage\nfrom sklearn.pipeline import Pipeline\n\npipeline = Pipeline([\n    ('scaler', StandardScaler()),\n    ('model', RandomForestClassifier())\n])\n\n# Pipeline ensures no leakage in cross-validation\ncross_val_score(pipeline, X, y, cv=5)"
+              },
+              {
+                "title": "Validation Mistakes",
+                "content": "**1. Using Accuracy on Imbalanced Data**\n- 99% accuracy means nothing if 99% of data is one class\n- Use precision, recall, F1, or AUC instead\n\n**2. Random Split on Time Series**\n- Future data leaks into training set\n- Use TimeSeriesSplit instead\n\n**3. Ignoring Group Structure**\n- Same patient/user in train and test\n- Use GroupKFold to prevent leakage\n\n**4. Overfitting to Validation Set**\n- Repeated tuning on same validation data\n- Use nested cross-validation for unbiased estimates",
+                "code": "from sklearn.model_selection import TimeSeriesSplit, GroupKFold\nimport numpy as np\n\n# ❌ WRONG: Random split on time series\n# train_test_split(X, y)  # Leaks future into past!\n\n# ✅ CORRECT: TimeSeriesSplit\ntscv = TimeSeriesSplit(n_splits=5)\nfor train_idx, test_idx in tscv.split(X):\n    assert max(train_idx) < min(test_idx)  # Always train on past\n\n# ❌ WRONG: Random split with groups (e.g., same patient)\n# train_test_split(X, y)  # Same patient in both!\n\n# ✅ CORRECT: GroupKFold\ngroups = patient_ids  # Array of patient IDs\ngkf = GroupKFold(n_splits=5)\nfor train_idx, test_idx in gkf.split(X, y, groups):\n    train_patients = set(groups[train_idx])\n    test_patients = set(groups[test_idx])\n    assert len(train_patients & test_patients) == 0  # No overlap"
+              },
+              {
+                "title": "Feature Engineering Mistakes",
+                "content": "**1. Including Future Information**\n- Don't use 'total_spent_this_month' to predict 'will_buy_today'\n\n**2. Target Encoding Leakage**\n- Encoding categorical features using target statistics\n- Must be done within CV folds\n\n**3. Feature Selection on Full Data**\n- Selecting features before train/test split\n- Features should be selected only on training data\n\n**4. High-Cardinality ID Columns**\n- Model memorizes IDs instead of learning patterns\n- Remove or hash ID columns",
+                "code": "# ❌ WRONG: Feature selection before split\nfrom sklearn.feature_selection import SelectKBest\n\nselector = SelectKBest(k=10)\nX_selected = selector.fit_transform(X, y)  # Leakage!\nX_train, X_test = train_test_split(X_selected)\n\n# ✅ CORRECT: Feature selection inside CV\nfrom sklearn.pipeline import Pipeline\n\npipeline = Pipeline([\n    ('selector', SelectKBest(k=10)),\n    ('model', RandomForestClassifier())\n])\n\n# Selection happens inside each fold\ncross_val_score(pipeline, X, y, cv=5)"
+              },
+              {
+                "title": "Production Gotchas",
+                "content": "**1. Training-Serving Skew**\n- Features computed differently in training vs production\n- Use same preprocessing code for both\n\n**2. Concept Drift**\n- Data distribution changes over time\n- Monitor model performance and retrain\n\n**3. Missing Values in Production**\n- Training data may have complete values\n- Handle missing values in production pipeline\n\n**4. Feature Not Available at Prediction Time**\n- Using features that don't exist when making predictions\n- Audit each feature for availability"
+              }
+            ],
+            "keyTakeaways": [
+              "Data leakage leads to models that fail in production despite great validation metrics",
+              "Always split data before any preprocessing that uses statistics",
+              "Use Pipelines to prevent accidental leakage in cross-validation",
+              "Consider temporal and group structure when splitting data"
+            ],
+            "exercises": [
+              {
+                "title": "Leakage Detection",
+                "description": "Review a ML pipeline and identify all sources of data leakage"
+              },
+              {
+                "title": "Fix the Pipeline",
+                "description": "Rewrite a leaky preprocessing pipeline using sklearn Pipeline"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Leakage in Machine Learning",
+                "url": "https://www.kaggle.com/code/alexisbcook/data-leakage"
+              },
+              {
+                "title": "Rules of Machine Learning",
+                "author": "Google",
+                "url": "https://developers.google.com/machine-learning/guides/rules-of-ml"
               }
             ]
           }
