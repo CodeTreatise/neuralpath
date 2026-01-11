@@ -36,7 +36,10 @@
   "learningOutcomes": [
     "Write efficient Python code for data manipulation",
     "Use NumPy and Pandas for numerical computing",
+    "Visualize data and model performance with Matplotlib & Seaborn",
     "Implement machine learning algorithms from scratch",
+    "Handle errors, debug code, and write production-ready Python",
+    "Understand Python's limitations and when to use alternatives",
     "Build end-to-end AI projects"
   ],
   "modules": [
@@ -278,6 +281,136 @@
               }
             ]
           }
+        },
+        {
+          "id": "py-file-io",
+          "title": "File I/O and Data Handling",
+          "duration": "30 min",
+          "content": {
+            "overview": "Real-world AI projects involve reading and writing data in various formats. This lesson covers Python's file handling capabilities, from basic text files to JSON, CSV, and binary formats like pickle—essential skills for data pipelines.",
+            "sections": [
+              {
+                "title": "Basic File Operations",
+                "content": "Python's built-in file handling uses context managers for safe resource management:",
+                "code": "# Reading files\nwith open('data.txt', 'r') as f:\n    content = f.read()        # Entire file as string\n    \nwith open('data.txt', 'r') as f:\n    lines = f.readlines()     # List of lines\n\n# Writing files\nwith open('output.txt', 'w') as f:\n    f.write('Hello, AI!')     # Overwrite\n\nwith open('log.txt', 'a') as f:\n    f.write('New entry\\n')    # Append\n\n# The 'with' statement ensures file is closed even if error occurs\n# This is called a 'context manager'"
+              },
+              {
+                "title": "JSON: The Universal Data Format",
+                "content": "JSON is the standard format for configs, API responses, and structured data:",
+                "code": "import json\n\n# Reading JSON\nwith open('config.json', 'r') as f:\n    config = json.load(f)\nprint(config['learning_rate'])\n\n# Writing JSON\nresults = {\n    'model': 'RandomForest',\n    'accuracy': 0.95,\n    'params': {'n_estimators': 100}\n}\nwith open('results.json', 'w') as f:\n    json.dump(results, f, indent=2)\n\n# JSON strings\njson_str = json.dumps(results)      # Dict to string\ndata = json.loads(json_str)         # String to dict\n\n# Handle complex types (datetime, numpy)\nimport numpy as np\nfrom datetime import datetime\n\nclass NumpyEncoder(json.JSONEncoder):\n    def default(self, obj):\n        if isinstance(obj, np.ndarray):\n            return obj.tolist()\n        if isinstance(obj, datetime):\n            return obj.isoformat()\n        return super().default(obj)"
+              },
+              {
+                "title": "Pickle: Saving Python Objects",
+                "content": "Pickle serializes Python objects for saving models, arrays, and complex data structures:",
+                "code": "import pickle\nimport numpy as np\n\n# Save any Python object\nmodel = {'weights': np.random.randn(10, 5), 'bias': np.zeros(5)}\n\nwith open('model.pkl', 'wb') as f:\n    pickle.dump(model, f)\n\n# Load it back\nwith open('model.pkl', 'rb') as f:\n    loaded_model = pickle.load(f)\n\n# ⚠️ Security Warning: Never unpickle untrusted data!\n# Pickle can execute arbitrary code when loading\n\n# Alternative: joblib (faster for large arrays)\nfrom joblib import dump, load\ndump(model, 'model.joblib')\nmodel = load('model.joblib')"
+              },
+              {
+                "title": "Pathlib: Modern Path Handling",
+                "content": "Pathlib provides an object-oriented interface for file paths—cross-platform and intuitive:",
+                "code": "from pathlib import Path\n\n# Create paths\ndata_dir = Path('data')\ntrain_file = data_dir / 'train.csv'      # Use / for joining!\n\n# Path operations\nprint(train_file.exists())                # Check existence\nprint(train_file.suffix)                  # '.csv'\nprint(train_file.stem)                    # 'train'\nprint(train_file.parent)                  # Path('data')\n\n# Create directories\noutput_dir = Path('outputs/experiment_1')\noutput_dir.mkdir(parents=True, exist_ok=True)\n\n# Find files\nall_csvs = list(data_dir.glob('*.csv'))        # Current dir\nall_jsons = list(data_dir.rglob('*.json'))     # Recursive\n\n# Read/write (Python 3.5+)\ncontent = train_file.read_text()\nPath('out.txt').write_text('Hello!')\n\n# Common pattern: iterate over dataset files\nfor image_path in Path('images').glob('*.jpg'):\n    process_image(image_path)"
+              },
+              {
+                "title": "When to Use Each Format",
+                "content": "Choose the right format for your use case:\n\n| Format | Best For | Pros | Cons |\n|--------|----------|------|------|\n| **JSON** | Configs, APIs, logs | Human-readable, universal | Slow for large data |\n| **CSV** | Tabular data | Simple, Excel-compatible | No types, no nested data |\n| **Pickle** | Python objects, models | Fast, preserves types | Python-only, security risk |\n| **Parquet** | Large datasets | Fast, compressed, typed | Needs pyarrow |\n| **HDF5** | Scientific arrays | Fast for slicing | Complex API |\n\n**Real-World Pattern:**\n- Use JSON for configs and metadata\n- Use Parquet/CSV for tabular datasets\n- Use Pickle/joblib for trained models"
+              }
+            ],
+            "keyTakeaways": [
+              "Always use 'with' statements for safe file handling",
+              "JSON for configs and APIs, Pickle for Python objects",
+              "Pathlib is the modern way to handle file paths",
+              "Choose format based on data type and use case"
+            ],
+            "exercises": [
+              {
+                "title": "Config Manager",
+                "description": "Create a function that loads a JSON config file, updates values, and saves it back"
+              },
+              {
+                "title": "Dataset Scanner",
+                "description": "Use pathlib to recursively find all CSV files in a directory and report their sizes"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Python File I/O Documentation",
+                "url": "https://docs.python.org/3/tutorial/inputoutput.html"
+              },
+              {
+                "title": "Pathlib Documentation",
+                "url": "https://docs.python.org/3/library/pathlib.html"
+              },
+              {
+                "title": "Real Python: Working with Files",
+                "url": "https://realpython.com/working-with-files-in-python/"
+              }
+            ]
+          }
+        },
+        {
+          "id": "py-error-handling",
+          "title": "Error Handling and Debugging",
+          "duration": "35 min",
+          "content": {
+            "overview": "Robust AI code handles errors gracefully. This lesson covers Python's exception handling, debugging techniques, and logging—essential for production ML systems where data can be messy and APIs can fail.",
+            "sections": [
+              {
+                "title": "Try/Except: Handling Errors Gracefully",
+                "content": "Python uses exceptions to handle errors. Use try/except to catch and handle them:",
+                "code": "# Basic try/except\ntry:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    result = 0\n    print('Cannot divide by zero!')\n\n# Catch multiple exceptions\ntry:\n    data = load_data('file.csv')\n    processed = process(data)\nexcept FileNotFoundError:\n    print('File not found')\nexcept ValueError as e:\n    print(f'Invalid data: {e}')\nexcept Exception as e:\n    print(f'Unexpected error: {e}')  # Catch-all\nfinally:\n    cleanup()  # Always runs\n\n# The 'else' clause runs if no exception\ntry:\n    result = risky_operation()\nexcept SomeError:\n    handle_error()\nelse:\n    print('Success!')  # Only runs if no exception"
+              },
+              {
+                "title": "Common AI/ML Exceptions",
+                "content": "Know the errors you'll encounter in ML development:",
+                "code": "import numpy as np\n\n# ValueError - wrong input shape or type\ntry:\n    arr = np.array([[1, 2], [3, 4]])\n    arr.reshape(3, 3)  # Can't reshape 4 elements to 9\nexcept ValueError as e:\n    print(f'Shape mismatch: {e}')\n\n# KeyError - missing dictionary key\nconfig = {'lr': 0.01}\ntry:\n    batch_size = config['batch_size']\nexcept KeyError:\n    batch_size = 32  # Default value\n\n# Better: use .get() with default\nbatch_size = config.get('batch_size', 32)\n\n# IndexError - array out of bounds\ndata = [1, 2, 3]\ntry:\n    item = data[10]\nexcept IndexError:\n    item = None\n\n# API errors (common in LLM apps)\nimport openai\ntry:\n    response = openai.chat.completions.create(...)\nexcept openai.RateLimitError:\n    time.sleep(60)  # Wait and retry\nexcept openai.APIError as e:\n    log_error(e)"
+              },
+              {
+                "title": "Raising and Custom Exceptions",
+                "content": "Raise exceptions to signal errors in your own code:",
+                "code": "# Raise built-in exceptions\ndef train_model(X, y, epochs):\n    if epochs <= 0:\n        raise ValueError('epochs must be positive')\n    if len(X) != len(y):\n        raise ValueError(f'X and y must have same length: {len(X)} != {len(y)}')\n    # ... training logic\n\n# Custom exception classes\nclass ModelNotTrainedError(Exception):\n    \"\"\"Raised when predict is called before fit.\"\"\"\n    pass\n\nclass DataValidationError(Exception):\n    \"\"\"Raised when input data fails validation.\"\"\"\n    def __init__(self, message, column=None):\n        super().__init__(message)\n        self.column = column\n\n# Using custom exceptions\nclass Model:\n    def __init__(self):\n        self.is_fitted = False\n    \n    def predict(self, X):\n        if not self.is_fitted:\n            raise ModelNotTrainedError('Call fit() before predict()')\n        return self._predict(X)"
+              },
+              {
+                "title": "Debugging with pdb",
+                "content": "Python's built-in debugger lets you step through code and inspect variables:",
+                "code": "# Insert a breakpoint\ndef buggy_function(data):\n    processed = preprocess(data)\n    breakpoint()  # Execution pauses here (Python 3.7+)\n    result = compute(processed)\n    return result\n\n# pdb commands:\n# n (next)      - Execute next line\n# s (step)      - Step into function\n# c (continue)  - Continue to next breakpoint\n# p variable    - Print variable value\n# l (list)      - Show current code\n# q (quit)      - Exit debugger\n\n# Example debugging session:\n# > processed = preprocess(data)\n# (Pdb) p data.shape\n# (100, 10)\n# (Pdb) p processed[:5]\n# array([[0.1, 0.2, ...]])\n# (Pdb) n\n# > result = compute(processed)\n\n# Alternative: run script in debug mode\n# python -m pdb script.py"
+              },
+              {
+                "title": "Logging for Production",
+                "content": "Use logging instead of print() for production code:",
+                "code": "import logging\n\n# Configure logging\nlogging.basicConfig(\n    level=logging.INFO,\n    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',\n    handlers=[\n        logging.FileHandler('training.log'),\n        logging.StreamHandler()  # Also print to console\n    ]\n)\n\nlogger = logging.getLogger(__name__)\n\n# Log levels (in order of severity)\nlogger.debug('Detailed info for debugging')\nlogger.info('Training started')\nlogger.warning('GPU memory running low')\nlogger.error('Failed to load checkpoint')\nlogger.critical('Training crashed!')\n\n# Use in ML training\ndef train(model, data, epochs):\n    logger.info(f'Starting training for {epochs} epochs')\n    for epoch in range(epochs):\n        loss = train_epoch(model, data)\n        logger.info(f'Epoch {epoch}: loss={loss:.4f}')\n        \n        if loss > 100:\n            logger.warning(f'Loss spike detected: {loss}')\n    \n    logger.info('Training complete')"
+              }
+            ],
+            "keyTakeaways": [
+              "Use try/except to handle errors gracefully",
+              "Use .get() for dictionaries to avoid KeyError",
+              "breakpoint() pauses execution for debugging",
+              "Use logging instead of print() in production"
+            ],
+            "exercises": [
+              {
+                "title": "Robust Data Loader",
+                "description": "Create a function that loads a CSV file and handles FileNotFoundError, empty files, and invalid data"
+              },
+              {
+                "title": "Training Logger",
+                "description": "Set up a logger that writes to both console and file with timestamps"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Python Errors and Exceptions",
+                "url": "https://docs.python.org/3/tutorial/errors.html"
+              },
+              {
+                "title": "Python Logging Documentation",
+                "url": "https://docs.python.org/3/library/logging.html"
+              },
+              {
+                "title": "Effective Python",
+                "author": "Brett Slatkin",
+                "year": 2019
+              }
+            ]
+          }
         }
       ]
     },
@@ -345,6 +478,12 @@
                 "title": "From Python to NumPy",
                 "author": "Nicolas Rougier",
                 "url": "https://www.labri.fr/perso/nrougier/from-python-to-numpy/"
+              },
+              {
+                "title": "Guide to NumPy",
+                "author": "Travis Oliphant",
+                "year": 2006,
+                "note": "Travis Oliphant created NumPy in 2005, unifying Numeric and Numarray into the foundation of Python's scientific computing ecosystem"
               }
             ]
           }
@@ -536,6 +675,83 @@
               }
             ]
           }
+        },
+        {
+          "id": "data-visualization",
+          "title": "Data Visualization with Matplotlib & Seaborn",
+          "duration": "45 min",
+          "content": {
+            "overview": "Visualization is essential for exploratory data analysis (EDA), understanding model performance, and communicating results. Matplotlib is the foundation for Python plotting, while Seaborn provides beautiful statistical visualizations with less code.",
+            "sections": [
+              {
+                "title": "Why Visualization Matters in ML",
+                "content": "**Visualization helps you:**\n- Understand data distributions before modeling\n- Detect outliers and anomalies\n- Identify correlations between features\n- Diagnose model issues (overfitting, bias)\n- Communicate results to stakeholders\n\n**The EDA Process:**\n1. Look at data shape and types\n2. Check for missing values\n3. Visualize distributions (histograms)\n4. Explore relationships (scatter plots)\n5. Check correlations (heatmaps)\n\n**John Tukey (statistician):** *'The greatest value of a picture is when it forces us to notice what we never expected to see.'*"
+              },
+              {
+                "title": "Matplotlib Fundamentals",
+                "content": "Matplotlib is the most widely used plotting library in Python. Created by John D. Hunter in 2003.",
+                "code": "import matplotlib.pyplot as plt\nimport numpy as np\n\n# Basic line plot\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\n\nplt.figure(figsize=(10, 6))\nplt.plot(x, y, label='sin(x)', color='blue', linewidth=2)\nplt.xlabel('x')\nplt.ylabel('y')\nplt.title('Sine Wave')\nplt.legend()\nplt.grid(True)\nplt.savefig('plot.png', dpi=150)\nplt.show()\n\n# Multiple subplots\nfig, axes = plt.subplots(2, 2, figsize=(12, 10))\n\naxes[0, 0].plot(x, np.sin(x))\naxes[0, 0].set_title('Sine')\n\naxes[0, 1].plot(x, np.cos(x), color='orange')\naxes[0, 1].set_title('Cosine')\n\naxes[1, 0].scatter(np.random.randn(100), np.random.randn(100))\naxes[1, 0].set_title('Scatter')\n\naxes[1, 1].hist(np.random.randn(1000), bins=30)\naxes[1, 1].set_title('Histogram')\n\nplt.tight_layout()\nplt.show()"
+              },
+              {
+                "title": "Essential Plot Types for ML",
+                "content": "These plots cover 90% of ML visualization needs:",
+                "code": "import matplotlib.pyplot as plt\nimport numpy as np\nfrom sklearn.datasets import load_iris\n\niris = load_iris()\nX, y = iris.data, iris.target\n\n# 1. Histogram - Check feature distributions\nfig, axes = plt.subplots(1, 4, figsize=(16, 4))\nfor i, ax in enumerate(axes):\n    ax.hist(X[:, i], bins=20, edgecolor='black')\n    ax.set_title(iris.feature_names[i])\nplt.suptitle('Feature Distributions')\nplt.show()\n\n# 2. Scatter plot - Relationship between features\nplt.figure(figsize=(8, 6))\nscatter = plt.scatter(X[:, 0], X[:, 1], c=y, cmap='viridis')\nplt.xlabel(iris.feature_names[0])\nplt.ylabel(iris.feature_names[1])\nplt.colorbar(scatter, label='Species')\nplt.title('Sepal Length vs Width')\nplt.show()\n\n# 3. Box plot - Compare distributions across groups\nfig, ax = plt.subplots(figsize=(10, 6))\ndata = [X[y == i, 0] for i in range(3)]\nax.boxplot(data, labels=iris.target_names)\nax.set_ylabel('Sepal Length')\nax.set_title('Sepal Length by Species')\nplt.show()"
+              },
+              {
+                "title": "Seaborn: Statistical Visualization",
+                "content": "Seaborn is built on Matplotlib but provides a high-level interface for statistical graphics. Created by Michael Waskom.",
+                "code": "import seaborn as sns\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\n# Set style\nsns.set_style('whitegrid')\n\n# Load sample data\ntips = sns.load_dataset('tips')\n\n# 1. Distribution plot\nfig, axes = plt.subplots(1, 2, figsize=(12, 5))\nsns.histplot(data=tips, x='total_bill', kde=True, ax=axes[0])\nsns.kdeplot(data=tips, x='total_bill', hue='time', ax=axes[1])\nplt.show()\n\n# 2. Relationship plots\nfig, axes = plt.subplots(1, 2, figsize=(14, 5))\nsns.scatterplot(data=tips, x='total_bill', y='tip', \n                hue='day', size='size', ax=axes[0])\nsns.regplot(data=tips, x='total_bill', y='tip', ax=axes[1])\nplt.show()\n\n# 3. Categorical plots\nfig, axes = plt.subplots(1, 3, figsize=(15, 5))\nsns.boxplot(data=tips, x='day', y='total_bill', ax=axes[0])\nsns.violinplot(data=tips, x='day', y='total_bill', ax=axes[1])\nsns.barplot(data=tips, x='day', y='total_bill', ax=axes[2])\nplt.show()"
+              },
+              {
+                "title": "Correlation Heatmaps",
+                "content": "Heatmaps reveal relationships between all features at once—essential for feature selection:",
+                "code": "import seaborn as sns\nimport pandas as pd\nimport numpy as np\n\n# Create correlation matrix\ndf = pd.DataFrame(X, columns=iris.feature_names)\ndf['species'] = y\ncorr_matrix = df.corr()\n\n# Heatmap\nplt.figure(figsize=(10, 8))\nsns.heatmap(corr_matrix, \n            annot=True,           # Show values\n            cmap='coolwarm',      # Color scheme\n            center=0,             # Center at 0\n            square=True,          # Square cells\n            linewidths=0.5)\nplt.title('Feature Correlation Matrix')\nplt.tight_layout()\nplt.show()\n\n# Pair plot - All relationships at once\nsns.pairplot(df, hue='species', diag_kind='kde')\nplt.show()"
+              },
+              {
+                "title": "ML Model Visualization",
+                "content": "Visualize model performance and diagnostics:",
+                "code": "from sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import confusion_matrix, roc_curve, auc\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Train a model\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\nclf = RandomForestClassifier()\nclf.fit(X_train, y_train)\ny_pred = clf.predict(X_test)\n\n# 1. Confusion Matrix\nplt.figure(figsize=(8, 6))\ncm = confusion_matrix(y_test, y_pred)\nsns.heatmap(cm, annot=True, fmt='d', cmap='Blues',\n            xticklabels=iris.target_names,\n            yticklabels=iris.target_names)\nplt.xlabel('Predicted')\nplt.ylabel('Actual')\nplt.title('Confusion Matrix')\nplt.show()\n\n# 2. Feature Importance\nimportances = clf.feature_importances_\nindices = np.argsort(importances)[::-1]\n\nplt.figure(figsize=(10, 6))\nplt.bar(range(X.shape[1]), importances[indices])\nplt.xticks(range(X.shape[1]), \n           [iris.feature_names[i] for i in indices], rotation=45)\nplt.title('Feature Importance')\nplt.tight_layout()\nplt.show()\n\n# 3. Learning Curve\nfrom sklearn.model_selection import learning_curve\n\ntrain_sizes, train_scores, val_scores = learning_curve(\n    clf, X, y, cv=5, n_jobs=-1,\n    train_sizes=np.linspace(0.1, 1.0, 10)\n)\n\nplt.figure(figsize=(10, 6))\nplt.plot(train_sizes, train_scores.mean(axis=1), label='Training')\nplt.plot(train_sizes, val_scores.mean(axis=1), label='Validation')\nplt.xlabel('Training Set Size')\nplt.ylabel('Accuracy')\nplt.title('Learning Curve')\nplt.legend()\nplt.show()"
+              }
+            ],
+            "keyTakeaways": [
+              "Always visualize data before modeling (EDA)",
+              "Matplotlib for customization, Seaborn for quick statistical plots",
+              "Histograms and box plots reveal distributions",
+              "Correlation heatmaps help with feature selection",
+              "Confusion matrices and learning curves diagnose model issues"
+            ],
+            "exercises": [
+              {
+                "title": "EDA Dashboard",
+                "description": "Create a 2x2 subplot figure showing: histograms, scatter plot, box plot, and correlation heatmap for a dataset"
+              },
+              {
+                "title": "Model Diagnostics",
+                "description": "Train a classifier and create visualizations: confusion matrix, feature importance, and ROC curve"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Matplotlib Documentation",
+                "url": "https://matplotlib.org/stable/contents.html"
+              },
+              {
+                "title": "Seaborn Tutorial",
+                "url": "https://seaborn.pydata.org/tutorial.html"
+              },
+              {
+                "title": "Python Data Science Handbook - Visualization",
+                "author": "Jake VanderPlas",
+                "year": 2016
+              },
+              {
+                "title": "The Visual Display of Quantitative Information",
+                "author": "Edward Tufte",
+                "year": 2001,
+                "note": "Classic text on data visualization principles"
+              }
+            ]
+          }
         }
       ]
     },
@@ -639,6 +855,80 @@
               {
                 "title": "OpenAI Python SDK",
                 "url": "https://github.com/openai/openai-python"
+              }
+            ]
+          }
+        },
+        {
+          "id": "python-limitations",
+          "title": "Python's Limitations & When NOT to Use It",
+          "duration": "30 min",
+          "content": {
+            "overview": "Understanding Python's limitations is crucial for production AI systems. This lesson covers the GIL, performance considerations, and when to use alternatives—knowledge that separates hobbyists from production engineers.",
+            "sections": [
+              {
+                "title": "The Global Interpreter Lock (GIL)",
+                "content": "Python's GIL is the most important limitation to understand:\n\n**What is the GIL?**\nThe Global Interpreter Lock is a mutex that protects access to Python objects, preventing multiple threads from executing Python bytecode at once.\n\n**What this means:**\n- Only one thread can execute Python code at a time\n- Multi-threaded Python doesn't fully utilize multiple CPU cores\n- CPU-bound tasks don't speed up with threads\n\n**David Beazley (Python expert):** *'The GIL is Python's greatest weakness and its greatest strength—it makes Python safe but slow for CPU-bound parallelism.'*",
+                "code": "import threading\nimport time\n\n# CPU-bound task\ndef count(n):\n    while n > 0:\n        n -= 1\n\n# Single thread\nstart = time.time()\ncount(100_000_000)\nprint(f'Single thread: {time.time() - start:.2f}s')\n\n# Two threads - NOT faster due to GIL!\nstart = time.time()\nt1 = threading.Thread(target=count, args=(50_000_000,))\nt2 = threading.Thread(target=count, args=(50_000_000,))\nt1.start()\nt2.start()\nt1.join()\nt2.join()\nprint(f'Two threads: {time.time() - start:.2f}s')  # Often SLOWER!\n\n# Solution: Use multiprocessing for CPU-bound tasks\nfrom multiprocessing import Pool\n\nwith Pool(4) as p:\n    results = p.map(count, [25_000_000] * 4)  # Actually parallel"
+              },
+              {
+                "title": "Python's Speed Problem",
+                "content": "Python is 10-100x slower than C/C++ for raw computation:\n\n**Why Python is slow:**\n- Interpreted, not compiled\n- Dynamic typing (type checks at runtime)\n- Object overhead (everything is an object)\n- No direct memory access\n\n**Benchmarks (approximate):**\n| Task | Python | C++ | Speedup |\n|------|--------|-----|---------|\n| Loop 10M times | 1.0s | 0.01s | 100x |\n| Matrix multiply | 10s | 0.1s | 100x |\n| String processing | 1.0s | 0.05s | 20x |\n\n**Why AI still uses Python:**\n- NumPy, PyTorch, TensorFlow use C/C++ backends\n- Python is just the 'glue' language\n- Actual computation happens in optimized libraries",
+                "code": "import numpy as np\nimport time\n\n# SLOW: Pure Python\ndef python_dot(a, b):\n    total = 0\n    for i in range(len(a)):\n        total += a[i] * b[i]\n    return total\n\n# FAST: NumPy (C backend)\na = np.random.randn(10_000_000)\nb = np.random.randn(10_000_000)\na_list = a.tolist()\nb_list = b.tolist()\n\nstart = time.time()\npython_dot(a_list, b_list)\nprint(f'Pure Python: {time.time() - start:.3f}s')\n\nstart = time.time()\nnp.dot(a, b)\nprint(f'NumPy: {time.time() - start:.3f}s')  # 100-1000x faster!"
+              },
+              {
+                "title": "When NOT to Use Python",
+                "content": "Choose a different language for these scenarios:\n\n**❌ Don't use Python for:**\n\n| Use Case | Better Choice | Why |\n|----------|--------------|-----|\n| **Mobile apps** | Swift, Kotlin | No native mobile support |\n| **Real-time systems** | C, Rust | GC pauses, too slow |\n| **High-frequency trading** | C++, Rust | Microsecond latency matters |\n| **Browser frontend** | JavaScript | Browsers don't run Python |\n| **Embedded systems** | C, MicroPython | Memory constraints |\n| **Game engines** | C++, C# | Frame rate critical |\n\n**✅ Use Python for:**\n- Data science and ML research\n- Backend APIs and web services\n- Automation and scripting\n- Prototyping and MVPs\n- Glue code between systems"
+              },
+              {
+                "title": "Memory Management Gotchas",
+                "content": "Python's automatic memory management can cause issues at scale:",
+                "code": "import sys\nimport numpy as np\n\n# Object overhead is huge\nx = 42\nprint(sys.getsizeof(x))  # 28 bytes for a single integer!\n\n# Lists use more memory than arrays\npy_list = list(range(1_000_000))\nnp_array = np.arange(1_000_000, dtype=np.int64)\n\nprint(f'Python list: {sys.getsizeof(py_list) / 1e6:.1f} MB')  # ~8 MB\nprint(f'NumPy array: {np_array.nbytes / 1e6:.1f} MB')          # ~8 MB\n# But list elements each have 28+ byte overhead!\n\n# Garbage collection pauses\nimport gc\n\n# Disable GC during critical sections\ngc.disable()\ntry:\n    # Time-critical code\n    fast_inference(data)\nfinally:\n    gc.enable()\n    gc.collect()  # Manually trigger collection"
+              },
+              {
+                "title": "Workarounds and Solutions",
+                "content": "Techniques to overcome Python's limitations:",
+                "code": "# 1. Use NumPy/PyTorch for numerical code\nimport numpy as np\nimport torch\n\n# 2. Multiprocessing for CPU parallelism\nfrom multiprocessing import Pool, cpu_count\n\ndef process_batch(data):\n    return heavy_computation(data)\n\nwith Pool(cpu_count()) as pool:\n    results = pool.map(process_batch, data_batches)\n\n# 3. Numba for JIT compilation (10-100x speedup)\nfrom numba import jit\n\n@jit(nopython=True)\ndef fast_loop(n):\n    total = 0\n    for i in range(n):\n        total += i * i\n    return total\n\n# 4. Cython for C-speed Python\n# Compile Python-like code to C\n\n# 5. asyncio for I/O parallelism\nimport asyncio\n\nasync def fetch_all(urls):\n    tasks = [fetch(url) for url in urls]\n    return await asyncio.gather(*tasks)\n\n# 6. Move critical code to C/Rust extensions\n# PyTorch, NumPy, etc. do this internally"
+              }
+            ],
+            "keyTakeaways": [
+              "The GIL prevents true multi-threaded parallelism for CPU-bound code",
+              "Use multiprocessing (not threading) for CPU parallelism",
+              "Python's speed comes from C backends (NumPy, PyTorch)",
+              "Don't use Python for mobile, real-time, or browser apps",
+              "Numba and Cython can dramatically speed up Python code"
+            ],
+            "exercises": [
+              {
+                "title": "GIL Demonstration",
+                "description": "Write a CPU-bound benchmark comparing single-threaded, multi-threaded, and multiprocessing execution"
+              },
+              {
+                "title": "Numba Speedup",
+                "description": "Take a slow Python loop and use Numba's @jit decorator to speed it up"
+              }
+            ],
+            "sources": [
+              {
+                "title": "Understanding the Python GIL",
+                "author": "David Beazley",
+                "url": "https://www.dabeaz.com/python/UnderstandingGIL.pdf",
+                "year": 2010,
+                "note": "The definitive talk on the GIL"
+              },
+              {
+                "title": "Python Concurrency from the Ground Up",
+                "author": "David Beazley",
+                "url": "https://www.youtube.com/watch?v=MCs5OvhV9S4",
+                "year": 2015
+              },
+              {
+                "title": "Numba Documentation",
+                "url": "https://numba.pydata.org/"
+              },
+              {
+                "title": "Python Performance Tips",
+                "url": "https://wiki.python.org/moin/PythonSpeed/PerformanceTips"
               }
             ]
           }
