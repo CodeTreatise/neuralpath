@@ -5,6 +5,7 @@
   "icon": "🔥",
   "level": "intermediate",
   "duration": "8 weeks",
+  "totalLessons": 10,
   "validationSources": [
     "https://www.ibm.com/topics/deep-learning",
     "https://www.ibm.com/topics/neural-networks",
@@ -12,6 +13,38 @@
     "https://www.ibm.com/topics/gradient-descent",
     "https://www.ibm.com/topics/convolutional-neural-networks",
     "https://www.ibm.com/topics/recurrent-neural-networks"
+  ],
+  "keyThinkers": [
+    {
+      "name": "Frank Rosenblatt",
+      "contribution": "Invented the perceptron (1958) - the first trainable neural network",
+      "era": "1950s"
+    },
+    {
+      "name": "Rumelhart, Hinton, Williams",
+      "contribution": "Popularized backpropagation (1986) - the algorithm that enables training deep networks",
+      "era": "1986"
+    },
+    {
+      "name": "Yann LeCun",
+      "contribution": "Pioneered CNNs and developed LeNet - revolutionized computer vision",
+      "era": "1980s-1990s"
+    },
+    {
+      "name": "Hochreiter & Schmidhuber",
+      "contribution": "Invented LSTM (1997) - solved vanishing gradients for sequence modeling",
+      "era": "1997"
+    },
+    {
+      "name": "Vaswani et al.",
+      "contribution": "Created the Transformer architecture (2017) - 'Attention Is All You Need'",
+      "era": "2017"
+    },
+    {
+      "name": "Geoffrey Hinton, Yoshua Bengio, Yann LeCun",
+      "contribution": "The 'Godfathers of AI' - Turing Award 2018 for deep learning breakthroughs",
+      "era": "2000s-present"
+    }
   ],
   "prerequisites": [
     "Python proficiency",
@@ -22,7 +55,9 @@
     "Understand neural network fundamentals and backpropagation",
     "Build and train models using PyTorch",
     "Implement CNNs, RNNs, and Transformers",
-    "Apply best practices for training and debugging"
+    "Apply best practices for training and debugging",
+    "Diagnose and fix common neural network training issues",
+    "Use transfer learning with pretrained models effectively"
   ],
   "modules": [
     {
@@ -33,6 +68,10 @@
           "id": "perceptron-mlp",
           "title": "From Perceptrons to Multilayer Networks",
           "duration": "45 min",
+          "authorCredits": {
+            "keyContributors": ["Frank Rosenblatt", "Marvin Minsky", "Seymour Papert"],
+            "historicalNote": "Frank Rosenblatt invented the perceptron in 1958. Minsky and Papert's 1969 book 'Perceptrons' famously proved single-layer limitations (XOR problem), leading to the first 'AI winter'. Multi-layer networks with backpropagation overcame these limitations in the 1980s."
+          },
           "content": {
             "overview": "Neural networks are computational models inspired by the brain. Starting from a single perceptron, we build up to multilayer networks capable of learning complex patterns. Understanding these fundamentals is essential for all deep learning.\n\n**Industry Definition**: Deep learning is a subset of machine learning driven by multilayered neural networks (at least 4 hidden layers) whose design is inspired by the structure of the human brain. Deep neural networks are universal approximators—it has been proven that for any function, there exists a neural network arrangement that can reproduce it. The power of deep learning comes from its ability to learn hierarchical representations, with earlier layers identifying broader patterns and deeper layers identifying more granular patterns.",
             "sections": [
@@ -96,6 +135,10 @@
           "id": "backpropagation",
           "title": "Backpropagation and Gradient Descent",
           "duration": "60 min",
+          "authorCredits": {
+            "keyContributors": ["David Rumelhart", "Geoffrey Hinton", "Ronald Williams"],
+            "historicalNote": "While backpropagation was discovered multiple times (Werbos 1974, Rumelhart et al. 1986), the 1986 Nature paper by Rumelhart, Hinton, and Williams popularized it, enabling the training of multi-layer networks and launching the modern deep learning era."
+          },
           "content": {
             "overview": "Backpropagation is the algorithm that makes neural networks trainable. It efficiently computes gradients of the loss with respect to all weights using the chain rule. Combined with gradient descent, it enables learning from data.\n\n**Industry Definition**: Backpropagation (backward propagation of error) is an elegant method to calculate how changes to any individual weight or bias will affect the accuracy of model predictions. It entails a single end-to-end backwards pass through the network, using the chain rule of calculus to compute the 'gradient' of the loss function—a vector of partial derivatives for every equation in the network. Remarkably efficient: while a naive approach to compute gradients for 1 million weights would require 1,000,001 forward passes, backpropagation achieves the same in just 2 passes (1 forward + 1 backward).",
             "sections": [
@@ -274,6 +317,10 @@
           "id": "cnn-basics",
           "title": "Convolutions and Pooling",
           "duration": "60 min",
+          "authorCredits": {
+            "keyContributors": ["Yann LeCun", "Kaiming He", "Alex Krizhevsky"],
+            "historicalNote": "Yann LeCun developed LeNet in 1989 for digit recognition. Alex Krizhevsky's AlexNet (2012) won ImageNet and sparked the deep learning revolution. Kaiming He's ResNet (2015) introduced skip connections, enabling training of 100+ layer networks."
+          },
           "content": {
             "overview": "Convolutional Neural Networks (CNNs) are designed for spatial data like images. They use convolution operations to detect local patterns (edges, textures, shapes) and build up hierarchical representations.\n\n**Industry Definition**: CNNs use three-dimensional data for image classification and object recognition. They have three main layer types: Convolutional (feature detection), Pooling (dimensionality reduction), and Fully-connected (classification). Prior to CNNs, manual time-consuming feature extraction was required. CNNs provide scalable pattern recognition leveraging matrix multiplication. Key hyperparameters: number of filters (output depth), stride (kernel movement distance), and zero-padding (Valid/Same/Full).",
             "sections": [
@@ -338,6 +385,10 @@
           "id": "rnn-fundamentals",
           "title": "RNNs and LSTMs",
           "duration": "60 min",
+          "authorCredits": {
+            "keyContributors": ["Sepp Hochreiter", "Jürgen Schmidhuber", "Kyunghyun Cho"],
+            "historicalNote": "Hochreiter and Schmidhuber invented the LSTM in 1997, solving the vanishing gradient problem that plagued vanilla RNNs. Cho et al. introduced the simpler GRU in 2014. Both architectures dominated sequence modeling until Transformers (2017)."
+          },
           "content": {
             "overview": "Recurrent Neural Networks (RNNs) are designed for sequential data where order matters. They maintain a hidden state that captures information from previous time steps. Long Short-Term Memory (LSTM) networks solve the vanishing gradient problem, enabling learning of long-term dependencies.\n\n**Industry Definition**: RNNs process sequences by maintaining internal memory (hidden state) that captures dependencies across time steps. They're foundational for sequence modeling tasks like language modeling, speech recognition, and time series prediction. While largely replaced by Transformers for NLP, understanding RNNs is essential for grasping the evolution of sequence models.",
             "sections": [
@@ -502,6 +553,10 @@
                 "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY"
               }
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Vaswani", "Shazeer", "Parmar", "Uszkoreit", "Jones", "Gomez", "Kaiser", "Polosukhin"],
+            "note": "The Transformer architecture was introduced by Vaswani et al. at Google Brain/Google Research in 'Attention Is All You Need' (NeurIPS 2017). This paper eliminated recurrence entirely, using only attention mechanisms for sequence modeling, achieving SOTA results in machine translation with massive parallelization. The architecture became the foundation for GPT, BERT, T5, and modern LLMs."
           }
         },
         {
