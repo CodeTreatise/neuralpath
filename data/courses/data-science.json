@@ -2,31 +2,59 @@
   "id": "data-science",
   "title": "Data Science Fundamentals",
   "icon": "📊",
-  "description": "Master data analysis, visualization, and statistical thinking for AI applications.",
+  "description": "Master data analysis, visualization, and statistical thinking for AI applications. Learn from the foundations established by pioneers like John Tukey (EDA), Ronald Fisher (statistics), and Edward Tufte (visualization).",
   "level": "beginner",
-  "duration": "5 weeks",
-  "totalLessons": 19,
+  "duration": "6 weeks",
+  "totalLessons": 20,
   "validationSources": [
     "https://www.ibm.com/topics/data-science",
     "https://www.ibm.com/topics/exploratory-data-analysis",
     "https://www.ibm.com/topics/data-visualization"
   ],
   "prerequisites": [
-    "Basic Python knowledge"
+    "Basic Python knowledge (complete Python for AI course first)"
   ],
   "outcomes": [
     "Analyze datasets using pandas and numpy",
-    "Create compelling visualizations",
-    "Apply statistical methods to real data",
+    "Create compelling visualizations that tell data stories",
+    "Apply statistical methods and hypothesis testing correctly",
+    "Recognize and avoid common statistical fallacies",
     "Build end-to-end data pipelines",
     "Handle time series and temporal data",
     "Build reproducible data processing pipelines",
-    "Design and analyze A/B tests"
+    "Design and analyze A/B tests with proper rigor"
+  ],
+  "keyThinkers": [
+    {
+      "name": "John Tukey",
+      "contribution": "Father of Exploratory Data Analysis (EDA), invented box plots, coined 'bit'",
+      "work": "Exploratory Data Analysis (1977)"
+    },
+    {
+      "name": "Ronald Fisher",
+      "contribution": "Father of modern statistics, experimental design, ANOVA, p-values",
+      "work": "Statistical Methods for Research Workers (1925)"
+    },
+    {
+      "name": "Edward Tufte",
+      "contribution": "Pioneer of data visualization and information design",
+      "work": "The Visual Display of Quantitative Information (1983)"
+    },
+    {
+      "name": "Hadley Wickham",
+      "contribution": "Tidy data principles, creator of ggplot2 and tidyverse",
+      "work": "R for Data Science, Tidy Data paper (2014)"
+    },
+    {
+      "name": "Hans Rosling",
+      "contribution": "Data storytelling, making statistics accessible",
+      "work": "Gapminder, Factfulness (2018)"
+    }
   ],
   "modules": [
     {
       "title": "Data Analysis Basics",
-      "description": "Data Analysis Basics module",
+      "description": "Introduction to data science concepts, workflow, and data cleaning fundamentals",
       "lessons": [
         {
           "id": "intro-ds",
@@ -293,8 +321,18 @@
           "type": "lesson",
           "duration": "30 min",
           "content": {
-            "overview": "Visualization is crucial for understanding data patterns and communicating insights. Learn to create compelling charts with Matplotlib and Seaborn.",
+            "overview": "Visualization is crucial for understanding data patterns and communicating insights. Learn to create compelling charts following the principles established by Edward Tufte, the pioneer of information design.",
             "sections": [
+              {
+                "title": "Tufte's Principles of Data Visualization",
+                "content": "**Edward Tufte**, often called the 'Galileo of graphics,' established foundational principles for effective data visualization.\n\n**Tufte's Core Principles:**\n\n1. **Data-Ink Ratio**: Maximize the ink used for actual data, minimize decoration\n   > *'Above all else, show the data.'* — Edward Tufte\n\n2. **Chartjunk**: Remove unnecessary gridlines, borders, 3D effects, and decorations\n\n3. **Lie Factor**: Ensure visual representation is proportional to the data\n   - Lie Factor = (Size of effect in graphic) / (Size of effect in data)\n   - Should be close to 1.0\n\n4. **Small Multiples**: Use repeated small charts to show patterns across categories\n\n5. **High Data Density**: Pack lots of information into a small space when appropriate",
+                "keyPoints": [
+                  "Tufte's 'The Visual Display of Quantitative Information' (1983) is the bible of data viz",
+                  "Remove every non-data element you can",
+                  "Never use 3D effects for 2D data",
+                  "Every pixel should earn its place"
+                ]
+              },
               {
                 "title": "Matplotlib Basics",
                 "codeExample": {
@@ -327,10 +365,32 @@
               }
             ],
             "keyTakeaways": [
+              "Tufte's data-ink ratio: maximize data, minimize decoration",
               "Matplotlib is flexible but verbose",
               "Seaborn provides beautiful statistical plots with less code",
               "Always label axes and add titles",
               "Choose the right chart type for your data"
+            ],
+            "sources": [
+              {
+                "title": "The Visual Display of Quantitative Information",
+                "author": "Edward Tufte",
+                "year": 1983,
+                "note": "The foundational text on data visualization principles"
+              },
+              {
+                "title": "Envisioning Information",
+                "author": "Edward Tufte",
+                "year": 1990
+              },
+              {
+                "title": "Matplotlib Documentation",
+                "url": "https://matplotlib.org/stable/contents.html"
+              },
+              {
+                "title": "Seaborn Tutorial",
+                "url": "https://seaborn.pydata.org/tutorial.html"
+              }
             ]
           }
         },
@@ -340,8 +400,17 @@
           "type": "lesson",
           "duration": "35 min",
           "content": {
-            "overview": "EDA is the critical first step in any data project. It involves understanding the structure, patterns, and anomalies in your data before modeling.",
+            "overview": "EDA is the critical first step in any data project, pioneered by John Tukey in his seminal 1977 book. It involves understanding the structure, patterns, and anomalies in your data before modeling—letting the data speak before imposing assumptions.",
             "sections": [
+              {
+                "title": "The Philosophy of EDA",
+                "content": "**John Tukey (1915-2000)**, the father of EDA, revolutionized statistics by emphasizing exploration over hypothesis testing.\n\n**Tukey's Philosophy:**\n> *'Far better an approximate answer to the right question than an exact answer to the wrong question.'*\n\n> *'The greatest value of a picture is when it forces us to notice what we never expected to see.'*\n\n**EDA vs Confirmatory Analysis:**\n| EDA (Exploratory) | CDA (Confirmatory) |\n|-------------------|--------------------|\n| Generate hypotheses | Test hypotheses |\n| Flexible, visual | Rigorous, statistical |\n| Open-ended | Pre-specified |\n| 'What might be true?' | 'Is this true?' |",
+                "keyPoints": [
+                  "Tukey invented the box plot, stem-and-leaf plot, and coined 'bit'",
+                  "EDA is detective work—find clues before making accusations",
+                  "Let data guide your analysis, not preconceptions"
+                ]
+              },
               {
                 "title": "Four Types of EDA",
                 "content": "Industry frameworks classify EDA into four primary types:\n\n| Type | Description | Example |\n|------|-------------|----------|\n| **Univariate Non-graphical** | Summarize single variable statistics | Mean, median, mode, variance |\n| **Univariate Graphical** | Visualize single variable distributions | Histograms, box plots, stem-leaf plots |\n| **Multivariate Non-graphical** | Analyze relationships through statistics | Cross-tabulation, correlation matrices |\n| **Multivariate Graphical** | Visualize relationships between variables | Scatter plots, heat maps, pair plots |",
@@ -369,7 +438,7 @@
                 "title": "Univariate Analysis",
                 "codeExample": {
                   "language": "python",
-                  "code": "import seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Numerical variables\nfor col in df.select_dtypes(include='number'):\n    fig, axes = plt.subplots(1, 2, figsize=(12, 4))\n    sns.histplot(df[col], kde=True, ax=axes[0])\n    sns.boxplot(x=df[col], ax=axes[1])\n    plt.suptitle(f'Distribution of {col}')\n    plt.show()\n\n# Categorical variables\nfor col in df.select_dtypes(include='object'):\n    plt.figure(figsize=(10, 4))\n    df[col].value_counts().plot(kind='bar')\n    plt.title(f'Distribution of {col}')\n    plt.show()"
+                  "code": "import seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Numerical variables\nfor col in df.select_dtypes(include='number'):\n    fig, axes = plt.subplots(1, 2, figsize=(12, 4))\n    sns.histplot(df[col], kde=True, ax=axes[0])\n    sns.boxplot(x=df[col], ax=axes[1])  # Tukey's invention!\n    plt.suptitle(f'Distribution of {col}')\n    plt.show()\n\n# Categorical variables\nfor col in df.select_dtypes(include='object'):\n    plt.figure(figsize=(10, 4))\n    df[col].value_counts().plot(kind='bar')\n    plt.title(f'Distribution of {col}')\n    plt.show()"
                 }
               },
               {
@@ -381,10 +450,23 @@
               }
             ],
             "keyTakeaways": [
+              "EDA was pioneered by John Tukey—let data speak before assumptions",
               "EDA reveals data quality issues early",
               "Look for patterns, outliers, and relationships",
               "Document your findings before modeling",
               "Visualizations communicate insights effectively"
+            ],
+            "sources": [
+              {
+                "title": "Exploratory Data Analysis",
+                "author": "John Tukey",
+                "year": 1977,
+                "note": "The foundational text that established EDA as a discipline"
+              },
+              {
+                "title": "IBM - What is Exploratory Data Analysis?",
+                "url": "https://www.ibm.com/topics/exploratory-data-analysis"
+              }
             ]
           }
         },
@@ -423,6 +505,116 @@
               "Understand when to use parametric vs non-parametric tests",
               "p-value < 0.05 traditionally indicates statistical significance",
               "Correlation ≠ causation"
+            ],
+            "sources": [
+              {
+                "title": "Statistical Methods for Research Workers",
+                "author": "Ronald Fisher",
+                "year": 1925,
+                "note": "Fisher is the father of modern statistics - he developed ANOVA, p-values, and experimental design principles still used today"
+              },
+              {
+                "title": "Statistics in Plain English",
+                "author": "Timothy Urdan",
+                "year": 2016
+              },
+              {
+                "title": "OpenIntro Statistics",
+                "url": "https://www.openintro.org/book/os/",
+                "note": "Free, comprehensive statistics textbook"
+              }
+            ]
+          }
+        },
+        {
+          "id": "statistical-fallacies",
+          "title": "Statistical Fallacies & Common Pitfalls",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "Understanding what can go wrong with data analysis is as important as knowing the techniques. This lesson covers the most common statistical fallacies that lead data scientists astray—and how to avoid them.",
+            "sections": [
+              {
+                "title": "Correlation vs Causation",
+                "content": "The most famous statistical fallacy: just because two things are correlated doesn't mean one causes the other.\n\n**Famous Examples:**\n- Ice cream sales correlate with drowning deaths (both caused by summer heat)\n- Countries that eat more chocolate have more Nobel Prize winners (wealthy countries have both)\n- Shoe size correlates with reading ability in children (both caused by age)\n\n**How to Establish Causation:**\n1. Randomized controlled experiments\n2. Natural experiments\n3. Instrumental variables\n4. Difference-in-differences analysis",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Spurious correlation example\nnp.random.seed(42)\n\n# The hidden confounding variable (age)\nage = np.random.uniform(5, 18, 100)\n\n# Shoe size increases with age\nshoe_size = 2 + 0.5 * age + np.random.normal(0, 1, 100)\n\n# Reading ability increases with age\nreading_score = 10 + 5 * age + np.random.normal(0, 5, 100)\n\n# Strong correlation, but no causation!\nfrom scipy import stats\nr, p = stats.pearsonr(shoe_size, reading_score)\nprint(f'Correlation: {r:.3f}, p-value: {p:.4f}')\n# Correlation: 0.85 - but shoes don't cause reading ability!"
+                }
+              },
+              {
+                "title": "Simpson's Paradox",
+                "content": "A trend that appears in different groups of data **reverses** when the groups are combined. This happens when there's a lurking variable that affects both the grouping and the outcome.\n\n**Famous Example: UC Berkeley Gender Bias Case (1973)**\n- Overall: Women had lower admission rates than men\n- But: Women had HIGHER admission rates in every department!\n- Explanation: Women applied to more competitive departments",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import pandas as pd\n\n# Simpson's Paradox Example\ndata = {\n    'department': ['A', 'A', 'B', 'B'],\n    'gender': ['Male', 'Female', 'Male', 'Female'],\n    'applicants': [800, 100, 200, 900],\n    'admitted': [400, 60, 50, 360]\n}\ndf = pd.DataFrame(data)\ndf['rate'] = df['admitted'] / df['applicants']\n\nprint('By Department:')\nprint(df[['department', 'gender', 'rate']])\n# Dept A: Male 50%, Female 60% - Women higher!\n# Dept B: Male 25%, Female 40% - Women higher!\n\n# But overall...\nby_gender = df.groupby('gender').agg({'applicants': 'sum', 'admitted': 'sum'})\nby_gender['rate'] = by_gender['admitted'] / by_gender['applicants']\nprint('\\nOverall:')\nprint(by_gender)\n# Male: 45%, Female: 42% - Men higher! (Paradox!)"
+                }
+              },
+              {
+                "title": "Survivorship Bias",
+                "content": "Focusing on 'survivors' while ignoring those that didn't make it leads to false conclusions.\n\n**Famous Example: WWII Airplane Armor**\n- Analysts saw bullet holes mostly on wings and fuselage\n- Initial recommendation: Add armor to those areas\n- Statistician Abraham Wald realized: Those planes survived!\n- Correct action: Armor the areas WITHOUT holes (engines, cockpit)\n\n**In Data Science:**\n- Analyzing successful companies ignores failed ones\n- Studying college graduates ignores dropouts\n- User feedback comes from engaged users, not churned ones",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\nimport pandas as pd\n\n# Survivorship bias in startup analysis\nnp.random.seed(42)\n\n# Simulate 1000 startups\nn_startups = 1000\ninitial_investment = np.random.uniform(10000, 1000000, n_startups)\nfailed = np.random.random(n_startups) < 0.9  # 90% fail\n\ndf = pd.DataFrame({\n    'investment': initial_investment,\n    'failed': failed\n})\n\n# Wrong: Only look at survivors\nsurvivors = df[~df['failed']]\nprint(f'Survivor avg investment: ${survivors[\"investment\"].mean():,.0f}')\n\n# The survivors may have higher investment not because money helps,\n# but because we're only seeing the ones that didn't fail!\n\n# Right: Include failed companies\nprint(f'All startups avg investment: ${df[\"investment\"].mean():,.0f}')"
+                }
+              },
+              {
+                "title": "P-Hacking and Multiple Comparisons",
+                "content": "**P-hacking**: Manipulating analysis until you get p < 0.05.\n\n**Common P-hacking Tactics:**\n- Testing many variables, reporting only significant ones\n- Adding/removing outliers until significant\n- Trying different subgroups\n- Stopping data collection when p < 0.05\n\n**Multiple Comparisons Problem:**\nWith 20 independent tests at α=0.05, you expect 1 false positive by chance alone!\n\n**Solutions:**\n- Pre-register hypotheses\n- Use Bonferroni correction: α_adjusted = α/n\n- Report all tests, not just significant ones\n- Use effect sizes, not just p-values",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import numpy as np\nfrom scipy import stats\n\n# Demonstrate the multiple testing problem\nnp.random.seed(42)\nn_tests = 20\nfalse_positives = 0\n\nfor i in range(n_tests):\n    # Two random groups (no real difference)\n    group_a = np.random.normal(0, 1, 100)\n    group_b = np.random.normal(0, 1, 100)  # Same distribution!\n    \n    t_stat, p_value = stats.ttest_ind(group_a, group_b)\n    if p_value < 0.05:\n        false_positives += 1\n        print(f'Test {i+1}: p = {p_value:.4f} - FALSE POSITIVE!')\n\nprint(f'\\nFalse positives: {false_positives}/{n_tests}')\nprint(f'Expected by chance: {n_tests * 0.05}')\n\n# Bonferroni correction\nalpha = 0.05\nalpha_corrected = alpha / n_tests\nprint(f'\\nBonferroni-corrected alpha: {alpha_corrected}')"
+                }
+              },
+              {
+                "title": "Base Rate Fallacy",
+                "content": "Ignoring the base rate (prior probability) when interpreting conditional probabilities.\n\n**Medical Testing Example:**\n- Disease affects 1 in 1000 people (base rate = 0.1%)\n- Test is 99% accurate\n- You test positive... what's the probability you have the disease?\n\n**Intuition says 99%... but the answer is only 9%!**\n\nThis is Bayes' Theorem in action—the base rate matters enormously.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Base Rate Fallacy / Bayes' Theorem\n\n# Disease parameters\nbase_rate = 0.001          # 1 in 1000 have the disease\nsensitivity = 0.99         # 99% true positive rate\nspecificity = 0.99         # 99% true negative rate\nfalse_positive_rate = 1 - specificity\n\n# Population of 100,000\npopulation = 100000\nactual_sick = int(population * base_rate)     # 100\nactual_healthy = population - actual_sick      # 99,900\n\n# Test results\ntrue_positives = actual_sick * sensitivity              # 99\nfalse_positives = actual_healthy * false_positive_rate  # 999\n\ntotal_positives = true_positives + false_positives\n\n# P(sick | positive test)\np_sick_given_positive = true_positives / total_positives\n\nprint(f'Total positive tests: {total_positives:.0f}')\nprint(f'True positives: {true_positives:.0f}')\nprint(f'False positives: {false_positives:.0f}')\nprint(f'\\nP(sick | positive) = {p_sick_given_positive:.1%}')\n# Only 9%! Not 99%!"
+                }
+              },
+              {
+                "title": "Regression to the Mean",
+                "content": "Extreme observations tend to be followed by more moderate ones.\n\n**Examples:**\n- Athletes on magazine covers often perform worse the next season\n- Students who score very high on a test often score lower on the next\n- Companies with exceptional years often have normal years after\n\nThis isn't a real effect—it's just probability. Extreme outcomes have luck baked in.\n\n**Implication:** Be careful attributing 'improvement' or 'decline' to interventions when regression to the mean may explain it."
+              },
+              {
+                "title": "Selection Bias & Confounding",
+                "content": "**Selection Bias:** Your sample isn't representative of the population.\n- Online surveys miss people without internet\n- Voluntary surveys attract engaged users\n- Hospital data excludes healthy people\n\n**Confounding:** A third variable affects both your X and Y.\n\n**Types of Selection Bias:**\n| Bias | Description | Example |\n|------|-------------|--------|\n| Sampling bias | Non-random sample | Phone surveys during work hours |\n| Self-selection | People choose to participate | Product reviews |\n| Attrition | People drop out non-randomly | Clinical trials |\n| Healthy worker | Workers are healthier than general population | Workplace health studies |"
+              }
+            ],
+            "keyTakeaways": [
+              "Correlation does not imply causation—look for confounders",
+              "Simpson's paradox: trends can reverse when data is aggregated",
+              "Survivorship bias: don't ignore the 'dead'",
+              "Multiple testing inflates false positive rates",
+              "Base rates matter—use Bayes' theorem",
+              "Extreme results regress toward the mean",
+              "Selection bias can invalidate your entire analysis"
+            ],
+            "sources": [
+              {
+                "title": "How to Lie with Statistics",
+                "author": "Darrell Huff",
+                "year": 1954,
+                "note": "Classic book on statistical fallacies, still relevant today"
+              },
+              {
+                "title": "The Art of Statistics",
+                "author": "David Spiegelhalter",
+                "year": 2019
+              },
+              {
+                "title": "Thinking, Fast and Slow",
+                "author": "Daniel Kahneman",
+                "year": 2011,
+                "note": "Nobel laureate on cognitive biases and statistical thinking"
+              },
+              {
+                "title": "Calling Bullshit: The Art of Skepticism in a Data-Driven World",
+                "author": "Carl Bergstrom & Jevin West",
+                "year": 2020
+              }
             ]
           }
         },
@@ -699,8 +891,17 @@
           "type": "lesson",
           "duration": "25 min",
           "content": {
-            "overview": "Transform your analysis into compelling stories that drive action and influence stakeholders.",
+            "overview": "Transform your analysis into compelling stories that drive action and influence stakeholders. Learn from Hans Rosling, the master of making data come alive.",
             "sections": [
+              {
+                "title": "The Art of Data Storytelling: Hans Rosling",
+                "content": "**Hans Rosling (1948-2017)** was a Swedish physician and statistician who revolutionized how we communicate data. His TED talks have over 35 million views.\n\n**Rosling's Key Insights:**\n> *'I have a dataset that beats any TED talk.'* — Hans Rosling\n\n**What Made Rosling Great:**\n1. **Animation**: Showed data moving through time\n2. **Comparison**: Compared countries to each other\n3. **Context**: Explained WHY patterns existed\n4. **Passion**: Made statistics exciting\n5. **Surprise**: Challenged audience assumptions\n\n**His Legacy:**\n- Gapminder foundation and tools\n- 'Factfulness' book (2018)\n- Proved data can change minds",
+                "keyPoints": [
+                  "Rosling's TED talks are masterclasses in data storytelling",
+                  "He used animated bubble charts to show change over time",
+                  "Always start by challenging assumptions"
+                ]
+              },
               {
                 "title": "Structure Your Story",
                 "content": "Every data story should have:\n\n1. **Setup**: Context and why this matters\n2. **Conflict**: The problem or question\n3. **Resolution**: What the data reveals\n4. **Action**: What should happen next\n\n**Example Framework**:\n- What's the situation?\n- What did we discover?\n- Why does it matter?\n- What should we do?"
@@ -718,10 +919,35 @@
               }
             ],
             "keyTakeaways": [
+              "Hans Rosling showed data can be exciting and change minds",
               "Lead with insights, not methodology",
               "Simplify visualizations for your audience",
               "Connect findings to business impact",
               "Always end with clear recommendations"
+            ],
+            "sources": [
+              {
+                "title": "Factfulness",
+                "author": "Hans Rosling",
+                "year": 2018,
+                "note": "Ten reasons we're wrong about the world and why things are better than you think"
+              },
+              {
+                "title": "Gapminder Tools",
+                "url": "https://www.gapminder.org/tools/",
+                "note": "Free tools for data exploration created by Rosling"
+              },
+              {
+                "title": "The Best Stats You've Ever Seen (TED Talk)",
+                "author": "Hans Rosling",
+                "url": "https://www.ted.com/talks/hans_rosling_the_best_stats_you_ve_ever_seen",
+                "year": 2006
+              },
+              {
+                "title": "Storytelling with Data",
+                "author": "Cole Nussbaumer Knaflic",
+                "year": 2015
+              }
             ]
           }
         },
