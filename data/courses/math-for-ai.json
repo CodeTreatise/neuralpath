@@ -5,7 +5,7 @@
   "description": "Master the essential mathematical foundations needed for machine learning and deep learning.",
   "level": "beginner",
   "duration": "6 weeks",
-  "totalLessons": 19,
+  "totalLessons": 22,
   "prerequisites": [
     "Basic arithmetic (add, subtract, multiply, divide)",
     "Understanding of variables (like x and y in equations)",
@@ -19,9 +19,12 @@
   ],
   "outcomes": [
     "Understand vectors, matrices, and linear transformations",
+    "Apply SVD and understand dimensionality reduction",
     "Apply calculus concepts to optimization problems",
     "Work with probability distributions and Bayes' theorem",
-    "Implement gradient descent from scratch"
+    "Understand information theory and cross-entropy loss",
+    "Implement gradient descent from scratch",
+    "Recognize numerical stability issues in practice"
   ],
   "validationSources": [
     {
@@ -35,6 +38,38 @@
       ],
       "verified": true,
       "date": "2025-01-26"
+    }
+  ],
+  "keyThinkers": [
+    {
+      "name": "Carl Friedrich Gauss",
+      "contribution": "Gaussian elimination, normal distribution - foundational for linear systems and statistics",
+      "era": "1777-1855"
+    },
+    {
+      "name": "Isaac Newton & Gottfried Leibniz",
+      "contribution": "Co-inventors of calculus - the mathematics of change that underlies all optimization",
+      "era": "1680s"
+    },
+    {
+      "name": "Leonhard Euler",
+      "contribution": "Euler's number (e), contributions to notation and analysis fundamental to calculus",
+      "era": "1707-1783"
+    },
+    {
+      "name": "Thomas Bayes & Pierre-Simon Laplace",
+      "contribution": "Bayesian probability - reasoning under uncertainty central to ML",
+      "era": "1700s"
+    },
+    {
+      "name": "Claude Shannon",
+      "contribution": "Information theory, entropy - foundation of cross-entropy loss and compression",
+      "era": "1916-2001"
+    },
+    {
+      "name": "Augustin-Louis Cauchy",
+      "contribution": "First formal description of gradient descent (1847) - the core of neural network training",
+      "era": "1789-1857"
     }
   ],
   "modules": [
@@ -85,6 +120,10 @@
           "title": "Vectors and Vector Operations",
           "type": "lesson",
           "duration": "25 min",
+          "authorCredits": {
+            "keyContributors": ["Hermann Grassmann"],
+            "historicalNote": "Hermann Grassmann developed the modern concept of vector spaces in the 1840s. His work was ahead of its time and forms the foundation of linear algebra used in all ML systems today."
+          },
           "content": [
             {
               "type": "text",
@@ -149,6 +188,10 @@
           "title": "Matrices and Matrix Operations",
           "type": "lesson",
           "duration": "30 min",
+          "authorCredits": {
+            "keyContributors": ["Arthur Cayley", "James Joseph Sylvester"],
+            "historicalNote": "Arthur Cayley formalized matrix algebra in 1858, while his friend J.J. Sylvester coined the term 'matrix'. Their work made possible the compact notation we use for neural network computations today."
+          },
           "content": [
             {
               "type": "text",
@@ -220,6 +263,44 @@
               "language": "python",
               "title": "Computing Eigenvalues in NumPy",
               "code": "import numpy as np\n\n# Covariance matrix (symmetric)\nA = np.array([[4, 2],\n              [2, 3]])\n\n# Compute eigenvalues and eigenvectors\neigenvalues, eigenvectors = np.linalg.eig(A)\n\nprint(\"Eigenvalues:\", eigenvalues)\nprint(\"\\nEigenvectors (columns):\")\nprint(eigenvectors)\n\n# Verify: A @ v = lambda * v\nv1 = eigenvectors[:, 0]\nlambda1 = eigenvalues[0]\n\nprint(f\"\\nA @ v1 = {A @ v1}\")\nprint(f\"λ1 * v1 = {lambda1 * v1}\")\nprint(\"They match!\")\n\n# PCA Example\nfrom sklearn.decomposition import PCA\n\n# Random data\nX = np.random.randn(100, 5)\n\n# PCA finds eigenvectors of covariance matrix\npca = PCA(n_components=2)\nX_reduced = pca.fit_transform(X)\n\nprint(f\"\\nOriginal shape: {X.shape}\")\nprint(f\"Reduced shape: {X_reduced.shape}\")\nprint(f\"Variance explained: {pca.explained_variance_ratio_}\")"
+            }
+          ]
+        },
+        {
+          "id": "svd",
+          "title": "Singular Value Decomposition (SVD)",
+          "type": "lesson",
+          "duration": "30 min",
+          "authorCredits": {
+            "keyContributors": ["Gene Golub", "William Kahan"],
+            "historicalNote": "The modern SVD algorithm was developed by Gene Golub and William Kahan in 1965. SVD is often called 'the most important matrix factorization' and powers everything from PCA to recommender systems."
+          },
+          "content": [
+            {
+              "type": "text",
+              "content": "## What is SVD?\n\n**Singular Value Decomposition** factors any matrix into three components:\n\n$$A = U \\Sigma V^T$$\n\nWhere:\n- $U$ = left singular vectors (rotation in output space)\n- $\\Sigma$ = diagonal matrix of singular values (scaling)\n- $V^T$ = right singular vectors (rotation in input space)\n\n**Key Insight:** Every linear transformation is a rotation, then a stretch, then another rotation."
+            },
+            {
+              "type": "text",
+              "content": "## Why SVD is Everywhere in ML\n\n**1. Dimensionality Reduction (PCA)**\n- PCA is SVD applied to centered data\n- Keep top-k singular values → keep most variance\n- Compression with minimal information loss\n\n**2. Recommender Systems**\n- Netflix Prize: SVD on user-item matrices\n- Find latent factors (genres, preferences)\n- Fill in missing ratings\n\n**3. NLP: LSA/LSI**\n- Latent Semantic Analysis uses SVD\n- Reduce word-document matrices\n- Capture semantic relationships\n\n**4. Image Compression**\n- Low-rank approximation of image matrices\n- Keep top singular values"
+            },
+            {
+              "type": "text",
+              "content": "## The Power of Low-Rank Approximation\n\nThe **Eckart-Young theorem** states:\n\n*The best rank-k approximation of a matrix (in terms of Frobenius norm) is obtained by keeping only the top k singular values.*\n\n$$A_k = U_k \\Sigma_k V_k^T$$\n\nThis is why SVD is so powerful for compression and noise reduction."
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "SVD in Practice",
+              "code": "import numpy as np\nimport matplotlib.pyplot as plt\n\n# SVD decomposes ANY matrix\nA = np.array([[1, 2, 3],\n              [4, 5, 6],\n              [7, 8, 9]])\n\nU, S, Vt = np.linalg.svd(A)\n\nprint(\"Original A:\")\nprint(A)\nprint(f\"\\nSingular values: {S}\")\nprint(f\"U shape: {U.shape}, S shape: {S.shape}, Vt shape: {Vt.shape}\")\n\n# Reconstruct from SVD\nA_reconstructed = U @ np.diag(S) @ Vt\nprint(f\"\\nReconstruction error: {np.abs(A - A_reconstructed).max():.2e}\")\n\n# Low-rank approximation (keep only top-k)\ndef low_rank_approx(A, k):\n    U, S, Vt = np.linalg.svd(A, full_matrices=False)\n    return U[:, :k] @ np.diag(S[:k]) @ Vt[:k, :]\n\n# Example: Compress a simple matrix\nA_rank1 = low_rank_approx(A, k=1)\nA_rank2 = low_rank_approx(A, k=2)\n\nprint(\"\\nRank-1 approximation:\")\nprint(A_rank1.round(2))\nprint(\"\\nRank-2 approximation:\")\nprint(A_rank2.round(2))"
+            },
+            {
+              "type": "text",
+              "content": "## SVD vs Eigendecomposition\n\n| Feature | SVD | Eigendecomposition |\n|---------|-----|--------------------|\n| Works on | Any matrix | Square matrices |\n| Components | U, Σ, V^T | V, Λ, V^-1 |\n| Values | Always non-negative | Can be negative |\n| Vectors | Always orthogonal | Not always |\n| Use case | General purpose | Symmetric matrices |\n\n**Bottom line:** When in doubt, use SVD - it always works."
+            },
+            {
+              "type": "text",
+              "content": "## When to Use SVD\n\n✅ **Use SVD when:**\n- Dimensionality reduction is needed\n- Building recommender systems\n- Text analysis (LSA/LSI)\n- Need stable matrix computations\n- Computing pseudo-inverse\n\n⚠️ **Limitations:**\n- O(mn²) or O(m²n) complexity - expensive for huge matrices\n- For large-scale, use randomized/truncated SVD (e.g., sklearn.decomposition.TruncatedSVD)\n- Not ideal for sparse matrices - consider NMF instead"
             }
           ]
         },
@@ -319,6 +400,10 @@
           "title": "Derivatives and Slopes",
           "type": "lesson",
           "duration": "25 min",
+          "authorCredits": {
+            "keyContributors": ["Isaac Newton", "Gottfried Leibniz"],
+            "historicalNote": "Newton and Leibniz independently invented calculus in the 1680s. Newton's notation (fluxions) and Leibniz's notation (dy/dx) both contribute to modern calculus. We primarily use Leibniz notation today."
+          },
           "content": [
             {
               "type": "text",
@@ -528,6 +613,10 @@
           "title": "Bayes' Theorem",
           "type": "lesson",
           "duration": "30 min",
+          "authorCredits": {
+            "keyContributors": ["Thomas Bayes", "Pierre-Simon Laplace"],
+            "historicalNote": "Reverend Thomas Bayes developed the theorem posthumously published in 1763. Laplace independently rediscovered and generalized it, applying it extensively. Bayesian inference now underlies probabilistic ML, uncertainty quantification, and even large language models."
+          },
           "content": [
             {
               "type": "text",
@@ -546,6 +635,48 @@
               "language": "python",
               "title": "Naive Bayes Classifier",
               "code": "from sklearn.naive_bayes import GaussianNB\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\n\n# Load data\niris = load_iris()\nX_train, X_test, y_train, y_test = train_test_split(\n    iris.data, iris.target, test_size=0.3, random_state=42\n)\n\n# Train Naive Bayes\nnb = GaussianNB()\nnb.fit(X_train, y_train)\n\n# Evaluate\naccuracy = nb.score(X_test, y_test)\nprint(f\"Naive Bayes Accuracy: {accuracy:.3f}\")\n\n# Get probability predictions\nprobs = nb.predict_proba(X_test[:3])\nprint(f\"\\nProbabilities for first 3 samples:\")\nfor i, p in enumerate(probs):\n    print(f\"  Sample {i}: {p.round(3)}\")"
+            }
+          ]
+        },
+        {
+          "id": "information-theory",
+          "title": "Information Theory Essentials",
+          "type": "lesson",
+          "duration": "30 min",
+          "authorCredits": {
+            "keyContributors": ["Claude Shannon"],
+            "historicalNote": "Claude Shannon's 1948 paper 'A Mathematical Theory of Communication' founded information theory. His concept of entropy directly underlies the cross-entropy loss function used to train virtually every modern neural network."
+          },
+          "content": [
+            {
+              "type": "text",
+              "content": "## Why Information Theory for ML?\n\n**Information theory** provides the mathematical foundation for:\n- **Cross-entropy loss** (the most common loss function)\n- **KL divergence** (comparing distributions)\n- **Compression** and representation learning\n- **Information bottleneck** theory\n\n> *\"Information theory answers: How much can you compress a message?\"* — Claude Shannon"
+            },
+            {
+              "type": "text",
+              "content": "## Entropy: Measuring Uncertainty\n\n**Entropy** measures the average \"surprise\" or uncertainty in a distribution:\n\n$$H(P) = -\\sum_x P(x) \\log P(x)$$\n\n**Intuition:**\n- Coin flip (50/50): High entropy (uncertain)\n- Loaded coin (99/1): Low entropy (predictable)\n- Certainty (100/0): Zero entropy\n\n**In ML:** Higher entropy = more uncertain predictions"
+            },
+            {
+              "type": "text",
+              "content": "## Cross-Entropy: Comparing Distributions\n\n**Cross-entropy** measures the average bits needed to encode samples from P using a code optimized for Q:\n\n$$H(P, Q) = -\\sum_x P(x) \\log Q(x)$$\n\n**In classification:**\n- $P$ = true labels (one-hot)\n- $Q$ = model predictions (softmax)\n- Cross-entropy loss = how wrong your predictions are\n\n$$\\text{Loss} = -\\sum_c y_c \\log(\\hat{y}_c)$$\n\nThis is **exactly** the categorical cross-entropy loss!"
+            },
+            {
+              "type": "text",
+              "content": "## KL Divergence: Distance Between Distributions\n\n**Kullback-Leibler divergence** measures how different Q is from P:\n\n$$D_{KL}(P||Q) = \\sum_x P(x) \\log \\frac{P(x)}{Q(x)}$$\n\n**Properties:**\n- Always ≥ 0 (Gibbs' inequality)\n- = 0 only when P = Q\n- **Asymmetric:** $D_{KL}(P||Q) \\neq D_{KL}(Q||P)$\n\n**In ML:**\n- VAEs minimize KL divergence to prior\n- Knowledge distillation uses KL divergence\n- Regularization in Bayesian methods"
+            },
+            {
+              "type": "text",
+              "content": "## The Connection\n\n$$H(P, Q) = H(P) + D_{KL}(P||Q)$$\n\n**Cross-entropy = Entropy + KL Divergence**\n\nSince entropy of true labels $H(P)$ is constant during training, minimizing cross-entropy = minimizing KL divergence = making Q closer to P!"
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Information Theory in Practice",
+              "code": "import numpy as np\nfrom scipy.stats import entropy\nfrom scipy.special import rel_entr\n\n# Entropy: measure uncertainty\ndef compute_entropy(p):\n    p = np.array(p)\n    p = p[p > 0]  # Avoid log(0)\n    return -np.sum(p * np.log2(p))\n\n# Examples\nfair_coin = [0.5, 0.5]\nloaded_coin = [0.9, 0.1]\ncertain = [1.0, 0.0]\n\nprint(\"Entropy (bits):\")\nprint(f\"  Fair coin: {compute_entropy(fair_coin):.3f}\")\nprint(f\"  Loaded coin: {compute_entropy(loaded_coin):.3f}\")\nprint(f\"  Certain: {compute_entropy(certain):.3f}\")\n\n# Cross-entropy loss\ndef cross_entropy(y_true, y_pred, eps=1e-15):\n    y_pred = np.clip(y_pred, eps, 1 - eps)\n    return -np.sum(y_true * np.log(y_pred))\n\n# True label: class 1 (one-hot)\ny_true = [0, 1, 0]  \n\n# Good prediction\ny_good = [0.1, 0.8, 0.1]\n# Bad prediction\ny_bad = [0.4, 0.3, 0.3]\n\nprint(f\"\\nCross-entropy loss:\")\nprint(f\"  Good prediction: {cross_entropy(y_true, y_good):.3f}\")\nprint(f\"  Bad prediction: {cross_entropy(y_true, y_bad):.3f}\")\n\n# KL Divergence\nP = np.array([0.3, 0.7])\nQ = np.array([0.5, 0.5])\n\nkl_div = np.sum(rel_entr(P, Q))\nprint(f\"\\nKL(P||Q) = {kl_div:.4f}\")\nprint(f\"KL(Q||P) = {np.sum(rel_entr(Q, P)):.4f}\")\nprint(\"Note: KL is asymmetric!\")"
+            },
+            {
+              "type": "text",
+              "content": "## When to Use What\n\n| Concept | Use When | ML Example |\n|---------|----------|------------|\n| **Entropy** | Measuring uncertainty | Confidence calibration |\n| **Cross-entropy** | Classification loss | Training classifiers |\n| **KL Divergence** | Comparing distributions | VAEs, knowledge distillation |\n| **Mutual Information** | Feature selection | Finding relevant features |"
             }
           ]
         },
@@ -663,6 +794,10 @@
           "title": "Gradient Descent Variants",
           "type": "lesson",
           "duration": "30 min",
+          "authorCredits": {
+            "keyContributors": ["Augustin-Louis Cauchy", "Herbert Robbins", "Sutton Monro"],
+            "historicalNote": "Cauchy first described gradient descent in 1847. Robbins and Monro introduced stochastic gradient descent in 1951, enabling the scalable training of modern neural networks."
+          },
           "content": [
             {
               "type": "text",
@@ -733,6 +868,44 @@
               "language": "python",
               "title": "Regularization in Practice",
               "code": "import torch\nimport torch.nn as nn\n\nclass RegularizedNetwork(nn.Module):\n    def __init__(self, dropout_rate=0.5):\n        super().__init__()\n        self.layers = nn.Sequential(\n            nn.Linear(784, 256),\n            nn.ReLU(),\n            nn.Dropout(dropout_rate),  # Dropout!\n            nn.Linear(256, 128),\n            nn.ReLU(),\n            nn.Dropout(dropout_rate),\n            nn.Linear(128, 10)\n        )\n    \n    def forward(self, x):\n        return self.layers(x)\n\nmodel = RegularizedNetwork(dropout_rate=0.3)\n\n# L2 regularization via weight_decay\noptimizer = torch.optim.AdamW(\n    model.parameters(), \n    lr=0.001, \n    weight_decay=0.01  # L2 penalty\n)\n\nprint(\"Model with Dropout layers:\")\nprint(model)\n\n# Training vs Eval mode\nmodel.train()  # Dropout active\nmodel.eval()   # Dropout disabled"
+            }
+          ]
+        },
+        {
+          "id": "numerical-stability",
+          "title": "Numerical Stability in Practice",
+          "type": "lesson",
+          "duration": "25 min",
+          "authorCredits": {
+            "keyContributors": ["James Wilkinson"],
+            "historicalNote": "James Wilkinson pioneered numerical stability analysis. His work on backward error analysis is why we know which algorithms work reliably with floating-point numbers."
+          },
+          "content": [
+            {
+              "type": "text",
+              "content": "## Why Numerical Stability Matters\n\n**The Math Works. The Computer Doesn't.**\n\nComputers use finite precision floating-point numbers:\n- 32-bit float: ~7 decimal digits of precision\n- 64-bit double: ~16 decimal digits\n\n**When this breaks:**\n- Very large or small numbers\n- Subtracting nearly equal numbers\n- Summing many small numbers\n- Inverting ill-conditioned matrices"
+            },
+            {
+              "type": "text",
+              "content": "## Common Stability Problems in ML\n\n### 1. Log of Small Probabilities\n```python\n# BAD: Can produce -inf\nloss = np.log(probability)  # If probability ≈ 0\n\n# GOOD: Add small epsilon\nloss = np.log(probability + 1e-10)\n# Or use log_softmax directly\n```\n\n### 2. Softmax Overflow\n```python\n# BAD: exp(1000) = inf\nsoftmax = np.exp(logits) / np.sum(np.exp(logits))\n\n# GOOD: Subtract max for stability\nlogits_stable = logits - np.max(logits)\nsoftmax = np.exp(logits_stable) / np.sum(np.exp(logits_stable))\n```\n\n### 3. Division by Zero\nAlways add epsilon to denominators!"
+            },
+            {
+              "type": "text",
+              "content": "## Never Invert Matrices Explicitly!\n\n**The Rule:** Don't compute $A^{-1}$. Solve the linear system instead.\n\n```python\n# BAD: Unstable and slow\nx = np.linalg.inv(A) @ b\n\n# GOOD: Use solve()\nx = np.linalg.solve(A, b)\n```\n\n**Why?**\n- Matrix inversion is O(n³) and numerically unstable\n- `solve()` uses LU decomposition - more stable\n- For least squares, use `lstsq()` or SVD"
+            },
+            {
+              "type": "text",
+              "content": "## Condition Number: Predicting Trouble\n\nThe **condition number** measures how sensitive a matrix is to small changes:\n\n$$\\kappa(A) = \\|A\\| \\cdot \\|A^{-1}\\|$$\n\n| Condition Number | Stability |\n|-----------------|----------|\n| κ ≈ 1 | Well-conditioned |\n| κ = 10⁶ | Losing 6 digits of precision |\n| κ = 10¹⁶ | Results are meaningless (for double) |\n\n**Rule of thumb:** You lose log₁₀(κ) decimal digits of precision."
+            },
+            {
+              "type": "code",
+              "language": "python",
+              "title": "Numerical Stability Patterns",
+              "code": "import numpy as np\n\n# 1. Stable softmax\ndef stable_softmax(x):\n    x_shifted = x - np.max(x)  # Subtract max for stability\n    exp_x = np.exp(x_shifted)\n    return exp_x / np.sum(exp_x)\n\nlogits = np.array([1000, 1001, 1002])  # Would overflow naive softmax\nprint(f\"Stable softmax: {stable_softmax(logits)}\")\n\n# 2. Log-sum-exp trick\ndef logsumexp(x):\n    c = np.max(x)\n    return c + np.log(np.sum(np.exp(x - c)))\n\nprint(f\"Log-sum-exp: {logsumexp(logits):.2f}\")\n\n# 3. Condition number\nA_good = np.array([[1, 0], [0, 1]])  # Identity\nA_bad = np.array([[1, 1], [1, 1.0001]])  # Nearly singular\n\nprint(f\"\\nCondition numbers:\")\nprint(f\"  Identity: {np.linalg.cond(A_good):.2f}\")\nprint(f\"  Ill-conditioned: {np.linalg.cond(A_bad):.2f}\")\n\n# 4. Solve vs inverse\nb = np.array([1, 2])\nx_inv = np.linalg.inv(A_good) @ b  # Works here, but avoid in general\nx_solve = np.linalg.solve(A_good, b)  # Always prefer this\nprint(f\"\\nSolve vs inverse match: {np.allclose(x_inv, x_solve)}\")"
+            },
+            {
+              "type": "text",
+              "content": "## Stability Checklist for ML\n\n✅ Use `log_softmax` instead of `log(softmax(x))`\n✅ Always add epsilon before dividing or logging\n✅ Use `solve()` instead of `inv()`\n✅ Use mixed precision carefully (fp16 can overflow)\n✅ Check for NaN/Inf during training\n✅ Initialize weights properly (avoid vanishing/exploding)\n✅ Use gradient clipping for RNNs\n\n> *\"The purpose of computing is insight, not numbers.\"* — Richard Hamming"
             }
           ]
         },
