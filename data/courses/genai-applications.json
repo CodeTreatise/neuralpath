@@ -5,13 +5,55 @@
   "description": "Build practical applications with LLMs, image generation, and multi-modal AI systems. Generative AI can create original content such as text, images, video, audio or software code in response to user prompts, using deep learning models that simulate human learning and decision-making.",
   "level": "intermediate",
   "duration": "6 weeks",
-  "totalLessons": 16,
+  "totalLessons": 18,
   "validationSources": [
     "https://www.ibm.com/topics/generative-ai"
   ],
   "prerequisites": [
     "Python Fundamentals",
     "LLM Basics"
+  ],
+  "keyThinkers": [
+    {
+      "name": "Harrison Chase",
+      "contribution": "Created LangChain framework, pioneering composable LLM application architecture with chains, agents, and memory"
+    },
+    {
+      "name": "Andrew Ng",
+      "contribution": "Defined the four agentic AI design patterns (Reflection, Tool Use, Planning, Multi-Agent) that form modern agent architectures"
+    },
+    {
+      "name": "Dario Amodei",
+      "contribution": "Anthropic CEO who developed Constitutional AI principles for building safe, helpful AI assistants"
+    },
+    {
+      "name": "Jan Leike",
+      "contribution": "Pioneered Reinforcement Learning from Human Feedback (RLHF) for aligning LLMs with human preferences"
+    },
+    {
+      "name": "Aditya Ramesh",
+      "contribution": "Led development of DALL-E and CLIP at OpenAI, enabling text-to-image generation and vision-language alignment"
+    },
+    {
+      "name": "Robin Rombach",
+      "contribution": "Created Latent Diffusion Models and Stable Diffusion, democratizing open-source image generation"
+    },
+    {
+      "name": "João Moura",
+      "contribution": "Founded CrewAI, developing multi-agent systems with role-playing, memory, and cooperation patterns"
+    },
+    {
+      "name": "Alec Radford",
+      "contribution": "Architect of the GPT series, CLIP, and Whisper at OpenAI, foundational to modern multimodal AI"
+    },
+    {
+      "name": "Samuel Colvin",
+      "contribution": "Created Pydantic, the standard library for data validation and structured outputs in Python AI applications"
+    },
+    {
+      "name": "Joseph Weizenbaum",
+      "contribution": "Created ELIZA (1966), the first chatbot that demonstrated conversational AI through pattern matching"
+    }
   ],
   "outcomes": [
     "Build chatbots and AI assistants",
@@ -60,6 +102,7 @@
           "title": "Building Chatbots with LLMs",
           "type": "lesson",
           "duration": "30 min",
+          "credit": "Conversational AI pioneered by Joseph Weizenbaum (ELIZA, 1966); modern LLM chat interfaces by OpenAI ChatGPT team",
           "content": {
             "overview": "Learn to build conversational AI applications using LLM APIs, managing context, and creating engaging user experiences.",
             "sections": [
@@ -104,6 +147,7 @@
           "title": "Function Calling & Tool Use",
           "type": "lesson",
           "duration": "30 min",
+          "credit": "OpenAI API team (function calling release, June 2023); paradigm enables LLM-to-tool interaction",
           "content": {
             "overview": "Enable LLMs to interact with external systems through function calling, turning them into powerful action-taking agents.",
             "sections": [
@@ -136,6 +180,53 @@
               "Parallel calls improve latency for multiple operations"
             ]
           }
+        },
+        {
+          "id": "structured-outputs",
+          "title": "Structured Outputs & JSON Mode",
+          "type": "lesson",
+          "duration": "40 min",
+          "credit": "OpenAI API team (structured outputs, 2024); Samuel Colvin (Pydantic for schema validation)",
+          "content": {
+            "overview": "Production AI applications require predictable, parseable outputs. Learn to use structured outputs and JSON mode for reliable data extraction.",
+            "sections": [
+              {
+                "title": "JSON Mode Basics",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from openai import OpenAI\nimport json\n\nclient = OpenAI()\n\n# JSON mode - basic approach\nresponse = client.chat.completions.create(\n    model='gpt-4o',\n    messages=[\n        {'role': 'system', 'content': 'Extract data as JSON with keys: name, email, company'},\n        {'role': 'user', 'content': 'Contact: John Smith, john@acme.com, works at Acme Inc'}\n    ],\n    response_format={'type': 'json_object'}\n)\n\ndata = json.loads(response.choices[0].message.content)\nprint(f\"Name: {data['name']}, Email: {data['email']}\")"
+                }
+              },
+              {
+                "title": "Structured Outputs with Pydantic",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from openai import OpenAI\nfrom pydantic import BaseModel, Field\nfrom typing import List, Optional\nfrom enum import Enum\n\nclient = OpenAI()\n\nclass Sentiment(str, Enum):\n    positive = 'positive'\n    negative = 'negative'\n    neutral = 'neutral'\n\nclass ProductReview(BaseModel):\n    \"\"\"Structured output for product review analysis.\"\"\"\n    sentiment: Sentiment = Field(description='Overall sentiment')\n    rating: int = Field(ge=1, le=5, description='Star rating 1-5')\n    pros: List[str] = Field(description='List of positive aspects')\n    cons: List[str] = Field(description='List of negative aspects')\n    summary: str = Field(max_length=200, description='Brief summary')\n    recommended: bool = Field(description='Would recommend product')\n\n# Use structured outputs API\nresponse = client.beta.chat.completions.parse(\n    model='gpt-4o',\n    messages=[\n        {'role': 'system', 'content': 'Analyze product reviews.'},\n        {'role': 'user', 'content': '''Review: This laptop is amazing! \n        Fast performance, great battery life, beautiful display. \n        Only downsides are the weight and high price tag.'''}\n    ],\n    response_format=ProductReview\n)\n\nreview = response.choices[0].message.parsed\nprint(f'Sentiment: {review.sentiment.value}')\nprint(f'Rating: {review.rating}/5')\nprint(f'Pros: {\", \".join(review.pros)}')\nprint(f'Recommended: {review.recommended}')"
+                }
+              },
+              {
+                "title": "Handling Refusals and Streaming",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Handle model refusals gracefully\nresponse = client.beta.chat.completions.parse(\n    model='gpt-4o',\n    messages=messages,\n    response_format=MySchema\n)\n\nmessage = response.choices[0].message\n\n# Check for refusal before accessing parsed\nif message.refusal:\n    print(f'Model refused: {message.refusal}')\nelse:\n    result = message.parsed\n    process_result(result)\n\n# Streaming with structured outputs\nfrom pydantic import BaseModel\n\nclass Step(BaseModel):\n    step_number: int\n    description: str\n    code: str\n\nclass Tutorial(BaseModel):\n    title: str\n    steps: List[Step]\n\nwith client.beta.chat.completions.stream(\n    model='gpt-4o',\n    messages=[{'role': 'user', 'content': 'Create a Python file reading tutorial'}],\n    response_format=Tutorial\n) as stream:\n    for event in stream:\n        if event.type == 'content.delta':\n            print(event.delta, end='', flush=True)\n    \n    # Get final parsed result\n    result = stream.get_final_completion().choices[0].message.parsed"
+                }
+              },
+              {
+                "title": "Complex Nested Schemas",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from pydantic import BaseModel\nfrom typing import List, Optional, Union\n\nclass Address(BaseModel):\n    street: str\n    city: str\n    country: str\n    postal_code: Optional[str] = None\n\nclass Person(BaseModel):\n    name: str\n    email: str\n    phone: Optional[str] = None\n    address: Optional[Address] = None\n\nclass Company(BaseModel):\n    name: str\n    industry: str\n    employees: List[Person]\n    headquarters: Address\n\nclass ExtractedData(BaseModel):\n    \"\"\"Root schema for document extraction.\"\"\"\n    companies: List[Company]\n    relationships: List[str]\n    key_facts: List[str]\n\n# Extract complex data from documents\nresponse = client.beta.chat.completions.parse(\n    model='gpt-4o',\n    messages=[\n        {'role': 'system', 'content': 'Extract business information from documents.'},\n        {'role': 'user', 'content': document_text}\n    ],\n    response_format=ExtractedData\n)\n\ndata = response.choices[0].message.parsed\nfor company in data.companies:\n    print(f'{company.name} ({company.industry}): {len(company.employees)} employees')"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Structured outputs guarantee schema-valid JSON",
+              "Pydantic provides type safety and validation",
+              "Always handle refusals in production code",
+              "Nested schemas enable complex data extraction",
+              "Streaming works with structured outputs for real-time UX"
+            ]
+          }
         }
       ]
     },
@@ -148,6 +239,7 @@
           "title": "Safety & Guardrails",
           "type": "lesson",
           "duration": "30 min",
+          "credit": "Anthropic (Constitutional AI); NVIDIA NeMo Guardrails team; OpenAI Moderation API",
           "content": {
             "overview": "Implement safety measures to prevent harmful outputs, prompt injection, and ensure responsible AI use.",
             "sections": [
@@ -234,6 +326,7 @@
           "title": "Building with LangChain",
           "type": "lesson",
           "duration": "35 min",
+          "credit": "Harrison Chase (LangChain founder/CEO); LangChain open-source community",
           "content": {
             "overview": "LangChain provides abstractions for building complex LLM applications with chains, memory, agents, and tools.",
             "sections": [
@@ -272,6 +365,7 @@
           "title": "Image Generation with AI",
           "type": "lesson",
           "duration": "30 min",
+          "credit": "Aditya Ramesh (DALL-E, OpenAI); Robin Rombach (Stable Diffusion); Midjourney team",
           "content": {
             "overview": "Learn to integrate image generation models like DALL-E, Stable Diffusion, and Midjourney into your applications.",
             "sections": [
@@ -310,6 +404,7 @@
           "title": "Multi-Modal AI Applications",
           "type": "lesson",
           "duration": "30 min",
+          "credit": "OpenAI GPT-4V team; Google DeepMind Gemini team; Alec Radford (CLIP, Whisper)",
           "content": {
             "overview": "Multi-modal AI can process and generate content across text, images, audio, and video. Learn to build applications that combine modalities.",
             "sections": [
@@ -348,6 +443,7 @@
           "title": "Advanced Prompt Engineering",
           "type": "lesson",
           "duration": "35 min",
+          "credit": "Lilian Weng (OpenAI research); Anthropic prompt engineering team; Jason Wei (Chain-of-Thought)",
           "content": {
             "overview": "Master the art of crafting effective prompts to get consistent, high-quality outputs from LLMs.",
             "sections": [
@@ -420,6 +516,54 @@
               "Build custom assistants for more control",
               "User profiles enable personalization",
               "Structured flows handle complex tasks"
+            ]
+          }
+        },
+        {
+          "id": "agentic-workflows",
+          "title": "Agentic Workflows & Multi-Agent Systems",
+          "type": "lesson",
+          "duration": "45 min",
+          "credit": "Andrew Ng (four agentic patterns); Harrison Chase (LangGraph); João Moura (CrewAI multi-agent systems)",
+          "content": {
+            "overview": "Build autonomous AI agents that can reason, plan, use tools, and collaborate. Master the four agentic design patterns that power modern AI systems.",
+            "sections": [
+              {
+                "title": "The Four Agentic Patterns",
+                "content": "**Andrew Ng's Agentic AI Design Patterns:**\n\n1. **Reflection**: Agent reviews and critiques its own output to improve quality\n2. **Tool Use**: Agent calls external tools/APIs to gather information or take actions\n3. **Planning**: Agent breaks complex tasks into steps and creates execution plans\n4. **Multi-Agent**: Multiple specialized agents collaborate on complex tasks\n\nThese patterns can be combined for powerful autonomous systems.",
+                "diagram": {
+                  "title": "Agentic Design Patterns",
+                  "code": "flowchart TB\n    subgraph Reflection[\"Reflection Pattern\"]\n        R1[Generate] --> R2[Critique]\n        R2 --> R3[Refine]\n        R3 --> R1\n    end\n    \n    subgraph Tools[\"Tool Use Pattern\"]\n        T1[Reason] --> T2[Select Tool]\n        T2 --> T3[Execute]\n        T3 --> T4[Observe]\n        T4 --> T1\n    end\n    \n    subgraph Planning[\"Planning Pattern\"]\n        P1[Task] --> P2[Decompose]\n        P2 --> P3[Execute Steps]\n        P3 --> P4[Synthesize]\n    end\n    \n    subgraph MultiAgent[\"Multi-Agent Pattern\"]\n        M1[Orchestrator] --> M2[Agent A]\n        M1 --> M3[Agent B]\n        M2 --> M4[Collaborate]\n        M3 --> M4\n    end"
+                }
+              },
+              {
+                "title": "Reflection Pattern with LangGraph",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from langgraph.graph import StateGraph, END\nfrom typing import TypedDict, Annotated\n\nclass AgentState(TypedDict):\n    draft: str\n    critique: str\n    iteration: int\n    final: bool\n\ndef generate_draft(state: AgentState) -> AgentState:\n    \"\"\"Generate or refine the draft.\"\"\"\n    prompt = f\"\"\"Write an essay about AI safety.\n    {'Previous critique to address: ' + state['critique'] if state['critique'] else ''}\"\"\"\n    \n    response = llm.invoke(prompt)\n    return {'draft': response.content, 'iteration': state['iteration'] + 1}\n\ndef critique_draft(state: AgentState) -> AgentState:\n    \"\"\"Self-critique the draft.\"\"\"\n    prompt = f\"\"\"Critique this essay. Be specific about improvements:\n    {state['draft']}\"\"\"\n    \n    response = llm.invoke(prompt)\n    return {'critique': response.content}\n\ndef should_continue(state: AgentState) -> str:\n    \"\"\"Decide if more iterations needed.\"\"\"\n    if state['iteration'] >= 3:\n        return 'end'\n    if 'excellent' in state['critique'].lower():\n        return 'end'\n    return 'continue'\n\n# Build the graph\nworkflow = StateGraph(AgentState)\nworkflow.add_node('generate', generate_draft)\nworkflow.add_node('critique', critique_draft)\nworkflow.add_edge('generate', 'critique')\nworkflow.add_conditional_edges('critique', should_continue, \n    {'continue': 'generate', 'end': END})\nworkflow.set_entry_point('generate')\n\napp = workflow.compile()\nresult = app.invoke({'draft': '', 'critique': '', 'iteration': 0, 'final': False})"
+                }
+              },
+              {
+                "title": "Multi-Agent with CrewAI",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from crewai import Agent, Task, Crew, Process\n\n# Define specialized agents\nresearcher = Agent(\n    role='Senior Research Analyst',\n    goal='Uncover cutting-edge developments in AI',\n    backstory='Expert at finding and analyzing tech trends',\n    tools=[search_tool, scrape_tool],\n    verbose=True\n)\n\nwriter = Agent(\n    role='Tech Content Writer',\n    goal='Create engaging content about AI discoveries',\n    backstory='Skilled at translating complex tech into clear prose',\n    verbose=True\n)\n\neditor = Agent(\n    role='Senior Editor',\n    goal='Ensure accuracy and quality of content',\n    backstory='Meticulous editor with journalism background',\n    verbose=True\n)\n\n# Define tasks\nresearch_task = Task(\n    description='Research the latest AI agent frameworks',\n    agent=researcher,\n    expected_output='Comprehensive research notes'\n)\n\nwriting_task = Task(\n    description='Write a blog post based on research',\n    agent=writer,\n    expected_output='Draft blog post',\n    context=[research_task]  # Depends on research\n)\n\nedit_task = Task(\n    description='Edit and polish the blog post',\n    agent=editor,\n    expected_output='Final polished article',\n    context=[writing_task]\n)\n\n# Create and run crew\ncrew = Crew(\n    agents=[researcher, writer, editor],\n    tasks=[research_task, writing_task, edit_task],\n    process=Process.sequential\n)\n\nresult = crew.kickoff()"
+                }
+              },
+              {
+                "title": "Agent Memory Patterns",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from typing import List, Dict\nimport json\n\nclass AgentMemory:\n    \"\"\"Implement different memory types for agents.\"\"\"\n    \n    def __init__(self):\n        # Short-term: Current conversation\n        self.short_term: List[Dict] = []\n        \n        # Long-term: Persistent knowledge\n        self.long_term: Dict = {}\n        \n        # Episodic: Past experiences/tasks\n        self.episodic: List[Dict] = []\n    \n    def add_message(self, role: str, content: str):\n        \"\"\"Add to short-term memory.\"\"\"\n        self.short_term.append({'role': role, 'content': content})\n        # Summarize if too long\n        if len(self.short_term) > 20:\n            self._summarize_and_compress()\n    \n    def remember_fact(self, key: str, value: str):\n        \"\"\"Store in long-term memory.\"\"\"\n        self.long_term[key] = value\n    \n    def record_episode(self, task: str, outcome: str, learnings: List[str]):\n        \"\"\"Record completed task for future reference.\"\"\"\n        self.episodic.append({\n            'task': task,\n            'outcome': outcome,\n            'learnings': learnings,\n            'timestamp': datetime.now().isoformat()\n        })\n    \n    def get_relevant_memories(self, query: str) -> str:\n        \"\"\"Retrieve relevant memories for current context.\"\"\"\n        # In production, use embeddings + vector search\n        context = []\n        context.append(f\"Known facts: {json.dumps(self.long_term)}\")\n        \n        # Get recent episodes\n        recent = self.episodic[-5:] if self.episodic else []\n        if recent:\n            context.append(f\"Past experiences: {json.dumps(recent)}\")\n        \n        return '\\n'.join(context)"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Reflection improves output quality through self-critique",
+              "Tool use extends agent capabilities beyond text generation",
+              "Planning enables complex multi-step task completion",
+              "Multi-agent systems divide complex work among specialists",
+              "Memory patterns enable learning and context retention"
             ]
           }
         },
