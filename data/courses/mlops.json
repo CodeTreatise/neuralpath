@@ -11,6 +11,58 @@
     "https://www.ibm.com/think/topics/machine-learning-operations",
     "https://www.ibm.com/topics/model-monitoring"
   ],
+  "keyThinkers": [
+    {
+      "name": "Matei Zaharia",
+      "contribution": "Created MLflow for ML lifecycle management, co-founded Databricks",
+      "keyWork": "MLflow: A Platform for the Machine Learning Lifecycle"
+    },
+    {
+      "name": "Dmitry Petrov",
+      "contribution": "Created DVC (Data Version Control) for ML data versioning",
+      "keyWork": "DVC: Open-source Version Control System for Machine Learning Projects"
+    },
+    {
+      "name": "Lukas Biewald",
+      "contribution": "Co-founded Weights & Biases for experiment tracking and ML observability",
+      "keyWork": "W&B: Developer tools for machine learning"
+    },
+    {
+      "name": "Willem Pienaar",
+      "contribution": "Created Feast feature store at Gojek (2018)",
+      "keyWork": "Feast: Open Source Feature Store for Machine Learning"
+    },
+    {
+      "name": "Elena Samuylova",
+      "contribution": "Co-founded Evidently AI for ML monitoring and drift detection",
+      "keyWork": "Evidently: Evaluate, test, and monitor ML models"
+    },
+    {
+      "name": "Emeli Dral",
+      "contribution": "Co-founded Evidently AI, ML observability thought leader",
+      "keyWork": "ML monitoring and production machine learning systems"
+    },
+    {
+      "name": "Harrison Chase",
+      "contribution": "Created LangChain and LangSmith for LLMOps",
+      "keyWork": "LangSmith for LLM monitoring, evaluation, and debugging"
+    },
+    {
+      "name": "D. Sculley",
+      "contribution": "Authored 'Hidden Technical Debt in Machine Learning Systems' (Google)",
+      "keyWork": "Seminal paper on ML systems challenges and technical debt"
+    },
+    {
+      "name": "Chip Huyen",
+      "contribution": "Author of 'Designing Machine Learning Systems', MLOps educator",
+      "keyWork": "ML systems design book and Stanford ML systems course"
+    },
+    {
+      "name": "Google Kubeflow Team",
+      "contribution": "Created Kubeflow for ML on Kubernetes",
+      "keyWork": "Kubeflow: Machine Learning Toolkit for Kubernetes"
+    }
+  ],
   "prerequisites": [
     "ML Fundamentals",
     "Python Proficiency",
@@ -69,6 +121,7 @@
         {
           "id": "experiment-tracking",
           "title": "Experiment Tracking",
+          "author": "MLflow by Matei Zaharia (Databricks); W&B by Lukas Biewald",
           "type": "lesson",
           "duration": "25 min",
           "content": {
@@ -302,6 +355,7 @@
         {
           "id": "monitoring-observability",
           "title": "Model Monitoring & Observability",
+          "author": "Evidently AI by Elena Samuylova & Emeli Dral",
           "type": "lesson",
           "duration": "30 min",
           "content": {
@@ -337,6 +391,7 @@
         {
           "id": "feature-stores",
           "title": "Feature Stores",
+          "author": "Feast by Willem Pienaar (Gojek/Tecton)",
           "type": "lesson",
           "duration": "30 min",
           "content": {
@@ -410,6 +465,7 @@
         {
           "id": "pipeline-orchestration",
           "title": "ML Pipeline Orchestration",
+          "author": "Kubeflow by Google; Airflow by Apache/Airbnb",
           "type": "lesson",
           "duration": "30 min",
           "content": {
@@ -476,6 +532,7 @@
         {
           "id": "data-versioning",
           "title": "Data Versioning with DVC",
+          "author": "DVC by Dmitry Petrov (Iterative.ai)",
           "type": "lesson",
           "duration": "25 min",
           "content": {
@@ -514,6 +571,7 @@
         {
           "id": "llmops",
           "title": "LLMOps: ML Operations for LLMs",
+          "author": "LangSmith by Harrison Chase (LangChain)",
           "type": "lesson",
           "duration": "40 min",
           "content": {
