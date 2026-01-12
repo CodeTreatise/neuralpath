@@ -11,6 +11,58 @@
     "https://www.ibm.com/topics/responsible-ai",
     "https://www.ibm.com/topics/ai-governance"
   ],
+  "keyThinkers": [
+    {
+      "name": "Timnit Gebru",
+      "contribution": "Co-founded Black in AI, Gender Shades research, DAIR Institute founder",
+      "keyWork": "On the Dangers of Stochastic Parrots; Gender Shades study"
+    },
+    {
+      "name": "Joy Buolamwini",
+      "contribution": "Founded Algorithmic Justice League, facial recognition bias research",
+      "keyWork": "Gender Shades: Intersectional Accuracy Disparities (2018)"
+    },
+    {
+      "name": "Cynthia Dwork",
+      "contribution": "Invented differential privacy and foundational work on algorithmic fairness",
+      "keyWork": "The Algorithmic Foundations of Differential Privacy"
+    },
+    {
+      "name": "Scott Lundberg",
+      "contribution": "Created SHAP for model explainability at Microsoft Research",
+      "keyWork": "SHAP: A Unified Approach to Interpreting Model Predictions"
+    },
+    {
+      "name": "Marco Tulio Ribeiro",
+      "contribution": "Created LIME for local interpretable explanations",
+      "keyWork": "Why Should I Trust You? Explaining the Predictions of Any Classifier"
+    },
+    {
+      "name": "Safiya Noble",
+      "contribution": "Scholar on algorithmic discrimination and search engine bias",
+      "keyWork": "Algorithms of Oppression: How Search Engines Reinforce Racism"
+    },
+    {
+      "name": "Ruha Benjamin",
+      "contribution": "Race and technology scholar, Princeton professor",
+      "keyWork": "Race After Technology: Abolitionist Tools for the New Jim Code"
+    },
+    {
+      "name": "Inioluwa Deborah Raji",
+      "contribution": "AI auditing methodologies and facial recognition bias research",
+      "keyWork": "Actionable Auditing: Investigating the Impact of Publicly Naming Biased Systems"
+    },
+    {
+      "name": "Yuntao Bai",
+      "contribution": "Lead author of Constitutional AI at Anthropic",
+      "keyWork": "Constitutional AI: Harmlessness from AI Feedback"
+    },
+    {
+      "name": "Hanna Wallach",
+      "contribution": "Co-created Fairlearn at Microsoft Research",
+      "keyWork": "Fairlearn: A toolkit for assessing and improving fairness in AI"
+    }
+  ],
   "prerequisites": [
     "ML Fundamentals"
   ],
@@ -70,6 +122,7 @@
         {
           "id": "algorithmic-bias",
           "title": "Understanding Algorithmic Bias",
+          "author": "Research by Timnit Gebru & Joy Buolamwini (Gender Shades study)",
           "type": "lesson",
           "duration": "30 min",
           "content": {
@@ -102,6 +155,7 @@
         {
           "id": "bias-mitigation",
           "title": "Bias Mitigation Techniques",
+          "author": "Fairlearn by Hanna Wallach, Miro Dudik et al. (Microsoft Research)",
           "type": "lesson",
           "duration": "35 min",
           "content": {
@@ -204,6 +258,7 @@
         {
           "id": "explainability",
           "title": "Explainability & Interpretability",
+          "author": "SHAP by Scott Lundberg; LIME by Marco Tulio Ribeiro",
           "type": "lesson",
           "duration": "30 min",
           "content": {
@@ -249,6 +304,7 @@
         {
           "id": "ai-safety",
           "title": "AI Safety Fundamentals",
+          "author": "RLHF concepts by OpenAI; Constitutional AI by Yuntao Bai (Anthropic)",
           "type": "lesson",
           "duration": "30 min",
           "content": {
@@ -284,6 +340,7 @@
         {
           "id": "privacy",
           "title": "Privacy in AI Systems",
+          "author": "Differential Privacy by Cynthia Dwork; Federated Learning by Google Research",
           "type": "lesson",
           "duration": "30 min",
           "content": {
@@ -355,6 +412,7 @@
         {
           "id": "llm-ethics",
           "title": "Ethics of Large Language Models",
+          "author": "Stochastic Parrots paper by Timnit Gebru, Emily Bender et al.",
           "type": "lesson",
           "duration": "30 min",
           "content": {
