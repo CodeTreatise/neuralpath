@@ -5,10 +5,48 @@
   "description": "Build vision AI systems from image classification to object detection and beyond. Computer vision is a subfield of AI that equips machines with the ability to process, analyze and interpret visual inputs such as images and videos, using machine learning to derive meaningful information.",
   "level": "intermediate",
   "duration": "6 weeks",
-  "totalLessons": 18,
+  "totalLessons": 19,
   "validationSources": [
     "https://www.ibm.com/topics/computer-vision",
     "https://www.ibm.com/topics/convolutional-neural-networks"
+  ],
+  "keyThinkers": [
+    {
+      "name": "Yann LeCun",
+      "contribution": "Convolutional Neural Networks (1989) - developed LeNet for handwritten digit recognition, establishing foundational CNN architecture with convolution, pooling, and backpropagation"
+    },
+    {
+      "name": "Alex Krizhevsky",
+      "contribution": "AlexNet (2012, with Sutskever & Hinton) - won ImageNet by large margin, catalyzed the deep learning revolution in computer vision with GPU training and ReLU activation"
+    },
+    {
+      "name": "Kaiming He",
+      "contribution": "ResNet (2015) - introduced skip connections enabling 152+ layer networks, also developed He initialization and Mask R-CNN for instance segmentation"
+    },
+    {
+      "name": "Ross Girshick",
+      "contribution": "R-CNN family (2014-2017) - pioneered region-based object detection with R-CNN, Fast R-CNN, and Faster R-CNN, establishing two-stage detection paradigm"
+    },
+    {
+      "name": "Joseph Redmon",
+      "contribution": "YOLO (2016) - You Only Look Once revolutionized real-time object detection with single-stage architecture achieving 45+ FPS"
+    },
+    {
+      "name": "Olaf Ronneberger",
+      "contribution": "U-Net (2015) - encoder-decoder architecture with skip connections for biomedical image segmentation, became standard for segmentation tasks"
+    },
+    {
+      "name": "Alexey Dosovitskiy",
+      "contribution": "Vision Transformer (2020, Google) - demonstrated pure transformer architecture can match/exceed CNNs for image classification when trained at scale"
+    },
+    {
+      "name": "Ian Goodfellow",
+      "contribution": "Generative Adversarial Networks (2014) - introduced adversarial training for image generation, spawning entire field of generative modeling"
+    },
+    {
+      "name": "Alec Radford",
+      "contribution": "CLIP (2021, OpenAI) - Contrastive Language-Image Pre-training enabled zero-shot image classification and revolutionized vision-language models"
+    }
   ],
   "prerequisites": [
     "Python Fundamentals",
@@ -162,6 +200,10 @@
               "SAM provides zero-shot segmentation capabilities",
               "Pre-trained encoders dramatically improve results"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Ronneberger", "Fischer", "Brox", "Kirillov", "Girshick", "He", "Dollár"],
+            "note": "U-Net was introduced by Olaf Ronneberger et al. (2015) for biomedical image segmentation with its encoder-decoder + skip connections architecture. Segment Anything (SAM) was developed by Alexander Kirillov et al. at Meta AI (2023), enabling zero-shot segmentation with prompt-based interaction."
           }
         },
         {
@@ -287,6 +329,10 @@
               "Modern architectures use skip connections for depth",
               "Batch normalization is essential for training stability"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["LeCun", "Bottou", "Bengio", "Haffner", "Krizhevsky", "Sutskever", "Hinton"],
+            "note": "Convolutional Neural Networks were pioneered by Yann LeCun et al. (1998) with LeNet for digit recognition. AlexNet by Krizhevsky, Sutskever, and Hinton (2012) demonstrated CNNs could dramatically outperform traditional methods on ImageNet, launching the deep learning era in computer vision."
           }
         },
         {
@@ -322,6 +368,10 @@
               "Anchor-free models are simpler and often better",
               "Always start with pre-trained weights"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Girshick", "Donahue", "Darrell", "Malik", "Redmon", "Divvala", "Farhadi"],
+            "note": "Region-based detection was pioneered by Ross Girshick et al. with R-CNN (2014), Fast R-CNN, and Faster R-CNN. YOLO (You Only Look Once) was introduced by Joseph Redmon et al. (2016), achieving real-time detection by treating it as a single regression problem."
           }
         },
         {
@@ -487,6 +537,73 @@
               "Requires more data than CNNs to train from scratch",
               "Swin Transformer adds efficiency with shifted windows"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Dosovitskiy", "Beyer", "Kolesnikov", "Weissenborn", "Liu", "Lin", "Radford"],
+            "note": "Vision Transformer (ViT) was introduced by Alexey Dosovitskiy et al. at Google (2020), showing pure transformers match/exceed CNNs at scale. Swin Transformer by Ze Liu et al. at Microsoft (2021) added hierarchical shifted windows for efficiency. CLIP by Alec Radford et al. at OpenAI (2021) enabled zero-shot classification via contrastive vision-language pretraining."
+          }
+        },
+        {
+          "id": "self-supervised-learning",
+          "title": "Self-Supervised & Contrastive Learning",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "Self-supervised learning trains vision models on unlabeled data by creating artificial supervision signals. Contrastive methods like SimCLR and CLIP have revolutionized how we train visual representations, enabling zero-shot classification and powerful transfer learning without manual labeling.",
+            "sections": [
+              {
+                "title": "Why Self-Supervised Learning?",
+                "content": "**The Problem with Supervised Learning:**\n- ImageNet: 14 million images, hand-labeled over years\n- Medical/specialized domains: expensive expert labels\n- Labels are biased toward predefined categories\n\n**Self-Supervised Solution:**\n- Learn from structure in the data itself\n- No manual labels needed\n- Often produces more generalizable representations\n- CLIP was trained on 400M image-text pairs from the internet\n\n**Key Paradigms:**\n1. **Contrastive Learning**: Learn by comparing similar/dissimilar pairs\n2. **Masked Image Modeling**: Predict masked patches (like BERT for images)\n3. **Distillation**: Learn from teacher network's outputs",
+                "keyPoints": [
+                  "Self-supervised models often outperform supervised ones on transfer tasks",
+                  "Removes the labeling bottleneck for new domains",
+                  "Foundation models (CLIP, DINO) are pre-trained this way"
+                ]
+              },
+              {
+                "title": "Contrastive Learning: SimCLR",
+                "content": "SimCLR learns representations by maximizing agreement between augmented views of the same image:\n\n1. Take an image, create two random augmentations\n2. Encode both through the same network\n3. These are 'positive' pairs (should be similar)\n4. All other images in batch are 'negative' pairs\n5. Contrastive loss pushes positives together, negatives apart\n\n**NT-Xent Loss (Normalized Temperature-scaled Cross Entropy):**\n$$\\mathcal{L} = -\\log \\frac{\\exp(\\text{sim}(z_i, z_j)/\\tau)}{\\sum_{k=1}^{2N} \\mathbb{1}_{[k \\neq i]} \\exp(\\text{sim}(z_i, z_k)/\\tau)}$$",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nimport torch.nn as nn\nimport torchvision.transforms as T\n\n# SimCLR augmentation pipeline (key to success)\nsimclr_augment = T.Compose([\n    T.RandomResizedCrop(224, scale=(0.2, 1.0)),\n    T.RandomHorizontalFlip(),\n    T.RandomApply([T.ColorJitter(0.8, 0.8, 0.8, 0.2)], p=0.8),\n    T.RandomGrayscale(p=0.2),\n    T.RandomApply([T.GaussianBlur(kernel_size=23)], p=0.5),\n    T.ToTensor(),\n    T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])\n])\n\n# Create two views of each image\ndef get_views(image):\n    return simclr_augment(image), simclr_augment(image)\n\n# Contrastive loss\ndef nt_xent_loss(z_i, z_j, temperature=0.5):\n    batch_size = z_i.shape[0]\n    z = torch.cat([z_i, z_j], dim=0)  # (2N, D)\n    \n    # Cosine similarity matrix\n    sim = torch.mm(z, z.T) / temperature  # (2N, 2N)\n    \n    # Mask out self-similarity\n    mask = torch.eye(2 * batch_size, device=z.device).bool()\n    sim.masked_fill_(mask, float('-inf'))\n    \n    # Labels: positive pairs are at positions [i, i+N] and [i+N, i]\n    labels = torch.cat([torch.arange(batch_size, 2*batch_size),\n                        torch.arange(batch_size)], dim=0).to(z.device)\n    \n    return nn.CrossEntropyLoss()(sim, labels)"
+                }
+              },
+              {
+                "title": "CLIP: Vision-Language Contrastive Learning",
+                "content": "CLIP learns visual representations from natural language supervision:\n\n**Training:**\n- 400M image-text pairs from the internet\n- Contrastive loss between image and text embeddings\n- Image encoder: ResNet or ViT\n- Text encoder: Transformer\n\n**Zero-Shot Classification:**\n- No fine-tuning needed for new classes\n- Create text prompts: 'a photo of a [class]'\n- Find which text has highest similarity to image\n\n**Why CLIP matters:**\n- First truly general-purpose visual model\n- Works on any visual concept describable in language\n- Foundation for Stable Diffusion, LLaVA, etc.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import CLIPProcessor, CLIPModel\nimport torch\nfrom PIL import Image\n\n# Load CLIP\nmodel = CLIPModel.from_pretrained('openai/clip-vit-base-patch32')\nprocessor = CLIPProcessor.from_pretrained('openai/clip-vit-base-patch32')\n\n# Zero-shot classification\nimage = Image.open('mystery_animal.jpg')\nclass_names = ['dog', 'cat', 'bird', 'fish', 'elephant']\n\n# Create text prompts\ntexts = [f'a photo of a {c}' for c in class_names]\n\ninputs = processor(\n    text=texts,\n    images=image,\n    return_tensors='pt',\n    padding=True\n)\n\nwith torch.no_grad():\n    outputs = model(**inputs)\n    logits = outputs.logits_per_image  # (1, num_classes)\n    probs = logits.softmax(dim=1)\n\nfor name, prob in zip(class_names, probs[0]):\n    print(f'{name}: {prob:.2%}')\n\n# CLIP for image search\nimage_embeddings = model.get_image_features(**processor(images=images, return_tensors='pt'))\ntext_embedding = model.get_text_features(**processor(text=['sunset over mountains'], return_tensors='pt'))\nsimilarities = (text_embedding @ image_embeddings.T).squeeze()"
+                }
+              },
+              {
+                "title": "DINO: Self-Distillation with No Labels",
+                "content": "DINO learns by matching student predictions to teacher predictions:\n\n**Key Ideas:**\n- Student and teacher see different augmented views\n- Teacher is exponential moving average of student\n- No negative pairs needed (unlike SimCLR)\n- Learns semantic segmentation without labels!\n\n**DINOv2** provides state-of-the-art visual features for many downstream tasks.",
+                "codeExample": {
+                  "language": "python",
+                  "code": "import torch\nfrom transformers import AutoImageProcessor, AutoModel\n\n# Load DINOv2\nprocessor = AutoImageProcessor.from_pretrained('facebook/dinov2-base')\nmodel = AutoModel.from_pretrained('facebook/dinov2-base')\n\n# Extract features\nimage = Image.open('image.jpg')\ninputs = processor(images=image, return_tensors='pt')\n\nwith torch.no_grad():\n    outputs = model(**inputs)\n    cls_token = outputs.last_hidden_state[:, 0]  # Global feature\n    patch_tokens = outputs.last_hidden_state[:, 1:]  # Local features\n\n# Use for downstream tasks\nprint(f'CLS embedding: {cls_token.shape}')  # (1, 768)\nprint(f'Patch features: {patch_tokens.shape}')  # (1, 196, 768)\n\n# DINO discovers semantic segmentation without labels!\n# Visualize attention heads to see object parts\nattention = model.get_last_self_attention(inputs['pixel_values'])\n# Different heads attend to different semantic regions"
+                }
+              },
+              {
+                "title": "Masked Image Modeling",
+                "content": "Inspired by BERT, mask patches and predict them:\n\n**MAE (Masked Autoencoder):**\n- Mask 75% of patches (aggressive!)\n- Encoder only processes visible patches\n- Decoder reconstructs masked patches\n- Very efficient training\n\n**BEiT:**\n- Tokenize images with discrete VAE\n- Predict token IDs of masked patches\n- More like original BERT",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import ViTMAEForPreTraining, ViTMAEImageProcessor\nimport torch\n\n# Load MAE\nprocessor = ViTMAEImageProcessor.from_pretrained('facebook/vit-mae-base')\nmodel = ViTMAEForPreTraining.from_pretrained('facebook/vit-mae-base')\n\n# Pre-training step (reconstruction)\nimage = Image.open('image.jpg')\ninputs = processor(images=image, return_tensors='pt')\n\nwith torch.no_grad():\n    outputs = model(**inputs)\n    loss = outputs.loss  # Reconstruction loss\n    reconstructed = outputs.logits  # Pixel predictions for masked patches\n\n# For downstream: use the encoder only\nfrom transformers import ViTModel\nencoder = ViTModel.from_pretrained('facebook/vit-mae-base')\nfeatures = encoder(**processor(images=image, return_tensors='pt')).last_hidden_state"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Self-supervised learning removes the labeling bottleneck",
+              "SimCLR uses contrastive learning between augmented views",
+              "CLIP enables zero-shot classification via language",
+              "DINO learns semantic segmentation without any labels",
+              "MAE trains efficiently by reconstructing masked patches"
+            ]
+          },
+          "authorCredits": {
+            "researchers": ["Chen", "Kornblith", "Norouzi", "Hinton", "Radford", "Kim", "Caron", "Touvron", "He", "Fan"],
+            "note": "SimCLR was introduced by Ting Chen et al. at Google (2020). CLIP was developed by Alec Radford et al. at OpenAI (2021), enabling zero-shot vision. DINO was created by Mathilde Caron et al. at Facebook AI (2021). MAE by Kaiming He et al. (2022) showed aggressive masking works for images."
           }
         },
         {
@@ -640,6 +757,10 @@
               "ControlNet adds structural guidance",
               "CFG scale controls prompt adherence vs creativity"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Goodfellow", "Pouget-Abadie", "Karras", "Laine", "Aila", "Ho", "Jain", "Abbeel", "Rombach", "Blattmann"],
+            "note": "GANs were introduced by Ian Goodfellow et al. (2014). StyleGAN by Tero Karras et al. at NVIDIA achieved photorealistic face generation. Diffusion models were formalized by Jonathan Ho et al. (2020) with DDPM. Stable Diffusion by Robin Rombach et al. (2022) made diffusion practical via latent space compression."
           }
         },
         {
