@@ -25,6 +25,58 @@
     "Build agents with persistent memory systems",
     "Design and orchestrate multi-agent systems"
   ],
+  "keyThinkers": [
+    {
+      "name": "Shunyu Yao",
+      "contribution": "Created ReAct pattern for reasoning + acting agents",
+      "keyWork": "ReAct: Synergizing Reasoning and Acting in Language Models (2022)"
+    },
+    {
+      "name": "Harrison Chase",
+      "contribution": "Created LangChain and LangGraph frameworks",
+      "keyWork": "LangChain: Building applications with LLMs through composability"
+    },
+    {
+      "name": "Chi Wang",
+      "contribution": "Led AutoGen multi-agent framework at Microsoft Research",
+      "keyWork": "AutoGen: Enabling Next-Gen LLM Applications (2023)"
+    },
+    {
+      "name": "Joon Sung Park",
+      "contribution": "Pioneered agent memory and reflection systems",
+      "keyWork": "Generative Agents: Interactive Simulacra of Human Behavior (2023)"
+    },
+    {
+      "name": "Charles Packer",
+      "contribution": "Created MemGPT for unbounded agent memory",
+      "keyWork": "MemGPT: Towards LLMs as Operating Systems (2023)"
+    },
+    {
+      "name": "João Moura",
+      "contribution": "Created CrewAI for multi-agent team orchestration",
+      "keyWork": "CrewAI: Framework for orchestrating role-playing AI agents"
+    },
+    {
+      "name": "Anthropic MCP Team",
+      "contribution": "Created Model Context Protocol open standard",
+      "keyWork": "Model Context Protocol specification (Nov 2024)"
+    },
+    {
+      "name": "Lilian Weng",
+      "contribution": "Synthesized agent research in influential survey",
+      "keyWork": "LLM Powered Autonomous Agents blog post (OpenAI, 2023)"
+    },
+    {
+      "name": "Binfeng Xu",
+      "contribution": "Created ReWOO planning-first agent pattern",
+      "keyWork": "ReWOO: Decoupling Reasoning from Observations (2023)"
+    },
+    {
+      "name": "Stuart Russell & Peter Norvig",
+      "contribution": "Defined foundational AI agent taxonomy",
+      "keyWork": "Artificial Intelligence: A Modern Approach (agent chapter)"
+    }
+  ],
   "modules": [
     {
       "id": "agent-intro",
@@ -33,6 +85,7 @@
         {
           "id": "agents-explained",
           "title": "What Are AI Agents? (Plain English)",
+          "author": "Agent loop concept popularized by Lilian Weng (OpenAI blog, 2023)",
           "duration": "15 min",
           "content": {
             "overview": "Before diving into code, let's understand what makes an 'agent' different from a regular chatbot.",
@@ -70,6 +123,7 @@
         {
           "id": "what-are-agents",
           "title": "What Are AI Agents?",
+          "author": "ReAct pattern by Shunyu Yao et al. (Princeton, 2022)",
           "duration": "40 min",
           "content": {
             "overview": "AI agents are autonomous systems that use LLMs as reasoning engines to perceive, plan, and act toward goals. Unlike simple chatbots, agents can break down complex tasks, use tools, and iterate until objectives are met.",
@@ -136,6 +190,7 @@
         {
           "id": "agent-frameworks",
           "title": "Agent Frameworks Overview",
+          "author": "LangChain by Harrison Chase; CrewAI by João Moura; AutoGen by Microsoft Research",
           "duration": "35 min",
           "content": {
             "overview": "Several frameworks simplify agent development. Understanding their trade-offs helps you choose the right tool for your project.",
@@ -273,6 +328,7 @@
         {
           "id": "function-calling",
           "title": "Function Calling Fundamentals",
+          "author": "OpenAI (June 2023); Anthropic Tool Use; Toolformer by Meta",
           "duration": "45 min",
           "content": {
             "overview": "Function calling allows LLMs to generate structured outputs that map to real function calls. This is the foundation of tool use in agents.",
@@ -384,6 +440,7 @@
         {
           "id": "model-context-protocol",
           "title": "Model Context Protocol (MCP)",
+          "author": "Anthropic MCP Team - Alex Albert et al. (Nov 2024)",
           "duration": "45 min",
           "content": {
             "overview": "MCP is an open standard for connecting AI agents to external tools and data sources. It provides a unified protocol for agent-tool communication, replacing ad-hoc integrations.",
@@ -465,6 +522,7 @@
         {
           "id": "memory-types",
           "title": "Types of Agent Memory",
+          "author": "Generative Agents by Joon Sung Park (Stanford); MemGPT by Charles Packer (Berkeley)",
           "duration": "45 min",
           "content": {
             "overview": "Memory allows agents to maintain context, learn from past interactions, and build knowledge over time. Different memory types serve different purposes.",
@@ -531,6 +589,7 @@
         {
           "id": "multi-agent-patterns",
           "title": "Multi-Agent Orchestration Patterns",
+          "author": "AutoGen by Chi Wang (Microsoft); ChatDev by Qian et al.; CrewAI",
           "duration": "50 min",
           "content": {
             "overview": "Complex tasks often benefit from multiple specialized agents working together. Understanding orchestration patterns helps you design effective multi-agent systems.",
