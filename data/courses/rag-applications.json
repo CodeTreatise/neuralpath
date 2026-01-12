@@ -9,6 +9,58 @@
   "validationSources": [
     "https://www.ibm.com/topics/retrieval-augmented-generation"
   ],
+  "keyThinkers": [
+    {
+      "name": "Patrick Lewis",
+      "contribution": "Original RAG paper lead author at Meta AI (2020)",
+      "keyWork": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+    },
+    {
+      "name": "Nils Reimers",
+      "contribution": "Created Sentence-BERT (SBERT) and sentence-transformers library",
+      "keyWork": "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks"
+    },
+    {
+      "name": "Shahul Es",
+      "contribution": "Co-creator of RAGAS evaluation framework for RAG systems",
+      "keyWork": "Ragas: Automated Evaluation of Retrieval Augmented Generation"
+    },
+    {
+      "name": "Akari Asai",
+      "contribution": "Lead author of Self-RAG paper at University of Washington",
+      "keyWork": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+    },
+    {
+      "name": "Luyu Gao",
+      "contribution": "Created HyDE (Hypothetical Document Embeddings) for query transformation",
+      "keyWork": "Precise Zero-Shot Dense Retrieval without Relevance Labels"
+    },
+    {
+      "name": "Darren Edge",
+      "contribution": "Lead author of GraphRAG at Microsoft Research",
+      "keyWork": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization"
+    },
+    {
+      "name": "Stephen Robertson",
+      "contribution": "Creator of BM25 ranking algorithm, foundation of hybrid search",
+      "keyWork": "The Probabilistic Relevance Framework: BM25 and Beyond"
+    },
+    {
+      "name": "Jerry Liu",
+      "contribution": "Creator of LlamaIndex, popularized semantic chunking and RAG patterns",
+      "keyWork": "LlamaIndex framework and advanced retrieval techniques"
+    },
+    {
+      "name": "Harrison Chase",
+      "contribution": "Creator of LangChain, multi-query RAG, and LangGraph agents",
+      "keyWork": "LangChain framework and LCEL for RAG applications"
+    },
+    {
+      "name": "Aidan Gomez",
+      "contribution": "Transformer co-author, co-founder of Cohere, leading rerank models",
+      "keyWork": "Cohere Rerank and enterprise embedding models"
+    }
+  ],
   "prerequisites": [
     "Python basics (variables, functions, packages)",
     "Understanding of what LLMs are (ChatGPT, Claude)",
@@ -114,6 +166,7 @@
         {
           "id": "what-is-rag",
           "title": "What is RAG and Why Use It?",
+          "author": "Original RAG paper by Patrick Lewis, Ethan Perez et al. (Meta AI, 2020)",
           "type": "lesson",
           "duration": "15 min",
           "content": {
@@ -151,6 +204,7 @@
         {
           "id": "embeddings",
           "title": "Text Embeddings Explained",
+          "author": "Concepts by Nils Reimers (sentence-transformers creator)",
           "type": "lesson",
           "duration": "20 min",
           "content": {
@@ -179,6 +233,7 @@
         {
           "id": "vector-dbs",
           "title": "Vector Databases Overview",
+          "author": "Concepts by Edo Liberty (Pinecone), Anton Troynikov (Chroma)",
           "type": "lesson",
           "duration": "20 min",
           "content": {
@@ -306,6 +361,7 @@
         {
           "id": "chunking-strategies",
           "title": "Advanced Chunking Strategies",
+          "author": "Concepts popularized by Jerry Liu, Logan Markewich (LlamaIndex)",
           "type": "lesson",
           "duration": "25 min",
           "content": {
@@ -333,6 +389,7 @@
         {
           "id": "hybrid-search",
           "title": "Hybrid Search Strategies",
+          "author": "BM25 by Stephen Robertson; Hybrid patterns by LangChain",
           "type": "lesson",
           "duration": "25 min",
           "content": {
@@ -362,6 +419,7 @@
         {
           "id": "reranking",
           "title": "Reranking for Better Results",
+          "author": "Cohere team (Aidan Gomez); Cross-encoders by Nils Reimers",
           "type": "lesson",
           "duration": "25 min",
           "content": {
@@ -391,6 +449,7 @@
         {
           "id": "query-transformation",
           "title": "Query Transformation Techniques",
+          "author": "HyDE by Luyu Gao; Multi-Query by Harrison Chase (LangChain)",
           "type": "lesson",
           "duration": "25 min",
           "content": {
@@ -429,6 +488,7 @@
         {
           "id": "rag-evaluation",
           "title": "Evaluating RAG Systems",
+          "author": "RAGAS by Shahul Es, Jithin James et al.",
           "type": "lesson",
           "duration": "30 min",
           "content": {
@@ -570,6 +630,7 @@
         {
           "id": "advanced-rag-paradigms",
           "title": "Advanced RAG Paradigms",
+          "author": "Self-RAG: Akari Asai; CRAG: Shi-Qi Yan; GraphRAG: Darren Edge (Microsoft)",
           "type": "lesson",
           "duration": "30 min",
           "content": {
