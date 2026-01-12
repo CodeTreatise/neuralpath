@@ -5,11 +5,54 @@
   "icon": "✨",
   "level": "intermediate",
   "duration": "4 weeks",
+  "totalLessons": 11,
   "validationSources": [
     "https://www.ibm.com/topics/prompt-engineering"
   ],
   "prerequisites": [
     "Basic understanding of LLMs"
+  ],
+  "keyThinkers": [
+    {
+      "name": "Jason Wei",
+      "contribution": "Co-authored the foundational Chain-of-Thought paper (2022) at Google Brain, showing intermediate reasoning steps dramatically improve LLM performance"
+    },
+    {
+      "name": "Takeshi Kojima",
+      "contribution": "Discovered Zero-shot Chain-of-Thought - 'Let's think step by step' - proving simple prompts can elicit reasoning without examples"
+    },
+    {
+      "name": "Xuezhi Wang",
+      "contribution": "Lead author on Self-Consistency (2022), sampling multiple reasoning paths and voting for more robust answers"
+    },
+    {
+      "name": "Shunyu Yao",
+      "contribution": "Created ReAct (Reason+Act) and Tree of Thoughts, pioneering deliberate problem-solving with search in LLMs"
+    },
+    {
+      "name": "Tom Brown",
+      "contribution": "Lead author on GPT-3 paper (2020) that established in-context few-shot learning as a paradigm"
+    },
+    {
+      "name": "Isa Fulford",
+      "contribution": "Co-created DeepLearning.AI Prompt Engineering course with Andrew Ng; developed OpenAI's official prompt engineering documentation"
+    },
+    {
+      "name": "Andrew Ng",
+      "contribution": "Co-created the definitive beginner prompt engineering course, bringing the discipline to mainstream AI education"
+    },
+    {
+      "name": "Simon Willison",
+      "contribution": "Coined 'prompt injection' (2022), extensively documented attack vectors, mitigations, and security best practices"
+    },
+    {
+      "name": "Sander Schulhoff",
+      "contribution": "Created LearnPrompting.org (2022), first comprehensive prompt engineering guide; lead author of 'The Prompt Report'"
+    },
+    {
+      "name": "Elvis Saravia",
+      "contribution": "Created PromptingGuide.ai at DAIR.AI, comprehensive open-source documentation of 200+ prompting techniques"
+    }
   ],
   "whatYouNeed": [
     "Access to any AI chatbot (ChatGPT, Claude, Gemini - free tiers work fine)",
@@ -261,6 +304,7 @@
           "id": "few-shot-learning",
           "title": "Few-Shot and Zero-Shot Learning",
           "duration": "45 min",
+          "credit": "Tom Brown et al. (OpenAI GPT-3 paper, 2020) established in-context learning; few-shot prompting research continues across Google, Anthropic",
           "content": {
             "overview": "Few-shot learning provides examples in the prompt to guide the model's behavior. This technique dramatically improves output quality and consistency, especially for specialized tasks or custom formats.",
             "sections": [
@@ -319,6 +363,7 @@
           "id": "chain-of-thought",
           "title": "Chain-of-Thought Prompting",
           "duration": "45 min",
+          "credit": "Jason Wei & Denny Zhou (Google Brain, 2022); Zero-shot CoT by Takeshi Kojima (2022); Self-Consistency by Xuezhi Wang (2022)",
           "content": {
             "overview": "Chain-of-Thought (CoT) prompting encourages models to show their reasoning step-by-step before giving an answer. This technique significantly improves performance on complex reasoning tasks like math, logic, and multi-step problems.",
             "sections": [
@@ -381,6 +426,7 @@
           "id": "structured-outputs",
           "title": "Structured Output & JSON Mode",
           "duration": "45 min",
+          "credit": "OpenAI Team (JSON Mode Nov 2023, Structured Outputs Aug 2024); Samuel Colvin (Pydantic)",
           "content": {
             "overview": "For production applications, you need reliable, parseable outputs. Structured output techniques ensure LLMs return data in specific formats like JSON, making it easy to integrate AI into software systems.",
             "sections": [
@@ -434,9 +480,80 @@
       "title": "Production Prompt Patterns",
       "lessons": [
         {
+          "id": "prompt-chaining",
+          "title": "Prompt Chaining & Composition",
+          "duration": "40 min",
+          "credit": "LangChain team (Harrison Chase); Anthropic prompt engineering documentation; PromptingGuide.ai chaining patterns",
+          "content": {
+            "overview": "Complex tasks often require breaking down into subtasks, each handled by a specialized prompt. Prompt chaining orchestrates multiple LLM calls to achieve results that a single prompt cannot.",
+            "sections": [
+              {
+                "title": "When to Use Chaining",
+                "content": "**Use Chaining When:**\n- Task has multiple distinct steps\n- Each step needs different instructions or context\n- You need to debug or verify intermediate outputs\n- Single prompt would exceed context limits\n- Different steps need different models or parameters\n\n**Use Single Prompt When:**\n- Task is simple and well-defined\n- Steps are tightly coupled\n- Latency is critical\n- Cost must be minimized",
+                "diagram": {
+                  "title": "Prompt Chain Architecture",
+                  "code": "flowchart LR\n    Input --> P1[Prompt 1: Extract]\n    P1 --> O1[Output 1]\n    O1 --> P2[Prompt 2: Analyze]\n    P2 --> O2[Output 2]\n    O2 --> P3[Prompt 3: Synthesize]\n    P3 --> Final[Final Output]\n    \n    style P1 fill:#dbeafe\n    style P2 fill:#dcfce7\n    style P3 fill:#fce7f3"
+                }
+              },
+              {
+                "title": "Sequential Chain Pattern",
+                "content": "Each prompt's output becomes the next prompt's input. Most common for document processing, analysis, and generation workflows.",
+                "code": "from openai import OpenAI\nimport json\n\nclient = OpenAI()\n\ndef run_chain(document: str) -> dict:\n    \"\"\"Three-step document analysis chain.\"\"\"\n    \n    # Step 1: Extract key information\n    step1_response = client.chat.completions.create(\n        model=\"gpt-4o-mini\",  # Fast, cheap for extraction\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Extract key entities from this document.\n            Return JSON with: people, organizations, dates, topics.\n            \n            Document:\n            {document}\"\"\"\n        }],\n        response_format={\"type\": \"json_object\"}\n    )\n    entities = json.loads(step1_response.choices[0].message.content)\n    \n    # Step 2: Analyze relationships (needs extracted entities)\n    step2_response = client.chat.completions.create(\n        model=\"gpt-4o\",  # More capable for analysis\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Analyze relationships between these entities:\n            {json.dumps(entities)}\n            \n            Original context:\n            {document[:2000]}  # Truncate for context\n            \n            Identify: key relationships, conflicts, collaborations.\"\"\"\n        }]\n    )\n    analysis = step2_response.choices[0].message.content\n    \n    # Step 3: Generate summary (combines both)\n    step3_response = client.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Create an executive summary.\n            \n            Entities found:\n            {json.dumps(entities)}\n            \n            Relationship analysis:\n            {analysis}\n            \n            Write a 3-paragraph summary for a busy executive.\"\"\"\n        }]\n    )\n    \n    return {\n        \"entities\": entities,\n        \"analysis\": analysis,\n        \"summary\": step3_response.choices[0].message.content\n    }"
+              },
+              {
+                "title": "Parallel Chain Pattern",
+                "content": "Run multiple prompts simultaneously when they don't depend on each other. Reduces latency for complex multi-aspect analysis.",
+                "code": "import asyncio\nfrom openai import AsyncOpenAI\n\nclient = AsyncOpenAI()\n\nasync def parallel_analysis(text: str) -> dict:\n    \"\"\"Analyze text from multiple perspectives in parallel.\"\"\"\n    \n    # Define parallel analysis tasks\n    async def analyze_sentiment():\n        response = await client.chat.completions.create(\n            model=\"gpt-4o-mini\",\n            messages=[{\"role\": \"user\", \"content\": f\"Analyze sentiment (positive/negative/neutral) with confidence score:\\n{text}\"}]\n        )\n        return response.choices[0].message.content\n    \n    async def extract_entities():\n        response = await client.chat.completions.create(\n            model=\"gpt-4o-mini\",\n            messages=[{\"role\": \"user\", \"content\": f\"Extract named entities (people, places, organizations):\\n{text}\"}]\n        )\n        return response.choices[0].message.content\n    \n    async def identify_topics():\n        response = await client.chat.completions.create(\n            model=\"gpt-4o-mini\",\n            messages=[{\"role\": \"user\", \"content\": f\"Identify main topics and themes:\\n{text}\"}]\n        )\n        return response.choices[0].message.content\n    \n    # Run all in parallel\n    sentiment, entities, topics = await asyncio.gather(\n        analyze_sentiment(),\n        extract_entities(),\n        identify_topics()\n    )\n    \n    # Combine results in final synthesis\n    synthesis = await client.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Synthesize these analyses into a coherent report:\n            \n            Sentiment: {sentiment}\n            Entities: {entities}\n            Topics: {topics}\n            \n            Provide actionable insights.\"\"\"\n        }]\n    )\n    \n    return {\n        \"sentiment\": sentiment,\n        \"entities\": entities,\n        \"topics\": topics,\n        \"synthesis\": synthesis.choices[0].message.content\n    }"
+              },
+              {
+                "title": "Conditional Branching",
+                "content": "Route to different prompts based on intermediate results. Useful for handling different input types or scenarios.",
+                "code": "def conditional_chain(user_query: str) -> str:\n    \"\"\"Route query to specialized prompt based on classification.\"\"\"\n    \n    # Step 1: Classify intent\n    classification = client.chat.completions.create(\n        model=\"gpt-4o-mini\",\n        messages=[{\n            \"role\": \"user\",\n            \"content\": f\"\"\"Classify this query into exactly one category:\n            - technical_support\n            - billing_question\n            - feature_request\n            - general_inquiry\n            \n            Query: {user_query}\n            \n            Return only the category name.\"\"\"\n        }]\n    )\n    intent = classification.choices[0].message.content.strip().lower()\n    \n    # Step 2: Route to specialized prompt\n    specialized_prompts = {\n        \"technical_support\": \"\"\"You are a technical support specialist.\n            Diagnose the issue, provide step-by-step solutions.\n            If unresolvable, suggest escalation.\"\"\",\n        \n        \"billing_question\": \"\"\"You are a billing assistant.\n            Explain charges clearly. You can offer 10% discount for annual plans.\n            For refunds, collect order ID and escalate.\"\"\",\n        \n        \"feature_request\": \"\"\"You are a product feedback collector.\n            Thank them for the suggestion. Ask clarifying questions.\n            Explain our feedback process.\"\"\",\n        \n        \"general_inquiry\": \"\"\"You are a helpful general assistant.\n            Answer questions about our company and products.\n            Be friendly and informative.\"\"\"\n    }\n    \n    system_prompt = specialized_prompts.get(intent, specialized_prompts[\"general_inquiry\"])\n    \n    # Step 3: Generate response with specialized prompt\n    response = client.chat.completions.create(\n        model=\"gpt-4o\",\n        messages=[\n            {\"role\": \"system\", \"content\": system_prompt},\n            {\"role\": \"user\", \"content\": user_query}\n        ]\n    )\n    \n    return response.choices[0].message.content"
+              },
+              {
+                "title": "Error Handling in Chains",
+                "content": "Chains can fail at any step. Implement retry logic, fallbacks, and graceful degradation.",
+                "code": "from typing import Optional\nimport time\n\nclass ChainExecutor:\n    def __init__(self, client, max_retries: int = 3):\n        self.client = client\n        self.max_retries = max_retries\n    \n    async def execute_step(\n        self,\n        step_name: str,\n        prompt: str,\n        model: str = \"gpt-4o\",\n        fallback: Optional[str] = None\n    ) -> str:\n        \"\"\"Execute a chain step with retry and fallback.\"\"\"\n        \n        for attempt in range(self.max_retries):\n            try:\n                response = await self.client.chat.completions.create(\n                    model=model,\n                    messages=[{\"role\": \"user\", \"content\": prompt}],\n                    timeout=30\n                )\n                return response.choices[0].message.content\n                \n            except Exception as e:\n                print(f\"Step '{step_name}' attempt {attempt + 1} failed: {e}\")\n                \n                if attempt < self.max_retries - 1:\n                    time.sleep(2 ** attempt)  # Exponential backoff\n                    continue\n                \n                # All retries failed - use fallback\n                if fallback:\n                    print(f\"Using fallback for {step_name}\")\n                    return fallback\n                \n                raise RuntimeError(f\"Chain failed at step: {step_name}\")\n    \n    async def run_chain(self, steps: list) -> dict:\n        \"\"\"Execute a chain of steps with context passing.\"\"\"\n        context = {}\n        \n        for step in steps:\n            # Interpolate previous outputs into prompt\n            prompt = step[\"prompt\"].format(**context)\n            \n            result = await self.execute_step(\n                step_name=step[\"name\"],\n                prompt=prompt,\n                model=step.get(\"model\", \"gpt-4o\"),\n                fallback=step.get(\"fallback\")\n            )\n            \n            context[step[\"name\"]] = result\n        \n        return context"
+              }
+            ],
+            "keyTakeaways": [
+              "Chain prompts for complex multi-step tasks",
+              "Use parallel chains for independent analyses to reduce latency",
+              "Implement conditional branching for different input scenarios",
+              "Add retry logic and fallbacks for production reliability",
+              "Pass structured outputs between chain steps for precision"
+            ],
+            "exercises": [
+              {
+                "title": "Document Pipeline",
+                "description": "Build a 3-step chain: (1) Extract key points, (2) Fact-check claims, (3) Generate summary with confidence scores"
+              },
+              {
+                "title": "Router Design",
+                "description": "Create a conditional chain that routes customer queries to specialized support agents (technical, billing, sales)"
+              }
+            ],
+            "sources": [
+              {
+                "title": "PromptingGuide - Prompt Chaining",
+                "url": "https://www.promptingguide.ai/techniques/prompt_chaining"
+              },
+              {
+                "title": "Anthropic - Chaining Prompts",
+                "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/chain-prompts"
+              },
+              {
+                "title": "LangChain - Chains Documentation",
+                "url": "https://python.langchain.com/docs/modules/chains"
+              }
+            ]
+          }
+        },
+        {
           "id": "prompt-security",
           "title": "Prompt Security & Injection Prevention",
           "duration": "45 min",
+          "credit": "Simon Willison (coined 'prompt injection', 2022); Riley Goodside (early demonstrations); OWASP LLM Security Project",
           "content": {
             "overview": "Prompt injection is a security vulnerability where malicious user input manipulates the AI's behavior. As LLMs are deployed in production, understanding and preventing these attacks is critical.",
             "sections": [
@@ -488,6 +605,7 @@
           "id": "advanced-industry-patterns",
           "title": "Advanced Industry Prompt Patterns",
           "duration": "50 min",
+          "credit": "Shunyu Yao (ReAct, Tree of Thoughts); OpenAI reasoning team; Anthropic prompt engineering documentation",
           "content": {
             "overview": "Industry-standard prompt patterns have evolved beyond basic techniques. This lesson covers advanced patterns used in production systems: when to choose prompt engineering vs other approaches, meta-prompting, negative prompting, and model-specific strategies.",
             "sections": [
