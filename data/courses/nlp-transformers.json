@@ -5,11 +5,45 @@
   "description": "Master Natural Language Processing from text preprocessing to building transformer models. NLP is a subfield of computer science and AI that uses machine learning to enable computers to understand and communicate with human language.",
   "level": "intermediate",
   "duration": "7 weeks",
-  "totalLessons": 20,
+  "totalLessons": 22,
   "validationSources": [
     "https://www.ibm.com/topics/natural-language-processing",
     "https://www.ibm.com/topics/transformer-model",
     "https://www.ibm.com/topics/large-language-models"
+  ],
+  "keyThinkers": [
+    {
+      "name": "Tomas Mikolov",
+      "contribution": "Word2Vec (2013) - introduced distributed word representations with skip-gram and CBOW models, showing word analogies emerge from vector arithmetic"
+    },
+    {
+      "name": "Jeffrey Pennington",
+      "contribution": "GloVe (2014, Stanford) - Global Vectors combining count-based and predictive methods for word embeddings"
+    },
+    {
+      "name": "Ashish Vaswani et al.",
+      "contribution": "Transformer architecture (2017) - 'Attention Is All You Need' eliminated recurrence, enabling parallel training and revolutionizing NLP"
+    },
+    {
+      "name": "Jacob Devlin et al.",
+      "contribution": "BERT (2018, Google) - Bidirectional encoder pre-training with masked language modeling, set new SOTA across NLP benchmarks"
+    },
+    {
+      "name": "Alec Radford & Tom Brown",
+      "contribution": "GPT series (2018-2020, OpenAI) - demonstrated scaling laws and emergent abilities in large language models"
+    },
+    {
+      "name": "Paul Christiano",
+      "contribution": "RLHF (2017, OpenAI) - pioneered using human feedback for AI alignment, foundation of ChatGPT training"
+    },
+    {
+      "name": "Rafael Rafailov et al.",
+      "contribution": "DPO (2023, Stanford) - Direct Preference Optimization simplified RLHF by eliminating separate reward model"
+    },
+    {
+      "name": "Edward Hu et al.",
+      "contribution": "LoRA (2021, Microsoft) - Low-Rank Adaptation enabled efficient fine-tuning of large models with minimal parameters"
+    }
   ],
   "prerequisites": [
     "Python Fundamentals",
@@ -123,6 +157,10 @@
               "Contextual embeddings (BERT) adapt to context",
               "Embeddings are fundamental to all modern NLP"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Mikolov", "Sutskever", "Chen", "Corrado", "Dean", "Pennington", "Socher", "Manning"],
+            "note": "Word2Vec was introduced by Mikolov et al. at Google (2013), demonstrating that word analogies emerge from learned vector representations. GloVe (Global Vectors) was developed by Pennington, Socher, and Manning at Stanford (2014), combining count-based and predictive methods."
           }
         },
         {
@@ -158,6 +196,10 @@
               "Multi-head attention captures different relationships",
               "Attention is O(n²) in sequence length"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Bahdanau", "Cho", "Bengio"],
+            "note": "The attention mechanism for neural machine translation was introduced by Bahdanau, Cho, and Bengio (2014) in 'Neural Machine Translation by Jointly Learning to Align and Translate'. This allowed models to focus on relevant source words when generating each target word, solving the information bottleneck of fixed-length encodings."
           }
         },
         {
@@ -205,6 +247,10 @@
               "Positional encodings inject sequence order",
               "Layer norm + residuals enable deep networks"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Vaswani", "Shazeer", "Parmar", "Uszkoreit", "Jones", "Gomez", "Kaiser", "Polosukhin"],
+            "note": "The Transformer architecture was introduced by Vaswani et al. at Google Brain/Google Research in 'Attention Is All You Need' (NeurIPS 2017). This paper eliminated recurrence entirely, using only attention mechanisms for sequence modeling, achieving SOTA results in machine translation with 3.5-day training time on 8 GPUs."
           }
         },
         {
@@ -278,6 +324,10 @@
               "DistilBERT is great for production",
               "DeBERTa often outperforms BERT on benchmarks"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Devlin", "Chang", "Lee", "Toutanova"],
+            "note": "BERT was introduced by Jacob Devlin et al. at Google AI Language in 'BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding' (NAACL 2019). It set new SOTA on 11 NLP benchmarks and pioneered the pre-train + fine-tune paradigm that dominates modern NLP."
           }
         },
         {
@@ -314,6 +364,10 @@
               "Top-p sampling often produces best results",
               "Scale + data + RLHF = modern LLMs"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Radford", "Narasimhan", "Salimans", "Sutskever", "Brown", "Mann", "Ryder", "Subbiah"],
+            "note": "GPT-1 was introduced by Radford et al. at OpenAI (2018), demonstrating that generative pre-training improves language understanding. GPT-3 (Brown et al., 2020) showed in-context learning and few-shot capabilities emerge at scale. The series established the scaling hypothesis for LLMs."
           }
         },
         {
@@ -815,6 +869,10 @@
               "The field is rapidly evolving with ORPO, IPO, GRPO variants",
               "Quality preference data is as important as the algorithm"
             ]
+          },
+          "authorCredits": {
+            "researchers": ["Christiano", "Leike", "Brown", "Marber", "Rafailov", "Sharma", "Mitchell", "Ouyang"],
+            "note": "RLHF was pioneered by Christiano et al. at OpenAI (2017) in 'Deep Reinforcement Learning from Human Preferences'. The InstructGPT paper (Ouyang et al., 2022) demonstrated RLHF's effectiveness for LLM alignment. DPO was introduced by Rafailov et al. at Stanford (2023), simplifying the RLHF pipeline by eliminating the reward model."
           }
         },
         {
@@ -853,6 +911,124 @@
               "Batch processing maximizes throughput",
               "Use async endpoints for I/O-bound operations"
             ]
+          }
+        },
+        {
+          "id": "peft-lora",
+          "title": "Parameter-Efficient Fine-Tuning (PEFT)",
+          "type": "lesson",
+          "duration": "40 min",
+          "content": {
+            "overview": "Full fine-tuning of large language models requires updating billions of parameters, demanding significant compute and memory. Parameter-Efficient Fine-Tuning (PEFT) methods like LoRA, QLoRA, and adapters enable training with a fraction of the resources while achieving comparable performance. This is now the standard approach for customizing LLMs in production.",
+            "sections": [
+              {
+                "title": "Why PEFT?",
+                "content": "**The Problem with Full Fine-tuning:**\n- LLaMA-7B: 7 billion parameters × 4 bytes = 28GB just for weights\n- Gradients + optimizer states multiply memory 4-8x\n- Training requires 80GB+ GPUs\n- Catastrophic forgetting of pre-trained knowledge\n\n**PEFT Solution:**\n- Freeze most parameters\n- Train only a small subset (0.1-1% of params)\n- Achieve 90-99% of full fine-tuning performance\n- Train on consumer GPUs (12-24GB)",
+                "keyPoints": [
+                  "Full fine-tuning: All parameters updated",
+                  "PEFT: Only small adapters trained",
+                  "Memory savings of 10-100x",
+                  "Multiple adapters can be swapped at inference"
+                ]
+              },
+              {
+                "title": "LoRA: Low-Rank Adaptation",
+                "content": "LoRA is the most popular PEFT method. It adds trainable low-rank matrices to attention layers:\n\n**Key Insight:** Weight updates during fine-tuning have low intrinsic rank.\n\n**How it works:**\n- Original weight: W₀ ∈ ℝᵈˣᵈ\n- Add low-rank decomposition: ΔW = BA where B ∈ ℝᵈˣʳ, A ∈ ℝʳˣᵈ\n- r << d (typically 8-64 vs 4096)\n- Forward pass: h = (W₀ + BA)x\n- Only train A and B (freeze W₀)\n\n**Parameter reduction:**\n- Full: d × d = 4096² = 16.7M params per layer\n- LoRA (r=16): 2 × d × r = 2 × 4096 × 16 = 131K params (0.8%)",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from peft import LoraConfig, get_peft_model, TaskType\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\n# Load base model\nmodel = AutoModelForCausalLM.from_pretrained(\n    'meta-llama/Llama-2-7b-hf',\n    torch_dtype=torch.float16,\n    device_map='auto'\n)\n\n# Configure LoRA\nlora_config = LoraConfig(\n    task_type=TaskType.CAUSAL_LM,\n    r=16,                    # Rank of decomposition\n    lora_alpha=32,           # Scaling factor\n    lora_dropout=0.1,        # Dropout for regularization\n    target_modules=[         # Which layers to adapt\n        'q_proj', 'k_proj', 'v_proj', 'o_proj',  # Attention\n        'gate_proj', 'up_proj', 'down_proj'       # MLP\n    ]\n)\n\n# Wrap model with LoRA\nmodel = get_peft_model(model, lora_config)\n\n# Check trainable parameters\nmodel.print_trainable_parameters()\n# trainable params: 4,194,304 || all params: 6,742,609,920 || trainable%: 0.0622%\n\n# Train as normal with Trainer\nfrom trl import SFTTrainer\n\ntrainer = SFTTrainer(\n    model=model,\n    train_dataset=dataset,\n    dataset_text_field='text',\n    max_seq_length=512,\n    args=training_args\n)\ntrainer.train()\n\n# Save only the adapter (small file)\nmodel.save_pretrained('my-lora-adapter')  # ~17MB instead of ~14GB"
+                }
+              },
+              {
+                "title": "QLoRA: Quantized LoRA",
+                "content": "QLoRA combines LoRA with 4-bit quantization for even greater memory savings:\n\n**Key innovations:**\n- 4-bit NormalFloat (NF4) quantization\n- Double quantization (quantize the quantization constants)\n- Paged optimizers for memory spikes\n\n**Memory comparison (7B model):**\n- Full fine-tuning: 112GB+ (needs 2x A100)\n- LoRA (16-bit): 28GB (1x A100)\n- QLoRA (4-bit): 6GB (consumer GPU!)",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from transformers import AutoModelForCausalLM, BitsAndBytesConfig\nfrom peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training\nimport torch\n\n# 4-bit quantization config\nbnb_config = BitsAndBytesConfig(\n    load_in_4bit=True,\n    bnb_4bit_quant_type='nf4',           # NormalFloat 4-bit\n    bnb_4bit_compute_dtype=torch.bfloat16,\n    bnb_4bit_use_double_quant=True       # Double quantization\n)\n\n# Load quantized model\nmodel = AutoModelForCausalLM.from_pretrained(\n    'meta-llama/Llama-2-7b-hf',\n    quantization_config=bnb_config,\n    device_map='auto'\n)\n\n# Prepare for k-bit training\nmodel = prepare_model_for_kbit_training(model)\n\n# Apply LoRA\nlora_config = LoraConfig(\n    r=64,                    # Can use higher rank with QLoRA\n    lora_alpha=16,\n    target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj'],\n    lora_dropout=0.05,\n    bias='none'\n)\n\nmodel = get_peft_model(model, lora_config)\nprint(model.print_trainable_parameters())\n# Now trainable on 12GB GPU!"
+                }
+              },
+              {
+                "title": "Other PEFT Methods",
+                "content": "**Adapters:**\n- Small bottleneck layers inserted between transformer layers\n- First PEFT method (Houlsby et al., 2019)\n- More parameters than LoRA but more flexible\n\n**Prefix Tuning:**\n- Prepend learnable 'virtual tokens' to input\n- Don't modify model weights at all\n- Good for multi-task learning\n\n**Prompt Tuning:**\n- Simpler version of prefix tuning\n- Learn soft prompts prepended to input\n- Works well at scale (>10B params)\n\n**IA³ (Infused Adapter by Inhibiting and Amplifying Inner Activations):**\n- Learn vectors that scale activations\n- Even fewer parameters than LoRA\n- Good for few-shot learning",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from peft import (\n    AdaLoraConfig,    # Adaptive rank LoRA\n    PromptTuningConfig,\n    PrefixTuningConfig,\n    IA3Config\n)\n\n# AdaLoRA - dynamically adjusts rank during training\nadaptive_config = AdaLoraConfig(\n    init_r=12,\n    target_r=8,           # Target average rank\n    tinit=200,            # Warmup steps\n    tfinal=1000,          # When to stop adapting\n    deltaT=10,            # Rank update interval\n    target_modules=['q_proj', 'v_proj']\n)\n\n# Prompt Tuning - learn soft prompt\nprompt_config = PromptTuningConfig(\n    task_type=TaskType.CAUSAL_LM,\n    num_virtual_tokens=20,     # Length of soft prompt\n    prompt_tuning_init='TEXT',  # Initialize from text\n    prompt_tuning_init_text='Classify the sentiment: '\n)\n\n# Prefix Tuning - prepend to all layers\nprefix_config = PrefixTuningConfig(\n    task_type=TaskType.CAUSAL_LM,\n    num_virtual_tokens=20,\n    prefix_projection=True    # Use MLP to project prefixes\n)\n\n# IA³ - scale activations\nia3_config = IA3Config(\n    task_type=TaskType.CAUSAL_LM,\n    target_modules=['k_proj', 'v_proj', 'down_proj'],\n    feedforward_modules=['down_proj']\n)"
+                }
+              },
+              {
+                "title": "Merging and Serving Adapters",
+                "content": "LoRA adapters can be merged into base model or swapped at runtime:\n\n**Merge into base:** No inference overhead, but loses modularity\n**Runtime swap:** Serve multiple tasks from one base model",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from peft import PeftModel\nfrom transformers import AutoModelForCausalLM\n\n# Load base model\nbase_model = AutoModelForCausalLM.from_pretrained('meta-llama/Llama-2-7b-hf')\n\n# Load adapter\nmodel = PeftModel.from_pretrained(base_model, 'my-lora-adapter')\n\n# Option 1: Merge adapter into base (permanent)\nmerged_model = model.merge_and_unload()\nmerged_model.save_pretrained('merged-model')  # Full size model\n\n# Option 2: Multiple adapters at runtime\nmodel.load_adapter('adapter-task-a', adapter_name='task_a')\nmodel.load_adapter('adapter-task-b', adapter_name='task_b')\n\n# Switch between tasks\nmodel.set_adapter('task_a')\noutput_a = model.generate(**inputs)\n\nmodel.set_adapter('task_b')\noutput_b = model.generate(**inputs)\n\n# Disable adapter (use base model)\nmodel.disable_adapter()"
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "LoRA adds trainable low-rank matrices to freeze base model",
+              "QLoRA combines 4-bit quantization for consumer GPU training",
+              "PEFT trains 0.1-1% of parameters with 90-99% quality",
+              "Adapters can be merged or swapped at runtime",
+              "Standard approach for customizing production LLMs"
+            ]
+          },
+          "authorCredits": {
+            "researchers": ["Hu", "Shen", "Wallis", "Allen-Zhu", "Li", "Wang", "Chen"],
+            "note": "LoRA was introduced by Edward Hu et al. at Microsoft (2021) in 'LoRA: Low-Rank Adaptation of Large Language Models'. QLoRA was developed by Dettmers et al. (2023), enabling 65B model fine-tuning on a single 48GB GPU. The PEFT library was created by Hugging Face to unify these methods."
+          }
+        },
+        {
+          "id": "reasoning-prompting",
+          "title": "Reasoning & Prompting Techniques",
+          "type": "lesson",
+          "duration": "35 min",
+          "content": {
+            "overview": "Prompting techniques unlock emergent reasoning abilities in LLMs. Chain-of-Thought (CoT) prompting enables step-by-step reasoning, while methods like ReAct combine reasoning with action for agentic workflows. These techniques are essential for building reliable AI systems.",
+            "sections": [
+              {
+                "title": "Chain-of-Thought Prompting",
+                "content": "Chain-of-Thought prompting encourages models to show their reasoning steps:\n\n**Standard prompting:**\nQ: If there are 23 oranges and you take 3, how many do you have?\nA: 3\n\n**Chain-of-Thought:**\nQ: If there are 23 oranges and you take 3, how many do you have?\nA: Let me think step by step.\n1. I take 3 oranges from the pile\n2. The question asks how many I have\n3. I took 3 oranges\nTherefore, I have 3 oranges.\n\n**Key benefits:**\n- Improves accuracy on reasoning tasks\n- Makes reasoning transparent and debuggable\n- Enables complex multi-step problem solving\n- Emergent ability at scale (>100B params)",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from openai import OpenAI\nclient = OpenAI()\n\n# Standard prompt (often fails on complex math)\nstandard_prompt = \"\"\"Q: A store has 125 apples. They sell 60% in the morning and 25% of the remaining in the afternoon. How many are left?\nA:\"\"\"\n\n# Chain-of-Thought prompt\ncot_prompt = \"\"\"Q: A store has 125 apples. They sell 60% in the morning and 25% of the remaining in the afternoon. How many are left?\n\nLet me solve this step by step:\n1. Start with 125 apples\n2. Morning: Sell 60% → 125 × 0.6 = 75 sold\n3. Remaining after morning: 125 - 75 = 50 apples\n4. Afternoon: Sell 25% of 50 → 50 × 0.25 = 12.5 → 12 or 13 sold\n5. Final remaining: 50 - 12 = 38 apples (or 37 if rounding up)\n\nA: 37-38 apples remain.\"\"\"\n\n# Zero-shot CoT: Just add \"Let's think step by step\"\nzero_shot_cot = \"\"\"Q: A store has 125 apples. They sell 60% in the morning and 25% of the remaining in the afternoon. How many are left?\n\nLet's think step by step:\"\"\"\n\nresponse = client.chat.completions.create(\n    model='gpt-4',\n    messages=[{'role': 'user', 'content': zero_shot_cot}]\n)"
+                }
+              },
+              {
+                "title": "Self-Consistency and Verification",
+                "content": "**Self-Consistency:**\nGenerate multiple reasoning paths and take the majority vote:\n\n1. Sample N different CoT reasoning chains\n2. Extract final answer from each\n3. Return most common answer\n\n**Verification/Reflection:**\nHave the model check its own work:\n- 'Is this answer correct? Let me verify...'\n- 'What could be wrong with this reasoning?'\n- 'Let me try a different approach...'",
+                "codeExample": {
+                  "language": "python",
+                  "code": "from collections import Counter\n\ndef self_consistency(prompt, n_samples=5, temperature=0.7):\n    \"\"\"\n    Generate multiple reasoning paths and vote on answer.\n    \"\"\"\n    answers = []\n    \n    for _ in range(n_samples):\n        response = client.chat.completions.create(\n            model='gpt-4',\n            messages=[{'role': 'user', 'content': prompt + '\\nLet\\'s think step by step:'}],\n            temperature=temperature  # Enable sampling diversity\n        )\n        \n        # Extract answer (implement based on your format)\n        answer = extract_answer(response.choices[0].message.content)\n        answers.append(answer)\n    \n    # Majority vote\n    answer_counts = Counter(answers)\n    best_answer = answer_counts.most_common(1)[0][0]\n    confidence = answer_counts[best_answer] / n_samples\n    \n    return best_answer, confidence\n\n# Verification prompt\nverification_prompt = \"\"\"Problem: [original problem]\n\nMy solution:\n[model's reasoning]\n\nFinal answer: [answer]\n\nNow let me verify this answer by:\n1. Checking each step for errors\n2. Trying an alternative approach\n3. Confirming the answer makes sense\n\nVerification:\"\"\""
+                }
+              },
+              {
+                "title": "ReAct: Reasoning + Acting",
+                "content": "ReAct interleaves reasoning (Thought) with actions (Act) and observations (Obs):\n\n**Pattern:**\n- Thought: Reason about what to do next\n- Action: Take an action (search, calculate, tool use)\n- Observation: Observe the result\n- Repeat until solved\n\n**This is the foundation of AI agents!**",
+                "codeExample": {
+                  "language": "python",
+                  "code": "react_prompt = \"\"\"Answer the following question using the available tools.\n\nTools available:\n- search(query): Search the web for information\n- calculate(expression): Evaluate a math expression\n- lookup(entity): Get facts about an entity\n\nQuestion: What is the population of the country where the Eiffel Tower is located, divided by 1000?\n\nThought: I need to find where the Eiffel Tower is located first.\nAction: lookup(Eiffel Tower)\nObservation: The Eiffel Tower is a wrought-iron lattice tower in Paris, France.\n\nThought: The Eiffel Tower is in France. Now I need France's population.\nAction: search(France population 2024)\nObservation: France has a population of approximately 68 million people.\n\nThought: Now I need to divide 68 million by 1000.\nAction: calculate(68000000 / 1000)\nObservation: 68000\n\nThought: I have the answer.\nFinal Answer: 68,000\"\"\"\n\n# LangChain implements ReAct pattern\nfrom langchain.agents import create_react_agent\nfrom langchain.tools import Tool\nfrom langchain_openai import ChatOpenAI\n\ntools = [\n    Tool(name='search', func=search_func, description='Search the web'),\n    Tool(name='calculator', func=calc_func, description='Do math')\n]\n\nagent = create_react_agent(ChatOpenAI(), tools, react_prompt)"
+                }
+              },
+              {
+                "title": "Few-Shot Prompting Patterns",
+                "content": "**Few-shot:** Provide examples in the prompt\n**Zero-shot:** No examples, just instructions\n**One-shot:** Single example\n\n**Best practices:**\n- Use 3-5 diverse examples\n- Order matters (put hardest last)\n- Match format exactly\n- Include edge cases",
+                "codeExample": {
+                  "language": "python",
+                  "code": "# Few-shot classification example\nfew_shot_prompt = \"\"\"Classify the sentiment of each review.\n\nReview: \"This product exceeded my expectations!\"\nSentiment: Positive\n\nReview: \"Complete waste of money, broke after one day.\"\nSentiment: Negative\n\nReview: \"It's okay, nothing special but does the job.\"\nSentiment: Neutral\n\nReview: \"Absolutely terrible customer service, never buying again.\"\nSentiment: Negative\n\nReview: \"Best purchase I've made all year, highly recommend!\"\nSentiment: Positive\n\nReview: \"{user_review}\"\nSentiment:\"\"\"\n\n# Structured output with examples\nstructured_prompt = \"\"\"Extract entities from the text as JSON.\n\nText: \"Apple announced the new iPhone 15 in Cupertino on September 12.\"\nOutput: {\"company\": \"Apple\", \"product\": \"iPhone 15\", \"location\": \"Cupertino\", \"date\": \"September 12\"}\n\nText: \"Tesla's CEO Elon Musk visited the Berlin factory.\"\nOutput: {\"company\": \"Tesla\", \"person\": \"Elon Musk\", \"location\": \"Berlin\", \"facility\": \"factory\"}\n\nText: \"{user_text}\"\nOutput:\"\"\""
+                }
+              }
+            ],
+            "keyTakeaways": [
+              "Chain-of-Thought enables step-by-step reasoning",
+              "Self-consistency improves accuracy via voting",
+              "ReAct combines reasoning with tool use for agents",
+              "Few-shot examples guide model behavior",
+              "Prompting is a core skill for LLM applications"
+            ]
+          },
+          "authorCredits": {
+            "researchers": ["Wei", "Wang", "Schuurmans", "Bosma", "Chi", "Le", "Zhou", "Yao"],
+            "note": "Chain-of-Thought prompting was introduced by Wei et al. at Google (2022) in 'Chain-of-Thought Prompting Elicits Reasoning in Large Language Models'. ReAct was developed by Yao et al. (2022), combining reasoning traces with action execution. These techniques form the foundation of modern AI agents."
           }
         },
         {
