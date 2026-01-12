@@ -10,6 +10,58 @@
     "https://www.ibm.com/think/topics/fine-tuning-large-language-models",
     "https://www.ibm.com/topics/foundation-models"
   ],
+  "keyThinkers": [
+    {
+      "name": "Edward J. Hu",
+      "contribution": "Lead author of LoRA paper at Microsoft Research (2021)",
+      "keyWork": "LoRA: Low-Rank Adaptation of Large Language Models"
+    },
+    {
+      "name": "Tim Dettmers",
+      "contribution": "Creator of QLoRA - 4-bit quantized fine-tuning at University of Washington (2023)",
+      "keyWork": "QLoRA: Efficient Finetuning of Quantized LLMs"
+    },
+    {
+      "name": "Rafael Rafailov",
+      "contribution": "Lead author of DPO (Direct Preference Optimization) at Stanford (2023)",
+      "keyWork": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model"
+    },
+    {
+      "name": "Chelsea Finn",
+      "contribution": "Senior author on DPO, pioneering research in meta-learning and RL",
+      "keyWork": "Stanford AI Lab research on alignment and preference learning"
+    },
+    {
+      "name": "Long Ouyang",
+      "contribution": "Lead author of InstructGPT and RLHF at OpenAI (2022)",
+      "keyWork": "Training Language Models to Follow Instructions with Human Feedback"
+    },
+    {
+      "name": "Yuntao Bai",
+      "contribution": "Lead author of Constitutional AI at Anthropic (2022)",
+      "keyWork": "Constitutional AI: Harmlessness from AI Feedback"
+    },
+    {
+      "name": "Yizhong Wang",
+      "contribution": "Creator of Self-Instruct for synthetic instruction dataset generation",
+      "keyWork": "Self-Instruct: Aligning Language Models with Self-Generated Instructions"
+    },
+    {
+      "name": "Leandro von Werra",
+      "contribution": "Creator and maintainer of TRL library at Hugging Face",
+      "keyWork": "Transformer Reinforcement Learning library for RLHF/DPO"
+    },
+    {
+      "name": "Sourab Mangrulkar",
+      "contribution": "Lead maintainer of PEFT library at Hugging Face",
+      "keyWork": "Parameter-Efficient Fine-Tuning library (LoRA, adapters, prefix tuning)"
+    },
+    {
+      "name": "Daniel Han",
+      "contribution": "Creator of Unsloth for 2x faster fine-tuning with 70% less VRAM",
+      "keyWork": "Unsloth: Faster LLM fine-tuning with Triton kernels"
+    }
+  ],
   "prerequisites": [
     "Deep learning fundamentals",
     "PyTorch experience",
@@ -82,6 +134,7 @@
         {
           "id": "when-to-finetune",
           "title": "When and Why to Fine-tune",
+          "author": "PEFT concepts by Sourab Mangrulkar et al. (Hugging Face); QLoRA by Tim Dettmers (UW)",
           "duration": "30 min",
           "content": {
             "overview": "Fine-tuning adapts a pre-trained LLM to your specific domain or task. But it's not always the right choice—understanding when to fine-tune versus when to use prompt engineering or RAG is crucial for efficient development.",
@@ -184,6 +237,7 @@
         {
           "id": "rlhf-alignment",
           "title": "RLHF and Alignment Methods",
+          "author": "RLHF by Long Ouyang (OpenAI); DPO by Rafael Rafailov et al. (Stanford); Constitutional AI by Yuntao Bai (Anthropic)",
           "duration": "50 min",
           "content": {
             "overview": "Understanding how models are aligned with human preferences is essential for advanced fine-tuning. This lesson covers RLHF (the original alignment technique), its successor DPO, and other modern alignment methods used in production.",
@@ -267,6 +321,7 @@
         {
           "id": "lora-explained",
           "title": "Understanding LoRA",
+          "author": "LoRA paper by Edward J. Hu et al. (Microsoft, 2021)",
           "duration": "45 min",
           "content": {
             "overview": "Low-Rank Adaptation (LoRA) is a parameter-efficient fine-tuning method that adds small trainable matrices to frozen model weights. Instead of updating millions of parameters, LoRA updates thousands—dramatically reducing memory and compute requirements.",
@@ -335,6 +390,7 @@
         {
           "id": "instruction-datasets",
           "title": "Building Instruction Datasets",
+          "author": "Self-Instruct by Yizhong Wang et al. (UW); Alpaca by Stanford NLP",
           "duration": "60 min",
           "content": {
             "overview": "The quality of your fine-tuning dataset is the most important factor for success. A small, high-quality dataset often outperforms a large, noisy one. This lesson covers how to create, format, and validate instruction datasets.",
@@ -395,6 +451,7 @@
         {
           "id": "training-with-trl",
           "title": "Fine-tuning with TRL",
+          "author": "TRL library by Leandro von Werra, Lewis Tunstall et al. (Hugging Face)",
           "duration": "60 min",
           "content": {
             "overview": "The TRL (Transformer Reinforcement Learning) library from Hugging Face provides high-level trainers for fine-tuning LLMs. We'll use SFTTrainer for supervised fine-tuning, the most common approach.",
