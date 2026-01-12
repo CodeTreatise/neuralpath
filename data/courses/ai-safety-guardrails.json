@@ -25,6 +25,58 @@
     "Test your AI systems like a hacker would (red teaming)",
     "Build production-safe AI applications"
   ],
+  "keyThinkers": [
+    {
+      "name": "Simon Willison",
+      "contribution": "Coined 'prompt injection' term, comprehensive LLM security research since Sept 2022",
+      "keyWork": "Prompt Injection series (simonwillison.net/series/prompt-injection)"
+    },
+    {
+      "name": "Riley Goodside",
+      "contribution": "First public demonstration of prompt injection attacks on GPT-3",
+      "keyWork": "GPT-3 prompt injection demonstration (September 11, 2022)"
+    },
+    {
+      "name": "Steve Wilson",
+      "contribution": "Founded OWASP Top 10 for LLM Applications project",
+      "keyWork": "OWASP LLM Top 10 (2023-2025)"
+    },
+    {
+      "name": "Yuntao Bai, Amanda Askell & Anthropic Team",
+      "contribution": "Constitutional AI and RLAIF for training harmless AI systems",
+      "keyWork": "Constitutional AI: Harmlessness from AI Feedback (Dec 2022)"
+    },
+    {
+      "name": "Hakan Inan et al. (Meta AI)",
+      "contribution": "Created Llama Guard LLM-based safety classifier",
+      "keyWork": "Llama Guard paper (December 2023)"
+    },
+    {
+      "name": "Johann Rehberger",
+      "contribution": "Prolific AI security researcher, 'Month of AI Bugs' vulnerability disclosure",
+      "keyWork": "Prompt injection vulnerability research (embracethered.com)"
+    },
+    {
+      "name": "NVIDIA NeMo Team",
+      "contribution": "Created open-source NeMo Guardrails with Colang domain-specific language",
+      "keyWork": "NeMo Guardrails framework"
+    },
+    {
+      "name": "Ads Dawson",
+      "contribution": "OWASP GenAI Security Technical Lead",
+      "keyWork": "OWASP LLM security standards and GenAI governance"
+    },
+    {
+      "name": "Guardrails AI Team",
+      "contribution": "Open-source Python framework for LLM safety with validator Hub",
+      "keyWork": "Guardrails AI library (guardrailsai.com)"
+    },
+    {
+      "name": "Microsoft AI Red Team",
+      "contribution": "Pioneered enterprise AI red teaming methodologies",
+      "keyWork": "Azure AI Content Safety, Prompt Shields"
+    }
+  ],
   "modules": [
     {
       "id": "safety-intro",
@@ -33,6 +85,7 @@
         {
           "id": "ai-risks-intro",
           "title": "Understanding AI Risks",
+          "author": "Risk taxonomy from OWASP GenAI Security Project (Steve Wilson, Ads Dawson)",
           "duration": "25 min",
           "content": {
             "overview": "Before building defenses, we need to understand what can go wrong. This lesson covers the main risks when deploying AI applications.",
@@ -85,6 +138,7 @@
         {
           "id": "why-guardrails",
           "title": "Building Basic Guardrails",
+          "author": "Enterprise framework by IBM AI; Input/output patterns from industry research",
           "duration": "30 min",
           "content": {
             "overview": "Now that we understand the risks, let's build our first guardrails. We'll start simple and add more sophisticated protections.",
@@ -120,6 +174,7 @@
         {
           "id": "nemo-intro",
           "title": "Building with NeMo Guardrails",
+          "author": "NVIDIA NeMo Team - Colang DSL and open-source guardrails toolkit",
           "duration": "45 min",
           "content": {
             "overview": "NeMo Guardrails is NVIDIA's open-source toolkit for adding programmable guardrails to LLM applications using a domain-specific language called Colang.",
@@ -167,6 +222,7 @@
         {
           "id": "injection-attacks",
           "title": "Understanding Prompt Injection",
+          "author": "Coined by Simon Willison (Sept 2022); First demo by Riley Goodside",
           "duration": "40 min",
           "content": {
             "overview": "Prompt injection is the #1 risk in OWASP's Top 10 for LLMs. Attackers manipulate prompts to bypass safety measures or hijack the model's behavior.",
@@ -209,6 +265,7 @@
         {
           "id": "red-team-basics",
           "title": "Red Teaming Fundamentals",
+          "author": "Methodologies from Anthropic, Microsoft AI Red Team, Google DeepMind",
           "duration": "45 min",
           "content": {
             "overview": "Red teaming systematically probes AI systems for vulnerabilities. It's essential for finding weaknesses before attackers do.",
@@ -259,6 +316,7 @@
         {
           "id": "building-safe-systems",
           "title": "Building Safe Production Systems",
+          "author": "Enterprise patterns by IBM; HAP filtering from content moderation research",
           "duration": "40 min",
           "content": {
             "overview": "Combine all safety techniques into a production-ready system with monitoring, logging, and incident response.",
