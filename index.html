@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="NeuralPath - Master Generative AI from fundamentals to production with interactive courses, knowledge maps, and career guidance">
+    <meta name="description"
+        content="NeuralPath - Master Generative AI from fundamentals to production with interactive courses, knowledge maps, and career guidance">
     <meta name="theme-color" content="#6366f1" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#6366f1" media="(prefers-color-scheme: light)">
     <title>NeuralPath - Master Generative AI</title>
-    
+
     <!-- PWA Meta Tags -->
     <meta name="application-name" content="NeuralPath">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,23 +18,25 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="msapplication-TileColor" content="#0a0a0f">
     <meta name="msapplication-tap-highlight" content="no">
-    
+
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    
+
     <!-- Favicon & Icons -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="apple-touch-icon" href="icons/icon-192.svg">
     <link rel="mask-icon" href="favicon.svg" color="#6366f1">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
     <!-- D3.js for graph visualization -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    
+
     <!-- MathJax for LaTeX rendering -->
     <script>
         MathJax = {
@@ -57,7 +61,7 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-    
+
     <!-- Mermaid for diagrams -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
@@ -135,15 +139,15 @@
                 nodeBkg: '#eef2ff',
                 labelColor: '#334155'
             },
-            flowchart: { 
-                curve: 'basis', 
+            flowchart: {
+                curve: 'basis',
                 padding: 20,
                 nodeSpacing: 50,
                 rankSpacing: 50,
                 htmlLabels: true
             },
-            sequence: { 
-                actorMargin: 80, 
+            sequence: {
+                actorMargin: 80,
                 mirrorActors: false,
                 messageMargin: 40,
                 boxMargin: 10,
@@ -152,12 +156,12 @@
                 useMaxWidth: true
             }
         });
-        
+
         // Initialize Mermaid with theme support
         document.addEventListener('DOMContentLoaded', () => {
             const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
             mermaid.initialize(getMermaidConfig(isDark));
-            
+
             // Global function to render mermaid diagrams
             window.renderMermaidDiagrams = async () => {
                 const diagrams = document.querySelectorAll('.mermaid-diagram:not([data-processed])');
@@ -174,14 +178,14 @@
                     }
                 }
             };
-            
+
             // Re-render diagrams when theme changes
             const observer = new MutationObserver((mutations) => {
                 mutations.forEach((mutation) => {
                     if (mutation.attributeName === 'data-theme') {
                         const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
                         mermaid.initialize(getMermaidConfig(isDark));
-                        
+
                         // Re-render all diagrams with new theme
                         document.querySelectorAll('.mermaid-diagram[data-processed]').forEach(el => {
                             el.removeAttribute('data-processed');
@@ -193,7 +197,7 @@
             observer.observe(document.documentElement, { attributes: true });
         });
     </script>
-    
+
     <!-- Styles -->
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
@@ -201,6 +205,7 @@
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/pages.css">
 </head>
+
 <body>
     <!-- App Shell -->
     <div id="app">
@@ -212,7 +217,7 @@
                     <span class="logo-text">NeuralPath</span>
                 </a>
             </div>
-            
+
             <nav class="nav" id="nav">
                 <a href="#/explore" class="nav-link" data-route="explore">
                     <span class="nav-icon">🗺️</span>
@@ -243,24 +248,24 @@
                     <span class="nav-text">Jobs</span>
                 </a>
             </nav>
-            
+
             <div class="header-right">
                 <button class="search-trigger" id="search-trigger" aria-label="Search">
                     <span class="search-icon">🔍</span>
                     <span class="search-hint">Search</span>
                     <kbd class="search-kbd">⌘K</kbd>
                 </button>
-                
+
                 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
                     <span class="theme-icon" id="theme-icon">🌙</span>
                 </button>
-                
+
                 <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
                     <span class="menu-icon">☰</span>
                 </button>
             </div>
         </header>
-        
+
         <!-- Main Content -->
         <main class="main" id="main">
             <!-- Content will be injected here by router -->
@@ -269,19 +274,14 @@
                 <p>Loading...</p>
             </div>
         </main>
-        
+
         <!-- Search Modal -->
         <div class="modal-overlay" id="search-modal">
             <div class="search-modal">
                 <div class="search-header">
                     <span class="search-modal-icon">🔍</span>
-                    <input 
-                        type="text" 
-                        class="search-input" 
-                        id="search-input" 
-                        placeholder="Search courses, tools, topics..."
-                        autocomplete="off"
-                    >
+                    <input type="text" class="search-input" id="search-input"
+                        placeholder="Search courses, tools, topics..." autocomplete="off">
                     <kbd class="search-close-kbd">ESC</kbd>
                 </div>
                 <div class="search-categories" id="search-categories">
@@ -304,11 +304,11 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Toast Container -->
         <div class="toast-container" id="toast-container"></div>
     </div>
-    
+
     <!-- Scripts -->
     <script src="js/utils/storage.js"></script>
     <script src="js/utils/helpers.js"></script>
@@ -325,7 +325,7 @@
     <script src="js/pages/resources.js"></script>
     <script src="js/pages/periodic-table.js"></script>
     <script src="js/app.js"></script>
-    
+
     <!-- Service Worker Registration -->
     <script>
         // Register Service Worker for PWA
@@ -335,14 +335,14 @@
                     const registration = await navigator.serviceWorker.register('/sw.js', {
                         scope: '/'
                     });
-                    
+
                     console.log('✅ ServiceWorker registered:', registration.scope);
-                    
+
                     // Check for updates
                     registration.addEventListener('updatefound', () => {
                         const newWorker = registration.installing;
                         console.log('🔄 New service worker installing...');
-                        
+
                         newWorker.addEventListener('statechange', () => {
                             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                                 // New content available
@@ -354,13 +354,13 @@
                     console.warn('ServiceWorker registration failed:', error);
                 }
             });
-            
+
             // Handle controller change (new SW activated)
             navigator.serviceWorker.addEventListener('controllerchange', () => {
                 console.log('🔄 New service worker activated');
             });
         }
-        
+
         // Show update notification
         function showUpdateNotification() {
             if (typeof Components !== 'undefined' && Components.toast) {
@@ -376,22 +376,22 @@
                 setTimeout(() => toast.remove(), 10000);
             }
         }
-        
+
         // Install prompt handling
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            
+
             // Show install button after a delay (optional UX)
             setTimeout(() => {
                 showInstallPrompt();
             }, 30000); // Show after 30 seconds
         });
-        
+
         function showInstallPrompt() {
             if (!deferredPrompt) return;
-            
+
             const installBanner = document.createElement('div');
             installBanner.id = 'install-banner';
             installBanner.innerHTML = `
@@ -437,40 +437,48 @@
             `;
             document.body.appendChild(installBanner);
         }
-        
+
         async function installApp() {
             if (!deferredPrompt) return;
-            
+
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            
+
             console.log('Install prompt outcome:', outcome);
             deferredPrompt = null;
             dismissInstall();
-            
+
             if (outcome === 'accepted') {
                 if (typeof Components !== 'undefined') {
                     Components.toast('🎉 NeuralPath installed!', 'success');
                 }
             }
         }
-        
+
         function dismissInstall() {
             document.getElementById('install-banner')?.remove();
         }
-        
+
         // Track app installed event
         window.addEventListener('appinstalled', () => {
             console.log('✅ NeuralPath was installed');
             deferredPrompt = null;
         });
     </script>
-    
+
     <style>
         @keyframes slideUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
         }
     </style>
 </body>
+
 </html>

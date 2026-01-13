@@ -1,0 +1,1405 @@
+/* ===============================================
+   ENCHANTED FOREST PATH - Cartoon Nature Journey
+   Whimsical Storybook Learning Adventure
+   =============================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Patrick+Hand&family=Bubblegum+Sans&display=swap');
+
+:root {
+    /* Nature Colors */
+    --sky-light: #87CEEB;
+    --sky-gradient: linear-gradient(180deg, #87CEEB 0%, #E0F4FF 50%, #FFF8DC 100%);
+    --grass-green: #7CB342;
+    --grass-light: #9CCC65;
+    --grass-dark: #558B2F;
+    --tree-trunk: #8D6E63;
+    --tree-leaves: #43A047;
+    --tree-leaves-light: #66BB6A;
+    --path-brown: #D7CCC8;
+    --path-dark: #A1887F;
+    --path-light: #EFEBE9;
+    
+    /* Accent Colors */
+    --flower-pink: #F48FB1;
+    --flower-yellow: #FFF176;
+    --flower-purple: #CE93D8;
+    --flower-blue: #81D4FA;
+    --berry-red: #EF5350;
+    --mushroom-red: #E53935;
+    --mushroom-white: #FAFAFA;
+    
+    /* Shop/Building Colors */
+    --shop-roof: #FF7043;
+    --shop-wall: #FFF3E0;
+    --shop-wood: #6D4C41;
+    --sign-yellow: #FFE082;
+    --window-blue: #B3E5FC;
+    
+    /* UI Colors */
+    --text-primary: #4E342E;
+    --text-secondary: #6D4C41;
+    --text-light: #8D6E63;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --card-border: rgba(139, 90, 43, 0.3);
+    --shadow-soft: rgba(0, 0, 0, 0.1);
+    
+    /* Fun Highlights */
+    --glow-gold: #FFD54F;
+    --glow-magic: #BA68C8;
+    --sparkle: #FFEB3B;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Fredoka', 'Comic Sans MS', cursive;
+    background: var(--sky-gradient);
+    color: var(--text-primary);
+    overflow: hidden;
+    height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Utility Classes */
+.hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
+/* ===============================================
+   Decorative Overlays - Clouds & Sun
+   =============================================== */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background: none;
+    opacity: 0;
+}
+
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 60%,
+        rgba(255, 248, 220, 0.3) 100%
+    );
+}
+
+/* Floating clouds decoration */
+.vignette::before,
+.vignette::after {
+    content: '☁️';
+    position: absolute;
+    font-size: 4rem;
+    opacity: 0.6;
+    animation: floatCloud 20s ease-in-out infinite;
+}
+
+.vignette::before {
+    top: 5%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.vignette::after {
+    top: 8%;
+    right: 15%;
+    font-size: 3rem;
+    animation-delay: -10s;
+}
+
+@keyframes floatCloud {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(30px) translateY(-10px); }
+}
+
+/* ===============================================
+   3D Canvas Container
+   =============================================== */
+.canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.canvas-container canvas {
+    display: block;
+}
+
+/* ===============================================
+   Navigation Bar - Wooden Sign Style
+   =============================================== */
+.journey-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: linear-gradient(180deg, 
+        #8D6E63 0%, 
+        #6D4C41 50%,
+        #5D4037 100%
+    );
+    border-bottom: 4px solid #4E342E;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    z-index: 100;
+    box-shadow: 
+        0 4px 0 #3E2723,
+        0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Wood grain texture */
+.journey-nav::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 40px,
+            rgba(0, 0, 0, 0.05) 40px,
+            rgba(0, 0, 0, 0.05) 42px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 3px,
+            rgba(255, 255, 255, 0.03) 3px,
+            rgba(255, 255, 255, 0.03) 4px
+        );
+    pointer-events: none;
+}
+
+/* Hanging rope decoration */
+.journey-nav::after {
+    content: '🌿';
+    position: absolute;
+    right: 50%;
+    bottom: -20px;
+    font-size: 1.5rem;
+    transform: translateX(50%);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #FFF8E1;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.nav-link svg {
+    stroke: #FFF8E1;
+}
+
+.nav-title-group {
+    text-align: center;
+    position: relative;
+}
+
+.nav-title {
+    display: block;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #FFF8E1;
+    text-shadow: 
+        2px 2px 0 #4E342E,
+        3px 3px 0 rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
+}
+
+.nav-subtitle {
+    display: block;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.85rem;
+    color: #FFCC80;
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+.nav-controls {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(180deg, #FFE082 0%, #FFD54F 100%);
+    border: 3px solid #F9A825;
+    color: #5D4037;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Fredoka', cursive;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 3px 0 #F57F17,
+        0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 5px 0 #F57F17,
+        0 8px 15px rgba(0, 0, 0, 0.25);
+}
+
+.nav-btn:active {
+    transform: translateY(1px);
+    box-shadow: 
+        0 1px 0 #F57F17,
+        0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.nav-btn.glow-btn {
+    background: linear-gradient(180deg, #81C784 0%, #66BB6A 100%);
+    border-color: #43A047;
+    box-shadow: 
+        0 3px 0 #388E3C,
+        0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-btn.glow-btn:hover {
+    box-shadow: 
+        0 5px 0 #388E3C,
+        0 8px 15px rgba(0, 0, 0, 0.25);
+}
+
+.nav-btn.active {
+    background: linear-gradient(180deg, #A5D6A7 0%, #81C784 100%);
+}
+
+.btn-icon {
+    font-size: 1rem;
+}
+
+/* ===============================================
+   Progress Bar - Garden Path Style
+   =============================================== */
+.progress-bar {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(180deg, #A1887F 0%, #8D6E63 100%);
+    border-bottom: 3px solid #6D4C41;
+    z-index: 99;
+    overflow: visible;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.progress-track {
+    position: absolute;
+    top: 4px;
+    left: 10px;
+    right: 10px;
+    height: 12px;
+    background: #BCAAA4;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, 
+        #66BB6A 0%, 
+        #81C784 50%, 
+        #A5D6A7 100%
+    );
+    border-radius: 10px;
+    transition: width 0.3s ease-out;
+    position: relative;
+    box-shadow: 0 0 10px rgba(102, 187, 106, 0.5);
+}
+
+/* Walking character on progress */
+.progress-fill::after {
+    content: '🚶';
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    animation: walk 0.4s steps(2) infinite;
+}
+
+@keyframes walk {
+    0%, 100% { transform: translateY(-50%) scaleX(1); }
+    50% { transform: translateY(-55%) scaleX(-1); }
+}
+
+.progress-glow {
+    display: none;
+}
+
+.progress-year {
+    position: absolute;
+    right: 1rem;
+    top: 24px;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #5D4037;
+    background: linear-gradient(180deg, #FFF8E1 0%, #FFECB3 100%);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    border: 3px solid #FFB74D;
+    box-shadow: 
+        0 3px 0 #F57C00,
+        0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* ===============================================
+   Era Legend - Signpost Style
+   =============================================== */
+.era-legend {
+    position: fixed;
+    top: 110px;
+    left: 1rem;
+    background: linear-gradient(180deg, #EFEBE9 0%, #D7CCC8 100%);
+    border: 4px solid #8D6E63;
+    border-radius: 15px;
+    padding: 1rem;
+    z-index: 90;
+    max-width: 200px;
+    box-shadow: 
+        4px 4px 0 #6D4C41,
+        6px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Wooden post */
+.era-legend::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    bottom: -25px;
+    width: 15px;
+    height: 30px;
+    background: linear-gradient(90deg, #8D6E63 0%, #6D4C41 100%);
+    border-radius: 0 0 5px 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.era-legend h4 {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #5D4037;
+    margin-bottom: 0.75rem;
+    text-align: center;
+    border-bottom: 2px dashed #BCAAA4;
+    padding-bottom: 0.5rem;
+}
+
+.era-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    opacity: 0.6;
+    border: 2px solid transparent;
+    background: transparent;
+}
+
+.era-item:hover {
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0.85;
+    transform: translateX(3px);
+}
+
+.era-item.active {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: var(--glow-gold);
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+.era-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.era-name {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.era-item.active .era-name {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* ===============================================
+   Dashboard HUD - Cottage Style
+   =============================================== */
+.dashboard-hud {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 1.5rem;
+    z-index: 50;
+    pointer-events: none;
+}
+
+.dashboard-hud > * {
+    pointer-events: auto;
+}
+
+/* Mini-map - Treasure Map Style */
+.hud-minimap {
+    width: 130px;
+    height: 130px;
+    background: 
+        linear-gradient(180deg, #FFF8E1 0%, #FFE0B2 100%);
+    border: 4px solid #8D6E63;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        4px 4px 0 #6D4C41,
+        6px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Aged paper texture */
+.hud-minimap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 4px,
+            rgba(139, 90, 43, 0.03) 4px,
+            rgba(139, 90, 43, 0.03) 5px
+        );
+    pointer-events: none;
+}
+
+/* Map decorations */
+.hud-minimap::after {
+    content: '🗺️';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1rem;
+    opacity: 0.5;
+}
+
+.minimap-path {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    width: 8px;
+    height: 80%;
+    background: 
+        repeating-linear-gradient(
+            180deg,
+            #A1887F 0px,
+            #A1887F 8px,
+            #BCAAA4 8px,
+            #BCAAA4 16px
+        );
+    border-radius: 4px;
+    border: 2px dashed #8D6E63;
+    transform: translateX(-50%);
+}
+
+.minimap-dot {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #EF5350 40%, #C62828 100%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid #FFF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: top 0.3s ease-out;
+    z-index: 2;
+}
+
+/* Flag on marker */
+.minimap-dot::after {
+    content: '🚩';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem;
+}
+
+/* Center HUD - Cottage Window */
+.hud-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.hud-current {
+    background: linear-gradient(180deg, #FFF8E1 0%, #FFECB3 100%);
+    border: 5px solid #8D6E63;
+    border-radius: 25px;
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+    box-shadow: 
+        5px 5px 0 #6D4C41,
+        8px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Decorative corners */
+.hud-current::before,
+.hud-current::after {
+    content: '🌸';
+    position: absolute;
+    font-size: 1.2rem;
+}
+
+.hud-current::before {
+    top: -10px;
+    left: -10px;
+}
+
+.hud-current::after {
+    content: '🌺';
+    bottom: -10px;
+    right: -10px;
+}
+
+.hud-current:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        5px 8px 0 #6D4C41,
+        8px 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+.hud-era-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    border-radius: 25px 0 0 25px;
+}
+
+.hud-year-wrap {
+    text-align: center;
+}
+
+.hud-year-label {
+    display: block;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-light);
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.hud-year {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #5D4037;
+    text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.8);
+    line-height: 1;
+}
+
+.hud-divider {
+    width: 3px;
+    height: 50px;
+    background: linear-gradient(180deg, 
+        transparent 0%, 
+        #BCAAA4 20%, 
+        #BCAAA4 80%, 
+        transparent 100%
+    );
+    border-radius: 2px;
+}
+
+.hud-event-info {
+    min-width: 200px;
+}
+
+.hud-title {
+    font-family: 'Fredoka', cursive;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.hud-subtitle {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.hud-click-hint {
+    position: absolute;
+    bottom: 8px;
+    right: 20px;
+    font-size: 0.7rem;
+    color: var(--text-light);
+    font-family: 'Patrick Hand', cursive;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hud-current:hover .hud-click-hint {
+    opacity: 1;
+}
+
+.hud-upcoming {
+    background: linear-gradient(180deg, #E8F5E9 0%, #C8E6C9 100%);
+    border: 3px solid #81C784;
+    border-radius: 30px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 
+        3px 3px 0 #66BB6A,
+        4px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hud-label {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #43A047;
+}
+
+.hud-next-title {
+    color: #2E7D32;
+    font-family: 'Fredoka', cursive;
+    font-weight: 500;
+}
+
+/* Speedometer - Compass Style */
+.speedometer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.speedo-ring {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    background: linear-gradient(180deg, #FFF8E1 0%, #FFE0B2 100%);
+    border: 5px solid #8D6E63;
+    border-radius: 50%;
+    box-shadow: 
+        4px 4px 0 #6D4C41,
+        6px 6px 15px rgba(0, 0, 0, 0.2),
+        inset 0 0 20px rgba(139, 90, 43, 0.1);
+}
+
+.speedo-ring svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.speedo-bg {
+    fill: none;
+    stroke: #EFEBE9;
+    stroke-width: 8;
+}
+
+.speedo-fill {
+    fill: none;
+    stroke: #66BB6A;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    transition: stroke-dashoffset 0.3s ease-out;
+}
+
+.speedo-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.speed-value {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #5D4037;
+}
+
+.speed-unit {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+}
+
+.distance-traveled {
+    background: linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 100%);
+    border: 3px solid #64B5F6;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    box-shadow: 
+        3px 3px 0 #42A5F5,
+        4px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dist-current {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1565C0;
+}
+
+.dist-sep {
+    color: #90CAF9;
+    font-weight: 600;
+}
+
+.dist-total {
+    font-family: 'Fredoka', cursive;
+    font-size: 0.9rem;
+    color: #42A5F5;
+}
+
+.dist-label {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.65rem;
+    color: #64B5F6;
+    margin-left: 0.3rem;
+    text-transform: uppercase;
+}
+
+/* ===============================================
+   Event Panel - Storybook Page
+   =============================================== */
+.event-panel {
+    position: fixed;
+    top: 0;
+    right: -500px;
+    width: 480px;
+    max-width: 90vw;
+    height: 100vh;
+    background: linear-gradient(180deg, #FFFDE7 0%, #FFF8E1 100%);
+    border-left: 6px solid #8D6E63;
+    z-index: 200;
+    transition: right 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow-y: auto;
+    box-shadow: 
+        -5px 0 0 #6D4C41,
+        -10px 0 40px rgba(0, 0, 0, 0.3);
+}
+
+.event-panel.open {
+    right: 0;
+}
+
+/* Decorative border pattern */
+.event-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            180deg,
+            #FFB74D 0px,
+            #FFB74D 20px,
+            #FFA726 20px,
+            #FFA726 40px
+        );
+}
+
+.panel-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(180deg, #FFCDD2 0%, #EF9A9A 100%);
+    border: 3px solid #E57373;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 
+        3px 3px 0 #EF5350,
+        4px 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+.panel-close svg {
+    stroke: #C62828;
+    stroke-width: 3;
+}
+
+.panel-close:hover {
+    transform: rotate(90deg) scale(1.1);
+    background: linear-gradient(180deg, #EF9A9A 0%, #E57373 100%);
+}
+
+.panel-content {
+    padding: 2rem;
+    padding-top: 4rem;
+}
+
+.panel-header {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 3px dashed #BCAAA4;
+}
+
+.panel-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    flex-shrink: 0;
+    border: 3px solid;
+}
+
+.panel-title-area h2 {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.panel-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.panel-year {
+    font-family: 'Fredoka', cursive;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #5D4037;
+    background: linear-gradient(180deg, #FFECB3 0%, #FFE082 100%);
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    border: 2px solid #FFB74D;
+}
+
+.panel-tag {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    border: 2px solid #BCAAA4;
+}
+
+.panel-section {
+    margin-bottom: 1.75rem;
+}
+
+.panel-section h3 {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #8D6E63;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.panel-section h3::before {
+    content: '📖';
+}
+
+.panel-section p {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+.panel-authors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.author-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: linear-gradient(180deg, #E8F5E9 0%, #C8E6C9 100%);
+    border: 2px solid #81C784;
+    border-radius: 15px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #FFB74D, #FF9800);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #FFF;
+    border: 2px solid #F57C00;
+}
+
+.panel-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.panel-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 100%);
+    border: 2px solid #64B5F6;
+    border-radius: 12px;
+    color: #1565C0;
+    text-decoration: none;
+    font-family: 'Fredoka', cursive;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.panel-link:hover {
+    transform: translateX(5px);
+    background: linear-gradient(180deg, #BBDEFB 0%, #90CAF9 100%);
+}
+
+.panel-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.5rem;
+    border-top: 3px dashed #BCAAA4;
+    margin-top: 2rem;
+}
+
+.panel-nav-btn {
+    background: linear-gradient(180deg, #FFE082 0%, #FFD54F 100%);
+    border: 3px solid #F9A825;
+    color: #5D4037;
+    padding: 0.6rem 1.25rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Fredoka', cursive;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 3px 3px 0 #F57F17;
+}
+
+.panel-nav-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 3px 5px 0 #F57F17;
+}
+
+.panel-nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #E0E0E0;
+    border-color: #BDBDBD;
+    box-shadow: none;
+}
+
+/* ===============================================
+   Instructions Overlay - Welcome Sign
+   =============================================== */
+.instructions-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at center, 
+            rgba(135, 206, 235, 0.95) 0%, 
+            rgba(100, 181, 246, 0.98) 100%
+        );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    transition: all 0.6s ease;
+}
+
+.instructions-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.instructions-card {
+    background: 
+        linear-gradient(180deg, #FFFDE7 0%, #FFF8E1 100%);
+    border: 8px solid #8D6E63;
+    border-radius: 40px;
+    padding: 3rem;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    box-shadow: 
+        8px 8px 0 #6D4C41,
+        12px 12px 30px rgba(0, 0, 0, 0.3);
+    animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Corner decorations */
+.instructions-card::before,
+.instructions-card::after {
+    position: absolute;
+    font-size: 2.5rem;
+}
+
+.instructions-card::before {
+    content: '🌳';
+    top: -25px;
+    left: -25px;
+}
+
+.instructions-card::after {
+    content: '🏠';
+    bottom: -25px;
+    right: -25px;
+}
+
+.instructions-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.instructions-card h2 {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 2.5rem;
+    color: #5D4037;
+    margin-bottom: 0.5rem;
+    text-shadow: 3px 3px 0 rgba(255, 255, 255, 0.8);
+}
+
+.instructions-tagline {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.2rem;
+    color: #8D6E63;
+    margin-bottom: 2rem;
+}
+
+.instructions-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.control-item {
+    background: linear-gradient(180deg, #E8F5E9 0%, #C8E6C9 100%);
+    border: 3px solid #81C784;
+    border-radius: 15px;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+    box-shadow: 3px 3px 0 #66BB6A;
+}
+
+.control-item:hover {
+    transform: translateY(-3px);
+}
+
+.control-key {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2E7D32;
+    margin-bottom: 0.25rem;
+}
+
+.control-desc {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.95rem;
+    color: #558B2F;
+}
+
+.start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(180deg, #FFB74D 0%, #FF9800 100%);
+    border: 4px solid #F57C00;
+    color: #FFF;
+    padding: 1rem 2.5rem;
+    border-radius: 30px;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+        5px 5px 0 #E65100,
+        8px 8px 20px rgba(0, 0, 0, 0.2);
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.start-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        5px 9px 0 #E65100,
+        8px 14px 25px rgba(0, 0, 0, 0.25);
+}
+
+.start-btn:active {
+    transform: translateY(2px);
+    box-shadow: 
+        3px 3px 0 #E65100,
+        4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.start-btn svg {
+    stroke: #FFF;
+    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.2));
+}
+
+/* ===============================================
+   Responsive Adjustments
+   =============================================== */
+@media (max-width: 768px) {
+    .journey-nav {
+        height: 60px;
+        padding: 0 1rem;
+    }
+    
+    .nav-title {
+        font-size: 1.2rem;
+    }
+    
+    .nav-btn span:not(.btn-icon) {
+        display: none;
+    }
+    
+    .era-legend {
+        display: none;
+    }
+    
+    .hud-minimap {
+        display: none;
+    }
+    
+    .hud-current {
+        padding: 1rem 1.5rem;
+        gap: 1rem;
+    }
+    
+    .hud-year {
+        font-size: 2rem;
+    }
+    
+    .hud-title {
+        font-size: 1.1rem;
+    }
+    
+    .speedometer {
+        transform: scale(0.85);
+    }
+    
+    .event-panel {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .instructions-card {
+        margin: 1rem;
+        padding: 2rem;
+    }
+    
+    .instructions-controls {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===============================================
+   Animations & Effects
+   =============================================== */
+@keyframes wiggle {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+.sparkle-effect {
+    animation: sparkle 1.5s ease-in-out infinite;
+}
+
+/* Hover bounce effect */
+.bounce-hover:hover {
+    animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-10px); }
+    50% { transform: translateY(-5px); }
+    70% { transform: translateY(-8px); }
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hud-center {
+    animation: slide-up 0.6s ease-out;
+}
+
+.speedometer {
+    animation: slide-up 0.6s ease-out 0.1s both;
+}
+
+.hud-minimap {
+    animation: slide-up 0.6s ease-out 0.2s both;
+}
+
+/* ===============================================
+   Custom Scrollbar - Nature Theme
+   =============================================== */
+::-webkit-scrollbar {
+    width: 14px;
+}
+
+::-webkit-scrollbar-track {
+    background: #D7CCC8;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #8D6E63 0%, #6D4C41 100%);
+    border-radius: 10px;
+    border: 3px solid #D7CCC8;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #6D4C41 0%, #5D4037 100%);
+}

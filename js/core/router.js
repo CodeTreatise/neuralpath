@@ -6,17 +6,17 @@ const Router = {
     routes: {},
     currentRoute: null,
     currentParams: {},
-    
+
     /**
      * Initialize router
      */
     init() {
         // Listen for hash changes
         window.addEventListener('hashchange', () => this.handleRoute());
-        
+
         // Handle initial route
         this.handleRoute();
-        
+
         // Handle clicks on links
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a[href^="#/"]');
@@ -26,14 +26,14 @@ const Router = {
             }
         });
     },
-    
+
     /**
      * Register a route
      */
     register(path, handler) {
         this.routes[path] = handler;
     },
-    
+
     /**
      * Navigate to a route
      */
@@ -44,7 +44,7 @@ const Router = {
             window.location.hash = path.startsWith('#') ? path.slice(1) : path;
         }
     },
-    
+
     /**
      * Handle current route
      */
@@ -52,20 +52,20 @@ const Router = {
         const hash = window.location.hash.slice(1) || '/';
         const [path, queryString] = hash.split('?');
         const query = queryString ? Helpers.parseQuery(queryString) : {};
-        
+
         // Find matching route
         const { handler, params } = this.matchRoute(path);
-        
+
         if (handler) {
             this.currentRoute = path;
             this.currentParams = { ...params, ...query };
-            
+
             // Update active nav link
             this.updateActiveNav(path);
-            
+
             // Show loading
             this.showLoading();
-            
+
             try {
                 // Execute route handler
                 await handler(this.currentParams);
@@ -78,7 +78,7 @@ const Router = {
             this.show404();
         }
     },
-    
+
     /**
      * Match route with params
      */
@@ -87,7 +87,7 @@ const Router = {
         if (this.routes[path]) {
             return { handler: this.routes[path], params: {} };
         }
-        
+
         // Pattern match (e.g., /courses/:id)
         for (const [pattern, handler] of Object.entries(this.routes)) {
             const params = this.matchPattern(pattern, path);
@@ -95,25 +95,25 @@ const Router = {
                 return { handler, params };
             }
         }
-        
+
         return { handler: null, params: {} };
     },
-    
+
     /**
      * Match URL pattern with params
      */
     matchPattern(pattern, path) {
         const patternParts = pattern.split('/');
         const pathParts = path.split('/');
-        
+
         if (patternParts.length !== pathParts.length) return null;
-        
+
         const params = {};
-        
+
         for (let i = 0; i < patternParts.length; i++) {
             const patternPart = patternParts[i];
             const pathPart = pathParts[i];
-            
+
             if (patternPart.startsWith(':')) {
                 // Dynamic param
                 params[patternPart.slice(1)] = pathPart;
@@ -121,24 +121,24 @@ const Router = {
                 return null;
             }
         }
-        
+
         return params;
     },
-    
+
     /**
      * Update active navigation link
      */
     updateActiveNav(path) {
         const navLinks = document.querySelectorAll('.nav-link');
-        
+
         navLinks.forEach(link => {
             const route = link.getAttribute('data-route');
-            const isActive = path.startsWith('/' + route) || 
-                           (route === '' && path === '/');
+            const isActive = path.startsWith('/' + route) ||
+                (route === '' && path === '/');
             link.classList.toggle('active', isActive);
         });
     },
-    
+
     /**
      * Show loading state
      */
@@ -151,7 +151,7 @@ const Router = {
             </div>
         `;
     },
-    
+
     /**
      * Show error state
      */
@@ -168,7 +168,7 @@ const Router = {
             </div>
         `;
     },
-    
+
     /**
      * Show 404 state
      */
@@ -184,20 +184,20 @@ const Router = {
                 </button>
             </div>
         `;
-        
+
         // Call custom handler if set
         if (this.notFoundHandler) {
             this.notFoundHandler();
         }
     },
-    
+
     /**
      * Set custom 404 handler
      */
     setNotFound(handler) {
         this.notFoundHandler = handler;
     },
-    
+
     /**
      * Get current route info
      */
@@ -207,21 +207,21 @@ const Router = {
             params: this.currentParams
         };
     },
-    
+
     /**
      * Go back
      */
     back() {
         window.history.back();
     },
-    
+
     /**
      * Go forward
      */
     forward() {
         window.history.forward();
     },
-    
+
     /**
      * Start the router (alias for init)
      */

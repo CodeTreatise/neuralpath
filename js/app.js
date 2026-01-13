@@ -8,28 +8,28 @@ const App = {
      */
     async init() {
         console.log('🧠 NeuralPath initializing...');
-        
+
         // Initialize theme
         this.initTheme();
-        
+
         // Initialize routes
         this.initRoutes();
-        
+
         // Initialize global search
         Search.init();
-        
+
         // Load initial data
         await this.loadData();
-        
+
         // Handle initial route
         Router.start();
-        
+
         // Setup event listeners
         this.setupEventListeners();
-        
+
         console.log('✅ NeuralPath ready!');
     },
-    
+
     /**
      * Initialize theme from storage
      */
@@ -38,7 +38,7 @@ const App = {
         document.documentElement.setAttribute('data-theme', theme);
         this.updateThemeToggle(theme);
     },
-    
+
     /**
      * Toggle between light and dark themes
      */
@@ -48,15 +48,15 @@ const App = {
         Storage.setTheme(next);
         document.documentElement.setAttribute('data-theme', next);
         this.updateThemeToggle(next);
-        
+
         // Update graph colors if on explore page with active graph
         if (typeof ExplorePage !== 'undefined' && ExplorePage.updateThemeColors) {
             ExplorePage.updateThemeColors();
         }
-        
+
         Components.toast(`Switched to ${next} mode`, 'success');
     },
-    
+
     /**
      * Update theme toggle button
      */
@@ -72,7 +72,7 @@ const App = {
             themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
         }
     },
-    
+
     /**
      * Initialize routes
      */
@@ -81,66 +81,66 @@ const App = {
         Router.register('/', async () => {
             await HomePage.render();
         });
-        
+
         // Explore / Knowledge Maps
         Router.register('/explore', async () => {
             await ExplorePage.render();
         });
-        
+
         Router.register('/explore/:graphId', async (params) => {
             await ExplorePage.renderGraph(params.graphId);
         });
-        
+
         // Courses
         Router.register('/courses', async () => {
             await CoursesPage.render();
         });
-        
+
         Router.register('/courses/:courseId', async (params) => {
             await CoursesPage.renderCourse(params.courseId);
         });
-        
+
         Router.register('/courses/:courseId/:moduleIndex/:lessonIndex', async (params) => {
             await CoursesPage.renderLesson(
-                params.courseId, 
-                parseInt(params.moduleIndex), 
+                params.courseId,
+                parseInt(params.moduleIndex),
                 parseInt(params.lessonIndex)
             );
         });
-        
+
         // Tools
         Router.register('/tools', async () => {
             await ToolsPage.render();
         });
-        
+
         Router.register('/tools/:toolId', async (params) => {
             await ToolsPage.renderTool(params.toolId);
         });
-        
+
         // Resources
         Router.register('/resources', async () => {
             await ResourcesPage.render();
         });
-        
+
         // Jobs
         Router.register('/jobs', async () => {
             await JobsPage.render();
         });
-        
+
         // Periodic Table
         Router.register('/periodic-table', async () => {
             await PeriodicTablePage.render();
         });
-        
+
         // Learning Paths
         Router.register('/learning-paths', async () => {
             await LearningPathsPage.render();
         });
-        
+
         Router.register('/learning-paths/:pathId', async (params) => {
             await LearningPathsPage.renderPathPage(params.pathId);
         });
-        
+
         // 404 handler
         Router.setNotFound(() => {
             const main = document.getElementById('main');
@@ -152,7 +152,7 @@ const App = {
             );
         });
     },
-    
+
     /**
      * Load initial data
      */
@@ -176,7 +176,7 @@ const App = {
             // Continue with empty data
         }
     },
-    
+
     /**
      * Setup global event listeners
      */
@@ -186,19 +186,19 @@ const App = {
         if (themeBtn) {
             themeBtn.addEventListener('click', () => this.toggleTheme());
         }
-        
+
         // Search trigger
         const searchBtn = document.getElementById('search-trigger');
         if (searchBtn) {
             searchBtn.addEventListener('click', () => Search.open());
         }
-        
+
         // Update active nav on route change
         window.addEventListener('hashchange', () => {
             this.updateActiveNav();
         });
         this.updateActiveNav();
-        
+
         // Handle visibility changes for background updates
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
@@ -206,23 +206,23 @@ const App = {
             }
         });
     },
-    
+
     /**
      * Update active navigation item
      */
     updateActiveNav() {
         const hash = window.location.hash || '#/';
         const path = hash.replace('#', '').split('?')[0];
-        
+
         document.querySelectorAll('.nav-link').forEach(link => {
             const href = link.getAttribute('href');
             const linkPath = href?.replace('#', '') || '/';
-            
+
             // Check if current path starts with link path
-            const isActive = linkPath === '/' 
-                ? path === '/' 
+            const isActive = linkPath === '/'
+                ? path === '/'
                 : path.startsWith(linkPath);
-            
+
             link.classList.toggle('active', isActive);
         });
     }
