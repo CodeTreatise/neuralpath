@@ -169,19 +169,13 @@ const State = {
             const response = await fetch('data/resources.json');
             if (response.ok) {
                 const data = await response.json();
-                // Resources are in categories[].items[], flatten them
-                if (data.categories) {
-                    this.data.resources = data.categories.reduce((all, cat) => {
-                        return all.concat(cat.items || []);
-                    }, []);
-                } else {
-                    this.data.resources = data.resources || [];
-                }
+                // Store the full data with categories
+                this.data.resources = data;
                 this.loaded.resources = true;
             }
         } catch (e) {
             console.warn('Resources not loaded:', e);
-            this.data.resources = [];
+            this.data.resources = { categories: [] };
         }
         
         return this.data.resources;
@@ -336,9 +330,15 @@ const State = {
         const toolCount = this.getAllTools().length;
         const courseCount = this.data.courses.length;
         const graphCount = this.data.graphs.length;
-        const careerCount = Array.isArray(this.data.careers) ? this.data.careers.length : 0;
+        const careerCount = this.data.careers?.length || 0;
         const learningPathCount = this.data.learningPaths.length;
-        const resourceCount = Array.isArray(this.data.resources) ? this.data.resources.length : 0;
+        
+        // Count resources from categories
+        let resourceCount = 0;
+        if (this.data.resources?.categories) {
+            resourceCount = this.data.resources.categories.reduce((sum, cat) => 
+                sum + (cat.items?.length || 0), 0);
+        }
         
         // Get user progress
         const progress = Storage.get('course_progress', {});

@@ -141,6 +141,11 @@ const App = {
             await LearningPathsPage.renderPathPage(params.pathId);
         });
 
+        // Glossary
+        Router.register('/glossary', async () => {
+            await GlossaryPage.render();
+        });
+
         // 404 handler
         Router.setNotFound(() => {
             const main = document.getElementById('main');

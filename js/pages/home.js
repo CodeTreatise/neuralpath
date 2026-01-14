@@ -69,15 +69,15 @@ const HomePage = {
                     </div>
                     <div class="stat-divider"></div>
                     <div class="stat-item">
-                        <span class="stat-icon">🗺️</span>
-                        <span class="stat-number">${stats.graphs}</span>
-                        <span class="stat-label">Knowledge Maps</span>
+                        <span class="stat-icon">🌐</span>
+                        <span class="stat-number">${stats.resources}</span>
+                        <span class="stat-label">Resources</span>
                     </div>
                     <div class="stat-divider"></div>
                     <div class="stat-item">
-                        <span class="stat-icon">�️</span>
-                        <span class="stat-number">${stats.learningPaths}</span>
-                        <span class="stat-label">Learning Paths</span>
+                        <span class="stat-icon">🗺️</span>
+                        <span class="stat-number">${stats.graphs}</span>
+                        <span class="stat-label">Knowledge Maps</span>
                     </div>
                     <div class="stat-divider"></div>
                     <div class="stat-item">
@@ -90,6 +90,16 @@ const HomePage = {
             
             <!-- Quick Access -->
             <section class="quick-access">
+                <a href="pages/journey.html" class="quick-card quick-card-featured">
+                    <span class="quick-card-icon">🌲</span>
+                    <h3 class="quick-card-title">AI Journey</h3>
+                    <p class="quick-card-desc">3D walk through 178 years of AI history</p>
+                </a>
+                <a href="pages/landscape.html" class="quick-card quick-card-featured">
+                    <span class="quick-card-icon">🌌</span>
+                    <h3 class="quick-card-title">AI Universe</h3>
+                    <p class="quick-card-desc">Explore 1,192 concepts across 47 domains in 3D</p>
+                </a>
                 <a href="#/explore" class="quick-card">
                     <span class="quick-card-icon">🗺️</span>
                     <h3 class="quick-card-title">Explore</h3>
@@ -104,6 +114,16 @@ const HomePage = {
                     <span class="quick-card-icon">🔧</span>
                     <h3 class="quick-card-title">Tools</h3>
                     <p class="quick-card-desc">Discover ${stats.tools}+ AI tools and frameworks</p>
+                </a>
+                <a href="#/resources" class="quick-card">
+                    <span class="quick-card-icon">🌐</span>
+                    <h3 class="quick-card-title">Resources</h3>
+                    <p class="quick-card-desc">366 curated courses, docs & tutorials</p>
+                </a>
+                <a href="#/glossary" class="quick-card">
+                    <span class="quick-card-icon">📖</span>
+                    <h3 class="quick-card-title">Glossary</h3>
+                    <p class="quick-card-desc">128 essential AI/ML terms defined</p>
                 </a>
                 <a href="#/jobs" class="quick-card">
                     <span class="quick-card-icon">💼</span>

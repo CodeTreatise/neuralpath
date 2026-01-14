@@ -1,0 +1,522 @@
+{
+  "meta": {
+    "title": "AI Glossary",
+    "description": "Essential AI/ML terminology with clear definitions",
+    "totalTerms": 128,
+    "lastUpdated": "2026-01-14"
+  },
+  "terms": [
+    {
+      "term": "Active Learning",
+      "definition": "Selecting most informative samples for human labeling"
+    },
+    {
+      "term": "Adapters",
+      "definition": "Small bottleneck layers added for task-specific tuning"
+    },
+    {
+      "term": "Adversarial Examples",
+      "definition": "Inputs crafted to fool ML models"
+    },
+    {
+      "term": "Adversarial Training",
+      "definition": "Training on adversarial examples for robustness"
+    },
+    {
+      "term": "Agent",
+      "definition": "AI that can plan, use tools, and take actions"
+    },
+    {
+      "term": "Agentic AI",
+      "definition": "AI systems that autonomously plan and execute tasks"
+    },
+    {
+      "term": "AGI",
+      "definition": "Artificial General Intelligence - Human-level AI across all tasks"
+    },
+    {
+      "term": "AI Winter",
+      "definition": "Periods of reduced AI funding and interest (1970s, late 1980s)"
+    },
+    {
+      "term": "Attention",
+      "definition": "Mechanism allowing models to focus on relevant parts of input (self-attention, cross-attention)"
+    },
+    {
+      "term": "Backpropagation",
+      "definition": "Algorithm for training neural networks (1986)"
+    },
+    {
+      "term": "Benchmarks",
+      "definition": "Standardized tests to evaluate model performance (MMLU, etc.)"
+    },
+    {
+      "term": "BERT",
+      "definition": "Bidirectional Encoder Representations from Transformers - Google's encoder model (2018)"
+    },
+    {
+      "term": "BM25",
+      "definition": "Best Match 25 - Classic keyword-based search algorithm"
+    },
+    {
+      "term": "Brier Score",
+      "definition": "Mean squared error between predicted probabilities and outcomes"
+    },
+    {
+      "term": "C2PA",
+      "definition": "Coalition for Content Provenance and Authenticity standard"
+    },
+    {
+      "term": "CAA",
+      "definition": "Contrastive Activation Addition - Steering technique"
+    },
+    {
+      "term": "Causal Discovery",
+      "definition": "Learning causal structure from data (PC, NOTEARS)"
+    },
+    {
+      "term": "Certified Defense",
+      "definition": "Mathematically provable robustness guarantees"
+    },
+    {
+      "term": "Chunking",
+      "definition": "Splitting documents into smaller pieces for RAG retrieval"
+    },
+    {
+      "term": "Claude",
+      "definition": "Anthropic's family of AI assistants built with Constitutional AI"
+    },
+    {
+      "term": "CNN",
+      "definition": "Convolutional Neural Network - Architecture for image processing"
+    },
+    {
+      "term": "Conformal Prediction",
+      "definition": "Distribution-free uncertainty with coverage guarantees"
+    },
+    {
+      "term": "Constitutional AI",
+      "definition": "Anthropic's self-critique alignment approach"
+    },
+    {
+      "term": "Content Credentials",
+      "definition": "Cryptographic provenance metadata for media"
+    },
+    {
+      "term": "Context Window",
+      "definition": "Maximum input length an LLM can process"
+    },
+    {
+      "term": "Contextual Bandits",
+      "definition": "Online learning with context-dependent rewards"
+    },
+    {
+      "term": "Cosine Similarity",
+      "definition": "Measure of similarity between two vectors (0-1 for normalized vectors)"
+    },
+    {
+      "term": "CoT",
+      "definition": "Chain-of-Thought - Prompting technique for reasoning"
+    },
+    {
+      "term": "CQL",
+      "definition": "Conservative Q-Learning for offline RL"
+    },
+    {
+      "term": "Croissant",
+      "definition": "MLCommons machine-readable dataset format"
+    },
+    {
+      "term": "Data Augmentation",
+      "definition": "Generating training variations (Albumentations, nlpaug)"
+    },
+    {
+      "term": "Dataset Card",
+      "definition": "HuggingFace's dataset documentation format"
+    },
+    {
+      "term": "Datasheets for Datasets",
+      "definition": "Documentation standard for ML datasets"
+    },
+    {
+      "term": "Decision Transformer",
+      "definition": "Treating RL as sequence modeling"
+    },
+    {
+      "term": "Deepfake Detection",
+      "definition": "Identifying AI-generated fake videos/images"
+    },
+    {
+      "term": "Differential Privacy",
+      "definition": "Mathematical privacy guarantees via noise injection"
+    },
+    {
+      "term": "DoRA",
+      "definition": "Weight-Decomposed LoRA - Improved LoRA variant"
+    },
+    {
+      "term": "Doubly Robust",
+      "definition": "OPE combining direct method and importance sampling"
+    },
+    {
+      "term": "DP-SGD",
+      "definition": "Differentially Private SGD for training with privacy"
+    },
+    {
+      "term": "DPO",
+      "definition": "Direct Preference Optimization - Simpler alternative to RLHF"
+    },
+    {
+      "term": "Drift",
+      "definition": "Change in data/model performance over time"
+    },
+    {
+      "term": "ECE",
+      "definition": "Expected Calibration Error - Measures calibration quality"
+    },
+    {
+      "term": "Embedding",
+      "definition": "Vector representation of text/images for similarity search"
+    },
+    {
+      "term": "Embodied AI",
+      "definition": "AI integrated with robots interacting with physical world"
+    },
+    {
+      "term": "Feature Store",
+      "definition": "Centralized repository for ML features (Feast, Tecton)"
+    },
+    {
+      "term": "Federated Learning",
+      "definition": "Training across decentralized data without sharing raw data"
+    },
+    {
+      "term": "Few-Shot",
+      "definition": "Prompting with a few examples to guide model behavior"
+    },
+    {
+      "term": "FGSM",
+      "definition": "Fast Gradient Sign Method - Simple adversarial attack"
+    },
+    {
+      "term": "Fine-Tuning",
+      "definition": "Training a pre-trained model on custom data"
+    },
+    {
+      "term": "Function Calling",
+      "definition": "LLM capability to invoke external functions with structured params"
+    },
+    {
+      "term": "GenAI Semantic Conventions",
+      "definition": "OTel standards for LLM/GenAI observability"
+    },
+    {
+      "term": "GPT",
+      "definition": "Generative Pre-trained Transformer - OpenAI's autoregressive language model architecture"
+    },
+    {
+      "term": "Gradient Leakage",
+      "definition": "Privacy attack exploiting gradients in federated learning"
+    },
+    {
+      "term": "GraphRAG",
+      "definition": "RAG using knowledge graphs for complex reasoning"
+    },
+    {
+      "term": "Grounding",
+      "definition": "Connecting LLM responses to factual sources to reduce hallucinations"
+    },
+    {
+      "term": "Guardrails",
+      "definition": "Safety filters to constrain LLM inputs/outputs"
+    },
+    {
+      "term": "Hallucination",
+      "definition": "When AI generates false/invented information"
+    },
+    {
+      "term": "Homomorphic Encryption",
+      "definition": "Computing on encrypted data without decryption"
+    },
+    {
+      "term": "Hybrid Search",
+      "definition": "Combining sparse (BM25) + dense (vector) retrieval"
+    },
+    {
+      "term": "In-Context Learning",
+      "definition": "LLM ability to learn from examples provided in the prompt without weight updates"
+    },
+    {
+      "term": "Inference",
+      "definition": "Running a trained model to get predictions"
+    },
+    {
+      "term": "IPS",
+      "definition": "Inverse Propensity Scoring - Unbiased OPE estimator"
+    },
+    {
+      "term": "Isotonic Regression",
+      "definition": "Non-parametric calibration using monotonic function"
+    },
+    {
+      "term": "Knowledge Distillation",
+      "definition": "Training small model to mimic large model"
+    },
+    {
+      "term": "KTO",
+      "definition": "Kahneman-Tversky Optimization - Alignment with binary feedback"
+    },
+    {
+      "term": "Latency",
+      "definition": "Time delay between request and response (measured in ms)"
+    },
+    {
+      "term": "LIME",
+      "definition": "Local Interpretable Model-agnostic Explanations"
+    },
+    {
+      "term": "LLM",
+      "definition": "Large Language Model - AI trained on text to generate human-like responses"
+    },
+    {
+      "term": "LLM-as-Judge",
+      "definition": "Using an LLM to evaluate another LLM's outputs"
+    },
+    {
+      "term": "LoRA",
+      "definition": "Low-Rank Adaptation - Efficient fine-tuning method"
+    },
+    {
+      "term": "LSTM",
+      "definition": "Long Short-Term Memory - RNN variant that handles long-range dependencies"
+    },
+    {
+      "term": "MAPIE",
+      "definition": "Python library for conformal prediction and prediction intervals"
+    },
+    {
+      "term": "MCP",
+      "definition": "Model Context Protocol - Anthropic's standard for tool integration"
+    },
+    {
+      "term": "Mechanistic Interpretability",
+      "definition": "Understanding internal model circuits"
+    },
+    {
+      "term": "Membership Inference",
+      "definition": "Attack to determine if sample was in training data"
+    },
+    {
+      "term": "Model Calibration",
+      "definition": "Ensuring predicted probabilities match actual outcomes"
+    },
+    {
+      "term": "Model Inversion",
+      "definition": "Attack to reconstruct training data from model"
+    },
+    {
+      "term": "Model Merging",
+      "definition": "Combining multiple fine-tuned models into one"
+    },
+    {
+      "term": "MoE",
+      "definition": "Mixture of Experts - Sparse model architecture"
+    },
+    {
+      "term": "Multi-Modal",
+      "definition": "Models that process multiple data types (text, images, audio, video)"
+    },
+    {
+      "term": "Neuromorphic",
+      "definition": "Brain-inspired computing hardware"
+    },
+    {
+      "term": "Off-Policy Evaluation",
+      "definition": "Estimating policy performance from historical data"
+    },
+    {
+      "term": "Offline RL",
+      "definition": "Learning policies from fixed logged data"
+    },
+    {
+      "term": "OpenTelemetry",
+      "definition": "Open-source observability framework (traces, metrics, logs)"
+    },
+    {
+      "term": "ORPO",
+      "definition": "Odds Ratio Preference Optimization - Single-stage alignment"
+    },
+    {
+      "term": "PEFT",
+      "definition": "Parameter-Efficient Fine-Tuning - Methods like LoRA, Adapters"
+    },
+    {
+      "term": "Perceptron",
+      "definition": "First neural network model (1958)"
+    },
+    {
+      "term": "PGD",
+      "definition": "Projected Gradient Descent - Strong iterative attack"
+    },
+    {
+      "term": "PII Redaction",
+      "definition": "Removing personally identifiable information"
+    },
+    {
+      "term": "Platt Scaling",
+      "definition": "Sigmoid-based calibration method for binary classifiers"
+    },
+    {
+      "term": "Prefix Tuning",
+      "definition": "Learning soft prompt tokens prepended to input"
+    },
+    {
+      "term": "Prompt",
+      "definition": "Input instruction given to an AI model"
+    },
+    {
+      "term": "Prompt Engineering",
+      "definition": "Crafting effective instructions to get desired outputs from LLMs"
+    },
+    {
+      "term": "Prompt Injection",
+      "definition": "Attack where malicious input manipulates LLM behavior"
+    },
+    {
+      "term": "QLoRA",
+      "definition": "Quantized LoRA - Memory-efficient fine-tuning"
+    },
+    {
+      "term": "Quantization",
+      "definition": "Reducing model precision for efficiency (GGUF, AWQ)"
+    },
+    {
+      "term": "RAG",
+      "definition": "Retrieval-Augmented Generation - Combining search with LLMs"
+    },
+    {
+      "term": "Reliability Diagram",
+      "definition": "Visualization of calibration showing expected vs actual accuracy"
+    },
+    {
+      "term": "RepE",
+      "definition": "Representation Engineering - Modifying internal representations"
+    },
+    {
+      "term": "Reranker",
+      "definition": "Cross-encoder model to reorder search results"
+    },
+    {
+      "term": "RLAIF",
+      "definition": "Reinforcement Learning from AI Feedback"
+    },
+    {
+      "term": "RLHF",
+      "definition": "Reinforcement Learning from Human Feedback"
+    },
+    {
+      "term": "RNN",
+      "definition": "Recurrent Neural Network - Architecture for sequential data processing"
+    },
+    {
+      "term": "RRF",
+      "definition": "Reciprocal Rank Fusion - Algorithm to merge search rankings"
+    },
+    {
+      "term": "Secure MPC",
+      "definition": "Multi-party computation with distributed trust"
+    },
+    {
+      "term": "Semantic Search",
+      "definition": "Finding content by meaning rather than keyword matching using embeddings"
+    },
+    {
+      "term": "SHAP",
+      "definition": "SHapley Additive exPlanations - Game-theoretic feature importance"
+    },
+    {
+      "term": "SLM",
+      "definition": "Small Language Model - Efficient models for edge/mobile (1-7B params)"
+    },
+    {
+      "term": "SNIPS",
+      "definition": "Self-Normalized IPS - Lower variance OPE estimator"
+    },
+    {
+      "term": "Snorkel",
+      "definition": "Framework for programmatic labeling with labeling functions"
+    },
+    {
+      "term": "Steering Vectors",
+      "definition": "Direction vectors added to activations to control LLM behavior"
+    },
+    {
+      "term": "Synthetic Data",
+      "definition": "AI-generated data used to train other AI models"
+    },
+    {
+      "term": "SynthID",
+      "definition": "Google's invisible watermarking for AI-generated content"
+    },
+    {
+      "term": "TCAV",
+      "definition": "Testing with Concept Activation Vectors"
+    },
+    {
+      "term": "TEE",
+      "definition": "Trusted Execution Environment - Hardware-isolated computation"
+    },
+    {
+      "term": "Temperature Scaling",
+      "definition": "Post-hoc calibration by scaling logits with single parameter"
+    },
+    {
+      "term": "Throughput",
+      "definition": "Number of requests/tokens processed per second"
+    },
+    {
+      "term": "TIES",
+      "definition": "Trim, Elect, Merge - Model merging with interference handling"
+    },
+    {
+      "term": "Token",
+      "definition": "Basic unit of text processing (word/subword)"
+    },
+    {
+      "term": "Tokenizer",
+      "definition": "Converts text to tokens (BPE, WordPiece, SentencePiece)"
+    },
+    {
+      "term": "Transformer",
+      "definition": "Neural network architecture using self-attention, foundation of modern LLMs (2017)"
+    },
+    {
+      "term": "TransformerLens",
+      "definition": "Library for mechanistic interpretability of transformers"
+    },
+    {
+      "term": "Turing Test",
+      "definition": "1950 test for machine intelligence by Alan Turing"
+    },
+    {
+      "term": "Vector Database",
+      "definition": "Database optimized for similarity search"
+    },
+    {
+      "term": "vLLM",
+      "definition": "High-throughput LLM serving with PagedAttention"
+    },
+    {
+      "term": "Weak Supervision",
+      "definition": "Using noisy labels or labeling functions instead of manual labels"
+    },
+    {
+      "term": "World Model",
+      "definition": "AI that understands physics and causality of the real world"
+    },
+    {
+      "term": "Zero-Shot",
+      "definition": "Prompting without examples, relying on model's pre-trained knowledge"
+    }
+  ]
+}

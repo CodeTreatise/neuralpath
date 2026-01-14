@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Journey - Walk Through History | NeuralPath</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Patrick+Hand&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/journey.css">
+</head>
+<body>
+    <!-- Decorative Overlay -->
+    <div class="scanlines"></div>
+    
+    <!-- Soft Vignette -->
+    <div class="vignette"></div>
+
+    <!-- Navigation Header -->
+    <nav class="journey-nav">
+        <a href="../index.html" class="nav-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            </svg>
+            Home
+        </a>
+        <div class="nav-title-group">
+            <span class="nav-title">🌲 Forest Path 🌲</span>
+            <span class="nav-subtitle">AI History Adventure • 1847-2025</span>
+        </div>
+        <div class="nav-controls">
+            <button id="toggle-auto" class="nav-btn glow-btn">
+                <span class="btn-icon">▶</span> AUTO
+            </button>
+            <button id="reset-journey" class="nav-btn">
+                <span class="btn-icon">⟲</span> RESET
+            </button>
+        </div>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress-track"></div>
+        <div class="progress-fill" id="progress-fill"></div>
+        <div class="progress-glow" id="progress-glow"></div>
+        <div class="progress-year" id="progress-year">1847</div>
+    </div>
+
+    <!-- Era Legend (left side) -->
+    <div class="era-legend" id="era-legend">
+        <!-- Filled by JS -->
+    </div>
+
+    <!-- 3D Canvas Container -->
+    <div class="canvas-container" id="canvas-container"></div>
+
+    <!-- Dashboard HUD -->
+    <div class="dashboard-hud">
+        <!-- Left: Mini-map with curved path -->
+        <div class="hud-minimap">
+            <svg class="minimap-svg" id="minimap-svg" viewBox="0 0 130 130">
+                <!-- Road path will be drawn dynamically -->
+                <path class="minimap-road" id="minimap-road" fill="none" stroke="#A1887F" stroke-width="6" stroke-linecap="round"/>
+                <path class="minimap-road-edge" id="minimap-road-edge" fill="none" stroke="#8D6E63" stroke-width="8" stroke-linecap="round" stroke-dasharray="4 4"/>
+                <!-- Trees decoration -->
+                <g class="minimap-trees" id="minimap-trees"></g>
+                <!-- Player position -->
+                <circle class="minimap-player" id="minimap-player" r="6" fill="#EF5350" stroke="#FFF" stroke-width="2"/>
+                <!-- Direction indicator -->
+                <polygon class="minimap-arrow" id="minimap-arrow" points="0,-4 3,4 -3,4" fill="#C62828"/>
+            </svg>
+            <div class="minimap-label">🗺️ Map</div>
+        </div>
+        
+        <!-- Center: Current Event -->
+        <div class="hud-center">
+            <div class="hud-current" id="hud-current">
+                <div class="hud-era-indicator" id="hud-era"></div>
+                <div class="hud-year-wrap">
+                    <span class="hud-year-label">YEAR</span>
+                    <div class="hud-year" id="hud-year">1847</div>
+                </div>
+                <div class="hud-divider"></div>
+                <div class="hud-event-info">
+                    <div class="hud-title" id="hud-title">Boolean Algebra</div>
+                    <div class="hud-subtitle" id="hud-subtitle">George Boole</div>
+                </div>
+                <div class="hud-click-hint">Click for details</div>
+            </div>
+            <div class="hud-upcoming">
+                <span class="hud-label">NEXT →</span>
+                <span class="hud-next-title" id="hud-next">Predicate Logic</span>
+            </div>
+        </div>
+        
+        <!-- Right: Speedometer -->
+        <div class="speedometer" id="speedometer">
+            <div class="speedo-ring">
+                <svg viewBox="0 0 100 100">
+                    <circle class="speedo-bg" cx="50" cy="50" r="45"/>
+                    <circle class="speedo-fill" id="speedo-arc" cx="50" cy="50" r="45"/>
+                </svg>
+                <div class="speedo-inner">
+                    <div class="speed-value" id="speed-value">0</div>
+                    <div class="speed-unit">SPEED</div>
+                </div>
+            </div>
+            <div class="distance-traveled">
+                <span class="dist-current" id="events-passed">0</span>
+                <span class="dist-sep">/</span>
+                <span class="dist-total" id="events-total">61</span>
+                <span class="dist-label">MILESTONES</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Detail Panel (slides up) -->
+    <div class="event-panel" id="event-panel">
+        <button class="panel-close" id="panel-close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="panel-content" id="panel-content">
+            <!-- Filled by JS when event is clicked -->
+        </div>
+    </div>
+
+    <!-- Instructions Overlay (first visit) -->
+    <div class="instructions-overlay" id="instructions">
+        <div class="instructions-card">
+            <div class="instructions-icon">🌳</div>
+            <h2>FOREST PATH</h2>
+            <p class="instructions-tagline">A whimsical stroll through 178 years of AI history</p>
+            <div class="instructions-controls">
+                <div class="control-item">
+                    <div class="control-key">SCROLL</div>
+                    <div class="control-desc">Walk forward / backward</div>
+                </div>
+                <div class="control-item">
+                    <div class="control-key">↑ ↓</div>
+                    <div class="control-desc">Fine movement control</div>
+                </div>
+                <div class="control-item">
+                    <div class="control-key">SPACE</div>
+                    <div class="control-desc">View milestone details</div>
+                </div>
+                <div class="control-item">
+                    <div class="control-key">AUTO</div>
+                    <div class="control-desc">Guided stroll mode</div>
+                </div>
+            </div>
+            <button class="start-btn" id="start-journey">
+                <span>BEGIN ADVENTURE</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5,3 19,12 5,21 5,3"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script src="../js/journey.js"></script>
+</body>
+</html>

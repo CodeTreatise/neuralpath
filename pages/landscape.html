@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Universe - 3D Knowledge Landscape | NeuralPath</title>
+    <link rel="icon" type="image/svg+xml" href="../icons/icon.svg">
+    <link rel="stylesheet" href="../css/landscape.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <a href="../index.html" class="back-link">← NeuralPath</a>
+        <h1>🌌 AI Universe</h1>
+        <p class="subtitle">Explore 47 Domains • 1,192 Concepts • Interactive 3D</p>
+    </header>
+
+    <!-- Search Bar -->
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="🔍 Search concepts..." autocomplete="off">
+        <div id="search-results"></div>
+    </div>
+
+    <!-- Section Pills (Domain Filter) -->
+    <div id="domain-pills">
+        <button class="domain-pill active" data-domain="all">
+            <span class="pill-icon">🌐</span>
+            <span class="pill-label">All Domains</span>
+        </button>
+    </div>
+
+    <!-- Current Domain Info -->
+    <div id="domain-info">
+        <div class="domain-header">
+            <span id="domain-icon">🌐</span>
+            <div>
+                <h2 id="domain-title">AI Universe</h2>
+                <p id="domain-description">All 47 domains visualized as constellations</p>
+            </div>
+        </div>
+        <div class="domain-stats">
+            <span><strong id="node-count">1192</strong> Concepts</span>
+            <span><strong id="edge-count">1058</strong> Connections</span>
+        </div>
+    </div>
+
+    <!-- Node Detail Card -->
+    <div id="node-card" class="hidden">
+        <button id="close-card" class="close-btn">×</button>
+        <div class="node-header">
+            <span id="node-icon">📄</span>
+            <h3 id="node-label">Node</h3>
+        </div>
+        <div id="node-section" class="node-meta"></div>
+        <p id="node-description" class="node-description"></p>
+        <a id="node-link" href="#" target="_blank" rel="noopener" class="node-link hidden">
+            Open Resource →
+        </a>
+        <div id="node-connections" class="node-connections"></div>
+    </div>
+
+    <!-- Section Sidebar -->
+    <div id="section-sidebar" class="hidden">
+        <div class="sidebar-overlay"></div>
+        <div class="sidebar-panel">
+            <div class="sidebar-header">
+                <div class="sidebar-title-row">
+                    <span id="sidebar-icon" class="sidebar-icon">📚</span>
+                    <div class="sidebar-title-content">
+                        <h2 id="sidebar-title">Section</h2>
+                        <p id="sidebar-description" class="sidebar-desc"></p>
+                    </div>
+                </div>
+                <button id="close-sidebar" class="close-btn">×</button>
+            </div>
+            <div class="sidebar-stats">
+                <span class="stat-item"><strong id="sidebar-node-count">0</strong> Concepts</span>
+                <span class="stat-item"><strong id="sidebar-edge-count">0</strong> Connections</span>
+            </div>
+            <div class="sidebar-content">
+                <div id="sidebar-flowchart" class="flowchart-container">
+                    <!-- Nodes will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HUD Controls -->
+    <div id="hud-controls">
+        <button id="toggle-legend" title="Toggle Legend">📊</button>
+        <button id="zoom-in" title="Zoom In">+</button>
+        <button id="zoom-out" title="Zoom Out">−</button>
+        <button id="reset-view" title="Reset View">⟲</button>
+        <button id="toggle-rotate" title="Auto Rotate" class="active">🌍</button>
+        <button id="toggle-labels" title="Toggle Labels">Aa</button>
+        <button id="toggle-edges" title="Toggle Connections">🔗</button>
+        <button id="show-help" title="Show Controls">?</button>
+        <div class="sensitivity-control" title="Control Sensitivity">
+            <label for="sensitivity-slider">⚡</label>
+            <input type="range" id="sensitivity-slider" min="5" max="100" value="30">
+            <span id="sensitivity-value">30%</span>
+        </div>
+    </div>
+
+    <!-- Legend (hidden by default) -->
+    <div id="legend">
+        <h4>Categories</h4>
+        <div id="legend-items"></div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div id="stats-bar">
+        <span id="fps">60 FPS</span>
+        <span id="visible-nodes">1192 nodes</span>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="loader">
+            <div class="spinner"></div>
+            <p>Loading AI Universe...</p>
+            <p class="loader-sub">47 domains, 1,192 concepts</p>
+        </div>
+    </div>
+
+    <!-- Instructions Overlay -->
+    <div id="instructions-overlay">
+        <div class="instructions-card">
+            <h2>🌌 Navigate the AI Universe</h2>
+            <div class="controls-grid">
+                <div class="control-item">
+                    <span class="control-key">🖱️ Left Drag</span>
+                    <span class="control-action">Orbit / Rotate view</span>
+                </div>
+                <div class="control-item">
+                    <span class="control-key">🖱️ Right Drag</span>
+                    <span class="control-action">Pan the view</span>
+                </div>
+                <div class="control-item">
+                    <span class="control-key">🖱️ Scroll</span>
+                    <span class="control-action">Zoom in / out</span>
+                </div>
+                <div class="control-item">
+                    <span class="control-key">🖱️ Double-Click</span>
+                    <span class="control-action">Focus on node</span>
+                </div>
+                <div class="control-item">
+                    <span class="control-key">⌨️ WASD</span>
+                    <span class="control-action">Orbit & zoom</span>
+                </div>
+                <div class="control-item">
+                    <span class="control-key">⌨️ Arrows</span>
+                    <span class="control-action">Pan the view</span>
+                </div>
+                <div class="control-item">
+                    <span class="control-key">⌨️ H / Home</span>
+                    <span class="control-action">Reset view</span>
+                </div>
+                <div class="control-item">
+                    <span class="control-key">📱 Touch</span>
+                    <span class="control-action">Drag to orbit / Pinch to zoom</span>
+                </div>
+            </div>
+            <p class="instructions-tip">💡 Explore like Google Earth! Drag to spin the universe, scroll to zoom. Motion continues with momentum.</p>
+            <button id="start-exploring" class="start-btn">🚀 Start Exploring</button>
+        </div>
+    </div>
+
+    <script src="../js/landscape.js"></script>
+</body>
+</html>

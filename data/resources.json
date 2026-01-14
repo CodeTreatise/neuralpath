@@ -694,6 +694,46 @@
           "description": "Official OpenAI channel with research and product updates.",
           "tags": ["research", "openai", "official"],
           "subscribers": "1M+"
+        },
+        {
+          "id": "3b1b-neural-networks",
+          "title": "But what is a neural network?",
+          "provider": "YouTube",
+          "author": "3Blue1Brown",
+          "url": "https://www.youtube.com/watch?v=aircAruvnKk",
+          "description": "Best visual explanation of neural networks - 15M+ views, builds intuition beautifully.",
+          "tags": ["neural networks", "visualization", "beginner"],
+          "featured": true
+        },
+        {
+          "id": "3b1b-transformers",
+          "title": "Attention in Transformers, Visually Explained",
+          "provider": "YouTube",
+          "author": "3Blue1Brown",
+          "url": "https://www.youtube.com/watch?v=eMlx5fFNoYc",
+          "description": "Visual deep-dive into the attention mechanism that powers GPT and all modern LLMs.",
+          "tags": ["transformers", "attention", "visualization"],
+          "featured": true
+        },
+        {
+          "id": "fireship-docker",
+          "title": "Docker in 100 Seconds",
+          "provider": "YouTube",
+          "author": "Fireship",
+          "url": "https://www.youtube.com/watch?v=Gjnup-PuquQ",
+          "description": "Perfect Docker primer - 4M+ views, gets you started fast in just 100 seconds.",
+          "tags": ["docker", "devops", "quick"],
+          "featured": true
+        },
+        {
+          "id": "ibm-rag-explained",
+          "title": "What is RAG? (Retrieval-Augmented Generation)",
+          "provider": "YouTube",
+          "author": "IBM Technology",
+          "url": "https://www.youtube.com/watch?v=T-D1OfcDW1M",
+          "description": "Clear 8-min visual explanation of RAG architecture - perfect for beginners.",
+          "tags": ["rag", "explainer", "beginner"],
+          "featured": true
         }
       ]
     },
@@ -1332,6 +1372,190 @@
           "url": "https://huggingface.co/docs/bitsandbytes",
           "description": "Accessible quantization (8-bit, 4-bit) for LLMs.",
           "tags": ["quantization", "inference", "efficiency"]
+        },
+        {
+          "id": "langchain-js-docs",
+          "title": "LangChain.js Documentation",
+          "provider": "LangChain",
+          "url": "https://js.langchain.com/docs/",
+          "description": "JavaScript/TypeScript framework for building LLM applications. Perfect for Node.js developers.",
+          "tags": ["langchain", "javascript", "rag", "llm"],
+          "featured": true
+        },
+        {
+          "id": "langchain-rag-tutorial",
+          "title": "Build a RAG App - LangChain.js",
+          "provider": "LangChain",
+          "url": "https://js.langchain.com/docs/tutorials/rag/",
+          "description": "Step-by-step guide to building RAG with LangChain.js. The starting point for RAG development.",
+          "tags": ["langchain", "rag", "tutorial", "javascript"],
+          "featured": true
+        },
+        {
+          "id": "pinecone-what-is-rag",
+          "title": "What is Retrieval Augmented Generation?",
+          "provider": "Pinecone",
+          "url": "https://www.pinecone.io/learn/retrieval-augmented-generation/",
+          "description": "Best RAG explainer - covers why, what, and how of RAG architecture.",
+          "tags": ["rag", "pinecone", "vectors"],
+          "featured": true
+        },
+        {
+          "id": "pinecone-chunking",
+          "title": "Chunking Strategies for LLM Applications",
+          "provider": "Pinecone",
+          "url": "https://www.pinecone.io/learn/chunking-strategies/",
+          "description": "Most comprehensive chunking guide - fixed-size, semantic, and document-aware methods.",
+          "tags": ["chunking", "rag", "pinecone"],
+          "featured": true
+        },
+        {
+          "id": "pinecone-embeddings",
+          "title": "What are Vector Embeddings?",
+          "provider": "Pinecone",
+          "url": "https://www.pinecone.io/learn/vector-embeddings/",
+          "description": "Foundation concept - must understand embeddings before building RAG.",
+          "tags": ["embeddings", "vectors", "pinecone"]
+        },
+        {
+          "id": "openai-cookbook",
+          "title": "OpenAI Cookbook",
+          "provider": "OpenAI",
+          "url": "https://cookbook.openai.com/",
+          "description": "Official examples covering RAG, embeddings, function calling, and best practices.",
+          "tags": ["openai", "examples", "rag"],
+          "featured": true
+        },
+        {
+          "id": "openai-embeddings-guide",
+          "title": "OpenAI Embeddings Guide",
+          "provider": "OpenAI",
+          "url": "https://platform.openai.com/docs/guides/embeddings",
+          "description": "Official guide for text-embedding-3 models - best embeddings for most use cases.",
+          "tags": ["openai", "embeddings", "api"]
+        },
+        {
+          "id": "anthropic-prompt-guide",
+          "title": "Anthropic Prompt Engineering Guide",
+          "provider": "Anthropic",
+          "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+          "description": "Best prompt engineering guide - applies to all LLMs, not just Claude.",
+          "tags": ["prompts", "anthropic", "claude"],
+          "featured": true
+        },
+        {
+          "id": "anthropic-contextual-retrieval",
+          "title": "Contextual Retrieval",
+          "provider": "Anthropic",
+          "url": "https://www.anthropic.com/news/contextual-retrieval",
+          "description": "Advanced RAG technique - 67% fewer retrieval failures with contextual embeddings.",
+          "tags": ["rag", "anthropic", "advanced"]
+        },
+        {
+          "id": "vercel-ai-sdk",
+          "title": "Vercel AI SDK",
+          "provider": "Vercel",
+          "url": "https://sdk.vercel.ai/docs",
+          "description": "Best for streaming AI responses in React/Next.js web apps.",
+          "tags": ["vercel", "streaming", "react", "nextjs"]
+        },
+        {
+          "id": "pgvector-github",
+          "title": "pgvector - Vector Similarity for PostgreSQL",
+          "provider": "GitHub",
+          "url": "https://github.com/pgvector/pgvector",
+          "description": "Open-source vector similarity search for PostgreSQL. Use existing Postgres skills for vectors.",
+          "tags": ["postgresql", "vectors", "database"],
+          "featured": true
+        },
+        {
+          "id": "supabase-pgvector",
+          "title": "Supabase Vector (pgvector) Guide",
+          "provider": "Supabase",
+          "url": "https://supabase.com/docs/guides/ai",
+          "description": "Easiest pgvector setup - managed Postgres + vectors with simple API.",
+          "tags": ["supabase", "pgvector", "database"]
+        },
+        {
+          "id": "cheerio-docs",
+          "title": "Cheerio Documentation",
+          "provider": "Cheerio",
+          "url": "https://cheerio.js.org/docs/intro",
+          "description": "Fast, flexible HTML parsing for Node.js - essential for web scraping in RAG pipelines.",
+          "tags": ["cheerio", "scraping", "nodejs"]
+        },
+        {
+          "id": "mozilla-readability",
+          "title": "Mozilla Readability",
+          "provider": "Mozilla",
+          "url": "https://github.com/mozilla/readability",
+          "description": "Extract article content from web pages - used by Firefox Reader View.",
+          "tags": ["readability", "content-extraction", "mozilla"]
+        },
+        {
+          "id": "zod-docs",
+          "title": "Zod - TypeScript Schema Validation",
+          "provider": "Zod",
+          "url": "https://zod.dev/",
+          "description": "Type-safe schema validation - essential for validating LLM structured outputs.",
+          "tags": ["zod", "typescript", "validation"]
+        },
+        {
+          "id": "ragas-docs",
+          "title": "RAGAS - RAG Evaluation Framework",
+          "provider": "RAGAS",
+          "url": "https://docs.ragas.io/",
+          "description": "Standard RAG evaluation tool - measure faithfulness, relevancy before you improve.",
+          "tags": ["evaluation", "rag", "metrics"]
+        },
+        {
+          "id": "cohere-reranking",
+          "title": "Reranking for Better RAG",
+          "provider": "Cohere",
+          "url": "https://cohere.com/blog/reranking",
+          "description": "Key optimization technique - two-stage retrieval for 10-30% accuracy boost.",
+          "tags": ["reranking", "rag", "cohere"]
+        },
+        {
+          "id": "huggingface-embeddings-guide",
+          "title": "Getting Started with Embeddings",
+          "provider": "Hugging Face",
+          "url": "https://huggingface.co/blog/getting-started-with-embeddings",
+          "description": "Practical hands-on embedding tutorial with code examples.",
+          "tags": ["embeddings", "huggingface", "tutorial"]
+        },
+        {
+          "id": "owasp-llm-top10",
+          "title": "OWASP Top 10 for LLM Applications",
+          "provider": "OWASP",
+          "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+          "description": "Industry standard security risks in LLM apps - know the risks before deploying.",
+          "tags": ["security", "owasp", "llm"],
+          "featured": true
+        },
+        {
+          "id": "prompt-injection-explained",
+          "title": "Prompt Injection Explained",
+          "provider": "Simon Willison",
+          "url": "https://simonwillison.net/2022/Sep/12/prompt-injection/",
+          "description": "Original prompt injection article - must-read for LLM security.",
+          "tags": ["security", "prompt-injection"]
+        },
+        {
+          "id": "docker-getting-started",
+          "title": "Docker Getting Started Guide",
+          "provider": "Docker",
+          "url": "https://docs.docker.com/get-started/",
+          "description": "Official hands-on tutorial for containerizing applications.",
+          "tags": ["docker", "containers", "devops"]
+        },
+        {
+          "id": "sqlbolt-tutorial",
+          "title": "SQLBolt - Interactive SQL Tutorial",
+          "provider": "SQLBolt",
+          "url": "https://sqlbolt.com/",
+          "description": "Best free SQL tutorial - needed for pgvector queries and database work.",
+          "tags": ["sql", "tutorial", "interactive"]
         }
       ]
     },

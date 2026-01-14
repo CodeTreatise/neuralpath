@@ -183,6 +183,28 @@
       "tags": ["angular", "node", "langchain", "rag", "mean-stack"],
       "featured": true,
       "type": "roadmap"
+    },
+    {
+      "id": "genai-learning-path",
+      "title": "GenAI Learning Path",
+      "icon": "🎯",
+      "description": "Structured learning path from foundations to advanced GenAI development with curated articles.",
+      "nodeCount": 56,
+      "category": "learning",
+      "tags": ["learning-path", "rag", "llm", "embeddings", "production"],
+      "featured": true,
+      "type": "roadmap"
+    },
+    {
+      "id": "ai-future-trends",
+      "title": "Emerging & Future AI",
+      "icon": "🚀",
+      "description": "Cutting-edge trends and future directions: MCP, function calling, small LLMs, AGI, and beyond.",
+      "nodeCount": 40,
+      "category": "overview",
+      "tags": ["future", "emerging", "mcp", "agi", "research"],
+      "featured": true,
+      "type": "landscape"
     }
   ]
 }

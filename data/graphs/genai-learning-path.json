@@ -1,0 +1,753 @@
+{
+  "id": "genai-learning-path",
+  "title": "GenAI Learning Path",
+  "description": "Structured learning path from foundations to advanced GenAI development",
+  "sections": [
+    {
+      "id": "foundation",
+      "title": "Foundation",
+      "color": "#3b82f6"
+    },
+    {
+      "id": "core",
+      "title": "Core Skills",
+      "color": "#8b5cf6"
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced",
+      "color": "#ec4899"
+    },
+    {
+      "id": "production",
+      "title": "Production",
+      "color": "#10b981"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "root",
+      "label": "GenAI Learning Path",
+      "type": "root",
+      "section": "foundation",
+      "difficulty": "Intermediate"
+    },
+    {
+      "id": "fcebd8f2",
+      "label": "Week 1 Recipe (Follow Step-by-Step)",
+      "type": "recipe",
+      "section": "advanced",
+      "difficulty": "Intermediate",
+      "localPath": "fcebd8f2.html"
+    },
+    {
+      "id": "7409a286",
+      "label": "Phase 1: Foundation (Weeks 1\u20132)",
+      "type": "phase",
+      "section": "foundation",
+      "difficulty": "Intermediate",
+      "localPath": "7409a286.html"
+    },
+    {
+      "id": "0e78bbb6",
+      "label": "1.1 Postgres Fundamentals (MUST LEARN)",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "0e78bbb6.html"
+    },
+    {
+      "id": "b42a8406",
+      "label": "1.2 Node.js + TypeScript Refresh",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "b42a8406.html"
+    },
+    {
+      "id": "88a3bcab",
+      "label": "TypeScript Handbook",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "typescript-handbook.html"
+    },
+    {
+      "id": "f5001a67",
+      "label": "Express + TypeScript setup",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "express-typescript-setup.html"
+    },
+    {
+      "id": "8bfe526a",
+      "label": "Zod (validation)",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "zod-validation.html"
+    },
+    {
+      "id": "b3548239",
+      "label": "1.3 Docker Basics (for Postgres)",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "b3548239.html"
+    },
+    {
+      "id": "52dc0c6e",
+      "label": "Docker in 100 Seconds",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "docker-in-100-seconds.html"
+    },
+    {
+      "id": "a94d6876",
+      "label": "Docker Compose Quickstart",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "docker-compose-quickstart.html"
+    },
+    {
+      "id": "9ba819c0",
+      "label": "Phase 2: LLM Fundamentals (Week 3)",
+      "type": "phase",
+      "section": "foundation",
+      "difficulty": "Intermediate",
+      "localPath": "9ba819c0.html"
+    },
+    {
+      "id": "1de861f9",
+      "label": "2.1 Core Concepts",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "1de861f9.html"
+    },
+    {
+      "id": "f63508c7",
+      "label": "OpenAI API Docs",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "openai-api-docs.html"
+    },
+    {
+      "id": "bb3c06a8",
+      "label": "Prompt Engineering Guide",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "prompt-engineering-guide.html"
+    },
+    {
+      "id": "91f68d3b",
+      "label": "OpenAI Cookbook",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "openai-cookbook.html"
+    },
+    {
+      "id": "f6ca8c4c",
+      "label": "2.2 Structured Outputs + Tool Calling",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "f6ca8c4c.html"
+    },
+    {
+      "id": "87ac36e5",
+      "label": "OpenAI Structured Outputs",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "openai-structured-outputs.html"
+    },
+    {
+      "id": "3da90478",
+      "label": "OpenAI Function Calling",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "openai-function-calling.html"
+    },
+    {
+      "id": "c1c924b0",
+      "label": "Phase 3: RAG Fundamentals (Weeks 4\u20136)",
+      "type": "phase",
+      "section": "foundation",
+      "difficulty": "Intermediate",
+      "localPath": "c1c924b0.html"
+    },
+    {
+      "id": "e6b0a7e6",
+      "label": "3.1 What is RAG?",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "e6b0a7e6.html"
+    },
+    {
+      "id": "bbac1f2a",
+      "label": "RAG Explained (video, 10 min)",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "rag-explained-video-10-min.html"
+    },
+    {
+      "id": "383dca2a",
+      "label": "LangChain RAG Tutorial",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "langchain-rag-tutorial.html"
+    },
+    {
+      "id": "bc6ddc89",
+      "label": "Pinecone: What is RAG?",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "pinecone-what-is-rag.html"
+    },
+    {
+      "id": "d9c63d1f",
+      "label": "3.2 Document Ingestion",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "d9c63d1f.html"
+    },
+    {
+      "id": "5c7a857c",
+      "label": "Cheerio",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "cheerio.html"
+    },
+    {
+      "id": "510568ec",
+      "label": "Mozilla Readability",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "mozilla-readability.html"
+    },
+    {
+      "id": "14cd4cb5",
+      "label": "3.3 Chunking",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "14cd4cb5.html"
+    },
+    {
+      "id": "7fd583ed",
+      "label": "Chunking Strategies",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "chunking-strategies.html"
+    },
+    {
+      "id": "7f87e0cf",
+      "label": "LangChain Text Splitters",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "langchain-text-splitters.html"
+    },
+    {
+      "id": "1c0210e3",
+      "label": "3.4 Embeddings",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "1c0210e3.html"
+    },
+    {
+      "id": "86385ce2",
+      "label": "OpenAI Embeddings Guide",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "openai-embeddings-guide.html"
+    },
+    {
+      "id": "5491a8eb",
+      "label": "What are Embeddings? (video)",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "what-are-embeddings-video.html"
+    },
+    {
+      "id": "41d86100",
+      "label": "3.5 Vector Database (pgvector)",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "41d86100.html"
+    },
+    {
+      "id": "0982f03c",
+      "label": "pgvector GitHub",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "pgvector-github.html"
+    },
+    {
+      "id": "b8803a11",
+      "label": "pgvector + Prisma",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "pgvector-prisma.html"
+    },
+    {
+      "id": "2c51d957",
+      "label": "Supabase pgvector Guide",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "supabase-pgvector-guide.html"
+    },
+    {
+      "id": "a42b46c0",
+      "label": "3.6 Retrieval + Generation",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "a42b46c0.html"
+    },
+    {
+      "id": "eba7caf5",
+      "label": "RAG Prompt Patterns",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "rag-prompt-patterns.html"
+    },
+    {
+      "id": "ce029c3a",
+      "label": "Phase 4: Reliability + Evaluation (Weeks 7\u20138)",
+      "type": "phase",
+      "section": "foundation",
+      "difficulty": "Intermediate",
+      "localPath": "ce029c3a.html"
+    },
+    {
+      "id": "9a61cb0a",
+      "label": "4.1 Why Evaluation Matters",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "9a61cb0a.html"
+    },
+    {
+      "id": "fa7f4f3f",
+      "label": "LLM Evaluation Guide",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "llm-evaluation-guide.html"
+    },
+    {
+      "id": "c1b4a402",
+      "label": "RAGAS",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "ragas.html"
+    },
+    {
+      "id": "b9f6412f",
+      "label": "4.2 Monitoring + Observability",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "b9f6412f.html"
+    },
+    {
+      "id": "f1cb5263",
+      "label": "Phase 5: Security + Safety (Week 9)",
+      "type": "phase",
+      "section": "foundation",
+      "difficulty": "Intermediate",
+      "localPath": "f1cb5263.html"
+    },
+    {
+      "id": "bc52a8a8",
+      "label": "5.1 Prompt Injection",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "bc52a8a8.html"
+    },
+    {
+      "id": "d2850f82",
+      "label": "OWASP LLM Top 10",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "owasp-llm-top-10.html"
+    },
+    {
+      "id": "789355b0",
+      "label": "Prompt Injection Explained",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "prompt-injection-explained.html"
+    },
+    {
+      "id": "1f660971",
+      "label": "5.2 Access Control (RBAC)",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "1f660971.html"
+    },
+    {
+      "id": "a3dd28f8",
+      "label": "5.3 PII + Data Handling",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "a3dd28f8.html"
+    },
+    {
+      "id": "89386cb2",
+      "label": "Phase 6: Deployment (Week 10)",
+      "type": "phase",
+      "section": "foundation",
+      "difficulty": "Intermediate",
+      "localPath": "89386cb2.html"
+    },
+    {
+      "id": "87cb6f12",
+      "label": "6.1 Deployment Options (simple)",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "87cb6f12.html"
+    },
+    {
+      "id": "5a85dcaa",
+      "label": "6.2 README + Portfolio",
+      "type": "topic",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "5a85dcaa.html"
+    },
+    {
+      "id": "e9f6349a",
+      "label": "Angular SSE (Server-Sent Events)",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "angular-sse-server-sent-events.html"
+    },
+    {
+      "id": "f29dabb8",
+      "label": "Streaming fetch in JS",
+      "type": "resource",
+      "section": "core",
+      "difficulty": "Intermediate",
+      "localPath": "streaming-fetch-in-js.html"
+    },
+    {
+      "id": "d5fe13a4",
+      "label": "Phase 7 (Optional): Add Python Skills",
+      "type": "phase",
+      "section": "foundation",
+      "difficulty": "Intermediate",
+      "localPath": "d5fe13a4.html"
+    }
+  ],
+  "links": [
+    {
+      "source": "root",
+      "target": "fcebd8f2",
+      "type": "leads-to"
+    },
+    {
+      "source": "root",
+      "target": "7409a286",
+      "type": "leads-to"
+    },
+    {
+      "source": "7409a286",
+      "target": "0e78bbb6",
+      "type": "leads-to"
+    },
+    {
+      "source": "7409a286",
+      "target": "b42a8406",
+      "type": "leads-to"
+    },
+    {
+      "source": "b42a8406",
+      "target": "88a3bcab",
+      "type": "leads-to"
+    },
+    {
+      "source": "b42a8406",
+      "target": "f5001a67",
+      "type": "leads-to"
+    },
+    {
+      "source": "b42a8406",
+      "target": "8bfe526a",
+      "type": "leads-to"
+    },
+    {
+      "source": "7409a286",
+      "target": "b3548239",
+      "type": "leads-to"
+    },
+    {
+      "source": "b3548239",
+      "target": "52dc0c6e",
+      "type": "leads-to"
+    },
+    {
+      "source": "b3548239",
+      "target": "a94d6876",
+      "type": "leads-to"
+    },
+    {
+      "source": "root",
+      "target": "9ba819c0",
+      "type": "leads-to"
+    },
+    {
+      "source": "9ba819c0",
+      "target": "1de861f9",
+      "type": "leads-to"
+    },
+    {
+      "source": "1de861f9",
+      "target": "f63508c7",
+      "type": "leads-to"
+    },
+    {
+      "source": "1de861f9",
+      "target": "bb3c06a8",
+      "type": "leads-to"
+    },
+    {
+      "source": "1de861f9",
+      "target": "91f68d3b",
+      "type": "leads-to"
+    },
+    {
+      "source": "9ba819c0",
+      "target": "f6ca8c4c",
+      "type": "leads-to"
+    },
+    {
+      "source": "f6ca8c4c",
+      "target": "87ac36e5",
+      "type": "leads-to"
+    },
+    {
+      "source": "f6ca8c4c",
+      "target": "3da90478",
+      "type": "leads-to"
+    },
+    {
+      "source": "root",
+      "target": "c1c924b0",
+      "type": "leads-to"
+    },
+    {
+      "source": "c1c924b0",
+      "target": "e6b0a7e6",
+      "type": "leads-to"
+    },
+    {
+      "source": "e6b0a7e6",
+      "target": "bbac1f2a",
+      "type": "leads-to"
+    },
+    {
+      "source": "e6b0a7e6",
+      "target": "383dca2a",
+      "type": "leads-to"
+    },
+    {
+      "source": "e6b0a7e6",
+      "target": "bc6ddc89",
+      "type": "leads-to"
+    },
+    {
+      "source": "c1c924b0",
+      "target": "d9c63d1f",
+      "type": "leads-to"
+    },
+    {
+      "source": "d9c63d1f",
+      "target": "5c7a857c",
+      "type": "leads-to"
+    },
+    {
+      "source": "d9c63d1f",
+      "target": "510568ec",
+      "type": "leads-to"
+    },
+    {
+      "source": "c1c924b0",
+      "target": "14cd4cb5",
+      "type": "leads-to"
+    },
+    {
+      "source": "14cd4cb5",
+      "target": "7fd583ed",
+      "type": "leads-to"
+    },
+    {
+      "source": "14cd4cb5",
+      "target": "7f87e0cf",
+      "type": "leads-to"
+    },
+    {
+      "source": "c1c924b0",
+      "target": "1c0210e3",
+      "type": "leads-to"
+    },
+    {
+      "source": "1c0210e3",
+      "target": "86385ce2",
+      "type": "leads-to"
+    },
+    {
+      "source": "1c0210e3",
+      "target": "5491a8eb",
+      "type": "leads-to"
+    },
+    {
+      "source": "c1c924b0",
+      "target": "41d86100",
+      "type": "leads-to"
+    },
+    {
+      "source": "41d86100",
+      "target": "0982f03c",
+      "type": "leads-to"
+    },
+    {
+      "source": "41d86100",
+      "target": "b8803a11",
+      "type": "leads-to"
+    },
+    {
+      "source": "41d86100",
+      "target": "2c51d957",
+      "type": "leads-to"
+    },
+    {
+      "source": "c1c924b0",
+      "target": "a42b46c0",
+      "type": "leads-to"
+    },
+    {
+      "source": "a42b46c0",
+      "target": "eba7caf5",
+      "type": "leads-to"
+    },
+    {
+      "source": "root",
+      "target": "ce029c3a",
+      "type": "leads-to"
+    },
+    {
+      "source": "ce029c3a",
+      "target": "9a61cb0a",
+      "type": "leads-to"
+    },
+    {
+      "source": "9a61cb0a",
+      "target": "fa7f4f3f",
+      "type": "leads-to"
+    },
+    {
+      "source": "9a61cb0a",
+      "target": "c1b4a402",
+      "type": "leads-to"
+    },
+    {
+      "source": "ce029c3a",
+      "target": "b9f6412f",
+      "type": "leads-to"
+    },
+    {
+      "source": "root",
+      "target": "f1cb5263",
+      "type": "leads-to"
+    },
+    {
+      "source": "f1cb5263",
+      "target": "bc52a8a8",
+      "type": "leads-to"
+    },
+    {
+      "source": "bc52a8a8",
+      "target": "d2850f82",
+      "type": "leads-to"
+    },
+    {
+      "source": "bc52a8a8",
+      "target": "789355b0",
+      "type": "leads-to"
+    },
+    {
+      "source": "f1cb5263",
+      "target": "1f660971",
+      "type": "leads-to"
+    },
+    {
+      "source": "f1cb5263",
+      "target": "a3dd28f8",
+      "type": "leads-to"
+    },
+    {
+      "source": "root",
+      "target": "89386cb2",
+      "type": "leads-to"
+    },
+    {
+      "source": "89386cb2",
+      "target": "87cb6f12",
+      "type": "leads-to"
+    },
+    {
+      "source": "89386cb2",
+      "target": "5a85dcaa",
+      "type": "leads-to"
+    },
+    {
+      "source": "5a85dcaa",
+      "target": "e9f6349a",
+      "type": "leads-to"
+    },
+    {
+      "source": "5a85dcaa",
+      "target": "f29dabb8",
+      "type": "leads-to"
+    },
+    {
+      "source": "root",
+      "target": "d5fe13a4",
+      "type": "leads-to"
+    }
+  ]
+}

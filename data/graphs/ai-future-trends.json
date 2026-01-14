@@ -1,0 +1,531 @@
+{
+  "id": "ai-future-trends",
+  "title": "Emerging & Future AI",
+  "description": "Cutting-edge trends and future directions in AI: MCP, function calling, small LLMs, and beyond",
+  "sections": [
+    {
+      "id": "emerging",
+      "title": "Emerging Tech (2024-2025)",
+      "color": "#3b82f6"
+    },
+    {
+      "id": "future",
+      "title": "Future Trends (2025+)",
+      "color": "#8b5cf6"
+    },
+    {
+      "id": "research",
+      "title": "Research Frontiers",
+      "color": "#ec4899"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "s18_b18_EMERGING",
+      "label": "EMERGING TECH",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://www.deeplearning.ai/the-batch/"
+    },
+    {
+      "id": "s18_b18_MCP",
+      "label": "MCP",
+      "type": "node",
+      "section": "emerging",
+      "difficulty": "Advanced",
+      "url": "https://modelcontextprotocol.io/"
+    },
+    {
+      "id": "s18_b18_FC",
+      "label": "Function Calling",
+      "type": "node",
+      "section": "emerging",
+      "difficulty": "Advanced",
+      "url": "https://platform.openai.com/docs/guides/function-calling"
+    },
+    {
+      "id": "s18_b18_STRUCT",
+      "label": "Structured Output",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://python.useinstructor.com/"
+    },
+    {
+      "id": "s18_b18_SMALL",
+      "label": "Small LLMs",
+      "type": "node",
+      "section": "emerging",
+      "difficulty": "Advanced",
+      "url": "https://huggingface.co/collections/microsoft/phi-3-6626e15e9585a200d2d761e3"
+    },
+    {
+      "id": "s18_b18_M1",
+      "label": "Model Context Protocol",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://modelcontextprotocol.io/introduction"
+    },
+    {
+      "id": "s18_b18_M2",
+      "label": "Tool Standardization",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://modelcontextprotocol.io/docs/concepts/tools"
+    },
+    {
+      "id": "s18_b18_M3",
+      "label": "Anthropic Standard",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://www.anthropic.com/news/model-context-protocol"
+    },
+    {
+      "id": "s18_b18_F1",
+      "label": "OpenAI Functions",
+      "type": "node",
+      "section": "emerging",
+      "difficulty": "Advanced",
+      "url": "https://platform.openai.com/docs/guides/function-calling"
+    },
+    {
+      "id": "s18_b18_F2",
+      "label": "Tool Use",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
+    },
+    {
+      "id": "s18_b18_F3",
+      "label": "JSON Mode",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://platform.openai.com/docs/guides/structured-outputs"
+    },
+    {
+      "id": "s18_b18_S1",
+      "label": "Pydantic",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://docs.pydantic.dev/"
+    },
+    {
+      "id": "s18_b18_S2",
+      "label": "Instructor",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://python.useinstructor.com/"
+    },
+    {
+      "id": "s18_b18_S3",
+      "label": "Outlines",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://dottxt-ai.github.io/outlines/"
+    },
+    {
+      "id": "s18_b18_SM1",
+      "label": "Phi-3",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://azure.microsoft.com/en-us/products/phi-3"
+    },
+    {
+      "id": "s18_b18_SM2",
+      "label": "Gemma",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://ai.google.dev/gemma"
+    },
+    {
+      "id": "s18_b18_SM3",
+      "label": "Llama 3.2",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://llama.meta.com/"
+    },
+    {
+      "id": "s28_b32_Near",
+      "label": "\ud83d\udd2e 2025-2026: Near Term",
+      "type": "subgraph",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://www.gartner.com/en/articles/what-s-new-in-artificial-intelligence-from-the-2024-gartner-hype-cycle"
+    },
+    {
+      "id": "s28_b32_N1",
+      "label": "Agentic AI Mainstream",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://lilianweng.github.io/posts/2023-06-23-agent/"
+    },
+    {
+      "id": "s28_b32_N2",
+      "label": "Small Language Models",
+      "type": "node",
+      "section": "emerging",
+      "difficulty": "Advanced",
+      "url": "https://azure.microsoft.com/en-us/products/phi-3"
+    },
+    {
+      "id": "s28_b32_N3",
+      "label": "On-Device AI",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://developer.apple.com/machine-learning/core-ml/"
+    },
+    {
+      "id": "s28_b32_N4",
+      "label": "Enterprise RAG",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://microsoft.github.io/graphrag/"
+    },
+    {
+      "id": "s28_b32_N5",
+      "label": "AI Regulation",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://artificialintelligenceact.eu/"
+    },
+    {
+      "id": "s28_b32_Mid",
+      "label": "\ud83d\ude80 2027-2028: Mid Term",
+      "type": "subgraph",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://hai.stanford.edu/news/ai-index-state-ai-14-charts"
+    },
+    {
+      "id": "s28_b32_M1",
+      "label": "AGI Progress",
+      "type": "node",
+      "section": "future",
+      "difficulty": "Advanced",
+      "url": "https://openai.com/"
+    },
+    {
+      "id": "s28_b32_M2",
+      "label": "Embodied AI / Robotics",
+      "type": "node",
+      "section": "future",
+      "difficulty": "Advanced",
+      "url": "https://www.figure.ai/"
+    },
+    {
+      "id": "s28_b32_M3",
+      "label": "Neuromorphic Computing",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://www.intel.com/content/www/us/en/research/neuromorphic-computing.html"
+    },
+    {
+      "id": "s28_b32_M4",
+      "label": "AI-Native Applications",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://a16z.com/emerging-architectures-for-llm-applications/"
+    },
+    {
+      "id": "s28_b32_M5",
+      "label": "Synthetic Data Dominance",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://gretel.ai/"
+    },
+    {
+      "id": "s28_b32_Long",
+      "label": "\ud83c\udf0c 2029-2030+: Long Term",
+      "type": "subgraph",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://futureoflife.org/open-letter/pause-giant-ai-experiments/"
+    },
+    {
+      "id": "s28_b32_L1",
+      "label": "Artificial General Intelligence?",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://deepmind.google/"
+    },
+    {
+      "id": "s28_b32_L2",
+      "label": "Brain-Computer Interfaces",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://neuralink.com/"
+    },
+    {
+      "id": "s28_b32_L3",
+      "label": "Quantum AI",
+      "type": "node",
+      "section": "future",
+      "difficulty": "Advanced",
+      "url": "https://www.ibm.com/quantum"
+    },
+    {
+      "id": "s28_b32_L4",
+      "label": "AI Consciousness Debate",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://plato.stanford.edu/entries/consciousness-higher/"
+    },
+    {
+      "id": "s28_b32_L5",
+      "label": "Post-Transformer Architectures",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://arxiv.org/abs/2312.00752"
+    },
+    {
+      "id": "s28_b33_Past",
+      "label": "\ud83d\udcdc Past Paradigms",
+      "type": "subgraph",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://www.britannica.com/technology/artificial-intelligence"
+    },
+    {
+      "id": "s28_b33_P1",
+      "label": "Rule-Based Expert Systems",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://www.britannica.com/technology/expert-system"
+    },
+    {
+      "id": "s28_b33_P2",
+      "label": "Statistical ML",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://scikit-learn.org/"
+    },
+    {
+      "id": "s28_b33_P3",
+      "label": "Deep Learning",
+      "type": "node",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://pytorch.org/"
+    },
+    {
+      "id": "s28_b33_Present",
+      "label": "\u26a1 Current (2025)",
+      "type": "subgraph",
+      "section": "research",
+      "difficulty": "Advanced",
+      "url": "https://www.nvidia.com/en-us/glossary/large-language-models/"
+    }
+  ],
+  "links": [
+    {
+      "source": "s18_b18_EMERGING",
+      "target": "s18_b18_MCP",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_EMERGING",
+      "target": "s18_b18_FC",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_EMERGING",
+      "target": "s18_b18_STRUCT",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_EMERGING",
+      "target": "s18_b18_SMALL",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_MCP",
+      "target": "s18_b18_M1",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_MCP",
+      "target": "s18_b18_M2",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_MCP",
+      "target": "s18_b18_M3",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_FC",
+      "target": "s18_b18_F1",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_FC",
+      "target": "s18_b18_F2",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_FC",
+      "target": "s18_b18_F3",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_STRUCT",
+      "target": "s18_b18_S1",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_STRUCT",
+      "target": "s18_b18_S2",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_STRUCT",
+      "target": "s18_b18_S3",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_SMALL",
+      "target": "s18_b18_SM1",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_SMALL",
+      "target": "s18_b18_SM2",
+      "type": "relates-to"
+    },
+    {
+      "source": "s18_b18_SMALL",
+      "target": "s18_b18_SM3",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Near",
+      "target": "s28_b32_Mid",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Mid",
+      "target": "s28_b32_Long",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Near",
+      "target": "s28_b32_N1",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Near",
+      "target": "s28_b32_N2",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Near",
+      "target": "s28_b32_N3",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Near",
+      "target": "s28_b32_N4",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Near",
+      "target": "s28_b32_N5",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Mid",
+      "target": "s28_b32_M1",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Mid",
+      "target": "s28_b32_M2",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Mid",
+      "target": "s28_b32_M3",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Mid",
+      "target": "s28_b32_M4",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Mid",
+      "target": "s28_b32_M5",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Long",
+      "target": "s28_b32_L1",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Long",
+      "target": "s28_b32_L2",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Long",
+      "target": "s28_b32_L3",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Long",
+      "target": "s28_b32_L4",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b32_Long",
+      "target": "s28_b32_L5",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b33_Past",
+      "target": "s28_b33_Present",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b33_Past",
+      "target": "s28_b33_P1",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b33_Past",
+      "target": "s28_b33_P2",
+      "type": "relates-to"
+    },
+    {
+      "source": "s28_b33_Past",
+      "target": "s28_b33_P3",
+      "type": "relates-to"
+    }
+  ]
+}
